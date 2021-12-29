@@ -1,10 +1,10 @@
-const AzureAdOAuth2Strategy = require("passport-azure-ad-oauth2");
-const jwt = require("jsonwebtoken");
+//const AzureAdOAuth2Strategy = require("passport-azure-ad-oauth2");
+//const jwt = require("jsonwebtoken");
 
 module.exports = ({ env }) => ({
   auth: {
     secret: env("ADMIN_JWT_SECRET", "5759e3e0320dfca3e6cf03cdf445ef51"),
-    providers: [
+/*    providers: [
       {
         uid: "azure_ad_oauth2",
         displayName: "Microsoft",
@@ -30,6 +30,6 @@ module.exports = ({ env }) => ({
             }
           ),
       },
-    ],
+    ],*/
   },
 });
