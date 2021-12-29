@@ -7,10 +7,10 @@
     "@strapi/strapi": "4.0.2",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
+    "passport-azure-ad-oauth2": "^0.0.4",
     "pg": "^8.7.1",
     "pg-connection-string": "^2.5.0",
-    "sqlite3": "5.0.2",
-    "strapi-provider-upload-do": "^3.6.6"
+    "sqlite3": "5.0.2"
   },
   "name": "backend",
   "private": true,
