@@ -4,10 +4,11 @@
   "info": {
     "singularName": "team-member",
     "pluralName": "team-members",
-    "displayName": "TeamMember"
+    "displayName": "TeamMember",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
@@ -17,8 +18,36 @@
       "unique": false
     },
     "lastName": {
-      "type": "string",
+      "type": "string"
+    },
+    "pronouns": {
+      "type": "enumeration",
+      "enum": [
+        "theythem",
+        "sheher",
+        "hehim"
+      ],
       "required": true
+    },
+    "positions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::position.position"
+    },
+    "email": {
+      "type": "email"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

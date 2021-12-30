@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jote_articles",
+  "info": {
+    "singularName": "jote-article",
+    "pluralName": "jote-articles",
+    "displayName": "JOTE Article",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Abstract": {
+      "type": "richtext"
+    },
+    "published": {
+      "type": "date"
+    },
+    "submitted": {
+      "type": "date"
+    },
+    "accepted": {
+      "type": "date"
+    },
+    "jote_authors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::jote-author.jote-author"
+    }
+  }
+}
