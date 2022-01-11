@@ -38,7 +38,7 @@ export async function handleCreate({
     const { _id } = item;
     const update = await addIdToStrapi({
       collectionName,
-      id: id as string,
+      id: id as unknown as string,
       webflowId: _id as string,
     });
 

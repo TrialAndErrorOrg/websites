@@ -26,7 +26,7 @@ export async function createUpdate({
       fields: {
         //_id: `${collectionName}-${entry.id}`,
         _archived: false,
-        _draft: false,
+        _draft: true,
         ...updateEntry,
       },
     });
@@ -35,7 +35,7 @@ export async function createUpdate({
 
     const strapi = await addIdToStrapi({
       collectionName: collectionName,
-      id: entry.id as string,
+      id: entry.id as unknown as string,
       updateId: _id,
     });
     return strapi;

@@ -6,9 +6,9 @@ export interface Event {
 }
 export interface Entry {
   id: number;
-  published_at: string | null;
-  updated_at: string;
-  created_at: string;
+  publishedAt: string | null;
+  updatedAt: string;
+  createdAt: string;
   [key: string]: string | number | null | undefined;
 }
 export interface HandleProps {

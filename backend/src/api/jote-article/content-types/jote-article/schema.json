@@ -19,13 +19,13 @@
       "type": "richtext"
     },
     "published": {
-      "type": "date"
+      "type": "datetime"
     },
     "submitted": {
-      "type": "date"
+      "type": "datetime"
     },
     "accepted": {
-      "type": "date"
+      "type": "datetime"
     },
     "jote_authors": {
       "type": "relation",

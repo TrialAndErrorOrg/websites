@@ -48,7 +48,7 @@ const updateCollectionId = process.env.UPDATE_COLLECTION_ID as string;
       req.on("data", (chunk: any) => {
         const data = JSON.parse(chunk.toString());
         const { model: collectionName, entry } = data;
-        console.log(req.headers.cookie);
+        console.log(data);
 
         const collectionIds = JSON.parse(req.headers.cookie);
         const collectionId = collectionIds[collectionName];

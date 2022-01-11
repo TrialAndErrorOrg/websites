@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "feed_types",
+  "info": {
+    "singularName": "feed-type",
+    "pluralName": "feed-types",
+    "displayName": "Feed Type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

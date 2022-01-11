@@ -28,20 +28,16 @@ export async function handlePublish({
     publishedAt: pubd,
     ...rest
   } = entry;
-  if (!pubd && !unpublish) {
-    try {
-      await webflow.publishSite({
-        siteId: process.env.SITE_ID,
-        domains: [process.env.SITE_DOMAIN],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-    return;
-  }
+
+  const isDraft = !publishedAt;
+  const isPublished = !isDraft;
+  const shouldBecomeDraft = !isDraft && unpublish;
+  const canBeUnpublished = isPublished;
+  const needsLive = isPublished && !unpublish;
+  const needsSitePublished = !isPublished && !unpublish;
 
   try {
-    const updateItem = await webflow.updateItem(
+    const changedEntry = await webflow.updateItem(
       {
         collectionId: collectionId,
         itemId: entry.webflowId as string,
@@ -49,16 +45,44 @@ export async function handlePublish({
           name: title as string,
           slug: slugify(title as string),
           _archived: false,
-          _draft: false,
+          _draft: shouldBecomeDraft,
           ...rest,
         },
       },
-      { live: !unpublish }
+      { live: needsLive }
     );
 
-    console.log(updateItem);
+    const changedUpdate = await webflow.updateItem(
+      {
+        collectionId: process.env.UPDATE_COLLECTION_ID,
+        itemId: entry.updateId as string,
+        fields: {
+          name: title as string,
+          slug: slugify(title as string),
+          _archived: false,
+          _draft: shouldBecomeDraft,
+          ...rest,
+        },
+      },
+      { live: needsLive }
+    );
 
-    return updateItem;
+    console.log(changedEntry);
+    console.log(changedUpdate);
+
+    if (needsSitePublished) {
+      try {
+        await webflow.publishSite({
+          siteId: process.env.SITE_ID,
+          domains: [process.env.SITE_DOMAIN],
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      return;
+    }
+
+    return changedEntry;
   } catch (e: any) {
     console.error(e);
   }

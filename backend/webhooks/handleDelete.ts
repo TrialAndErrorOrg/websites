@@ -8,8 +8,30 @@ export async function handleDelete({
   publishedAt,
   webflow,
 }: HandleProps) {
-  const removed = webflow.removeItem({
-    collectionId,
-    itemId: "582bbba8dae4fb7a75bd30e8",
-  });
+  const { webflowId, updateId } = entry;
+  try {
+    const removedItem = await webflow.removeItem({
+      collectionId,
+      itemId: webflowId,
+    });
+    console.log(
+      `Successfully removed ${collectionName} ${entry.title}: ${webflowId}`
+    );
+  } catch (e) {
+    console.log(
+      `Did not manage to remove ${collectionName} ${entry.title}: ${webflowId}`
+    );
+    console.error(e);
+  }
+  try {
+    const removedUpdate = await webflow.removeItem({
+      collectionId: process.env.UPDATE_COLLECTION_ID,
+      itemId: updateId,
+    });
+
+    console.log(`Successfully removed update ${entry.title}: ${updateId}`);
+  } catch (e) {
+    console.log(`Did not manage to remove update ${entry.title}: ${updateId}`);
+    console.error(e);
+  }
 }

@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "website_types",
+  "info": {
+    "singularName": "website-type",
+    "pluralName": "website-types",
+    "displayName": "Website type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
