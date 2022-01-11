@@ -31,4 +31,5 @@ export interface Update {
   summary: string;
   url: string;
   source: string;
+  group?: string;
 }

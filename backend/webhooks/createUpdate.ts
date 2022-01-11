@@ -14,10 +14,11 @@ export async function createUpdate({
     name: entry.title as string,
     slug: "ayy",
     "cover-image": entry["cover-image"] as string,
-    "update-text": entry["update-text"] as string,
+    "update-text": entry["abstract"] as string,
     summary: entry["summary"] as string,
     url: entry["url"] as string,
     source: sourceId,
+    //group: collectionId,
   };
   try {
     const update = await webflow.createItem({

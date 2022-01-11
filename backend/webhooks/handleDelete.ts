@@ -1,6 +1,6 @@
 import { HandleProps } from ".";
 
-export function handleDelete({
+export async function handleDelete({
   entry,
   collectionName,
   updateCollectionId,

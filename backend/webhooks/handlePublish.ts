@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import { HandlePublishProps } from ".";
 
-export function handlePublish({
+export async function handlePublish({
   entry,
   collectionName,
   updateCollectionId,
@@ -29,17 +29,19 @@ export function handlePublish({
     ...rest
   } = entry;
   if (!pubd && !unpublish) {
-    webflow
-      .publishSite({
+    try {
+      await webflow.publishSite({
         siteId: process.env.SITE_ID,
         domains: [process.env.SITE_DOMAIN],
-      })
-      .catch((e: any) => console.error(e));
+      });
+    } catch (e) {
+      console.error(e);
+    }
     return;
   }
 
-  webflow
-    .updateItem(
+  try {
+    const updateItem = await webflow.updateItem(
       {
         collectionId: collectionId,
         itemId: entry.webflowId as string,
@@ -52,7 +54,12 @@ export function handlePublish({
         },
       },
       { live: !unpublish }
-    )
-    .then((i: any) => console.log(i))
-    .catch((e: any) => console.error(e));
+    );
+
+    console.log(updateItem);
+
+    return updateItem;
+  } catch (e: any) {
+    console.error(e);
+  }
 }
