@@ -1,6 +1,6 @@
 import { Entry, HandleProps } from ".";
 
-export function handleDefault({
+export async function handleDefault({
   entry,
   collectionName,
   updateCollectionId,

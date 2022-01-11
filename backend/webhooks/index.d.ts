@@ -5,6 +5,10 @@ export interface Event {
   entry: Entry;
 }
 export interface Entry {
+  id: number;
+  published_at: string | null;
+  updated_at: string;
+  created_at: string;
   [key: string]: string | number | null | undefined;
 }
 export interface HandleProps {
