@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import { HandleProps } from ".";
+import { translateItemToUpdate } from "./translateItemToUpdate";
 
 export async function handleUpdate({
   entry,
@@ -8,6 +9,8 @@ export async function handleUpdate({
   updateCollectionId,
   publishedAt,
   webflow,
+  webflowStrapiInterfaces,
+  strapiTypesWhichShouldBecomeWeblowCollections,
 }: HandleProps) {
   const {
     title,
@@ -45,7 +48,7 @@ export async function handleUpdate({
       fields: {
         name: title as string,
         slug: slugify(title as string),
-        ...rest,
+        ...translateItemToUpdate(rest),
       },
     },
     { live: needsLive }

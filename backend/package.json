@@ -19,6 +19,7 @@
     "postinstall-postinstall": "^2.1.0",
     "slugify": "^1.6.5",
     "sqlite3": "5.0.2",
+    "strapi-sdk-js": "^2.1.3",
     "webflow-api": "^0.5.4"
   },
   "name": "backend",

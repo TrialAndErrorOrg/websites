@@ -9,6 +9,8 @@ export async function handleCreate({
   publishedAt: pubd,
   webflow,
   collectionId,
+  webflowStrapiInterfaces,
+  strapiTypesWhichShouldBecomeWeblowCollections,
 }: HandleProps) {
   const {
     title,

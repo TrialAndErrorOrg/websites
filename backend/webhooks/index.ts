@@ -1,3 +1,6 @@
+import { InterfaceInterface } from "../src/types";
+import Webflow from "./js-webflow-api";
+
 export interface Event {
   event: string;
   createdAt: string;
@@ -18,6 +21,8 @@ export interface HandleProps {
   publishedAt: string | undefined;
   webflow: Webflow;
   collectionId: string;
+  webflowStrapiInterfaces: InterfaceInterface;
+  strapiTypesWhichShouldBecomeWeblowCollections: string[];
 }
 export interface UpdateProps extends HandleProps {
   sourceId: string;
@@ -28,12 +33,21 @@ export interface HandlePublishProps extends HandleProps {
 }
 
 export interface Update {
+  type: string;
   name: string;
   slug: string;
-  "cover-image": string;
-  "update-text": string;
-  summary: string;
+  image: string;
+  body: string;
   url: string;
-  source: string;
-  group?: string;
 }
+
+export type StrapiGETItem<Type> = {
+  id: number;
+  attributes: Omit<Type, "id">;
+  meta: any;
+};
+
+export type StrapiGETResponse<Type> = {
+  data: StrapiGETItem<Type>[];
+  meta: any;
+};

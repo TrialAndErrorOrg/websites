@@ -2,8 +2,6 @@ var secret = "your_secret_key";
 var repo = "~/path-to-your-repo/";
 
 import http from "http";
-import crypto from "crypto";
-import { exec } from "child_process";
 import Webflow from "./js-webflow-api";
 import fetch from "node-fetch";
 import { webflowToStrapiId } from "./strapi-webflow-id-conv";
@@ -14,6 +12,14 @@ import { handleCreate } from "./handleCreate";
 import { handleDelete } from "./handleDelete";
 import { handlePublish } from "./handlePublish";
 import path from "path";
+import tryCatch from "./utils/try-catch";
+import {
+  IContentUpdateInterface,
+  InterfaceInterface,
+  IWebsiteType,
+} from "../src/types";
+import { HandleProps, StrapiGETResponse } from ".";
+
 dotenv.config({ path: path.resolve(process.cwd(), "./webhooks/.env") });
 
 const PM2_CMD = "cd ~ && pm2 startOrRestart ecosystem.config.js";
@@ -28,20 +34,75 @@ const siteId = process.env.SITE_ID as string;
 const token = process.env.WEBFLOW_TOKEN as string;
 console.log(token);
 const updateCollectionId = process.env.UPDATE_COLLECTION_ID as string;
+const STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME = process.env
+  .STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME as string;
+const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
+  .STRAPI_WEBFLOW_TYPES_COLLECTION_NAME as string;
 
 (async () => {
   const webflow = new Webflow({ token });
 
-  const schemasResponse = await webflow.collections({ siteId });
+  const [schemasResponse, schemaError] = await tryCatch(
+    webflow.collections({ siteId })
+  );
   console.log(schemasResponse);
-  const schemas = schemasResponse.reduce<{ [key: string]: any }>(
-    (acc, curr) => {
+  const webflowSchemas: { [key: string]: any } = schemasResponse.reduce(
+    (acc: { [key: string]: any }, curr: any) => {
       acc[curr.slug as string] = curr;
       return acc;
     },
     {}
   );
-  console.log(schemas);
+  const [webflowStrapiInterfacesRaw, interfaceError]: [
+    StrapiGETResponse<IContentUpdateInterface>,
+    any
+  ] = await tryCatch(
+    (
+      await fetch(
+        `http://localhost:1337/api/${STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
+        {
+          headers: {
+            Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+    ).json()
+  );
+
+  const [strapiTypesWhichShouldBecomeWeblowCollectionsRaw, collectionError]: [
+    StrapiGETResponse<IWebsiteType>,
+    any
+  ] = await tryCatch(
+    (
+      await fetch(
+        `http://localhost:1337/api/${STRAPI_WEBFLOW_TYPES_COLLECTION_NAME}`,
+        {
+          headers: {
+            Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+    ).json()
+  );
+
+  const webflowStrapiInterfaces =
+    webflowStrapiInterfacesRaw.data.reduce<InterfaceInterface>((acc, curr) => {
+      const { type, ...rest } = curr.attributes;
+      acc[type] = rest;
+      return acc;
+    }, {});
+
+  const strapiTypesWhichShouldBecomeWeblowCollections =
+    strapiTypesWhichShouldBecomeWeblowCollectionsRaw.data.reduce<string[]>(
+      (acc, curr) => {
+        acc.push(curr.attributes.type);
+        return acc;
+      },
+      []
+    );
+  console.log(webflowSchemas);
 
   http
     .createServer((req: any, res: any) => {
@@ -63,6 +124,17 @@ const updateCollectionId = process.env.UPDATE_COLLECTION_ID as string;
         }
         const { publishedAt } = entry;
 
+        const hookHandleData: HandleProps = {
+          entry,
+          collectionId,
+          collectionName,
+          publishedAt,
+          webflow,
+          updateCollectionId,
+          webflowStrapiInterfaces,
+          strapiTypesWhichShouldBecomeWeblowCollections,
+        };
+
         switch (req.headers["x-strapi-event"]) {
           case "entry.update": {
             console.log("update!");
@@ -80,67 +152,31 @@ const updateCollectionId = process.env.UPDATE_COLLECTION_ID as string;
 
           case "entry.create": {
             console.log("create!");
-            handleCreate({
-              entry,
-              collectionId,
-              collectionName,
-              publishedAt,
-              webflow,
-              updateCollectionId,
-            });
+            handleCreate(hookHandleData);
             return;
           }
 
           case "entry.delete": {
             console.log("delete!");
-            handleDelete({
-              entry,
-              collectionName,
-              publishedAt,
-              webflow,
-              collectionId,
-              updateCollectionId,
-            });
+            handleDelete(hookHandleData);
             return;
           }
 
           case "entry.publish": {
             console.log("publish!");
-            handlePublish({
-              entry,
-              collectionName,
-              publishedAt,
-              webflow,
-              collectionId,
-              updateCollectionId,
-            });
+            handlePublish(hookHandleData);
             return;
           }
 
           case "entry.unpublish": {
             console.log("unpublish!");
-            handlePublish({
-              entry,
-              collectionName,
-              collectionId,
-              publishedAt,
-              webflow,
-              updateCollectionId,
-              unpublish: true,
-            });
+            handlePublish({ ...hookHandleData, unpublish: true });
             return;
           }
 
           default:
             console.log("bummer");
-            handleDefault({
-              entry,
-              collectionName,
-              publishedAt,
-              webflow,
-              collectionId,
-              updateCollectionId,
-            });
+            handleDefault(hookHandleData);
         }
       });
 
