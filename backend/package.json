@@ -7,11 +7,16 @@
     "@types/node-fetch": "2",
     "@yermangderrff/strapi-to-typescript": "^2.0.15",
     "dotenv": "^11.0.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
     "node-fetch": "2",
     "nodemon": "^2.0.15",
+    "passport-azure-ad-oauth2": "^0.0.4",
+    "passport-github2": "^0.1.12",
+    "patch-package": "^6.4.7",
     "pg": "^8.7.1",
+    "postinstall-postinstall": "^2.1.0",
     "slugify": "^1.6.5",
     "sqlite3": "5.0.2",
     "webflow-api": "^0.5.4"
@@ -28,7 +33,8 @@
     "webhook": "nodemon ./webhooks/syncToWebflow.ts",
     "build": "strapi build",
     "strapi": "strapi",
-    "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\""
+    "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@types/node": "^17.0.8",
