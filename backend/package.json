@@ -48,7 +48,6 @@
     "email": "hello@tefkah.com"
   },
   "strapi": {
-    "uuid": "3e7349ba-f77c-405c-abf9-8f96a9ef31b6",
     "template": "@strapi/template-blog@^1.0.0",
     "starter": "@strapi/starter-next-blog"
   },
