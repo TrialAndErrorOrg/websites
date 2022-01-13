@@ -39,6 +39,8 @@ const STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME = process.env
 const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
   .STRAPI_WEBFLOW_TYPES_COLLECTION_NAME as string;
 
+const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 (async () => {
   const webflow = new Webflow({ token });
 
@@ -46,6 +48,7 @@ const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
     webflow.collections({ siteId })
   );
   console.log(schemasResponse);
+
   const webflowSchemas: { [key: string]: any } = schemasResponse.reduce(
     (acc: { [key: string]: any }, curr: any) => {
       acc[curr.slug as string] = curr;
@@ -53,6 +56,11 @@ const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
     },
     {}
   );
+
+  //fixme
+  // very bad way of making sure that the api does not start before the server does
+  await timer(10000);
+
   const [webflowStrapiInterfacesRaw, interfaceError]: [
     StrapiGETResponse<IContentUpdateInterface>,
     any
@@ -115,8 +123,9 @@ const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
         const { model: collectionName, entry } = data;
         console.log(data);
 
-        const collectionIds = JSON.parse(req.headers.cookie);
-        const collectionId = collectionIds[collectionName];
+        // const collectionIds = JSON.parse(req.headers.cookie);
+        // const collectionId = collectionIds[collectionName];
+        const collectionId = "61db0af3af943c4259747c11";
 
         if (!collectionId) {
           console.error("Whoopsie!");

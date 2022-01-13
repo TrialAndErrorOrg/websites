@@ -26,6 +26,7 @@ export async function handleCreate({
     ...rest
   } = entry;
 
+  console.log(webflowStrapiInterfaces);
   if (!Object.keys(webflowStrapiInterfaces).includes(collectionName)) return;
 
   try {
