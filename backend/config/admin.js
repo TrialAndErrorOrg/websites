@@ -17,7 +17,7 @@ module.exports = ({ env }) => ({
             {
               clientID: env("MICROSOFT_CLIENT_ID", ""),
               clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
-              scope: ["user:email"],
+              scope: ["user:profile"],
               tenant: env("MICROSOFT_TENANT_ID", ""),
               callbackURL:
                 strapi.admin.services.passport.getStrategyCallbackURL(
@@ -26,34 +26,38 @@ module.exports = ({ env }) => ({
             },
             (accessToken, refreshToken, params, profile, done) => {
               var waadProfile = jwt.decode(params.id_token, "", true);
+              const prof = jwt.decode(accessToken, "", true);
               done(null, {
-                email: waadProfile.upn,
-                username: waadProfile.upn,
+                email: prof.upn,
+                username: prof.upn,
+                firstname: prof.given_name || prof.name,
+                lastname:
+                  prof.family_name || !prof.given_name ? prof.name : undefined,
               });
             }
           ),
       },
-      {
-        uid: "github",
-        displayName: "Github",
-        icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png",
-        createStrategy: (strapi) =>
-          new GithubStrategy(
-            {
-              clientID: env("GITHUB_CLIENT_ID"),
-              clientSecret: env("GITHUB_CLIENT_SECRET"),
-              scope: ["user:email"],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("github"),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.emails[0].value,
-                username: profile.username,
-              });
-            }
-          ),
-      },
+      // {
+      //   uid: "github",
+      //   displayName: "Github",
+      //   icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png",
+      //   createStrategy: (strapi) =>
+      //     new GithubStrategy(
+      //       {
+      //         clientID: env("GITHUB_CLIENT_ID"),
+      //         clientSecret: env("GITHUB_CLIENT_SECRET"),
+      //         scope: ["user:email"],
+      //         callbackURL:
+      //           strapi.admin.services.passport.getStrategyCallbackURL("github"),
+      //       },
+      //       (accessToken, refreshToken, profile, done) => {
+      //         done(null, {
+      //           email: profile.emails[0].value,
+      //           username: profile.username,
+      //         });
+      //       }
+      //     ),
+      // },
     ],
   },
   url: "/admin",

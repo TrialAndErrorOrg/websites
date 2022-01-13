@@ -1,11 +1,15 @@
 import { Entry, Update } from ".";
 import { InterfaceInterface } from "../src/types";
 
-export function translateItemToUpdate(
-  entry: Entry,
-  collectionName: string,
-  interfaceSchema: InterfaceInterface
-): Update {
+export function translateItemToUpdate({
+  entry,
+  collectionName,
+  interfaceSchema,
+}: {
+  entry: Entry;
+  collectionName: string;
+  interfaceSchema: InterfaceInterface;
+}): Update {
   const { extraMaps, ...translationSchema } = interfaceSchema[collectionName];
 
   const update = Object.values(translationSchema).reduce<Update>(

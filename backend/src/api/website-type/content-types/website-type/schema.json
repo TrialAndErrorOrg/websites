@@ -4,7 +4,8 @@
   "info": {
     "singularName": "website-type",
     "pluralName": "website-types",
-    "displayName": "Website type"
+    "displayName": "Website type",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,6 +14,19 @@
   "attributes": {
     "type": {
       "type": "string",
+      "required": true
+    },
+    "webflowCollectionId": {
+      "type": "string",
+      "required": true
+    },
+    "needsUpdate": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "map": {
+      "type": "json",
       "required": true
     }
   }

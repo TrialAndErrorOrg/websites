@@ -2,7 +2,7 @@ var secret = "your_secret_key";
 var repo = "~/path-to-your-repo/";
 
 import http from "http";
-import Webflow from "./js-webflow-api";
+import Webflow from "webflow-api";
 import fetch from "node-fetch";
 import { webflowToStrapiId } from "./strapi-webflow-id-conv";
 import slugify from "slugify";
@@ -58,16 +58,18 @@ const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
     any
   ] = await tryCatch(
     (
-      await fetch(
-        `http://localhost:1337/api/${STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
-        {
-          headers: {
-            Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-        }
+      await tryCatch(
+        fetch(
+          `http://localhost:1337/api/${STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
       )
-    ).json()
+    )[0]?.json()
   );
 
   const [strapiTypesWhichShouldBecomeWeblowCollectionsRaw, collectionError]: [
@@ -75,16 +77,18 @@ const STRAPI_WEBFLOW_TYPES_COLLECTION_NAME = process.env
     any
   ] = await tryCatch(
     (
-      await fetch(
-        `http://localhost:1337/api/${STRAPI_WEBFLOW_TYPES_COLLECTION_NAME}`,
-        {
-          headers: {
-            Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-        }
+      await tryCatch(
+        fetch(
+          `http://localhost:1337/api/${STRAPI_WEBFLOW_TYPES_COLLECTION_NAME}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
       )
-    ).json()
+    )[0]?.json()
   );
 
   const webflowStrapiInterfaces =

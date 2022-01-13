@@ -1,5 +1,6 @@
 import slugify from "slugify";
 import { HandlePublishProps } from ".";
+import { translateItemToUpdate } from "./translateItemToUpdate";
 
 export async function handlePublish({
   entry,
@@ -9,6 +10,7 @@ export async function handlePublish({
   webflow,
   collectionId,
   unpublish,
+  webflowStrapiInterfaces,
 }: HandlePublishProps) {
   if (!entry.webflowId) return;
   //console.log(collectionId);
@@ -54,14 +56,18 @@ export async function handlePublish({
 
     const changedUpdate = await webflow.updateItem(
       {
-        collectionId: process.env.UPDATE_COLLECTION_ID,
+        collectionId: process.env.UPDATE_COLLECTION_ID as string,
         itemId: entry.updateId as string,
         fields: {
-          name: title as string,
-          slug: slugify(title as string),
+          // name: title as string,
+          // slug: slugify(title as string),
           _archived: false,
           _draft: shouldBecomeDraft,
-          ...rest,
+          ...translateItemToUpdate({
+            entry,
+            collectionName,
+            interfaceSchema: webflowStrapiInterfaces,
+          }),
         },
       },
       { live: needsLive }
@@ -73,8 +79,8 @@ export async function handlePublish({
     if (needsSitePublished) {
       try {
         await webflow.publishSite({
-          siteId: process.env.SITE_ID,
-          domains: [process.env.SITE_DOMAIN],
+          siteId: process.env.SITE_ID as string,
+          domains: [process.env.SITE_DOMAIN as string],
         });
       } catch (e) {
         console.error(e);

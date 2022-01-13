@@ -43,12 +43,14 @@ export async function handleUpdate({
 
   const changedUpdate = await webflow.patchItem(
     {
-      collectionId: process.env.UPDATE_COLLECTION_ID,
+      collectionId: process.env.UPDATE_COLLECTION_ID as string,
       itemId: entry.updateId as string,
       fields: {
-        name: title as string,
-        slug: slugify(title as string),
-        ...translateItemToUpdate(rest),
+        ...translateItemToUpdate({
+          entry,
+          collectionName,
+          interfaceSchema: webflowStrapiInterfaces,
+        }),
       },
     },
     { live: needsLive }

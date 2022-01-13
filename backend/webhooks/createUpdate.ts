@@ -1,5 +1,6 @@
 import { Update, UpdateProps } from ".";
 import { addIdToStrapi } from "./addIdToStrapi";
+import { translateItemToUpdate } from "./translateItemToUpdate";
 
 export async function createUpdate({
   entry,
@@ -9,17 +10,14 @@ export async function createUpdate({
   publishedAt,
   webflow,
   sourceId,
+  webflowStrapiInterfaces,
 }: UpdateProps) {
-  const updateEntry: Update = {
-    name: entry.title as string,
-    slug: "ayy",
-    "cover-image": entry["cover-image"] as string,
-    "update-text": entry["abstract"] as string,
-    summary: entry["summary"] as string,
-    url: entry["url"] as string,
-    source: sourceId,
-    //group: collectionId,
-  };
+  const updateEntry = translateItemToUpdate({
+    entry,
+    collectionName,
+    interfaceSchema: webflowStrapiInterfaces,
+  });
+
   try {
     const update = await webflow.createItem({
       collectionId: updateCollectionId,

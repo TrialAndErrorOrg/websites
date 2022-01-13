@@ -1,5 +1,5 @@
 import { InterfaceInterface } from "../src/types";
-import Webflow from "./js-webflow-api";
+import Webflow from "webflow-api";
 
 export interface Event {
   event: string;

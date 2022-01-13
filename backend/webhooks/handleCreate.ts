@@ -25,28 +25,39 @@ export async function handleCreate({
     updateId,
     ...rest
   } = entry;
+
+  if (!Object.keys(webflowStrapiInterfaces).includes(collectionName)) return;
+
   try {
-    const item = await webflow.createItem({
-      collectionId: collectionId,
-      fields: {
-        name: title,
-        slug: "exciting-post",
-        _archived: false,
-        _draft: true,
-        ...rest,
-      },
-    });
+    let webId: string = "";
+    if (
+      strapiTypesWhichShouldBecomeWeblowCollections.includes(collectionName)
+    ) {
+      const item = await webflow.createItem({
+        collectionId: collectionId,
+        fields: {
+          name: title,
+          slug: "exciting-post",
+          _archived: false,
+          _draft: true,
+          ...rest,
+        },
+      });
 
-    const { _id } = item;
-    const update = await addIdToStrapi({
-      collectionName,
-      id: id as unknown as string,
-      webflowId: _id as string,
-    });
+      const { _id } = item;
+      const update = await addIdToStrapi({
+        collectionName,
+        id: id as unknown as string,
+        webflowId: _id as string,
+      });
 
-    const {
-      data: { webflowId: webId },
-    } = update;
+      const {
+        data: { webflowId },
+      } = update;
+
+      webId = webflowId;
+    }
+
     await createUpdate({
       entry,
       collectionName,
@@ -55,6 +66,8 @@ export async function handleCreate({
       publishedAt: pubd,
       webflow,
       sourceId: webId,
+      webflowStrapiInterfaces,
+      strapiTypesWhichShouldBecomeWeblowCollections,
     });
   } catch (e) {
     console.error(e);

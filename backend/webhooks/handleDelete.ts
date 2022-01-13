@@ -12,7 +12,7 @@ export async function handleDelete({
   try {
     const removedItem = await webflow.removeItem({
       collectionId,
-      itemId: webflowId,
+      itemId: webflowId as string,
     });
     console.log(
       `Successfully removed ${collectionName} ${entry.title}: ${webflowId}`
@@ -25,8 +25,8 @@ export async function handleDelete({
   }
   try {
     const removedUpdate = await webflow.removeItem({
-      collectionId: process.env.UPDATE_COLLECTION_ID,
-      itemId: updateId,
+      collectionId: process.env.UPDATE_COLLECTION_ID as string,
+      itemId: updateId as string,
     });
 
     console.log(`Successfully removed update ${entry.title}: ${updateId}`);

@@ -1,3 +1,7 @@
+import AuthLogo from "./extensions/favicon.png";
+import MenuLogo from "./extensions/favicon.png";
+import favicon from "./extensions/favicon.ico";
+
 export default {
   config: {
     locales: [
@@ -52,6 +56,16 @@ export default {
         // success100: "#1f2428", // SUCCESS BOX BG
       },
     },
+    menu: {
+      logo: MenuLogo,
+    },
+    auth: {
+      logo: AuthLogo,
+    },
+    header: {
+      favicon: favicon,
+    },
+    notifications: { release: false },
   },
   bootstrap(app) {
     console.log(app);
