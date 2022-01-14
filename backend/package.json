@@ -25,7 +25,7 @@
   "name": "backend",
   "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "description": "Backend CMS for COTE",
   "scripts": {
     "develop": "run-p \"develop-strapi\" \"webhook\"",
     "start": "run-p \"start-strapi\" \"webhook\"",

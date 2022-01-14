@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "website_types",
+  "collectionName": "content_content_interfaces",
   "info": {
-    "singularName": "website-type",
-    "pluralName": "website-types",
-    "displayName": "Website type",
-    "description": ""
+    "singularName": "content-content-interface",
+    "pluralName": "content-content-interfaces",
+    "displayName": "Content-Content Interface",
+    "description": "Interface between Strapi and Webflow content for e.g. blog posts."
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +28,9 @@
     "map": {
       "type": "json",
       "required": true
+    },
+    "extraMaps": {
+      "type": "json"
     }
   }
 }

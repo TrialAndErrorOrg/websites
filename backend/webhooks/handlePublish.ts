@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import { HandlePublishProps } from ".";
-import { translateItemToUpdate } from "./translateItemToUpdate";
+import { translateStrapiToWebflow } from "./translateStrapiToWebflow";
+import tryCatch from "./utils/try-catch";
 
 export async function handlePublish({
   entry,
@@ -11,7 +12,8 @@ export async function handlePublish({
   collectionId,
   unpublish,
   webflowStrapiInterfaces,
-}: HandlePublishProps) {
+  strapiTypesWhichShouldBecomeWeblowCollections,
+}: HandlePublishProps): Promise<void> {
   if (!entry.webflowId) return;
   //console.log(collectionId);
   // webflow.domains({ siteId: siteId }).then((r) => console.log(r));
@@ -38,22 +40,32 @@ export async function handlePublish({
   const needsLive = isPublished && !unpublish;
   const needsSitePublished = !isPublished && !unpublish;
 
-  try {
-    const changedEntry = await webflow.updateItem(
-      {
-        collectionId: collectionId,
-        itemId: entry.webflowId as string,
-        fields: {
-          name: title as string,
-          slug: slugify(title as string),
-          _archived: false,
-          _draft: shouldBecomeDraft,
-          ...rest,
-        },
-      },
-      { live: needsLive }
-    );
+  const hasWebflowItem = !!webflowId;
+  const hasUpdate = !!webflowStrapiInterfaces[collectionName];
 
+  if (hasWebflowItem) {
+    const changedEntry = await tryCatch(
+      webflow.updateItem(
+        {
+          collectionId: collectionId,
+          itemId: entry.webflowId as string,
+          fields: {
+            _archived: false,
+            _draft: shouldBecomeDraft,
+            ...translateStrapiToWebflow({
+              entry,
+              interfaceSchema:
+                strapiTypesWhichShouldBecomeWeblowCollections[collectionName],
+            }),
+          },
+        },
+        { live: needsLive }
+      )
+    );
+    console.log(changedEntry);
+  }
+
+  if (hasUpdate) {
     const changedUpdate = await webflow.updateItem(
       {
         collectionId: process.env.UPDATE_COLLECTION_ID as string,
@@ -63,33 +75,26 @@ export async function handlePublish({
           // slug: slugify(title as string),
           _archived: false,
           _draft: shouldBecomeDraft,
-          ...translateItemToUpdate({
+          ...translateStrapiToWebflow({
             entry,
-            collectionName,
-            interfaceSchema: webflowStrapiInterfaces,
+            interfaceSchema: webflowStrapiInterfaces[collectionName],
           }),
         },
       },
       { live: needsLive }
     );
-
-    console.log(changedEntry);
     console.log(changedUpdate);
-
-    if (needsSitePublished) {
-      try {
-        await webflow.publishSite({
-          siteId: process.env.SITE_ID as string,
-          domains: [process.env.SITE_DOMAIN as string],
-        });
-      } catch (e) {
-        console.error(e);
-      }
-      return;
-    }
-
-    return changedEntry;
-  } catch (e: any) {
-    console.error(e);
   }
+
+  if (needsSitePublished) {
+    await tryCatch(
+      webflow.publishSite({
+        siteId: process.env.SITE_ID as string,
+        domains: [process.env.SITE_DOMAIN as string],
+      })
+    );
+    return;
+  }
+
+  return;
 }

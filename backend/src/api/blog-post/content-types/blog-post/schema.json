@@ -4,7 +4,8 @@
   "info": {
     "singularName": "blog-post",
     "pluralName": "blog-posts",
-    "displayName": "Blog Post"
+    "displayName": "Blog Post",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,6 +15,41 @@
     "title": {
       "type": "string",
       "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "post": {
+      "type": "richtext",
+      "required": true,
+      "minLength": 200
+    },
+    "excerpt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "blog_authors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog-author.blog-author",
+      "inversedBy": "blog_posts"
+    },
+    "webflowId": {
+      "type": "string"
+    },
+    "updateId": {
+      "type": "string"
     }
   }
 }

@@ -1,5 +1,6 @@
-import { InterfaceInterface } from "../src/types";
+import { ContentUpdateInterfaceInterface } from "../src/types";
 import Webflow from "webflow-api";
+import { ContentContentInterfaceInterface } from "../src/types/content-content-interface-interface";
 
 export interface Event {
   event: string;
@@ -21,8 +22,8 @@ export interface HandleProps {
   publishedAt: string | undefined;
   webflow: Webflow;
   collectionId: string;
-  webflowStrapiInterfaces: InterfaceInterface;
-  strapiTypesWhichShouldBecomeWeblowCollections: string[];
+  webflowStrapiInterfaces: ContentUpdateInterfaceInterface;
+  strapiTypesWhichShouldBecomeWeblowCollections: ContentContentInterfaceInterface;
 }
 export interface UpdateProps extends HandleProps {
   sourceId: string;
@@ -32,11 +33,15 @@ export interface HandlePublishProps extends HandleProps {
   unpublish?: boolean;
 }
 
-export interface Update {
-  type: string;
+export interface WebflowItem {
   name: string;
   slug: string;
-  image: string;
+  [key: string]: any;
+}
+
+export interface Update extends WebflowItem {
+  // type: string;
+  image?: string;
   body: string;
   url: string;
 }

@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- *  feed-type controller
+ *  tag controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::feed-type.feed-type');
+module.exports = createCoreController('api::tag.tag');

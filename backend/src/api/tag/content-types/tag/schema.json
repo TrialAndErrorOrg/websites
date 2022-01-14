@@ -1,19 +1,23 @@
 {
   "kind": "collectionType",
-  "collectionName": "feed_types",
+  "collectionName": "tags",
   "info": {
-    "singularName": "feed-type",
-    "pluralName": "feed-types",
-    "displayName": "Feed Type"
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Tag",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "type": {
+    "title": {
       "type": "string",
       "required": true
+    },
+    "webflowId": {
+      "type": "string"
     }
   }
 }

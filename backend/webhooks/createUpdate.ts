@@ -1,6 +1,6 @@
 import { Update, UpdateProps } from ".";
 import { addIdToStrapi } from "./addIdToStrapi";
-import { translateItemToUpdate } from "./translateItemToUpdate";
+import { translateStrapiToWebflow } from "./translateStrapiToWebflow";
 
 export async function createUpdate({
   entry,
@@ -12,9 +12,8 @@ export async function createUpdate({
   sourceId,
   webflowStrapiInterfaces,
 }: UpdateProps) {
-  const updateEntry = translateItemToUpdate({
+  const updateEntry = translateStrapiToWebflow({
     entry,
-    collectionName,
     interfaceSchema: webflowStrapiInterfaces,
   });
 
@@ -31,6 +30,9 @@ export async function createUpdate({
 
     const { _id } = update;
 
+    // it's useful to keep track of which item belongs to which
+    // webflow item, so we can update it later
+    // FIXME: this triggers another update cycle, not ideal
     const strapi = await addIdToStrapi({
       collectionName: collectionName,
       id: entry.id as unknown as string,

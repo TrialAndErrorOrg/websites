@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * feed-type service.
+ * blog-author service.
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::feed-type.feed-type');
+module.exports = createCoreService('api::blog-author.blog-author');

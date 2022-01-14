@@ -1,6 +1,7 @@
 import { HandleProps } from ".";
 import { addIdToStrapi } from "./addIdToStrapi";
 import { createUpdate } from "./createUpdate";
+import { translateStrapiToWebflow } from "./translateStrapiToWebflow";
 
 export async function handleCreate({
   entry,
@@ -26,22 +27,21 @@ export async function handleCreate({
     ...rest
   } = entry;
 
-  console.log(webflowStrapiInterfaces);
-  if (!Object.keys(webflowStrapiInterfaces).includes(collectionName)) return;
-
   try {
-    let webId: string = "";
-    if (
-      strapiTypesWhichShouldBecomeWeblowCollections.includes(collectionName)
-    ) {
+    let webId = "";
+    if (strapiTypesWhichShouldBecomeWeblowCollections[collectionName]) {
+      const itemEntry = translateStrapiToWebflow({
+        entry,
+        interfaceSchema:
+          strapiTypesWhichShouldBecomeWeblowCollections[collectionName],
+      });
+
       const item = await webflow.createItem({
         collectionId: collectionId,
         fields: {
-          name: title,
-          slug: "exciting-post",
           _archived: false,
           _draft: true,
-          ...rest,
+          ...itemEntry,
         },
       });
 
@@ -58,6 +58,8 @@ export async function handleCreate({
 
       webId = webflowId;
     }
+
+    if (!webflowStrapiInterfaces[collectionName]) return;
 
     await createUpdate({
       entry,

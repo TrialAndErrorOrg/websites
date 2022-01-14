@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "blog_authors",
+  "info": {
+    "singularName": "blog-author",
+    "pluralName": "blog-authors",
+    "displayName": "Blog Author",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bio": {
+      "type": "richtext",
+      "maxLength": 300,
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "blog_posts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog-post.blog-post",
+      "mappedBy": "blog_authors"
+    },
+    "webflowId": {
+      "type": "string"
+    }
+  }
+}

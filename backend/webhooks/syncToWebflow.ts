@@ -14,11 +14,13 @@ import { handlePublish } from "./handlePublish";
 import path from "path";
 import tryCatch from "./utils/try-catch";
 import {
-  IContentUpdateInterface,
-  InterfaceInterface,
-  IWebsiteType,
+  ContentUpdateInterface,
+  ContentUpdateInterfaceInterface,
+  ContentContentInterface,
+  ContentContentInterfaceInterface,
 } from "../src/types";
 import { HandleProps, StrapiGETResponse } from ".";
+import { handleUpdate } from "./handleUpdate";
 
 dotenv.config({ path: path.resolve(process.cwd(), "./webhooks/.env") });
 
@@ -32,7 +34,6 @@ const updatableEntries = [
 
 const siteId = process.env.SITE_ID as string;
 const token = process.env.WEBFLOW_TOKEN as string;
-console.log(token);
 const updateCollectionId = process.env.UPDATE_COLLECTION_ID as string;
 const STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME = process.env
   .STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME as string;
@@ -47,7 +48,6 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
   const [schemasResponse, schemaError] = await tryCatch(
     webflow.collections({ siteId })
   );
-  console.log(schemasResponse);
 
   const webflowSchemas: { [key: string]: any } = schemasResponse.reduce(
     (acc: { [key: string]: any }, curr: any) => {
@@ -56,65 +56,69 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
     },
     {}
   );
+  console.log(webflowSchemas);
+  const [auths, er] = await tryCatch(
+    webflow.collection({ collectionId: "61b9ba103e800ee270a3bd15" })
+  );
+  console.log(auths);
 
   //fixme
   // very bad way of making sure that the api does not start before the server does
-  await timer(10000);
+  await timer(5000);
 
-  const [webflowStrapiInterfacesRaw, interfaceError]: [
-    StrapiGETResponse<IContentUpdateInterface>,
+  const [contentUpdateInterfaceInterfacesRes, CUIIError]: [any, any] =
+    await tryCatch(
+      fetch(
+        `http://localhost:1337/api/${STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+    );
+
+  const contentUpdateInterfaceInterfacesRaw: StrapiGETResponse<ContentUpdateInterface> =
+    await contentUpdateInterfaceInterfacesRes.json();
+
+  const [strapiTypesWhichShouldBecomeWeblowCollectionsRes, collectionError]: [
+    any,
     any
   ] = await tryCatch(
-    (
-      await tryCatch(
-        fetch(
-          `http://localhost:1337/api/${STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-      )
-    )[0]?.json()
+    fetch(`http://localhost:1337/api/${STRAPI_WEBFLOW_TYPES_COLLECTION_NAME}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    })
   );
 
-  const [strapiTypesWhichShouldBecomeWeblowCollectionsRaw, collectionError]: [
-    StrapiGETResponse<IWebsiteType>,
-    any
-  ] = await tryCatch(
-    (
-      await tryCatch(
-        fetch(
-          `http://localhost:1337/api/${STRAPI_WEBFLOW_TYPES_COLLECTION_NAME}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-      )
-    )[0]?.json()
-  );
+  const contentContentInterfaceInterfacesRaw: StrapiGETResponse<ContentContentInterface> =
+    await strapiTypesWhichShouldBecomeWeblowCollectionsRes.json();
 
-  const webflowStrapiInterfaces =
-    webflowStrapiInterfacesRaw.data.reduce<InterfaceInterface>((acc, curr) => {
-      const { type, ...rest } = curr.attributes;
-      acc[type] = rest;
-      return acc;
-    }, {});
-
-  const strapiTypesWhichShouldBecomeWeblowCollections =
-    strapiTypesWhichShouldBecomeWeblowCollectionsRaw.data.reduce<string[]>(
+  const contentUpdateInterfaceInterfaces =
+    contentUpdateInterfaceInterfacesRaw.data.reduce<ContentUpdateInterfaceInterface>(
       (acc, curr) => {
-        acc.push(curr.attributes.type);
+        const { type, ...rest } = curr.attributes;
+        acc[type] = rest;
         return acc;
       },
-      []
+      {}
     );
-  console.log(webflowSchemas);
+
+  const contentContentInterfaceInterfaces =
+    contentContentInterfaceInterfacesRaw.data.reduce<ContentContentInterfaceInterface>( //yes i'm doing fine everything's fine
+      (acc, curr) => {
+        const { type, map, ...rest } = curr.attributes;
+        acc[type] = { ...map, ...rest };
+        return acc;
+      },
+      {}
+    );
+
+  console.log(contentUpdateInterfaceInterfaces);
+  console.log(contentContentInterfaceInterfaces);
 
   http
     .createServer((req: any, res: any) => {
@@ -125,16 +129,24 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
         // const collectionIds = JSON.parse(req.headers.cookie);
         // const collectionId = collectionIds[collectionName];
-        const collectionId = "61db0af3af943c4259747c11";
 
-        if (!collectionId) {
-          console.error("Whoopsie!");
-          res.status(404).send({
-            error:
-              "There does not seem to be a collection with that name. Update the cookie with the correct list of ids to remedy this.",
-          });
+        if (
+          !contentContentInterfaceInterfaces[collectionName] &&
+          !contentUpdateInterfaceInterfaces[collectionName]
+        )
           return;
-        }
+
+        const collectionId =
+          contentContentInterfaceInterfaces[collectionName].webflowCollectionId;
+
+        // if (!collectionId) {
+        //   console.error("Whoopsie!");
+        //   res.status(404).send({
+        //     error:
+        //       "There does not seem to be a collection with that name. Update the cookie with the correct list of ids to remedy this.",
+        //   });
+        //   return;
+        // }
         const { publishedAt } = entry;
 
         const hookHandleData: HandleProps = {
@@ -144,22 +156,16 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
           publishedAt,
           webflow,
           updateCollectionId,
-          webflowStrapiInterfaces,
-          strapiTypesWhichShouldBecomeWeblowCollections,
+          webflowStrapiInterfaces: contentUpdateInterfaceInterfaces,
+          strapiTypesWhichShouldBecomeWeblowCollections:
+            contentContentInterfaceInterfaces,
         };
 
         switch (req.headers["x-strapi-event"]) {
           case "entry.update": {
             console.log("update!");
 
-            // handleUpdate({
-            //   entry,
-            //   collectionName,
-            //   collectionId,
-            //   publishedAt,
-            //   webflow,
-            //   updateCollectionId,
-            // });
+            handleUpdate(hookHandleData);
             return;
           }
 

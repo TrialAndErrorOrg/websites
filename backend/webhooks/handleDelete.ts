@@ -1,4 +1,5 @@
 import { HandleProps } from ".";
+import tryCatch from "./utils/try-catch";
 
 export async function handleDelete({
   entry,
@@ -7,31 +8,32 @@ export async function handleDelete({
   updateCollectionId,
   publishedAt,
   webflow,
+  webflowStrapiInterfaces,
+  strapiTypesWhichShouldBecomeWeblowCollections,
 }: HandleProps) {
   const { webflowId, updateId } = entry;
-  try {
-    const removedItem = await webflow.removeItem({
-      collectionId,
-      itemId: webflowId as string,
-    });
-    console.log(
-      `Successfully removed ${collectionName} ${entry.title}: ${webflowId}`
-    );
-  } catch (e) {
-    console.log(
-      `Did not manage to remove ${collectionName} ${entry.title}: ${webflowId}`
-    );
-    console.error(e);
-  }
-  try {
-    const removedUpdate = await webflow.removeItem({
-      collectionId: process.env.UPDATE_COLLECTION_ID as string,
-      itemId: updateId as string,
-    });
 
-    console.log(`Successfully removed update ${entry.title}: ${updateId}`);
-  } catch (e) {
-    console.log(`Did not manage to remove update ${entry.title}: ${updateId}`);
-    console.error(e);
+  if (webflowId) {
+    const removedItem = await tryCatch(
+      webflow.removeItem({
+        collectionId,
+        itemId: webflowId as string,
+      }),
+      (e) =>
+        console.log(
+          `Successfully removed ${collectionName} ${entry.title}: ${webflowId}`
+        )
+    );
+  }
+
+  if (updateId) {
+    const removedUpdate = await tryCatch(
+      webflow.removeItem({
+        collectionId: process.env.UPDATE_COLLECTION_ID as string,
+        itemId: updateId as string,
+      }),
+      (e) =>
+        console.log(`Successfully removed update ${entry.title}: ${updateId}`)
+    );
   }
 }
