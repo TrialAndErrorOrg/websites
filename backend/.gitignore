@@ -114,6 +114,5 @@ build
 .strapi-updater.json
 cert
 
-patches
 patches_bak
 patches_work
