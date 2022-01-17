@@ -33,6 +33,11 @@ module.exports = [
   "strapi::logger",
   "strapi::query",
   "strapi::body",
-  "strapi::favicon",
+  {
+    name: "strapi::favicon",
+    config: {
+      path: "../favicon.ico",
+    },
+  },
   "strapi::public",
 ];

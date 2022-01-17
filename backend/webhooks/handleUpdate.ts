@@ -33,7 +33,7 @@ export async function handleUpdate({
 
   console.log(hasWebflowItem);
   if (hasWebflowItem) {
-    const changedEntry = await tryCatch(
+    const [changedEntry, entryError] = await tryCatch(
       webflow.patchItem(
         {
           collectionId: collectionId,

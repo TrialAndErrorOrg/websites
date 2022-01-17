@@ -1,3 +1,82 @@
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+index c09accf..032c657 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+@@ -43,7 +43,45 @@ const LeftMenu = () => {
+   const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
+   const intlSingleTypeLinks = toIntl(singleTypeLinks);
+ 
++  const categories= {
++  Meta: ["Content-Content Interface", "Content-Update Interface"],
++  Blog: ["Blog Author", "Blog Post", "Tag"],
++  JOTE : ["JOTE Article", "JOTE Author", "JOTE Article Category", "Editor"],
++  COTE : ["TeamMember", "Position"]
++  }
++
++  const links = intlCollectionTypeLinks.reduce((acc,curr)=>{
++   const entry= Object.entries(categories).find(([key,arr])=>arr.includes(curr.title))
++   if(entry){
++     const [category, val] = entry
++     acc[category]=[...(acc[category]||[]), curr]
++     return acc
++   }
++   acc.Misc= [...(acc.Misc||[]), curr]
++
++   return acc
++
++  },{})
++
++  const menus = Object.entries(links).map(([category,link])=>({
++    id: `${category}Types`,
++      title: {
++        id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
++        defaultMessage: `${category}`,
++        },
++        searchable:true,
++      links: sortBy(matchByTitle(link, search), object =>
++        object.title.toLowerCase()
++      ),
++      }
++ ))
++
++
++
++
++
+   const menu = [
++    ...menus,
+     {
+       id: 'collectionTypes',
+       title: {
+@@ -55,6 +93,17 @@ const LeftMenu = () => {
+         object.title.toLowerCase()
+       ),
+     },
++    {
++      id: 'blogTypes',
++      title: {
++        id: getTrad('components.LeftMenu.blog-types'),
++        defaultMessage: 'Blog',
++      },
++      searchable: true,
++      links: sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++        object.title.toLowerCase()
++      ),
++    },
+     {
+       id: 'singleTypes',
+       title: {
+@@ -81,6 +130,10 @@ const LeftMenu = () => {
+     defaultMessage: 'Content',
+   });
+ 
++console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++        object.title.toLowerCase()
++      ))
++
+   return (
+     <SubNav ariaLabel={label}>
+       <SubNavHeader
 diff --git a/node_modules/@strapi/admin/admin/src/index.js b/node_modules/@strapi/admin/admin/src/index.js
 index 2b19ff7..b62c509 100644
 --- a/node_modules/@strapi/admin/admin/src/index.js

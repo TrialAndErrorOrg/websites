@@ -35,6 +35,26 @@ export function translateStrapiToWebflow({
       // you can even get a lil more custom with it
       const extraMap = extraMaps?.[webflowItemKey];
 
+      const fieldValue = entry[strapiItemKey];
+      if (Array.isArray(fieldValue)) {
+        // The value is a reference to another field.
+        // Webflow stores these guys as arrays of ids,
+        // so we just need to get those from the object,
+        // as strapi returns these as the object we're referencing
+
+        acc[webflowItemKey] = fieldValue.reduce((acc, curr) => {
+          if (!curr.webflowId) return;
+          return [...acc, curr.webflowId];
+        }, []);
+        return acc;
+      }
+
+      // need to check whether it's an object/single ref
+      // since it's not an array, we just need to check if it's an object and not null
+      if (typeof fieldValue === "object" && fieldValue !== null) {
+        acc[webflowItemKey] = fieldValue.webflowId;
+      }
+
       if (!extraMap) {
         acc[webflowItemKey] = entry[strapiItemKey] as unknown as string;
         return acc;
@@ -53,7 +73,10 @@ export function translateStrapiToWebflow({
 
   const item = {
     ...itemWithoutSlug,
-    slug: slugify(itemWithoutSlug.name),
+    slug: slugify(itemWithoutSlug.name, {
+      remove: /[*+~.()'"!:@]/g,
+      lower: true,
+    }),
   };
   console.log(itemWithoutSlug.name);
   console.log(item);

@@ -1,7 +1,7 @@
 var secret = "your_secret_key";
 var repo = "~/path-to-your-repo/";
 
-import http from "http";
+import http, { IncomingMessage } from "http";
 import Webflow from "webflow-api";
 import fetch from "node-fetch";
 import { webflowToStrapiId } from "./strapi-webflow-id-conv";
@@ -21,6 +21,9 @@ import {
 } from "../src/types";
 import { HandleProps, StrapiGETResponse } from ".";
 import { handleUpdate } from "./handleUpdate";
+import { getContentContentInterfaces } from "./getContentContentInterfaces";
+import { getContentUpdateInterfaces } from "./getUpdateUpdateInterfaces";
+import { ServerResponse } from "http";
 
 dotenv.config({ path: path.resolve(process.cwd(), "./webhooks/.env") });
 
@@ -58,146 +61,135 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
   );
   console.log(webflowSchemas);
   const [auths, er] = await tryCatch(
-    webflow.collection({ collectionId: "61b9ba103e800ee270a3bd15" })
+    webflow.collection({ collectionId: "61b9ba103e800e11eba3bd13" })
   );
   console.log(auths);
 
-  //fixme
+  // FIXME:
   // very bad way of making sure that the api does not start before the server does
   await timer(5000);
 
-  const [contentUpdateInterfaceInterfacesRes, CUIIError]: [any, any] =
-    await tryCatch(
-      fetch(
-        `http://localhost:1337/api/${STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-    );
-
-  const contentUpdateInterfaceInterfacesRaw: StrapiGETResponse<ContentUpdateInterface> =
-    await contentUpdateInterfaceInterfacesRes.json();
-
-  const [strapiTypesWhichShouldBecomeWeblowCollectionsRes, collectionError]: [
-    any,
-    any
-  ] = await tryCatch(
-    fetch(`http://localhost:1337/api/${STRAPI_WEBFLOW_TYPES_COLLECTION_NAME}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    })
+  let [contentContentInterfaceInterfaces, CCIIError] = await tryCatch(
+    getContentContentInterfaces()
+  );
+  let [contentUpdateInterfaceInterfaces, CUIIError] = await tryCatch(
+    getContentUpdateInterfaces()
   );
 
-  const contentContentInterfaceInterfacesRaw: StrapiGETResponse<ContentContentInterface> =
-    await strapiTypesWhichShouldBecomeWeblowCollectionsRes.json();
-
-  const contentUpdateInterfaceInterfaces =
-    contentUpdateInterfaceInterfacesRaw.data.reduce<ContentUpdateInterfaceInterface>(
-      (acc, curr) => {
-        const { type, ...rest } = curr.attributes;
-        acc[type] = rest;
-        return acc;
-      },
-      {}
-    );
-
-  const contentContentInterfaceInterfaces =
-    contentContentInterfaceInterfacesRaw.data.reduce<ContentContentInterfaceInterface>( //yes i'm doing fine everything's fine
-      (acc, curr) => {
-        const { type, map, ...rest } = curr.attributes;
-        acc[type] = { ...map, ...rest };
-        return acc;
-      },
-      {}
-    );
-
-  console.log(contentUpdateInterfaceInterfaces);
-  console.log(contentContentInterfaceInterfaces);
-
   http
-    .createServer((req: any, res: any) => {
-      req.on("data", (chunk: any) => {
-        const data = JSON.parse(chunk.toString());
-        const { model: collectionName, entry } = data;
-        console.log(data);
-
-        // const collectionIds = JSON.parse(req.headers.cookie);
-        // const collectionId = collectionIds[collectionName];
-
-        if (
-          !contentContentInterfaceInterfaces[collectionName] &&
-          !contentUpdateInterfaceInterfaces[collectionName]
-        )
-          return;
-
-        const collectionId =
-          contentContentInterfaceInterfaces[collectionName].webflowCollectionId;
-
-        // if (!collectionId) {
-        //   console.error("Whoopsie!");
-        //   res.status(404).send({
-        //     error:
-        //       "There does not seem to be a collection with that name. Update the cookie with the correct list of ids to remedy this.",
-        //   });
-        //   return;
-        // }
-        const { publishedAt } = entry;
-
-        const hookHandleData: HandleProps = {
-          entry,
-          collectionId,
-          collectionName,
-          publishedAt,
-          webflow,
-          updateCollectionId,
-          webflowStrapiInterfaces: contentUpdateInterfaceInterfaces,
-          strapiTypesWhichShouldBecomeWeblowCollections:
-            contentContentInterfaceInterfaces,
-        };
-
-        switch (req.headers["x-strapi-event"]) {
-          case "entry.update": {
-            console.log("update!");
-
-            handleUpdate(hookHandleData);
+    .createServer((req: IncomingMessage, res: ServerResponse) => {
+      let body: Buffer[] = [];
+      req
+        .on("data", (chunk: Buffer) => {
+          body.push(chunk);
+        })
+        .on("end", async () => {
+          const [data, error] = await tryCatch(
+            JSON.parse(Buffer.concat(body).toString())
+          );
+          if (error) {
+            res.statusCode = 500;
+            res.statusMessage = "Could not parse data from Webhook";
+            res.write({ error: error });
             return;
           }
 
-          case "entry.create": {
-            console.log("create!");
-            handleCreate(hookHandleData);
+          console.log(data);
+
+          const { model: collectionName, entry } = data;
+
+          if (collectionName === "content-content-interface") {
+            [contentContentInterfaceInterfaces, CCIIError] = await tryCatch(
+              getContentContentInterfaces()
+            );
+            res.statusCode = 200;
+            return;
+          } else if (collectionName === "content-update-interface") {
+            [contentUpdateInterfaceInterfaces, CCIIError] = await tryCatch(
+              getContentUpdateInterfaces()
+            );
+            res.statusCode = 200;
             return;
           }
 
-          case "entry.delete": {
-            console.log("delete!");
-            handleDelete(hookHandleData);
+          console.log(data);
+
+          // const collectionIds = JSON.parse(req.headers.cookie);
+          // const collectionId = collectionIds[collectionName];
+
+          if (
+            !contentContentInterfaceInterfaces[collectionName] &&
+            !contentUpdateInterfaceInterfaces[collectionName]
+          ) {
+            res.statusCode = 200;
+            res.statusMessage = "No update needed.";
             return;
           }
 
-          case "entry.publish": {
-            console.log("publish!");
-            handlePublish(hookHandleData);
-            return;
-          }
+          const collectionId =
+            contentContentInterfaceInterfaces?.[collectionName]
+              ?.webflowCollectionId;
 
-          case "entry.unpublish": {
-            console.log("unpublish!");
-            handlePublish({ ...hookHandleData, unpublish: true });
-            return;
-          }
+          // if (!collectionId) {
+          //   console.error("Whoopsie!");
+          //   res.status(404).send({
+          //     error:
+          //       "There does not seem to be a collection with that name. Update the cookie with the correct list of ids to remedy this.",
+          //   });
+          //   return;
+          // }
+          const { publishedAt } = entry;
 
-          default:
-            console.log("bummer");
-            handleDefault(hookHandleData);
-        }
-      });
+          const hookHandleData: HandleProps = {
+            entry,
+            collectionId,
+            collectionName,
+            publishedAt,
+            webflow,
+            updateCollectionId,
+            webflowStrapiInterfaces: contentUpdateInterfaceInterfaces,
+            strapiTypesWhichShouldBecomeWeblowCollections:
+              contentContentInterfaceInterfaces,
+          };
+
+          switch (req.headers["x-strapi-event"]) {
+            case "entry.update": {
+              console.log("update!");
+
+              if (!publishedAt) return;
+              handleUpdate(hookHandleData);
+              return;
+            }
+
+            case "entry.create": {
+              console.log("create!");
+              handleCreate(hookHandleData);
+              return;
+            }
+
+            case "entry.delete": {
+              console.log("delete!");
+              handleDelete(hookHandleData);
+              return;
+            }
+
+            case "entry.publish": {
+              console.log("publish!");
+              handlePublish(hookHandleData);
+              return;
+            }
+
+            case "entry.unpublish": {
+              console.log("unpublish!");
+              handlePublish({ ...hookHandleData, unpublish: true });
+              return;
+            }
+
+            default:
+              console.log("bummer");
+              handleDefault(hookHandleData);
+          }
+        });
 
       res.end();
     })

@@ -44,6 +44,12 @@
     },
     "webflowId": {
       "type": "string"
+    },
+    "team_member": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::team-member.team-member",
+      "inversedBy": "blog_author"
     }
   }
 }

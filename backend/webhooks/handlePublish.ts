@@ -44,7 +44,7 @@ export async function handlePublish({
   const hasUpdate = !!webflowStrapiInterfaces[collectionName];
 
   if (hasWebflowItem) {
-    const changedEntry = await tryCatch(
+    const [changedEntry, entryError] = await tryCatch(
       webflow.updateItem(
         {
           collectionId: collectionId,
@@ -66,22 +66,24 @@ export async function handlePublish({
   }
 
   if (hasUpdate) {
-    const changedUpdate = await webflow.updateItem(
-      {
-        collectionId: process.env.UPDATE_COLLECTION_ID as string,
-        itemId: entry.updateId as string,
-        fields: {
-          // name: title as string,
-          // slug: slugify(title as string),
-          _archived: false,
-          _draft: shouldBecomeDraft,
-          ...translateStrapiToWebflow({
-            entry,
-            interfaceSchema: webflowStrapiInterfaces[collectionName],
-          }),
+    const [changedUpdate, error] = await tryCatch(
+      webflow.updateItem(
+        {
+          collectionId: process.env.UPDATE_COLLECTION_ID as string,
+          itemId: entry.updateId as string,
+          fields: {
+            // name: title as string,
+            // slug: slugify(title as string),
+            _archived: false,
+            _draft: shouldBecomeDraft,
+            ...translateStrapiToWebflow({
+              entry,
+              interfaceSchema: webflowStrapiInterfaces[collectionName],
+            }),
+          },
         },
-      },
-      { live: needsLive }
+        { live: needsLive }
+      )
     );
     console.log(changedUpdate);
   }

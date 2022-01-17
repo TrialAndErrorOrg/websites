@@ -31,6 +31,11 @@
     },
     "extraMaps": {
       "type": "json"
+    },
+    "references": {
+      "type": "string",
+      "regex": "[^ ]*",
+      "required": false
     }
   }
 }

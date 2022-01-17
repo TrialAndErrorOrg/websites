@@ -13,7 +13,7 @@ export interface Entry {
   publishedAt: string | null;
   updatedAt: string;
   createdAt: string;
-  [key: string]: string | number | null | undefined;
+  [key: string]: string | number | null | { [key: string]: any } | undefined;
 }
 export interface HandleProps {
   entry: Entry;
