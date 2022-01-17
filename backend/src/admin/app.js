@@ -58,9 +58,9 @@ export default {
         primary100: "#2ea6ff14", // MENU ACTIVE BG
         // primary200: "#1f2428", // PLUS SIGN BG
         // primary500: "#6584ac", // PRIMARY BUTTON HOVER
+        primary500: "#FEAF0C", // PRIMARY BUTTON HOVER
         primary600: "#002642", // PRIMARY BUTTON COLOR
         primary700: "#002642", // PRIMARY BUTTON COLOR
-        //primary700: "#FEAF0C", // HIGHLIGHT COLOR
         // secondary100: "#1f2428", // INFO BOX COLOR
 
         // success100: "#1f2428", // SUCCESS BOX BG

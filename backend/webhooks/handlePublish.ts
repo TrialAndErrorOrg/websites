@@ -43,6 +43,12 @@ export async function handlePublish({
   const hasWebflowItem = !!webflowId;
   const hasUpdate = !!webflowStrapiInterfaces[collectionName];
 
+  const webflowEntry = translateStrapiToWebflow({
+    entry,
+    interfaceSchema:
+      strapiTypesWhichShouldBecomeWeblowCollections[collectionName],
+  });
+
   if (hasWebflowItem) {
     const [changedEntry, entryError] = await tryCatch(
       webflow.updateItem(
@@ -52,15 +58,43 @@ export async function handlePublish({
           fields: {
             _archived: false,
             _draft: shouldBecomeDraft,
-            ...translateStrapiToWebflow({
-              entry,
-              interfaceSchema:
-                strapiTypesWhichShouldBecomeWeblowCollections[collectionName],
-            }),
+            ...webflowEntry,
           },
         },
         { live: needsLive }
-      )
+      ),
+      async (e: any) => {
+        console.log(e);
+        console.log(typeof e);
+        console.log(e.code);
+        if (
+          e.code === 400 &&
+          e.msg === "Validation Failure" &&
+          e.problems?.[0].contains("Field 'slug'")
+        ) {
+          console.log("Ay");
+          await tryCatch(
+            webflow.updateItem(
+              {
+                itemId: entry.webflowId as string,
+                collectionId: updateCollectionId,
+                fields: {
+                  //_id: `${collectionName}-${entry.id}`,
+                  _archived: false,
+                  _draft: shouldBecomeDraft,
+                  ...{
+                    ...webflowEntry,
+                    slug: `${webflowEntry.slug}-${Math.floor(
+                      Math.random() * 3000
+                    )}`,
+                  },
+                },
+              },
+              { live: needsLive }
+            )
+          );
+        }
+      }
     );
     console.log(changedEntry);
   }

@@ -61,9 +61,13 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
   );
   console.log(webflowSchemas);
   const [auths, er] = await tryCatch(
-    webflow.collection({ collectionId: "61b9ba103e800e11eba3bd13" })
+    webflow.collection({ collectionId: "61b9ba103e800ee270a3bd15" })
   );
   console.log(auths);
+  const [post, ear] = await tryCatch(
+    webflow.collection({ collectionId: "61b9ba103e800e11eba3bd13" })
+  );
+  console.log(post);
 
   // FIXME:
   // very bad way of making sure that the api does not start before the server does
@@ -98,6 +102,7 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
           const { model: collectionName, entry } = data;
 
+          // TODO: Do this not dumbly
           if (collectionName === "content-content-interface") {
             [contentContentInterfaceInterfaces, CCIIError] = await tryCatch(
               getContentContentInterfaces()
@@ -138,7 +143,7 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
           //   });
           //   return;
           // }
-          const { publishedAt } = entry;
+          const { publishedAt, updatedAt, createdAt } = entry;
 
           const hookHandleData: HandleProps = {
             entry,
@@ -156,38 +161,57 @@ const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
             case "entry.update": {
               console.log("update!");
 
-              if (!publishedAt) return;
-              handleUpdate(hookHandleData);
+              if (!publishedAt) {
+                console.log(
+                  "did not do any updating because the item is not published"
+                );
+                return;
+              }
+              const updatedAtValue = new Date(publishedAt).valueOf();
+              if (
+                Math.abs(updatedAtValue - new Date(updatedAt).valueOf()) < 500
+              ) {
+                console.log("double dipping publihs update");
+                return;
+              }
+
+              if (
+                Math.abs(updatedAtValue - new Date(createdAt).valueOf()) < 500
+              ) {
+                console.log("Double dipping creation update.");
+                return;
+              }
+              await handleUpdate(hookHandleData);
               return;
             }
 
             case "entry.create": {
               console.log("create!");
-              handleCreate(hookHandleData);
+              await handleCreate(hookHandleData);
               return;
             }
 
             case "entry.delete": {
               console.log("delete!");
-              handleDelete(hookHandleData);
+              await handleDelete(hookHandleData);
               return;
             }
 
             case "entry.publish": {
               console.log("publish!");
-              handlePublish(hookHandleData);
+              await handlePublish(hookHandleData);
               return;
             }
 
             case "entry.unpublish": {
               console.log("unpublish!");
-              handlePublish({ ...hookHandleData, unpublish: true });
+              await handlePublish({ ...hookHandleData, unpublish: true });
               return;
             }
 
             default:
               console.log("bummer");
-              handleDefault(hookHandleData);
+              await handleDefault(hookHandleData);
           }
         });
 

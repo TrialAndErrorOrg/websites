@@ -50,6 +50,9 @@
     },
     "updateId": {
       "type": "string"
+    },
+    "publishDate": {
+      "type": "datetime"
     }
   }
 }

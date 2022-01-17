@@ -9,6 +9,7 @@
     "@types/node-fetch": "2",
     "@yermangderrff/strapi-to-typescript": "^2.0.15",
     "dotenv": "^11.0.0",
+    "forever": "^4.0.2",
     "jsonwebtoken": "^8.5.1",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",

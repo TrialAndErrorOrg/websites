@@ -9,7 +9,7 @@ export async function getContentUpdateInterfaces() {
   const [contentUpdateInterfaceInterfacesRes, CUIIError]: [any, any] =
     await tryCatch(
       fetch(
-        `http://localhost:1337/api/${process.env.STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}`,
+        `http://localhost:1337/api/${process.env.STRAPI_WEBFLOW_INTERFACE_COLLECTION_NAME}?populate=%2A`,
         {
           headers: {
             Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
@@ -21,6 +21,7 @@ export async function getContentUpdateInterfaces() {
 
   const contentUpdateInterfaceInterfacesRaw: StrapiGETResponse<ContentUpdateInterface> =
     await contentUpdateInterfaceInterfacesRes.json();
+  console.dir(contentUpdateInterfaceInterfacesRaw, { depth: null });
 
   const contentUpdateInterfaceInterfaces =
     contentUpdateInterfaceInterfacesRaw.data.reduce<ContentUpdateInterfaceInterface>(
@@ -31,6 +32,7 @@ export async function getContentUpdateInterfaces() {
       },
       {}
     );
+  console.log(contentUpdateInterfaceInterfaces);
 
   return contentUpdateInterfaceInterfaces;
 }

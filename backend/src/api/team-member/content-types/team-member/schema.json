@@ -53,7 +53,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::blog-author.blog-author",
-      "inversedBy": "team_member"
+      "mappedBy": "team_member"
     }
   }
 }

@@ -39,6 +39,18 @@
     },
     "extraMaps": {
       "type": "json"
+    },
+    "published": {
+      "type": "string",
+      "required": true
+    },
+    "by": {
+      "type": "string"
+    },
+    "update_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::update-category.update-category"
     }
   }
 }

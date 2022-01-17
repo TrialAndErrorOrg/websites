@@ -22,7 +22,7 @@
     },
     "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "allowedTypes": [
         "images"
@@ -50,6 +50,18 @@
       "relation": "oneToOne",
       "target": "api::team-member.team-member",
       "inversedBy": "blog_author"
+    },
+    "twitter": {
+      "type": "string",
+      "regex": "https://twitter.com/.*"
+    },
+    "github": {
+      "type": "string",
+      "regex": "https://github.com/.*"
+    },
+    "orcid": {
+      "type": "string",
+      "regex": "https://orcid.org/.*"
     }
   }
 }

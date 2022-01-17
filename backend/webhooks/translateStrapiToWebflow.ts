@@ -10,7 +10,7 @@ export function translateStrapiToWebflow({
   entry: Entry;
   interfaceSchema: Omit<ContentAnyInterface, "type" | "id">;
 }): WebflowItem {
-  const { extraMaps, ...map } = interfaceSchema;
+  const { extraMaps, update_category, ...map } = interfaceSchema;
 
   const itemWithoutSlug: Exclude<WebflowItem, "slug"> = Object.entries(
     map
@@ -43,7 +43,7 @@ export function translateStrapiToWebflow({
         // as strapi returns these as the object we're referencing
 
         acc[webflowItemKey] = fieldValue.reduce((acc, curr) => {
-          if (!curr.webflowId) return;
+          if (!curr.webflowId) return acc;
           return [...acc, curr.webflowId];
         }, []);
         return acc;
@@ -71,14 +71,17 @@ export function translateStrapiToWebflow({
     {} as WebflowItem
   );
 
+  console.log(itemWithoutSlug.name);
   const item = {
     ...itemWithoutSlug,
+    ...(update_category
+      ? { category: update_category?.data?.attributes?.webflowId }
+      : {}),
     slug: slugify(itemWithoutSlug.name, {
-      remove: /[*+~.()'"!:@]/g,
+      remove: /[^a-zA-Z0-9\-]/g,
       lower: true,
     }),
   };
-  console.log(itemWithoutSlug.name);
   console.log(item);
 
   return item;

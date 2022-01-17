@@ -14,7 +14,8 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "regex": "[^A-Z]"
     },
     "webflowId": {
       "type": "string"

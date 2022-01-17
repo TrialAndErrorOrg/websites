@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import { Update, UpdateProps } from ".";
 import { addIdToStrapi } from "./addIdToStrapi";
 import { translateStrapiToWebflow } from "./translateStrapiToWebflow";
@@ -28,7 +29,30 @@ export async function createUpdate({
         ...updateEntry,
         source: sourceId,
       },
-    })
+    }),
+    async (e: any) => {
+      if (
+        e.code === 400 &&
+        e.msg === "Validation failure" &&
+        e.problems?.[0].contains("Field 'slug'")
+      ) {
+        await tryCatch(
+          webflow.createItem({
+            collectionId: updateCollectionId,
+            fields: {
+              //_id: `${collectionName}-${entry.id}`,
+              _archived: false,
+              _draft: true,
+              ...{
+                ...updateEntry,
+                slug: `${updateEntry.slug}-${Math.floor(Math.random() * 3000)}`,
+              },
+              source: sourceId,
+            },
+          })
+        );
+      }
+    }
   );
 
   const { _id } = update;

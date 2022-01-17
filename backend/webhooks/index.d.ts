@@ -44,6 +44,7 @@ export interface Update extends WebflowItem {
   image?: string;
   body: string;
   url: string;
+  category: { [key: string]: any };
 }
 
 export type StrapiGETItem<Type> = {
