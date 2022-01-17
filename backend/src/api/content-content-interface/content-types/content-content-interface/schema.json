@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "content_content_interfaces",
+  "info": {
+    "singularName": "content-content-interface",
+    "pluralName": "content-content-interfaces",
+    "displayName": "Content-Content Interface",
+    "description": "Interface between Strapi and Webflow content for e.g. blog posts."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "webflowCollectionId": {
+      "type": "string",
+      "required": true
+    },
+    "needsUpdate": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "map": {
+      "type": "json",
+      "required": true
+    },
+    "extraMaps": {
+      "type": "json"
+    },
+    "references": {
+      "type": "string",
+      "regex": "[^ ]*",
+      "required": false
+    }
+  }
+}

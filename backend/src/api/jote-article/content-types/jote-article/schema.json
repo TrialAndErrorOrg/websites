@@ -12,25 +12,55 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Abstract": {
+    "abstract": {
       "type": "richtext"
     },
     "published": {
-      "type": "date"
+      "type": "datetime"
     },
     "submitted": {
-      "type": "date"
+      "type": "datetime"
     },
     "accepted": {
-      "type": "date"
+      "type": "datetime"
     },
     "jote_authors": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::jote-author.jote-author"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "jote_article_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::jote-article-category.jote-article-category"
+    },
+    "doi": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "references": {
+      "type": "json"
+    },
+    "webflowId": {
+      "type": "string",
+      "unique": true
+    },
+    "updateId": {
+      "type": "string"
     }
   }
 }

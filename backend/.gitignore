@@ -113,3 +113,6 @@ exports
 build
 .strapi-updater.json
 cert
+
+patches_bak
+patches_work

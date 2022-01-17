@@ -1,0 +1,217 @@
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+index c09accf..032c657 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+@@ -43,7 +43,45 @@ const LeftMenu = () => {
+   const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
+   const intlSingleTypeLinks = toIntl(singleTypeLinks);
+ 
++  const categories= {
++  Meta: ["Content-Content Interface", "Content-Update Interface"],
++  Blog: ["Blog Author", "Blog Post", "Tag"],
++  JOTE : ["JOTE Article", "JOTE Author", "JOTE Article Category", "Editor"],
++  COTE : ["TeamMember", "Position"]
++  }
++
++  const links = intlCollectionTypeLinks.reduce((acc,curr)=>{
++   const entry= Object.entries(categories).find(([key,arr])=>arr.includes(curr.title))
++   if(entry){
++     const [category, val] = entry
++     acc[category]=[...(acc[category]||[]), curr]
++     return acc
++   }
++   acc.Misc= [...(acc.Misc||[]), curr]
++
++   return acc
++
++  },{})
++
++  const menus = Object.entries(links).map(([category,link])=>({
++    id: `${category}Types`,
++      title: {
++        id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
++        defaultMessage: `${category}`,
++        },
++        searchable:true,
++      links: sortBy(matchByTitle(link, search), object =>
++        object.title.toLowerCase()
++      ),
++      }
++ ))
++
++
++
++
++
+   const menu = [
++    ...menus,
+     {
+       id: 'collectionTypes',
+       title: {
+@@ -55,6 +93,17 @@ const LeftMenu = () => {
+         object.title.toLowerCase()
+       ),
+     },
++    {
++      id: 'blogTypes',
++      title: {
++        id: getTrad('components.LeftMenu.blog-types'),
++        defaultMessage: 'Blog',
++      },
++      searchable: true,
++      links: sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++        object.title.toLowerCase()
++      ),
++    },
+     {
+       id: 'singleTypes',
+       title: {
+@@ -81,6 +130,10 @@ const LeftMenu = () => {
+     defaultMessage: 'Content',
+   });
+ 
++console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++        object.title.toLowerCase()
++      ))
++
+   return (
+     <SubNav ariaLabel={label}>
+       <SubNavHeader
+diff --git a/node_modules/@strapi/admin/admin/src/index.js b/node_modules/@strapi/admin/admin/src/index.js
+index 2b19ff7..b62c509 100644
+--- a/node_modules/@strapi/admin/admin/src/index.js
++++ b/node_modules/@strapi/admin/admin/src/index.js
+@@ -8,11 +8,11 @@ import appReducers from './reducers';
+ 
+ window.strapi = {
+   backendURL: process.env.STRAPI_ADMIN_BACKEND_URL,
+-  isEE: false,
++  isEE: true,
+   features: {
+     SSO: 'sso',
+   },
+-  projectType: 'Community',
++  projectType: 'Enterprise',
+ };
+ 
+ const customConfig = appCustomisations;
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
+index c656406..0073c50 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
+@@ -17,11 +17,11 @@ const DividerFull = styled(Divider)`
+ `;
+ 
+ const Login = loginProps => {
+-  const ssoEnabled = strapi.features.isEnabled(strapi.features.SSO);
++  const ssoEnabled = true;
+   const { isLoading, data: providers } = useAuthProviders({ ssoEnabled });
+   const { formatMessage } = useIntl();
+ 
+-  if (!ssoEnabled || (!isLoading && providers.length === 0)) {
++  if ( (!isLoading && providers.length === 0)) {
+     return (
+       <UnauthenticatedLayout>
+         <BaseLogin {...loginProps} />
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js b/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
+index 024abd3..1d0f470 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
+@@ -6,25 +6,27 @@ import { auth, LoadingIndicatorPage, request } from '@strapi/helper-plugin';
+ import { getRequestUrl } from '../../../../admin/src/utils';
+ 
+ const AuthResponse = () => {
+-  const {
+-    params: { authResponse },
+-  } = useRouteMatch('/auth/login/:authResponse');
+-  const { formatMessage } = useIntl();
+-  const { push } = useHistory();
+-  const formatMessageRef = useRef(formatMessage);
+-
+-  let redirectToOops = useCallback(() => {
+-    push(
+-      `/auth/oops?info=${encodeURIComponent(
++  console.log("HERE fs")
++  const url = window.location.href
++  // const {
++  //   params: { authResponse },
++  // } = useRouteMatch('/auth/login/:authResponse');
++  // const { formatMessage } = useIntl();
++  // const { push } = useHistory();
++  // const formatMessageRef = useRef(formatMessage);
++
++  const baseUrl = process.env.NODE_ENV ==='production' ?  `https://admin.centeroftrialanderror.com`:`http://localhost:1337`
++  let redirectToOops = () => {
++    window.location.href=
++     `${baseUrl}/admin/auth/oops?info=${encodeURIComponent(
+         formatMessageRef.current({
+           id: 'Auth.form.button.login.providers.error',
+           defaultMessage: 'We cannot connect you through the selected provider.',
+         })
+       )}`
+-    );
+-  }, [push]);
++  }
+ 
+-  const fetchUserInfo = useCallback(async () => {
++  const fetchUserInfo = async () => {
+     try {
+       const jwtToken = Cookies.get('jwtToken');
+ 
+@@ -39,22 +41,30 @@ const AuthResponse = () => {
+ 
+         Cookies.remove('jwtToken');
+ 
+-        push('/auth/login');
++        window.location.href = `${baseUrl}/admin/auth/login`
+       }
+     } catch (e) {
+       redirectToOops();
+     }
+-  }, [push, redirectToOops]);
++  }
++  if(url.includes('success')){
++    fetchUserInfo()
++  }
++  if(url.includes('error')){
++    redirectToOops();
+ 
+-  useEffect(() => {
+-    if (authResponse === 'error') {
+-      redirectToOops();
+-    }
++  }
+ 
+-    if (authResponse === 'success') {
+-      fetchUserInfo();
+-    }
+-  }, [authResponse, fetchUserInfo, redirectToOops]);
++
++  // useEffect(() => {
++  //   if (authResponse === 'error') {
++  //     redirectToOops();
++  //   }
++
++  //   if (authResponse === 'success') {
++  //     fetchUserInfo();
++  //   }
++  // }, [authResponse, fetchUserInfo, redirectToOops]);
+ 
+   return <LoadingIndicatorPage />;
+ };
+diff --git a/node_modules/@strapi/admin/server/controllers/admin.js b/node_modules/@strapi/admin/server/controllers/admin.js
+index 81c6b10..8f7584c 100644
+--- a/node_modules/@strapi/admin/server/controllers/admin.js
++++ b/node_modules/@strapi/admin/server/controllers/admin.js
+@@ -28,9 +28,9 @@ module.exports = {
+   async getProjectType() {
+     // FIXME
+     try {
+-      return { data: { isEE: strapi.EE, features: ee.features.getEnabled() } };
++      return { data: { isEE: true, features: ['sso'] }};
+     } catch (err) {
+-      return { data: { isEE: false, features: [] } };
++      return { data: { isEE: true, features: ['sso'] } };
+     }
+   },
+ 
