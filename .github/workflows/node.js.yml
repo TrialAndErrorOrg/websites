@@ -26,6 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: 'yarn'
     - run: NODE_ENV=production yarn build
     - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
       with:
