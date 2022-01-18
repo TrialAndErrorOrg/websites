@@ -20,7 +20,7 @@ module.exports = ({ env }) => ({
               scope: ["user:profile"],
               tenant: env("MICROSOFT_TENANT_ID", ""),
               callbackURL:
-                env(NODE_ENV, "development") === "production"
+                env("NODE_ENV", "development") === "production"
                   ? "https://admin.centeroftrialanderror.com/admin/connect/azure_ad_oauth2"
                   : strapi.admin.services.passport.getStrategyCallbackURL(
                       "azure_ad_oauth2"
