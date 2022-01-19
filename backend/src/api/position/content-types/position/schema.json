@@ -25,6 +25,7 @@
     },
     "department": {
       "type": "string"
-    }
+    },
+    "webflowId": { "type": "string" }
   }
 }
