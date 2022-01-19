@@ -114,10 +114,10 @@ index c656406..0073c50 100644
        <UnauthenticatedLayout>
          <BaseLogin {...loginProps} />
 diff --git a/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js b/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
-index 024abd3..1d0f470 100644
+index 024abd3..a05bcd4 100644
 --- a/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
 +++ b/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
-@@ -6,25 +6,27 @@ import { auth, LoadingIndicatorPage, request } from '@strapi/helper-plugin';
+@@ -6,25 +6,26 @@ import { auth, LoadingIndicatorPage, request } from '@strapi/helper-plugin';
  import { getRequestUrl } from '../../../../admin/src/utils';
  
  const AuthResponse = () => {
@@ -140,10 +140,9 @@ index 024abd3..1d0f470 100644
 +  // const { push } = useHistory();
 +  // const formatMessageRef = useRef(formatMessage);
 +
-+  const baseUrl = process.env.NODE_ENV ==='production' ?  `https://admin.centeroftrialanderror.com`:`http://localhost:1337`
 +  let redirectToOops = () => {
 +    window.location.href=
-+     `${baseUrl}/admin/auth/oops?info=${encodeURIComponent(
++     `/admin/auth/oops?info=${encodeURIComponent(
          formatMessageRef.current({
            id: 'Auth.form.button.login.providers.error',
            defaultMessage: 'We cannot connect you through the selected provider.',
@@ -158,12 +157,12 @@ index 024abd3..1d0f470 100644
      try {
        const jwtToken = Cookies.get('jwtToken');
  
-@@ -39,22 +41,30 @@ const AuthResponse = () => {
+@@ -39,22 +40,30 @@ const AuthResponse = () => {
  
          Cookies.remove('jwtToken');
  
 -        push('/auth/login');
-+        window.location.href = `${baseUrl}/admin/auth/login`
++        window.location.href = `/admin/auth/login`
        }
      } catch (e) {
        redirectToOops();
@@ -199,6 +198,20 @@ index 024abd3..1d0f470 100644
  
    return <LoadingIndicatorPage />;
  };
+diff --git a/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js b/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js
+index 5504f1e..a687f41 100644
+--- a/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js
++++ b/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js
+@@ -100,7 +100,9 @@ const redirectWithAuth = ctx => {
+   const jwt = getService('token').createJwtToken(user);
+ 
+   const isProduction = strapi.config.get('environment') === 'production';
++  console.log(isProduction)
+ 
++  console.log(strapi.config.get('environment'))
+   const cookiesOptions = { httpOnly: false, secure: isProduction, overwrite: true };
+ 
+   strapi.eventHub.emit('admin.auth.success', { user, provider });
 diff --git a/node_modules/@strapi/admin/server/controllers/admin.js b/node_modules/@strapi/admin/server/controllers/admin.js
 index 81c6b10..8f7584c 100644
 --- a/node_modules/@strapi/admin/server/controllers/admin.js
