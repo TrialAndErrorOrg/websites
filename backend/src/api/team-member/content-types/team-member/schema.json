@@ -4,7 +4,7 @@
   "info": {
     "singularName": "team-member",
     "pluralName": "team-members",
-    "displayName": "TeamMember",
+    "displayName": "Team Member",
     "description": ""
   },
   "options": {
@@ -20,15 +20,6 @@
     "lastName": {
       "type": "string"
     },
-    "pronouns": {
-      "type": "enumeration",
-      "enum": [
-        "theythem",
-        "sheher",
-        "hehim"
-      ],
-      "required": true
-    },
     "positions": {
       "type": "relation",
       "relation": "oneToMany",
@@ -41,19 +32,34 @@
       "type": "richtext"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "blog_author": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::blog-author.blog-author",
       "mappedBy": "team_member"
+    },
+    "show_pronouns": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "pronouns": {
+      "type": "string",
+      "regex": "((he|she|they|it)(\\/(her?|she|they|him|her|them|its?))+)",
+      "required": true
+    },
+    "webflowId": {
+      "type": "string",
+      "unique": true
     }
   }
 }

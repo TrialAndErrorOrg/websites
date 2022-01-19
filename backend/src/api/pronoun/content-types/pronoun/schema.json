@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pronouns",
+  "info": {
+    "singularName": "pronoun",
+    "pluralName": "pronouns",
+    "displayName": "Pronoun"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
