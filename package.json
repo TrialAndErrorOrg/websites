@@ -14,6 +14,7 @@
     "wait-on": "5.2.1"
   },
   "dependencies": {
+    "strapi-plugin-email-designer": "^2.1.0",
     "strapi-plugin-rest-cache": "^4.2.4",
     "strapi-provider-rest-cache-memory": "^4.2.4"
   }
