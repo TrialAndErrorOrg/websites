@@ -4,7 +4,7 @@
     "@strapi/plugin-i18n": "4.0.2",
     "@strapi/plugin-users-permissions": "4.0.2",
     "@strapi/provider-upload-cloudinary": "^4.0.4",
-    "@strapi/strapi": "4.0.4",
+    "@strapi/strapi": "4.2.0",
     "@types/node-fetch": "2",
     "@yermangderrff/strapi-to-typescript": "^2.0.15",
     "dotenv": "^11.0.0",
