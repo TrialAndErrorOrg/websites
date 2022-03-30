@@ -1,18 +1,5 @@
-diff --git a/node_modules/@strapi/strapi/lib/commands/watchAdmin.js b/node_modules/@strapi/strapi/lib/commands/watchAdmin.js
-index 28ad781..8e4dd0a 100644
---- a/node_modules/@strapi/strapi/lib/commands/watchAdmin.js
-+++ b/node_modules/@strapi/strapi/lib/commands/watchAdmin.js
-@@ -39,7 +39,7 @@ module.exports = async function({ browser }) {
-       backend: backendURL,
-       adminPath: addSlash(adminPath),
-       watchIgnoreFiles: adminWatchIgnoreFiles,
--      features: ee.isEE ? ee.features.getEnabled() : [],
-+      features: true ? ee.features.getEnabled() : ['sso'],
-     },
-   });
- };
 diff --git a/node_modules/@strapi/strapi/lib/services/metrics/index.js b/node_modules/@strapi/strapi/lib/services/metrics/index.js
-index 4f462c7..d407b73 100644
+index aef14f6..2db48b5 100644
 --- a/node_modules/@strapi/strapi/lib/services/metrics/index.js
 +++ b/node_modules/@strapi/strapi/lib/services/metrics/index.js
 @@ -32,41 +32,8 @@ const createTelemetryInstance = strapi => {
@@ -58,13 +45,13 @@ index 4f462c7..d407b73 100644
      destroy() {
        // clear open handles
 diff --git a/node_modules/@strapi/strapi/lib/services/metrics/sender.js b/node_modules/@strapi/strapi/lib/services/metrics/sender.js
-index 7585130..a3d3dec 100644
+index c5198ac..a85ecb8 100644
 --- a/node_modules/@strapi/strapi/lib/services/metrics/sender.js
 +++ b/node_modules/@strapi/strapi/lib/services/metrics/sender.js
 @@ -34,7 +34,7 @@ const addPackageJsonStrapiMetadata = (metadata, strapi) => {
  module.exports = strapi => {
    const { uuid } = strapi.config;
-   const deviceId = machineIdSync();
+   const deviceId = machineID();
 -  const isEE = strapi.EE === true && ee.isEE === true;
 +  const isEE = true;
  
@@ -75,12 +62,12 @@ index 7585130..a3d3dec 100644
      version: strapi.config.get('info.strapi'),
      strapiVersion: strapi.config.get('info.strapi'),
 -    projectType: isEE ? 'Enterprise' : 'Community',
-+    projectType:  'Enterprise' ,
++    projectType: 'Enterprise' ,
    };
  
    addPackageJsonStrapiMetadata(anonymous_metadata, strapi);
 diff --git a/node_modules/@strapi/strapi/lib/utils/ee.js b/node_modules/@strapi/strapi/lib/utils/ee.js
-index 1414109..ada66b4 100644
+index 1414109..74e13dd 100644
 --- a/node_modules/@strapi/strapi/lib/utils/ee.js
 +++ b/node_modules/@strapi/strapi/lib/utils/ee.js
 @@ -22,7 +22,8 @@ const features = {
@@ -89,7 +76,7 @@ index 1414109..ada66b4 100644
  module.exports = ({ dir, logger = noLog }) => {
 -  if (_.has(internals, 'isEE')) return internals.isEE;
 +  internals.isEE=true;
-+  return true
++  return true;
  
    const warnAndReturn = (msg = 'Invalid license. Starting in CE.') => {
      logger.warn(msg);
@@ -111,27 +98,37 @@ index 1414109..ada66b4 100644
    },
    configurable: false,
    enumerable: false,
-@@ -97,16 +96,12 @@ Object.defineProperty(module.exports, 'isEE', {
+@@ -97,16 +96,13 @@ Object.defineProperty(module.exports, 'isEE', {
  
  Object.defineProperty(module.exports, 'features', {
    get() {
 -    mustHaveKey('licenseInfo');
 -
 -    const { type: licenseType } = module.exports.licenseInfo;
--
+ 
      return {
        isEnabled(feature) {
 -        return features[licenseType].includes(feature);
-+        return true;
++        return true
        },
        getEnabled() {
 -        return features[licenseType];
-+        return ['sso'];
++        return ['sso']
        },
      };
    },
+@@ -115,9 +111,4 @@ Object.defineProperty(module.exports, 'features', {
+ });
+ 
+ const mustHaveKey = key => {
+-  if (!_.has(internals, key)) {
+-    const err = new Error('Tampering with license');
+-    // err.stack = null;
+-    throw err;
+-  }
+ };
 diff --git a/node_modules/@strapi/strapi/lib/utils/startup-logger.js b/node_modules/@strapi/strapi/lib/utils/startup-logger.js
-index 214dd5c..bcfe5dc 100644
+index 214dd5c..b0883ef 100644
 --- a/node_modules/@strapi/strapi/lib/utils/startup-logger.js
 +++ b/node_modules/@strapi/strapi/lib/utils/startup-logger.js
 @@ -19,7 +19,7 @@ module.exports = app => {
@@ -139,7 +136,7 @@ index 214dd5c..bcfe5dc 100644
        });
  
 -      const isEE = app.EE === true && ee.isEE === true;
-+      const isEE = true
++      const isEE =true;
  
        infoTable.push(
          [chalk.blue('Time'), `${new Date()}`],
@@ -148,7 +145,7 @@ index 214dd5c..bcfe5dc 100644
          [chalk.blue('Process PID'), process.pid],
          [chalk.blue('Version'), `${app.config.info.strapi} (node ${process.version})`],
 -        [chalk.blue('Edition'), isEE ? 'Enterprise' : 'Community']
-+        [chalk.blue('Edition'), 'Enterprise' ]
++        [chalk.blue('Edition'),  'Enterprise' ]
        );
  
        console.log(infoTable.toString());

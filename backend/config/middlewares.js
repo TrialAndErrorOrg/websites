@@ -13,6 +13,8 @@ module.exports = [
             "blob:",
             "res.cloudinary.com",
             "upload.wikimedia.org",
+            "s3.amazonaws.com",
+            "stapi.io",
           ],
           "media-src": [
             "'self'",
@@ -20,9 +22,22 @@ module.exports = [
             "blob:",
             "res.cloudinary.com",
             "upload.wikimedia.org",
+            "s3.amazonaws.com",
+            "stapi.io",
           ],
-          "script-src": ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
-          "script-src-attr": ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+          "script-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "cdn.jsdelivr.net",
+            "editor.unlayer.com",
+          ],
+          "frame-src": ["'self'", "editor.unlayer.com"],
+          "script-src-attr": [
+            "'self'",
+            "'unsafe-inline'",
+            "cdn.jsdelivr.net",
+            "editor.unilayer.com",
+          ],
           upgradeInsecureRequests: null,
         },
       },
@@ -33,6 +48,7 @@ module.exports = [
   "strapi::logger",
   "strapi::query",
   "strapi::body",
+  "strapi::session",
   {
     name: "strapi::favicon",
     config: {
