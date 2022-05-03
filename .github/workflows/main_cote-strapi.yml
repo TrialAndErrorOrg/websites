@@ -28,11 +28,14 @@ jobs:
       - run: 'yarn && yarn --cwd backend'
       - run: NODE_ENV=production yarn build
 
+      - name: 'Tar files'
+        run: tar -cf node-app.tar ./backend
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./backend
+          path: node-app.tar
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,6 +50,11 @@ jobs:
         with:
           name: node-app
 
+      - name: 'Untar files'
+        run: |
+          'tar -xf node-app.tar'
+          'rm node-app.tar'
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -54,4 +62,4 @@ jobs:
           app-name: 'cote-strapi'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48C35E5FD0E54E52AFC6BDFFE8471FA5 }}
-          package: ./backend
+          package: .
