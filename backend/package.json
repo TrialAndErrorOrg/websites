@@ -43,7 +43,7 @@
   "description": "Backend CMS for COTE",
   "scripts": {
     "develop": "run-p \"develop-strapi\" \"webhook\"",
-    "start": "run-p \"start-strapi\" \"webhook-start\"",
+    "start": "node node_modules/strapi/bin/strapi.js start",
     "develop-strapi": "strapi develop",
     "start-strapi": "strapi start",
     "webhook": "nodemon ./webhooks/syncToWebflow.ts",
