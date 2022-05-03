@@ -21,17 +21,16 @@ jobs:
         with:
           node-version: '14.x'
 
-      - name: npm install, build, and test
+      - name: yarn install, build, and test
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+            'yarn && yarn --cwd backend'
+             NODE_ENV=production yarn build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: ./backend
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +52,4 @@ jobs:
           app-name: 'cote-strapi'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48C35E5FD0E54E52AFC6BDFFE8471FA5 }}
-          package: .
+          package: ./backend
