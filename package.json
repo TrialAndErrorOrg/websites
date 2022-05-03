@@ -6,7 +6,8 @@
     "develop:backend": "yarn --cwd backend develop",
     "develop:frontend": "wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
     "develop": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*",
-    "build": "yarn --cwd backend build"
+    "build": "yarn --cwd backend build",
+    "start": "yarn --cwd backend start",
   },
   "devDependencies": {
     "cross-env": "7.0.3",
