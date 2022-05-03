@@ -51,9 +51,9 @@ jobs:
           name: node-app
 
       - name: 'Untar files'
-        run: |
-          'tar -xf node-app.tar'
-          'rm node-app.tar'
+        run: tar -xf node-app.tar
+      - name: 'Cleanup Tar'
+        run: rm node-app.tar
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
