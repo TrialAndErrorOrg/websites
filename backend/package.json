@@ -51,7 +51,8 @@
     "build": "strapi build",
     "strapi": "strapi",
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "clean": "rm -rf .cache .tmp"
   },
   "devDependencies": {
     "@types/node": "^17.0.8",

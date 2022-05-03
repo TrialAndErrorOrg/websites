@@ -26,7 +26,10 @@ jobs:
           cache: 'yarn'
 
       - run: 'yarn && yarn --cwd backend'
-      - run: NODE_ENV=production yarn build
+      - run: NODE_ENV=production yarn --cwd backend build
+
+      - name: 'Clean up'
+        run: 'yarn --cwd backend clean'
 
       - name: 'Tar files'
         run: tar -cf node-app.tar ./backend
