@@ -13,18 +13,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
-      - name: yarn install, build, and test
-        run: |
-            'yarn && yarn --cwd backend'
-             NODE_ENV=production yarn build
+      - run: 'yarn && yarn --cwd backend'
+      - run: NODE_ENV=production yarn build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
