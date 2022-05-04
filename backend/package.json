@@ -43,11 +43,9 @@
   "description": "Backend CMS for COTE",
   "scripts": {
     "develop": "run-p \"develop-strapi\" \"webhook\"",
-    "start": "node node_modules/strapi/bin/strapi.js start",
+    "start": "node node_modules/@strapi/strapi/bin/strapi.js start",
     "develop-strapi": "strapi develop",
     "start-strapi": "strapi start",
-    "webhook": "nodemon ./webhooks/syncToWebflow.ts",
-    "webhook-start": "wait-on http://localhost:1337/admin && yarn webhook",
     "build": "strapi build",
     "strapi": "strapi",
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
