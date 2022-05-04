@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbackend=self.webpackChunkbackend||[]).push([[6804],{80037:e=>{e.exports=JSON.parse('{"plugin.description.long":"Cr\xe9e un endpoint GraphQL supportant les m\xe9thodes par d\xe9faut de l\'API.","plugin.description.short":"Cr\xe9e un endpoint GraphQL supportant les m\xe9thodes par d\xe9faut de l\'API."}')}}]);
