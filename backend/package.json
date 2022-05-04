@@ -43,7 +43,7 @@
   "description": "Backend CMS for COTE",
   "scripts": {
     "develop": "run-p \"develop-strapi\" \"webhook\"",
-    "start": "node node_modules/@strapi/strapi/bin/strapi.js start",
+    "start": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
     "develop-strapi": "strapi develop",
     "start-strapi": "strapi start",
     "build": "strapi build",
