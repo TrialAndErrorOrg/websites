@@ -1,4 +1,9 @@
-//import PluginIcon from "./components/PluginIcon";
+// @ts-expect-error shush
+import PluginIcon from './components/PluginIcon'
+// @ts-expect-error shush
+import FavPNG from './extensions/favicon.png'
+// @ts-expect-error shush
+import FavIco from './extensions/favicon.ico'
 
 export default {
   config: {
@@ -38,42 +43,78 @@ export default {
     },
     theme: {
       colors: {
-        // danger100: "#24292d", // TOGGLE OFF BG
-        // danger700: "#bf4c69", // TOGGLE OFF COLOR
-        // neutral0: "#1f2428", // BACKGROUND SIDEBAR
-        // neutral100: "#24292d", // BACKGROUND CONTENT
-        neutral100: '#f6f7f9',
-        // neutral150: "#1f2428", // DISABLED BUTTON BG
-        // neutral200: "#1e2327", // LINE THROUGH MIDDLE
-        //neutral700: "#daefff", // MENU IDLE COLOR
-        // neutral600: "#daefff", // MENU HOVER COLOR
-        // neutral600: "#9b9faa", // MENU HOVER COLOR
-        // neutral700: "#9b9faa", // MENU ACTIVE ICON COLOR
-        // neutral800: "#74787b", // TITLE COLORS
-        // neutral900: "#24292d", // TOOLTIP BG
-        primary100: '#2ea6ff14', // MENU ACTIVE BG
-        // primary200: "#1f2428", // PLUS SIGN BG
-        // primary500: "#6584ac", // PRIMARY BUTTON HOVER
-        primary500: '#FEAF0C', // PRIMARY BUTTON HOVER
-        primary600: '#002642', // PRIMARY BUTTON COLOR
-        primary700: '#002642', // PRIMARY BUTTON COLOR
-        // secondary100: "#1f2428", // INFO BOX COLOR
-
-        // success100: "#1f2428", // SUCCESS BOX BG
+        alternative100: '#f6ecfc',
+        alternative200: '#e0c1f4',
+        alternative500: '#ac73e6',
+        alternative600: '#9736e8',
+        alternative700: '#8312d1',
+        buttonNeutral0: '#ffffff',
+        buttonPrimary500: '#7b79ff',
+        buttonPrimary600: '#4945ff',
+        danger100: '#fcecea',
+        danger200: '#f5c0b8',
+        danger500: '#ee5e52',
+        danger600: '#d02b20',
+        danger700: '#b72b1a',
+        neutral0: '#ffffff',
+        neutral100: '#f6f6f9',
+        neutral1000: '#181826',
+        neutral150: '#eaeaef',
+        neutral200: '#dcdce4',
+        neutral300: '#c0c0cf',
+        neutral400: '#a5a5ba',
+        neutral500: '#8e8ea9',
+        neutral600: '#666687',
+        neutral700: '#4a4a6a',
+        neutral800: '#32324d',
+        neutral900: '#212134',
+        primary100: '#f0f0ff',
+        primary200: '#d9d8ff',
+        primary500: '#7b79ff',
+        primary600: '#4945ff',
+        primary700: '#271fe0',
+        secondary100: '#eaf5ff',
+        secondary200: '#b8e1ff',
+        secondary500: '#66b7f1',
+        secondary600: '#0c75af',
+        secondary700: '#006096',
+        success100: '#eafbe7',
+        success200: '#c6f0c2',
+        success500: '#5cb176',
+        success600: '#328048',
+        success700: '#2f6846',
+        warning100: '#fdf4dc',
+        warning200: '#fae7b9',
+        warning500: '#f29d41',
+        warning600: '#d9822f',
+        warning700: '#be5d01',
       },
     },
     menu: {
-      logo: './extensions/favicon.png',
+      logo: FavPNG,
     },
     auth: {
-      logo: './extensions/favicon.png',
+      logo: FavPNG,
     },
     header: {
-      favicon: './extensions/favicon.ico',
+      favicon: FavIco,
     },
     notifications: { release: false },
   },
   bootstrap(app) {
+    // register(app) {
+    //   app.addMenuLink({
+    //     to: '/plugins/my-plugin',
+    //     icon: PluginIcon,
+    //     intlLabel: {
+    //       id: 'my-plugin.plugin.name',
+    //       defaultMessage: 'My plugin',
+    //     },
+    //     Component: () => 'My plugin',
+    //     permissions: [], // permissions to apply to the link
+    //   });
+    //   app.registerPlugin({ ... });
+    // },
     console.log(app)
   },
 }
