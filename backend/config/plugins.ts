@@ -1,11 +1,15 @@
 export default ({ env }) => ({
   upload: {
     config: {
-      provider: 'cloudinary',
+      provider: 'strapi-provider-upload-azure-storage',
       providerOptions: {
-        cloud_name: env('CLOUDINARY_NAME'),
-        api_key: env('CLOUDINARY_KEY'),
-        api_secret: env('CLOUDINARY_SECRET'),
+        account: env('STORAGE_ACCOUNT'),
+        accountKey: env('STORAGE_ACCOUNT_KEY'),
+        serviceBaseURL: env('STORAGE_URL'),
+        containerName: env('STORAGE_CONTAINER_NAME'),
+        cdnBaseURL: env('STORAGE_CDN_URL'),
+        defaultPath: 'assets',
+        maxConcurrent: 10,
       },
       actionOptions: {
         upload: {},
