@@ -1,87 +1,19 @@
-diff --git a/node_modules/@strapi/strapi/lib/services/metrics/index.js b/node_modules/@strapi/strapi/lib/services/metrics/index.js
-index aef14f6..2db48b5 100644
---- a/node_modules/@strapi/strapi/lib/services/metrics/index.js
-+++ b/node_modules/@strapi/strapi/lib/services/metrics/index.js
-@@ -32,41 +32,8 @@ const createTelemetryInstance = strapi => {
- 
-   return {
-     register() {
--      if (!isDisabled) {
--        const pingCron = scheduleJob('0 0 12 * * *', () => sendEvent('ping'));
--        crons.push(pingCron);
--
--        strapi.server.use(createMiddleware({ sendEvent }));
--      }
-     },
-     bootstrap() {
--      if (strapi.EE === true && ee.isEE === true) {
--        const pingDisabled =
--          isTruthy(process.env.STRAPI_LICENSE_PING_DISABLED) && ee.licenseInfo.type === 'gold';
--
--        const sendLicenseCheck = () => {
--          return sendEvent(
--            'didCheckLicense',
--            {
--              licenseInfo: {
--                ...ee.licenseInfo,
--                projectHash: hashProject(strapi),
--                dependencyHash: hashDep(strapi),
--              },
--            },
--            {
--              headers: { 'x-strapi-project': 'enterprise' },
--            }
--          );
--        };
--
--        if (!pingDisabled) {
--          const licenseCron = scheduleJob('0 0 0 * * 7', () => sendLicenseCheck());
--          crons.push(licenseCron);
--
--          sendLicenseCheck();
--        }
--      }
-     },
-     destroy() {
-       // clear open handles
-diff --git a/node_modules/@strapi/strapi/lib/services/metrics/sender.js b/node_modules/@strapi/strapi/lib/services/metrics/sender.js
-index c5198ac..a85ecb8 100644
---- a/node_modules/@strapi/strapi/lib/services/metrics/sender.js
-+++ b/node_modules/@strapi/strapi/lib/services/metrics/sender.js
-@@ -34,7 +34,7 @@ const addPackageJsonStrapiMetadata = (metadata, strapi) => {
- module.exports = strapi => {
-   const { uuid } = strapi.config;
-   const deviceId = machineID();
--  const isEE = strapi.EE === true && ee.isEE === true;
-+  const isEE = true;
- 
-   const anonymous_metadata = {
-     environment: strapi.config.environment,
-@@ -46,7 +46,7 @@ module.exports = strapi => {
-     isCI: ciEnv.isCI,
-     version: strapi.config.get('info.strapi'),
-     strapiVersion: strapi.config.get('info.strapi'),
--    projectType: isEE ? 'Enterprise' : 'Community',
-+    projectType: 'Enterprise' ,
-   };
- 
-   addPackageJsonStrapiMetadata(anonymous_metadata, strapi);
 diff --git a/node_modules/@strapi/strapi/lib/utils/ee.js b/node_modules/@strapi/strapi/lib/utils/ee.js
 index 1414109..74e13dd 100644
 --- a/node_modules/@strapi/strapi/lib/utils/ee.js
 +++ b/node_modules/@strapi/strapi/lib/utils/ee.js
 @@ -22,7 +22,8 @@ const features = {
  };
- 
+
  module.exports = ({ dir, logger = noLog }) => {
 -  if (_.has(internals, 'isEE')) return internals.isEE;
 +  internals.isEE=true;
 +  return true;
- 
+
    const warnAndReturn = (msg = 'Invalid license. Starting in CE.') => {
      logger.warn(msg);
 @@ -79,7 +80,6 @@ module.exports = ({ dir, logger = noLog }) => {
- 
+
  Object.defineProperty(module.exports, 'licenseInfo', {
    get() {
 -    mustHaveKey('licenseInfo');
@@ -89,7 +21,7 @@ index 1414109..74e13dd 100644
    },
    configurable: false,
 @@ -88,8 +88,7 @@ Object.defineProperty(module.exports, 'licenseInfo', {
- 
+
  Object.defineProperty(module.exports, 'isEE', {
    get() {
 -    mustHaveKey('isEE');
@@ -99,13 +31,13 @@ index 1414109..74e13dd 100644
    configurable: false,
    enumerable: false,
 @@ -97,16 +96,13 @@ Object.defineProperty(module.exports, 'isEE', {
- 
+
  Object.defineProperty(module.exports, 'features', {
    get() {
 -    mustHaveKey('licenseInfo');
 -
 -    const { type: licenseType } = module.exports.licenseInfo;
- 
+
      return {
        isEnabled(feature) {
 -        return features[licenseType].includes(feature);
@@ -119,7 +51,7 @@ index 1414109..74e13dd 100644
    },
 @@ -115,9 +111,4 @@ Object.defineProperty(module.exports, 'features', {
  });
- 
+
  const mustHaveKey = key => {
 -  if (!_.has(internals, key)) {
 -    const err = new Error('Tampering with license');
@@ -134,10 +66,10 @@ index 214dd5c..b0883ef 100644
 @@ -19,7 +19,7 @@ module.exports = app => {
          chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
        });
- 
+
 -      const isEE = app.EE === true && ee.isEE === true;
 +      const isEE =true;
- 
+
        infoTable.push(
          [chalk.blue('Time'), `${new Date()}`],
 @@ -27,7 +27,7 @@ module.exports = app => {
@@ -147,5 +79,5 @@ index 214dd5c..b0883ef 100644
 -        [chalk.blue('Edition'), isEE ? 'Enterprise' : 'Community']
 +        [chalk.blue('Edition'),  'Enterprise' ]
        );
- 
+
        console.log(infoTable.toString());
