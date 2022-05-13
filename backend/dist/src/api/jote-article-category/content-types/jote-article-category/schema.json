@@ -1,0 +1,30 @@
+{
+    "kind": "collectionType",
+    "collectionName": "jote_article_categories",
+    "info": {
+        "singularName": "jote-article-category",
+        "pluralName": "jote-article-categories",
+        "displayName": "JOTE Article Category",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "invited": {
+            "type": "boolean"
+        },
+        "doiPrefix": {
+            "type": "string",
+            "required": true,
+            "maxLength": 5,
+            "unique": true
+        }
+    }
+}

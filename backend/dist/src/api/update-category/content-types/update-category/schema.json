@@ -1,0 +1,37 @@
+{
+    "kind": "collectionType",
+    "collectionName": "update_categories",
+    "info": {
+        "singularName": "update-category",
+        "pluralName": "update-categories",
+        "displayName": "Update Category",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "symbol": {
+            "type": "media",
+            "multiple": false,
+            "required": true,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "in": {
+            "type": "string"
+        },
+        "inurl": {
+            "type": "string"
+        },
+        "webflowId": {
+            "type": "string"
+        }
+    }
+}
