@@ -20,11 +20,6 @@
     "lastName": {
       "type": "string"
     },
-    "positions": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::position.position"
-    },
     "email": {
       "type": "email"
     },
@@ -60,6 +55,32 @@
     "webflowId": {
       "type": "string",
       "unique": true
+    },
+    "azureID": {
+      "type": "string",
+      "unique": true
+    },
+    "twitter": {
+      "type": "string",
+      "unique": true,
+      "regex": "https:\\/\\/twitter.com\\/.*"
+    },
+    "github": {
+      "type": "string",
+      "regex": "https://github.com/.*",
+      "unique": true
+    },
+    "orcid": {
+      "type": "string",
+      "regex": "https://orcid.org/.*",
+      "unique": true
+    },
+    "personalWebsite": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string",
+      "required": true
     }
   }
 }
