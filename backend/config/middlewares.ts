@@ -15,6 +15,8 @@ export default [
             'upload.wikimedia.org',
             's3.amazonaws.com',
             'strapi.io',
+            'cote.azureedge.net',
+            '*.core.windows.net',
           ],
           'media-src': [
             "'self'",
@@ -24,6 +26,8 @@ export default [
             'upload.wikimedia.org',
             's3.amazonaws.com',
             'strapi.io',
+            'cote.azureedge.net',
+            '*.core.windows.net',
           ],
           'script-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net', 'editor.unlayer.com'],
           'frame-src': ["'self'", 'editor.unlayer.com'],
