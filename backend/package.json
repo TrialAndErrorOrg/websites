@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "@strapi/icons": "^1.1.0",
-    "@strapi/plugin-graphql": "^4.2.0-beta.0",
-    "@strapi/plugin-i18n": "^4.2.0-beta.0",
-    "@strapi/plugin-users-permissions": "^4.2.0-beta.0",
-    "@strapi/provider-upload-cloudinary": "^4.2.0-beta.0",
-    "@strapi/strapi": "^4.2.0-beta.0",
+    "@strapi/plugin-graphql": "^4.2.0-beta.2",
+    "@strapi/plugin-i18n": "^4.2.0-beta.2",
+    "@strapi/plugin-users-permissions": "^4.2.0-beta.2",
+    "@strapi/provider-upload-cloudinary": "^4.2.0-beta.2",
+    "@strapi/strapi": "^4.2.0-beta.2",
     "@types/lodash": "^4.14.182",
     "@types/node-fetch": "2",
     "@webbio/strapi-plugin-scheduler": "^0.1.0",

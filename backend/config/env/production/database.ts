@@ -1,7 +1,4 @@
-import path from 'path'
-import fs from 'fs'
-
-module.exports = ({ env }) => ({
+export default ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: {
