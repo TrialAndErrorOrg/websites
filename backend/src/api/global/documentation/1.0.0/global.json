@@ -4,6 +4,7 @@
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1333,11 +1334,12 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/global"
       },
       "put": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2563,6 +2565,7 @@
           "Global"
         ],
         "parameters": [],
+        "operationId": "put/global",
         "requestBody": {
           "required": true,
           "content": {
@@ -2649,6 +2652,7 @@
       "delete": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2808,7 +2812,7 @@
           "Global"
         ],
         "parameters": [],
-        "requestBody": {}
+        "operationId": "delete/global"
       }
     }
   }

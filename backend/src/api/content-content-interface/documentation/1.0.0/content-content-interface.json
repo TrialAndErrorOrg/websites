@@ -4,6 +4,7 @@
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -594,11 +595,12 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/content-content-interfaces"
       },
       "post": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1085,6 +1087,7 @@
           "Content-content-interface"
         ],
         "parameters": [],
+        "operationId": "post/content-content-interfaces",
         "requestBody": {
           "required": true,
           "content": {
@@ -1117,6 +1120,7 @@
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1614,11 +1618,12 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/content-content-interfaces/{id}"
       },
       "put": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2116,6 +2121,7 @@
             }
           }
         ],
+        "operationId": "put/content-content-interfaces/{id}",
         "requestBody": {
           "required": true,
           "content": {
@@ -2184,6 +2190,7 @@
       "delete": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2354,7 +2361,7 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "delete/content-content-interfaces/{id}"
       }
     }
   }

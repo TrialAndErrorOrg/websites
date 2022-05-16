@@ -4,6 +4,7 @@
       "post": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -531,6 +532,7 @@
           "Upload - file"
         ],
         "parameters": [],
+        "operationId": "post/upload",
         "requestBody": {
           "required": true,
           "content": {
@@ -572,6 +574,7 @@
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1099,13 +1102,14 @@
           "Upload - file"
         ],
         "parameters": [],
-        "requestBody": {}
+        "operationId": "get/upload/files/count"
       }
     },
     "/upload/files": {
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1737,13 +1741,14 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/upload/files"
       }
     },
     "/upload/files/{id}": {
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2282,11 +2287,12 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/upload/files/{id}"
       },
       "delete": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2457,7 +2463,7 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "delete/upload/files/{id}"
       }
     }
   }

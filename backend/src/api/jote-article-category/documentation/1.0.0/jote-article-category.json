@@ -4,6 +4,7 @@
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -589,11 +590,12 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/jote-article-categories"
       },
       "post": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1075,6 +1077,7 @@
           "Jote-article-category"
         ],
         "parameters": [],
+        "operationId": "post/jote-article-categories",
         "requestBody": {
           "required": true,
           "content": {
@@ -1103,6 +1106,7 @@
       "get": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -1595,11 +1599,12 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "get/jote-article-categories/{id}"
       },
       "put": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2092,6 +2097,7 @@
             }
           }
         ],
+        "operationId": "put/jote-article-categories/{id}",
         "requestBody": {
           "required": true,
           "content": {
@@ -2155,6 +2161,7 @@
       "delete": {
         "responses": {
           "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2325,7 +2332,7 @@
             }
           }
         ],
-        "requestBody": {}
+        "operationId": "delete/jote-article-categories/{id}"
       }
     }
   }
