@@ -81,6 +81,17 @@
     "position": {
       "type": "string",
       "required": true
+    },
+    "department": {
+      "type": "enumeration",
+      "enum": [
+        "Editorial",
+        "Board",
+        "IT",
+        "Design",
+        "Outreach",
+        "Production"
+      ]
     }
   }
 }

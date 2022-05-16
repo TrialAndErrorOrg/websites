@@ -2040,6 +2040,17 @@
                                                                                                             "position": {
                                                                                                                 "type": "string"
                                                                                                             },
+                                                                                                            "department": {
+                                                                                                                "type": "string",
+                                                                                                                "enum": [
+                                                                                                                    "Editorial",
+                                                                                                                    "Board",
+                                                                                                                    "IT",
+                                                                                                                    "Design",
+                                                                                                                    "Outreach",
+                                                                                                                    "Production"
+                                                                                                                ]
+                                                                                                            },
                                                                                                             "createdAt": {
                                                                                                                 "type": "string",
                                                                                                                 "format": "date-time"
@@ -2179,6 +2190,17 @@
                                                             },
                                                             "position": {
                                                                 "type": "string"
+                                                            },
+                                                            "department": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "Editorial",
+                                                                    "Board",
+                                                                    "IT",
+                                                                    "Design",
+                                                                    "Outreach",
+                                                                    "Production"
+                                                                ]
                                                             },
                                                             "createdAt": {
                                                                 "type": "string",
@@ -4529,6 +4551,17 @@
                                                                                                         "position": {
                                                                                                             "type": "string"
                                                                                                         },
+                                                                                                        "department": {
+                                                                                                            "type": "string",
+                                                                                                            "enum": [
+                                                                                                                "Editorial",
+                                                                                                                "Board",
+                                                                                                                "IT",
+                                                                                                                "Design",
+                                                                                                                "Outreach",
+                                                                                                                "Production"
+                                                                                                            ]
+                                                                                                        },
                                                                                                         "createdAt": {
                                                                                                             "type": "string",
                                                                                                             "format": "date-time"
@@ -4668,6 +4701,17 @@
                                                         },
                                                         "position": {
                                                             "type": "string"
+                                                        },
+                                                        "department": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "Editorial",
+                                                                "Board",
+                                                                "IT",
+                                                                "Design",
+                                                                "Outreach",
+                                                                "Production"
+                                                            ]
                                                         },
                                                         "createdAt": {
                                                             "type": "string",
@@ -6946,6 +6990,17 @@
                                                                                                         "position": {
                                                                                                             "type": "string"
                                                                                                         },
+                                                                                                        "department": {
+                                                                                                            "type": "string",
+                                                                                                            "enum": [
+                                                                                                                "Editorial",
+                                                                                                                "Board",
+                                                                                                                "IT",
+                                                                                                                "Design",
+                                                                                                                "Outreach",
+                                                                                                                "Production"
+                                                                                                            ]
+                                                                                                        },
                                                                                                         "createdAt": {
                                                                                                             "type": "string",
                                                                                                             "format": "date-time"
@@ -7085,6 +7140,17 @@
                                                         },
                                                         "position": {
                                                             "type": "string"
+                                                        },
+                                                        "department": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "Editorial",
+                                                                "Board",
+                                                                "IT",
+                                                                "Design",
+                                                                "Outreach",
+                                                                "Production"
+                                                            ]
                                                         },
                                                         "createdAt": {
                                                             "type": "string",
@@ -9344,6 +9410,17 @@
                                                                                                         "position": {
                                                                                                             "type": "string"
                                                                                                         },
+                                                                                                        "department": {
+                                                                                                            "type": "string",
+                                                                                                            "enum": [
+                                                                                                                "Editorial",
+                                                                                                                "Board",
+                                                                                                                "IT",
+                                                                                                                "Design",
+                                                                                                                "Outreach",
+                                                                                                                "Production"
+                                                                                                            ]
+                                                                                                        },
                                                                                                         "createdAt": {
                                                                                                             "type": "string",
                                                                                                             "format": "date-time"
@@ -9483,6 +9560,17 @@
                                                         },
                                                         "position": {
                                                             "type": "string"
+                                                        },
+                                                        "department": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "Editorial",
+                                                                "Board",
+                                                                "IT",
+                                                                "Design",
+                                                                "Outreach",
+                                                                "Production"
+                                                            ]
                                                         },
                                                         "createdAt": {
                                                             "type": "string",
@@ -9774,6 +9862,17 @@
                                             },
                                             "position": {
                                                 "type": "string"
+                                            },
+                                            "department": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Editorial",
+                                                    "Board",
+                                                    "IT",
+                                                    "Design",
+                                                    "Outreach",
+                                                    "Production"
+                                                ]
                                             },
                                             "createdAt": {
                                                 "type": "string",
