@@ -4,6 +4,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1137,11 +1138,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/jote-articles"
             },
             "post": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2171,6 +2173,7 @@
                     "Jote-article"
                 ],
                 "parameters": [],
+                "operationId": "post/jote-articles",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2196,6 +2199,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3236,11 +3240,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/jote-articles/{id}"
             },
             "put": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4281,6 +4286,7 @@
                         }
                     }
                 ],
+                "operationId": "put/jote-articles/{id}",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4399,6 +4405,7 @@
             "delete": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4569,7 +4576,7 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "delete/jote-articles/{id}"
             }
         }
     }

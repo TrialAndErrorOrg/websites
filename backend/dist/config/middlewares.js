@@ -19,6 +19,7 @@ exports.default = [
                         'strapi.io',
                         'cote.azureedge.net',
                         '*.core.windows.net',
+                        'dl.airtable.com',
                     ],
                     'media-src': [
                         "'self'",
@@ -30,6 +31,7 @@ exports.default = [
                         'strapi.io',
                         'cote.azureedge.net',
                         '*.core.windows.net',
+                        'dl.airtable.com',
                     ],
                     'script-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net', 'editor.unlayer.com'],
                     'frame-src': ["'self'", 'editor.unlayer.com'],
@@ -53,7 +55,7 @@ exports.default = [
     {
         name: 'strapi::favicon',
         config: {
-            path: './favicon.ico',
+            path: 'https://cote.azureedge.net/cote-strapi-uploads/undefined/assets/favicon_4cc365caaa.png?updated_at=2022-05-16T16:08:59.005Z',
         },
     },
     'strapi::public',

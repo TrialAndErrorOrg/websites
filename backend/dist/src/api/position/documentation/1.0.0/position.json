@@ -4,6 +4,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -19,7 +20,7 @@
                                                     "attributes": {
                                                         "type": "object",
                                                         "properties": {
-                                                            "Title": {
+                                                            "title": {
                                                                 "type": "string"
                                                             },
                                                             "description": {
@@ -28,6 +29,9 @@
                                                             "email": {
                                                                 "type": "string",
                                                                 "format": "email"
+                                                            },
+                                                            "department": {
+                                                                "type": "string"
                                                             },
                                                             "webflowId": {
                                                                 "type": "string"
@@ -368,7 +372,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -395,7 +401,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -422,7 +430,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -449,7 +459,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -476,7 +488,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -498,7 +512,9 @@
                         }
                     }
                 },
-                "tags": ["Position"],
+                "tags": [
+                    "Position"
+                ],
                 "parameters": [
                     {
                         "name": "sort",
@@ -581,11 +597,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/positions"
             },
             "post": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -599,7 +616,7 @@
                                                 "attributes": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "Title": {
+                                                        "title": {
                                                             "type": "string"
                                                         },
                                                         "description": {
@@ -608,6 +625,12 @@
                                                         "email": {
                                                             "type": "string",
                                                             "format": "email"
+                                                        },
+                                                        "department": {
+                                                            "type": "string"
+                                                        },
+                                                        "webflowId": {
+                                                            "type": "string"
                                                         },
                                                         "createdAt": {
                                                             "type": "string",
@@ -924,7 +947,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -951,7 +976,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -978,7 +1005,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1005,7 +1034,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1032,7 +1063,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1054,8 +1087,11 @@
                         }
                     }
                 },
-                "tags": ["Position"],
+                "tags": [
+                    "Position"
+                ],
                 "parameters": [],
+                "operationId": "post/positions",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1065,49 +1101,8 @@
                                     "data": {
                                         "type": "object",
                                         "properties": {
-                                            "Title": {
+                                            "title": {
                                                 "type": "string"
-                                            },
-                                            "description": {
-                                                "type": "string"
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "format": "email"
-                                            },
-                                            "createdAt": {
-                                                "type": "string",
-                                                "format": "date-time"
-                                            },
-                                            "updatedAt": {
-                                                "type": "string",
-                                                "format": "date-time"
-                                            },
-                                            "publishedAt": {
-                                                "type": "string",
-                                                "format": "date-time"
-                                            },
-                                            "createdBy": {
-                                                "oneOf": [
-                                                    {
-                                                        "type": "integer"
-                                                    },
-                                                    {
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "example": "string or id"
-                                            },
-                                            "updatedBy": {
-                                                "oneOf": [
-                                                    {
-                                                        "type": "integer"
-                                                    },
-                                                    {
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "example": "string or id"
                                             }
                                         }
                                     }
@@ -1122,6 +1117,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1135,7 +1131,7 @@
                                                 "attributes": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "Title": {
+                                                        "title": {
                                                             "type": "string"
                                                         },
                                                         "description": {
@@ -1144,6 +1140,12 @@
                                                         "email": {
                                                             "type": "string",
                                                             "format": "email"
+                                                        },
+                                                        "department": {
+                                                            "type": "string"
+                                                        },
+                                                        "webflowId": {
+                                                            "type": "string"
                                                         },
                                                         "createdAt": {
                                                             "type": "string",
@@ -1460,7 +1462,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1487,7 +1491,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1514,7 +1520,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1541,7 +1549,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1568,7 +1578,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1590,7 +1602,9 @@
                         }
                     }
                 },
-                "tags": ["Position"],
+                "tags": [
+                    "Position"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -1603,11 +1617,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/positions/{id}"
             },
             "put": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1621,7 +1636,7 @@
                                                 "attributes": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "Title": {
+                                                        "title": {
                                                             "type": "string"
                                                         },
                                                         "description": {
@@ -1630,6 +1645,12 @@
                                                         "email": {
                                                             "type": "string",
                                                             "format": "email"
+                                                        },
+                                                        "department": {
+                                                            "type": "string"
+                                                        },
+                                                        "webflowId": {
+                                                            "type": "string"
                                                         },
                                                         "createdAt": {
                                                             "type": "string",
@@ -1946,7 +1967,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -1973,7 +1996,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2000,7 +2025,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2027,7 +2054,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2054,7 +2083,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2076,7 +2107,9 @@
                         }
                     }
                 },
-                "tags": ["Position"],
+                "tags": [
+                    "Position"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -2089,6 +2122,7 @@
                         }
                     }
                 ],
+                "operationId": "put/positions/{id}",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2098,7 +2132,7 @@
                                     "data": {
                                         "type": "object",
                                         "properties": {
-                                            "Title": {
+                                            "title": {
                                                 "type": "string"
                                             },
                                             "description": {
@@ -2107,6 +2141,12 @@
                                             "email": {
                                                 "type": "string",
                                                 "format": "email"
+                                            },
+                                            "department": {
+                                                "type": "string"
+                                            },
+                                            "webflowId": {
+                                                "type": "string"
                                             },
                                             "createdAt": {
                                                 "type": "string",
@@ -2153,6 +2193,7 @@
             "delete": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2168,7 +2209,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2195,7 +2238,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2222,7 +2267,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2249,7 +2296,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2276,7 +2325,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "required": ["error"],
+                                    "required": [
+                                        "error"
+                                    ],
                                     "properties": {
                                         "error": {
                                             "type": "object",
@@ -2298,7 +2349,9 @@
                         }
                     }
                 },
-                "tags": ["Position"],
+                "tags": [
+                    "Position"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -2311,7 +2364,7 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "delete/positions/{id}"
             }
         }
     }

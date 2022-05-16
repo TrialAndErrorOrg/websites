@@ -4,6 +4,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -599,11 +600,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/jote-authors"
             },
             "post": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1095,6 +1097,7 @@
                     "Jote-author"
                 ],
                 "parameters": [],
+                "operationId": "post/jote-authors",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1170,6 +1173,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1672,11 +1676,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/jote-authors/{id}"
             },
             "put": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2179,6 +2184,7 @@
                         }
                     }
                 ],
+                "operationId": "put/jote-authors/{id}",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2252,6 +2258,7 @@
             "delete": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2422,7 +2429,7 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "delete/jote-authors/{id}"
             }
         }
     }

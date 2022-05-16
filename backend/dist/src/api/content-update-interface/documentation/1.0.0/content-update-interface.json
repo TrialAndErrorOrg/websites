@@ -4,6 +4,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1051,11 +1052,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/content-update-interfaces"
             },
             "post": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1999,6 +2001,7 @@
                     "Content-update-interface"
                 ],
                 "parameters": [],
+                "operationId": "post/content-update-interfaces",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2033,6 +2036,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2987,11 +2991,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/content-update-interfaces/{id}"
             },
             "put": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3946,6 +3951,7 @@
                         }
                     }
                 ],
+                "operationId": "put/content-update-interfaces/{id}",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4036,6 +4042,7 @@
             "delete": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -4206,7 +4213,7 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "delete/content-update-interfaces/{id}"
             }
         }
     }

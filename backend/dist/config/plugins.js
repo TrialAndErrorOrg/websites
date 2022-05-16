@@ -13,10 +13,6 @@ exports.default = ({ env }) => ({
                 defaultPath: 'assets',
                 maxConcurrent: 10,
             },
-            actionOptions: {
-                upload: {},
-                delete: {},
-            },
         },
     },
     // "rest-cache": {

@@ -4,6 +4,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1943,11 +1944,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/writers"
             },
             "post": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3783,6 +3785,7 @@
                     "Writer"
                 ],
                 "parameters": [],
+                "operationId": "post/writers",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3866,6 +3869,7 @@
             "get": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -5712,11 +5716,12 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "get/writers/{id}"
             },
             "put": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7563,6 +7568,7 @@
                         }
                     }
                 ],
+                "operationId": "put/writers/{id}",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -7644,6 +7650,7 @@
             "delete": {
                 "responses": {
                     "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7814,7 +7821,7 @@
                         }
                     }
                 ],
-                "requestBody": {}
+                "operationId": "delete/writers/{id}"
             }
         }
     }
