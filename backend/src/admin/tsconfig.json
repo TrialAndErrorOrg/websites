@@ -1,6 +1,0 @@
-{
-  "extends": "@strapi/typescript-utils/lib/configs/admin",
-  "compilerOptions": { "jsx": "react" },
-  "include": ["../plugins/**/admin/src/**/*", "./", "./**/*", "app.tsx"],
-  "exclude": ["node_modules/", "build/", "dist/", "**/*.test.ts"]
-}

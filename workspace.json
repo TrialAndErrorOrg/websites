@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "projects": {
+    "frontend": "apps/frontend",
+    "scripts": "libs/scripts",
+    "strapi": "apps/strapi",
+    "test": "apps/test",
+    "thesis": "apps/thesis",
+    "ui": "libs/ui",
+    "utils-try-catch": "libs/utils/try-catch",
+    "webhooks": "libs/webhooks"
+  }
+}

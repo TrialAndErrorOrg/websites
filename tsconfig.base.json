@@ -1,0 +1,43 @@
+{
+  "compileOnSave": false,
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "NodeNext",
+      "target": "ESNext"
+    },
+    "esm": true
+  },
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "esnext",
+    "module": "NodeNext",
+    "lib": ["es2021", "DOM"],
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipDefaultLibCheck": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@centertrialerror/frontend": ["apps/frontend"],
+      "@centertrialerror/scripts": ["libs/scripts/src/index.ts"],
+      "@centertrialerror/strapi": ["apps/strapi"],
+      "@centertrialerror/thesis": ["apps/thesis"],
+      "@centertrialerror/ui": ["libs/ui/src/index.ts"],
+      "@centertrialerror/webhooks": ["libs/webhooks/src/index.ts"],
+      "try-catch": ["libs/utils/try-catch/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
