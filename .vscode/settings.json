@@ -1,3 +1,6 @@
 {
-  "appService.zipIgnorePattern": ["node_modules{,/**}", ".vscode{,/**}"]
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "tailwindCSS.experimental.configFile": "/apps/frontend/tailwind.config.js",
+  "exportall.config.folderListener": ["/libs/types/src/lib/github"]
 }

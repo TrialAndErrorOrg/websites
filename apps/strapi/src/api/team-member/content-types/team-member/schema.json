@@ -1,0 +1,97 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_members",
+  "info": {
+    "singularName": "team-member",
+    "pluralName": "team-members",
+    "displayName": "Team Member",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "blog_author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::blog-author.blog-author",
+      "mappedBy": "team_member"
+    },
+    "show_pronouns": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "pronouns": {
+      "type": "string",
+      "regex": "((he|she|they|it)(\\/(her?|she|they|him|her|them|its?))+)",
+      "required": true
+    },
+    "webflowId": {
+      "type": "string",
+      "unique": true
+    },
+    "azureID": {
+      "type": "string",
+      "unique": true
+    },
+    "twitter": {
+      "type": "string",
+      "unique": true,
+      "regex": "https:\\/\\/twitter.com\\/.*"
+    },
+    "github": {
+      "type": "string",
+      "regex": "https://github.com/.*",
+      "unique": true
+    },
+    "orcid": {
+      "type": "string",
+      "regex": "https://orcid.org/.*",
+      "unique": true
+    },
+    "personalWebsite": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string",
+      "required": true
+    },
+    "department": {
+      "type": "enumeration",
+      "enum": [
+        "Editorial",
+        "Board",
+        "IT",
+        "Design",
+        "Outreach",
+        "Production"
+      ]
+    }
+  }
+}

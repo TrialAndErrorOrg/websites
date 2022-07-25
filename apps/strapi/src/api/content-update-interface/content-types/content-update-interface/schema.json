@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "content_update_interfaces",
+  "info": {
+    "singularName": "content-update-interface",
+    "pluralName": "content-update-interfaces",
+    "displayName": "Content-Update Interface",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "default": "title"
+    },
+    "body": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "string",
+      "default": "image"
+    },
+    "url": {
+      "type": "string",
+      "required": false
+    },
+    "slug": {
+      "type": "string"
+    },
+    "extraMaps": {
+      "type": "json"
+    },
+    "published": {
+      "type": "string",
+      "required": true
+    },
+    "by": {
+      "type": "string"
+    },
+    "update_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::update-category.update-category"
+    }
+  }
+}

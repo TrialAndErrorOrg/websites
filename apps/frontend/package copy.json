@@ -1,0 +1,15 @@
+{
+  "name": "zkp",
+  "license": "GPL-3-0-or-later",
+  "scripts": {
+    "dev": "next",
+    "build": "yarn setup && next build",
+    "start": "next start",
+    "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
+    "setup": "yarn ts-node scripts/setup.ts"
+  },
+  "repository": "https://github.com/thomasfkjorna/thesis-visualization",
+  "author": "Thomas F. K. Jorna <hello@tefkah.com>",
+  "devDependencies": {},
+  "dependencies": {}
+}

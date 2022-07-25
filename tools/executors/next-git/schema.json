@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/schema",
+
+  "type": "object",
+
+  "cli": "nx",
+
+  "properties": {
+    "remote": {
+      "type": "string",
+      "description": "where to pull the notes from"
+    },
+    "git": {
+      "type": "boolean",
+
+      "description": "Whether or not to do git",
+
+      "default": true
+    },
+    "gitDir": { "type": "string", "description": "Name of the git directory", "default": "git" },
+    "notesDir": {
+      "type": "string",
+      "description": "Name of the note directory",
+      "default": "notes"
+    },
+    "dir": {
+      "type": "string",
+      "description": "name/path of the folder containing the project",
+      "default": "apps/thesis"
+    }
+  }
+}

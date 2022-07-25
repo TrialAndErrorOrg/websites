@@ -1,0 +1,60 @@
+{
+  "sourceRoot": "apps/thesis",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "remote": "https://github.com/thomasfkjorna/thesis-writing",
+        "root": "apps/thesis",
+        "outputPath": "dist/apps/thesis"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "thesis:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "thesis:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "thesis:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "thesis:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/thesis"],
+      "options": {
+        "jestConfig": "apps/thesis/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/thesis/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

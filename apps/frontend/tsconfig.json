@@ -1,0 +1,27 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    // "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "types": ["jest", "node"],
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.d.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "**/[*].tsx",
+    "**/[...*].tsx",
+    "jest.config.js"
+  ],
+  "exclude": ["node_modules", "**/katexSlatePlugin.tsx"]
+}

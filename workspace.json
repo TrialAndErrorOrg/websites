@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "projects": {
+    "frontend": "apps/frontend",
+    "scripts": "libs/scripts",
+    "strapi": "apps/strapi",
+    "ui": "libs/ui",
+    "utils-try-catch": "libs/utils/try-catch",
+    "webhooks": "libs/webhooks"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "executors": {
+    "next-git": {
+      "implementation": "./impl",
+
+      "schema": "./schema.json",
+
+      "description": "Pulls note git repo into a different git folder in order to upload it to vercel, then builds Next project as normal."
+    }
+  }
+}

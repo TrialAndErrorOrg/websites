@@ -1,0 +1,43 @@
+{
+  "name": "strapi",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Backend CMS for COTE",
+  "dependencies": {
+    "@strapi/strapi": "4.3.0-beta.1",
+    "@webbio/strapi-plugin-scheduler": "^0.1.0",
+    "strapi-plugin-email-designer": "^2.1.1",
+    "strapi-plugin-notes": "^1.0.1",
+    "strapi-plugin-plausible": "^1.0.3",
+    "strapi-plugin-preview-button": "^0.3.4",
+    "strapi-plugin-react-editorjs": "^2.0.1",
+    "strapi-provider-upload-azure-storage": "^2.1.0"
+  },
+  "scripts": {
+    "dev": "yarn develop-strapi",
+    "sstart": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
+    "develop-strapi": "strapi develop --watch-admin",
+    "start-strapi": "strapi start",
+    "bbuild": "strapi build",
+    "sstrapi": "strapi",
+    "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
+    "clean": "rm -rf .cache .tmp",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "author": {
+    "name": "Thomas F. K. Jorna",
+    "email": "hello@tefkah.com"
+  },
+  "strapi": {
+    "template": "@strapi/template-blog@^1.0.0",
+    "starter": "@strapi/starter-next-blog"
+  },
+  "engines": {
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

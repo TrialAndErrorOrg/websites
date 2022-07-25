@@ -1,0 +1,16 @@
+{
+  "name": "@centertrialerror/webhooks",
+  "version": "0.0.1",
+  "license": "GPL-3-0-or-later",
+  "repository": "https://github.com/journaloftrialanderror/jote",
+  "author": "Thomas F. K. Jorna <hello@tefkah.com>",
+  "type": "module",
+  "description": "Legacy webhooks for communicating between strapi and webflow",
+  "keywords": [
+    "unified",
+    "abstract",
+    "syntax",
+    "tree",
+    "ast"
+  ]
+}
