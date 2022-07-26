@@ -4,11 +4,10 @@
   "license": "GPL-3-0-or-later",
   "scripts": {
     "start": "nx serve",
-    "build": "node scripts/clone/setup.mjs && yarn nx build --prod --verbose",
     "test": "nx test",
     "strapi-dev": "yarn --cwd apps/strapi dev",
     "strapi-develop": "yarn --cwd apps/strapi develop",
-    "strapi-build": "yarn --cwd apps/strapi build",
+    "strapi-build": "nx build strapi --production",
     "postinstall": "patch-package"
   },
   "private": true,

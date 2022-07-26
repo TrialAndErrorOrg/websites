@@ -25,14 +25,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
 
-      - run: 'yarn && yarn --cwd backend'
-      - run: NODE_ENV=production yarn --cwd backend build
+      - run: 'yarn'
+      - run: NODE_ENV=production yarn build
 
       - name: 'Clean up'
         run: 'yarn --cwd backend clean'
 
       - name: 'Tar files'
-        run: tar -cf node-app.tar ./backend
+        run: tar -cf node-app.tar ./dist/apps/strapi
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
