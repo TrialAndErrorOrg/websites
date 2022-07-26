@@ -28,9 +28,6 @@ jobs:
       - run: 'yarn'
       - run: NODE_ENV=production yarn build
 
-      - name: 'Clean up'
-        run: 'yarn --cwd backend clean'
-
       - name: 'Tar files'
         run: tar -cf node-app.tar ./dist/apps/strapi
 
