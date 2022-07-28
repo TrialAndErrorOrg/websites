@@ -15,7 +15,15 @@
     "strapi-plugin-plausible": "^1.0.3",
     "strapi-plugin-preview-button": "^0.3.4",
     "strapi-plugin-react-editorjs": "^2.0.1",
-    "strapi-provider-upload-azure-storage": "^2.1.0"
+    "strapi-provider-upload-azure-storage": "^2.1.0",
+    "@strapi/plugin-documentation": "^4.3.0",
+    "@strapi/plugin-graphql": "^4.3.0",
+    "@strapi/plugin-i18n": "^4.3.0",
+    "@strapi/plugin-users-permissions": "^4.3.0",
+    "passport-azure-ad-oauth2": "^0.0.4",
+    "passport-github2": "^0.1.12",
+    "lodash.set": "^4.3.2",
+    "pg": "^8.7.1"
   },
   "scripts": {
     "dev": "yarn develop-strapi",
@@ -27,7 +35,7 @@
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
     "clean": "rm -rf .cache .tmp",
     "develop": "strapi develop",
-    "start": "strapi start",
+    "start": "NODE_ENV=production strapi start",
     "build": "strapi build",
     "strapi": "strapi",
     "postinstall": "patch-package"

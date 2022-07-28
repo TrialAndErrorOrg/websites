@@ -54,7 +54,6 @@
     "next": "12.2.1",
     "next-auth": "^4.6.1",
     "next-compose-plugins": "^2.2.1",
-    "node-fetch": "3.2.6",
     "passport-azure-ad-oauth2": "^0.0.4",
     "passport-github2": "^0.1.12",
     "patch-package": "^6.4.7",
