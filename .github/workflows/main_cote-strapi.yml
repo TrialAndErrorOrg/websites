@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
 
@@ -25,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-          
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -38,21 +37,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - run: 'yarn'
-      - run: NODE_ENV=production yarn build
+      - run: 'yarn --cwd apps/strapi'
+      - run: NODE_ENV=production yarn --cwd apps/strapi build
 
-     
-#     - name: 'Tar files'
-#       run: touch node-app.tar.gz && tar -zcf node-app.tar.gz --exclude=node-app.tar.gz . 
-     
-      - name: 'zip that thang'
-        run: zip -r node-app.zip .
-     
+      - name: 'Tar files'
+        run: touch node-app.tar.gz && tar -zcf node-app.tar.gz --exclude=node-app.tar.gz .
+
+      # - name: 'zip that thang'
+      #   run: zip -r node-app.zip apps/strapi
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: node-app.zip
+          path: node-app.tar.gz
 
   deploy:
     runs-on: ubuntu-latest
@@ -67,10 +65,10 @@ jobs:
         with:
           name: node-app
 
-#      - name: 'Untar files'
-#        run: tar -xzf node-app.tar.gz
-#      - name: 'Cleanup Tar'
-#        run: rm node-app.tar.gz
+      - name: 'Untar files'
+        run: tar -xzf node-app.tar.gz
+      - name: 'Cleanup Tar'
+        run: rm node-app.tar.gz
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -79,4 +77,4 @@ jobs:
           app-name: 'cote-strapi'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48C35E5FD0E54E52AFC6BDFFE8471FA5 }}
-          package: node-app.zip
+          package: .
