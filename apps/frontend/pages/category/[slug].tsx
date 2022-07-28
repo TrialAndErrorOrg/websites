@@ -1,5 +1,6 @@
+import { GetStaticPaths, GetStaticProps } from "next"
 import Articles from "../../components/articles"
-import { fetchAPI } from "../../lib/api"
+// import { fetchAPI } from "../../lib/api"
 import Layout from "../../components/layout"
 import Seo from "../../components/seo"
 
@@ -22,7 +23,7 @@ const Category = ({ category, categories }) => {
   )
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const categoriesRes = await fetchAPI("/categories", { fields: ["slug"] })
 
   return {
@@ -35,7 +36,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const matchingCategories = await fetchAPI("/categories", {
     filters: { slug: params.slug },
     populate: {

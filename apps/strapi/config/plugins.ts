@@ -108,4 +108,14 @@ export default ({ env }) => ({
       model: 'scheduler',
     },
   },
+  seo: {
+    // pathToPlugin: '../../../node_modules/@strapi/plugin-seo',
+    enabled: true,
+  },
+  plausible: {
+    enabled: true,
+    config: {
+      sharedLink: 'https://plausible.io/share/trialanderror.org?auth=sl01pbHu02aH7rz2qb0VG',
+    },
+  },
 })

@@ -4,8 +4,12 @@
   "version": "0.1.0",
   "description": "Backend CMS for COTE",
   "dependencies": {
-    "@strapi/strapi": "4.3.0-beta.1",
+    "@strapi-newsletter/strapi": "^0.1.2",
+    "@strapi/plugin-seo": "^1.7.4",
+    "@strapi/strapi": "4.3.0",
     "@webbio/strapi-plugin-scheduler": "^0.1.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "strapi-plugin-email-designer": "^2.1.1",
     "strapi-plugin-notes": "^1.0.1",
     "strapi-plugin-plausible": "^1.0.3",
@@ -16,7 +20,7 @@
   "scripts": {
     "dev": "yarn develop-strapi",
     "sstart": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
-    "develop-strapi": "strapi develop --watch-admin",
+    "develop-strapi": "strapi ts:generate-types --verbose -o ../../libs/types/src/lib && strapi develop --watch-admin",
     "start-strapi": "strapi start",
     "bbuild": "strapi build",
     "sstrapi": "strapi",
@@ -25,7 +29,8 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "postinstall": "patch-package"
   },
   "author": {
     "name": "Thomas F. K. Jorna",

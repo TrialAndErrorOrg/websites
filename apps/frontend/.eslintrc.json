@@ -5,15 +5,19 @@
     "next/core-web-vitals",
     "../../.eslintrc.json"
   ],
-  "ignorePatterns": ["**/katexSlatePlugin.tsx", "!**/*", "**/katexSlatePlugin.tsx"],
+  "ignorePatterns": [
+    "**/katexSlatePlugin.tsx",
+    "!**/*",
+    "**/katexSlatePlugin.tsx"
+  ],
   "overrides": [
     {
       "files": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
       "parserOptions": {
-        "project": "apps/thesis/tsconfig.json"
+        "project": "apps/frontend/tsconfig.json"
       },
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/thesis/pages"]
+        "@next/next/no-html-link-for-pages": ["error", "apps/frontend/pages"]
       }
     },
     {

@@ -6,6 +6,7 @@
     "strapi": "apps/strapi",
     "ui": "libs/ui",
     "utils-try-catch": "libs/utils/try-catch",
-    "webhooks": "libs/webhooks"
+    "webhooks": "libs/webhooks",
+    "types": "libs/types"
   }
 }
