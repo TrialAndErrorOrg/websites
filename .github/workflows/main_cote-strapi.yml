@@ -29,7 +29,7 @@ jobs:
       - run: NODE_ENV=production yarn build
 
       - name: 'Tar files'
-        run: tar -cf node-app.tar ./dist/apps/strapi
+        run: tar -cf node-app.tar ./dist/apps/strapi package.json patches nx.json project.json yarn.lock
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
