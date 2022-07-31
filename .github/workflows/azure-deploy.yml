@@ -45,7 +45,7 @@ jobs:
 
       - name: 'Tar files'
         # run: cd apps/strapi && rm -rf .cache && tar -zvcf ../../node-app.tar.gz  .  && cd ../..
-        run: tar -zvcf node-app.tar.gz --exclude=node-app.tar.gz .
+        run: tar -zvcf ../../node-app.tar.gz .
         working-directory: ${{env.working-directory}}
 
       # - name: 'zip that thang'
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: apps/strapi/node-app.tar.gz
+          path: node-app.tar.gz
 
   deploy:
     env:
