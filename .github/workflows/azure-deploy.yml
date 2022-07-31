@@ -37,7 +37,7 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-yarn-
 
-      - run: 'yarn  --no-bin-links --cwd apps/strapi'
+      - run: 'yarn --cwd apps/strapi'
       - run: NODE_ENV=production yarn --cwd apps/strapi build
 
       - name: 'Tar files'
