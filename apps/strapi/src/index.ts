@@ -1,4 +1,4 @@
-import bootstrap from './bootstrap'
+// import bootstrap from './bootstrap'
 
 export default {
   /**
@@ -16,5 +16,6 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap,
+  // bootstrap,
+  bootstrap(/*{ strapi }*/) {},
 }
