@@ -37,9 +37,9 @@
     "clean": "rm -rf .cache .tmp",
     "develop": "strapi develop",
     "start": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
-    "build": "NODE_ENV=production strapi build",
+    "build": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js build",
     "strapi": "strapi",
-    "postinstall": "patch-package"
+    "postinstall": "node node_modules/patch-package/index.js"
   },
   "author": {
     "name": "Thomas F. K. Jorna",
