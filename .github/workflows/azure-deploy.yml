@@ -41,7 +41,7 @@ jobs:
       - run: NODE_ENV=production yarn --cwd apps/strapi build
 
       - name: 'Tar files'
-        run: cd apps/strapi && rm -rf .cache && tar -zcf ../../node-app.tar.gz . --exclude=node_modules && cd ../..
+        run: cd apps/strapi && rm -rf .cache && tar -zcf ../../node-app.tar.gz --exclude=node_modules .  && cd ../..
 
       # - name: 'zip that thang'
       #   run: zip -r node-app.zip apps/strapi
