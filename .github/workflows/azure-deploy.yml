@@ -11,6 +11,8 @@ on:
 
 jobs:
   build:
+    env:
+      working-directory: ./apps/thesis
     runs-on: ubuntu-latest
 
     strategy:
@@ -57,6 +59,8 @@ jobs:
           path: node-app.tar.gz
 
   deploy:
+    env:
+      working-directory: ./apps/thesis
     runs-on: ubuntu-latest
     needs: build
     environment:
