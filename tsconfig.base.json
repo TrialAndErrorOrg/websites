@@ -58,6 +58,9 @@
       ],
       "@/types": [
         "libs/types/src/index.ts"
+      ],
+      "@trialanderror/strapi": [
+        "libs/strapi-client/src/index.ts"
       ]
     }
   },
