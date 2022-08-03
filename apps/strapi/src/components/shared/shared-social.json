@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_shared_shared_socials",
+  "info": {
+    "displayName": "shared.social",
+    "icon": "share-alt"
+  },
+  "options": {},
+  "attributes": {
+    "socialNetwork": {
+      "type": "enumeration",
+      "enum": [
+        "facebook",
+        "twitter"
+      ],
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "maxLength": 65
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 60
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": false
+    }
+  }
+}

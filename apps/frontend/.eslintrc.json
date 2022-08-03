@@ -13,6 +13,7 @@
   "overrides": [
     {
       "files": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+      "excludedFiles": ["*.js"],
       "parserOptions": {
         "project": "apps/frontend/tsconfig.json"
       },

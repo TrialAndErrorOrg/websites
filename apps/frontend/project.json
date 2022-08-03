@@ -1,5 +1,5 @@
 {
-  "sourceRoot": "apps/thesis",
+  "sourceRoot": "apps/frontend",
   "projectType": "application",
   "targets": {
     "build": {
@@ -7,9 +7,9 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "remote": "https://github.com/thomasfkjorna/thesis-writing",
-        "root": "apps/thesis",
-        "outputPath": "dist/apps/thesis"
+        "remote": "https://github.com/thomasfkjorna/frontend-writing",
+        "root": "apps/frontend",
+        "outputPath": "dist/apps/frontend"
       },
       "configurations": {
         "development": {},
@@ -20,16 +20,16 @@
       "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "thesis:build",
+        "buildTarget": "frontend:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "thesis:build:development",
+          "buildTarget": "frontend:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "thesis:build:production",
+          "buildTarget": "frontend:build:production",
           "dev": false
         }
       }
@@ -37,14 +37,14 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "thesis:build:production"
+        "buildTarget": "frontend:build:production"
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/thesis"],
+      "outputs": ["coverage/apps/frontend"],
       "options": {
-        "jestConfig": "apps/thesis/jest.config.js",
+        "jestConfig": "apps/frontend/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -52,7 +52,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/thesis/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/frontend/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },

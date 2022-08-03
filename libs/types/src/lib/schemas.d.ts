@@ -17,12 +17,12 @@ import {
   DecimalAttribute,
   SetMinMax,
   TextAttribute,
-  BigIntegerAttribute,
-  RichTextAttribute,
   UIDAttribute,
+  SetPluginOptions,
   MediaAttribute,
-  SingleTypeSchema,
+  RichTextAttribute,
   ComponentAttribute,
+  SingleTypeSchema,
   ComponentSchema,
 } from '@strapi/strapi'
 
@@ -237,6 +237,7 @@ export interface PluginUploadFile extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::upload.file', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -275,6 +276,7 @@ export interface PluginUploadFolder extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::upload.folder', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -322,6 +324,7 @@ export interface PluginEmailDesignerEmailTemplate extends CollectionTypeSchema {
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -354,16 +357,19 @@ export interface PluginEntityNotesNote extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::entity-notes.note', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
-export interface PluginSchedulerScheduler extends CollectionTypeSchema {
+export interface PluginPublisherAction extends CollectionTypeSchema {
   info: {
-    collectionName: 'scheduler'
-    singularName: 'scheduler'
-    pluralName: 'scheduler'
-    displayName: 'scheduler'
-    description: ''
+    singularName: 'action'
+    pluralName: 'actions'
+    displayName: 'actions'
+  }
+  options: {
+    draftAndPublish: false
+    comment: ''
   }
   pluginOptions: {
     'content-manager': {
@@ -374,16 +380,201 @@ export interface PluginSchedulerScheduler extends CollectionTypeSchema {
     }
   }
   attributes: {
-    scheduledDatetime: DateTimeAttribute
-    uid: StringAttribute
-    contentId: BigIntegerAttribute
-    scheduleType: StringAttribute
+    executeAt: DateTimeAttribute
+    mode: StringAttribute
+    entityId: IntegerAttribute
+    entitySlug: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::scheduler.scheduler', 'oneToOne', 'admin::user'> &
+    createdBy: RelationAttribute<'plugin::publisher.action', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::scheduler.scheduler', 'oneToOne', 'admin::user'> &
+    updatedBy: RelationAttribute<'plugin::publisher.action', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginNavigationAudience extends CollectionTypeSchema {
+  info: {
+    singularName: 'audience'
+    pluralName: 'audiences'
+    displayName: 'Audience'
+    name: 'audience'
+  }
+  options: {
+    increments: true
+    comment: 'Audience'
+  }
+  attributes: {
+    name: StringAttribute & RequiredAttribute
+    key: UIDAttribute<'plugin::navigation.audience', 'name'>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::navigation.audience', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::navigation.audience', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginNavigationNavigation extends CollectionTypeSchema {
+  info: {
+    singularName: 'navigation'
+    pluralName: 'navigations'
+    displayName: 'Navigation'
+    name: 'navigation'
+  }
+  options: {
+    increments: true
+    comment: ''
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    name: TextAttribute & RequiredAttribute
+    slug: UIDAttribute & RequiredAttribute
+    visible: BooleanAttribute & DefaultTo<false>
+    items: RelationAttribute<
+      'plugin::navigation.navigation',
+      'oneToMany',
+      'plugin::navigation.navigation-item'
+    >
+    localizations: RelationAttribute<
+      'plugin::navigation.navigation',
+      'oneToMany',
+      'plugin::navigation.navigation'
+    >
+    localeCode: StringAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::navigation.navigation', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::navigation.navigation', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginNavigationNavigationItem extends CollectionTypeSchema {
+  info: {
+    singularName: 'navigation-item'
+    pluralName: 'navigation-items'
+    displayName: 'Navigation Item'
+    name: 'navigation-item'
+  }
+  options: {
+    increments: true
+    timestamps: true
+    comment: 'Navigation Item'
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+    i18n: {
+      localized: false
+    }
+  }
+  attributes: {
+    title: TextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: false
+        }
+      }>
+    type: EnumerationAttribute<['INTERNAL', 'EXTERNAL', 'WRAPPER']> & DefaultTo<'INTERNAL'>
+    path: TextAttribute
+    externalPath: TextAttribute
+    uiRouterKey: StringAttribute
+    menuAttached: BooleanAttribute & DefaultTo<false>
+    order: IntegerAttribute & DefaultTo<0>
+    collapsed: BooleanAttribute & DefaultTo<false>
+    related: RelationAttribute<
+      'plugin::navigation.navigation-item',
+      'oneToOne',
+      'plugin::navigation.navigations-items-related'
+    >
+    parent: RelationAttribute<
+      'plugin::navigation.navigation-item',
+      'oneToOne',
+      'plugin::navigation.navigation-item'
+    >
+    master: RelationAttribute<
+      'plugin::navigation.navigation-item',
+      'manyToOne',
+      'plugin::navigation.navigation'
+    >
+    audience: RelationAttribute<
+      'plugin::navigation.navigation-item',
+      'oneToMany',
+      'plugin::navigation.audience'
+    >
+    additionalFields: JSONAttribute & DefaultTo<{}>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::navigation.navigation-item', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::navigation.navigation-item', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginNavigationNavigationsItemsRelated extends CollectionTypeSchema {
+  info: {
+    singularName: 'navigations-items-related'
+    pluralName: 'navigations-items-relateds'
+    displayName: 'Navigations Items Related'
+    name: 'navigations_items_related'
+  }
+  options: {
+    increments: true
+    timestamps: false
+    populateCreatorFields: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+    i18n: {
+      localized: false
+    }
+  }
+  attributes: {
+    related_id: StringAttribute & RequiredAttribute
+    related_type: StringAttribute & RequiredAttribute
+    field: StringAttribute & RequiredAttribute
+    order: IntegerAttribute & RequiredAttribute
+    master: StringAttribute & RequiredAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<
+      'plugin::navigation.navigations-items-related',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    updatedBy: RelationAttribute<
+      'plugin::navigation.navigations-items-related',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -421,6 +612,7 @@ export interface PluginStrapiNewsletterNewsletter extends CollectionTypeSchema {
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -459,6 +651,281 @@ export interface PluginStrapiNewsletterSubscribedUser extends CollectionTypeSche
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginUsersPermissionsPermission extends CollectionTypeSchema {
+  info: {
+    name: 'permission'
+    description: ''
+    singularName: 'permission'
+    pluralName: 'permissions'
+    displayName: 'Permission'
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    action: StringAttribute & RequiredAttribute
+    role: RelationAttribute<
+      'plugin::users-permissions.permission',
+      'manyToOne',
+      'plugin::users-permissions.role'
+    >
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<
+      'plugin::users-permissions.permission',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    updatedBy: RelationAttribute<
+      'plugin::users-permissions.permission',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+  }
+}
+
+export interface PluginUsersPermissionsRole extends CollectionTypeSchema {
+  info: {
+    name: 'role'
+    description: ''
+    singularName: 'role'
+    pluralName: 'roles'
+    displayName: 'Role'
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    name: StringAttribute &
+      RequiredAttribute &
+      SetMinMaxLength<{
+        minLength: 3
+      }>
+    description: StringAttribute
+    type: StringAttribute & UniqueAttribute
+    permissions: RelationAttribute<
+      'plugin::users-permissions.role',
+      'oneToMany',
+      'plugin::users-permissions.permission'
+    >
+    users: RelationAttribute<
+      'plugin::users-permissions.role',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::users-permissions.role', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::users-permissions.role', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+  }
+}
+
+export interface PluginUsersPermissionsUser extends CollectionTypeSchema {
+  info: {
+    name: 'user'
+    description: ''
+    singularName: 'user'
+    pluralName: 'users'
+    displayName: 'User'
+  }
+  options: {
+    draftAndPublish: false
+    timestamps: true
+  }
+  attributes: {
+    username: StringAttribute &
+      RequiredAttribute &
+      UniqueAttribute &
+      SetMinMaxLength<{
+        minLength: 3
+      }>
+    email: EmailAttribute &
+      RequiredAttribute &
+      SetMinMaxLength<{
+        minLength: 6
+      }>
+    provider: StringAttribute
+    password: PasswordAttribute &
+      PrivateAttribute &
+      SetMinMaxLength<{
+        minLength: 6
+      }>
+    resetPasswordToken: StringAttribute & PrivateAttribute
+    confirmationToken: StringAttribute & PrivateAttribute
+    confirmed: BooleanAttribute & DefaultTo<false>
+    blocked: BooleanAttribute & DefaultTo<false>
+    role: RelationAttribute<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'plugin::users-permissions.role'
+    >
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::users-permissions.user', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::users-permissions.user', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginStrapiStripeStrapiStripeProduct extends CollectionTypeSchema {
+  info: {
+    tableName: 'StrapiStripeProduct'
+    singularName: 'strapi-stripe-product'
+    pluralName: 'strapi-stripe-products'
+    displayName: 'Product'
+    description: 'Stripe Products'
+    kind: 'collectionType'
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetMinMax<{
+        min: 1
+      }>
+    slug: UIDAttribute<'plugin::strapi-stripe.strapi-stripe-product', 'title'> &
+      RequiredAttribute &
+      UniqueAttribute
+    description: StringAttribute &
+      RequiredAttribute &
+      SetMinMax<{
+        min: 1
+      }>
+    price: DecimalAttribute & RequiredAttribute
+    currency: StringAttribute &
+      RequiredAttribute &
+      SetMinMax<{
+        min: 1
+      }>
+    productImage: MediaAttribute & RequiredAttribute
+    isSubscription: BooleanAttribute & DefaultTo<false>
+    interval: StringAttribute
+    trialPeriodDays: IntegerAttribute
+    stripeProductId: StringAttribute &
+      RequiredAttribute &
+      SetMinMax<{
+        min: 3
+      }>
+    stripePriceId: StringAttribute &
+      SetMinMax<{
+        min: 3
+      }>
+    stripePlanId: StringAttribute &
+      SetMinMax<{
+        min: 3
+      }>
+    stripePayment: RelationAttribute<
+      'plugin::strapi-stripe.strapi-stripe-product',
+      'oneToMany',
+      'plugin::strapi-stripe.strapi-stripe-payment'
+    >
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<
+      'plugin::strapi-stripe.strapi-stripe-product',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    updatedBy: RelationAttribute<
+      'plugin::strapi-stripe.strapi-stripe-product',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginStrapiStripeStrapiStripePayment extends CollectionTypeSchema {
+  info: {
+    tableName: 'StrapiStripePayment'
+    singularName: 'strapi-stripe-payment'
+    pluralName: 'strapi-stripe-payments'
+    displayName: 'Payment'
+    description: 'Stripe Payment'
+    kind: 'collectionType'
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    txnDate: DateTimeAttribute & RequiredAttribute
+    transactionId: StringAttribute &
+      RequiredAttribute &
+      SetMinMaxLength<{
+        maxLength: 250
+      }>
+    isTxnSuccessful: BooleanAttribute & DefaultTo<false>
+    txnMessage: StringAttribute &
+      SetMinMaxLength<{
+        maxLength: 5000
+      }>
+    txnErrorMessage: StringAttribute &
+      SetMinMaxLength<{
+        maxLength: 250
+      }>
+    txnAmount: DecimalAttribute & RequiredAttribute
+    customerName: StringAttribute & RequiredAttribute
+    customerEmail: StringAttribute & RequiredAttribute
+    stripeProduct: RelationAttribute<
+      'plugin::strapi-stripe.strapi-stripe-payment',
+      'manyToOne',
+      'plugin::strapi-stripe.strapi-stripe-product'
+    >
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<
+      'plugin::strapi-stripe.strapi-stripe-payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    updatedBy: RelationAttribute<
+      'plugin::strapi-stripe.strapi-stripe-payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -468,6 +935,7 @@ export interface ApiArticleArticle extends CollectionTypeSchema {
     pluralName: 'articles'
     displayName: 'Article'
     name: 'article'
+    description: ''
   }
   options: {
     increments: true
@@ -482,6 +950,7 @@ export interface ApiArticleArticle extends CollectionTypeSchema {
     category: RelationAttribute<'api::article.article', 'manyToOne', 'api::category.category'>
     image: MediaAttribute
     author: RelationAttribute<'api::article.article', 'manyToOne', 'api::writer.writer'>
+    seo: ComponentAttribute<'shared.seo'> & RequiredAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -489,6 +958,7 @@ export interface ApiArticleArticle extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::article.article', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -533,6 +1003,7 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -575,6 +1046,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::blog-post.blog-post', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -599,6 +1071,7 @@ export interface ApiCategoryCategory extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::category.category', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -634,6 +1107,7 @@ export interface ApiContentContentInterfaceContentContentInterface extends Colle
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -677,6 +1151,7 @@ export interface ApiContentUpdateInterfaceContentUpdateInterface extends Collect
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -697,6 +1172,7 @@ export interface ApiDepartmentDepartment extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::department.department', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -723,6 +1199,7 @@ export interface ApiEditorEditor extends CollectionTypeSchema {
     publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::editor.editor', 'oneToOne', 'admin::user'> & PrivateAttribute
     updatedBy: RelationAttribute<'api::editor.editor', 'oneToOne', 'admin::user'> & PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -746,6 +1223,7 @@ export interface ApiGlobalGlobal extends SingleTypeSchema {
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::global.global', 'oneToOne', 'admin::user'> & PrivateAttribute
     updatedBy: RelationAttribute<'api::global.global', 'oneToOne', 'admin::user'> & PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -769,6 +1247,7 @@ export interface ApiHomepageHomepage extends SingleTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::homepage.homepage', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -789,6 +1268,7 @@ export interface ApiInitiativeInitiative extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::initiative.initiative', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -830,6 +1310,7 @@ export interface ApiJoteArticleJoteArticle extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::jote-article.jote-article', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -867,6 +1348,7 @@ export interface ApiJoteArticleCategoryJoteArticleCategory extends CollectionTyp
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -893,6 +1375,7 @@ export interface ApiJoteAuthorJoteAuthor extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::jote-author.jote-author', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -919,6 +1402,7 @@ export interface ApiPositionPosition extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::position.position', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -940,6 +1424,7 @@ export interface ApiTagTag extends CollectionTypeSchema {
     publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::tag.tag', 'oneToOne', 'admin::user'> & PrivateAttribute
     updatedBy: RelationAttribute<'api::tag.tag', 'oneToOne', 'admin::user'> & PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -983,6 +1468,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -1017,6 +1503,7 @@ export interface ApiUpdateCategoryUpdateCategory extends CollectionTypeSchema {
       'admin::user'
     > &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -1040,6 +1527,7 @@ export interface ApiWriterWriter extends CollectionTypeSchema {
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::writer.writer', 'oneToOne', 'admin::user'> & PrivateAttribute
     updatedBy: RelationAttribute<'api::writer.writer', 'oneToOne', 'admin::user'> & PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
@@ -1087,9 +1575,18 @@ declare global {
       'plugin::upload.folder': PluginUploadFolder
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate
       'plugin::entity-notes.note': PluginEntityNotesNote
-      'plugin::scheduler.scheduler': PluginSchedulerScheduler
+      'plugin::publisher.action': PluginPublisherAction
+      'plugin::navigation.audience': PluginNavigationAudience
+      'plugin::navigation.navigation': PluginNavigationNavigation
+      'plugin::navigation.navigation-item': PluginNavigationNavigationItem
+      'plugin::navigation.navigations-items-related': PluginNavigationNavigationsItemsRelated
       'plugin::strapi-newsletter.newsletter': PluginStrapiNewsletterNewsletter
       'plugin::strapi-newsletter.subscribed-user': PluginStrapiNewsletterSubscribedUser
+      'plugin::users-permissions.permission': PluginUsersPermissionsPermission
+      'plugin::users-permissions.role': PluginUsersPermissionsRole
+      'plugin::users-permissions.user': PluginUsersPermissionsUser
+      'plugin::strapi-stripe.strapi-stripe-product': PluginStrapiStripeStrapiStripeProduct
+      'plugin::strapi-stripe.strapi-stripe-payment': PluginStrapiStripeStrapiStripePayment
       'api::article.article': ApiArticleArticle
       'api::blog-author.blog-author': ApiBlogAuthorBlogAuthor
       'api::blog-post.blog-post': ApiBlogPostBlogPost

@@ -101,13 +101,13 @@ export default ({ env }) => ({
   'entity-notes': {
     enabled: true,
   },
-  scheduler: {
-    enabled: true,
-    // pathToPlugin: '../../../node_modules/strapi-plugin-scheduler',
-    config: {
-      model: 'scheduler',
-    },
-  },
+  // scheduler: {
+  //   enabled: true,
+  //   // pathToPlugin: '../../../node_modules/strapi-plugin-scheduler',
+  //   config: {
+  //     model: 'scheduler',
+  //   },
+  // },
   seo: {
     // pathToPlugin: '../../../node_modules/@strapi/plugin-seo',
     enabled: true,
@@ -117,5 +117,31 @@ export default ({ env }) => ({
     config: {
       sharedLink: 'https://plausible.io/share/trialanderror.org?auth=sl01pbHu02aH7rz2qb0VG',
     },
+  },
+  'vercel-deploy': {
+    enabled: true,
+    config: {
+      deployHook: env('VERCEL_DEPLOY_PLUGIN_HOOK'),
+      apiToken: env('VERCEL_DEPLOY_PLUGIN_API_TOKEN'),
+      teamFilter: env('VERCEL_DEPLOY_PLUGIN_TEAM_FILTER'),
+      roles: ['strapi-super-admin'],
+    },
+  },
+  slugify: {
+    enabled: true,
+    config: {
+      contentTypes: {
+        article: {
+          field: 'slug',
+          references: 'title',
+        },
+      },
+    },
+  },
+  publisher: {
+    enabled: true,
+  },
+  navigation: {
+    enabled: true,
   },
 })
