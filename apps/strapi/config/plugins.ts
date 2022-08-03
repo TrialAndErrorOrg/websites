@@ -121,9 +121,9 @@ export default ({ env }) => ({
   'vercel-deploy': {
     enabled: true,
     config: {
-      deployHook: env('VERCEL_DEPLOY_PLUGIN_HOOK'),
-      apiToken: env('VERCEL_DEPLOY_PLUGIN_API_TOKEN'),
-      teamFilter: env('VERCEL_DEPLOY_PLUGIN_TEAM_FILTER'),
+      deployHook: process.env.VERCEL_DEPLOY_PLUGIN_HOOK,
+      apiToken: process.env.VERCEL_DEPLOY_PLUGIN_API_TOKEN,
+      teamFilter: process.env.VERCEL_DEPLOY_PLUGIN_TEAM_FILTER,
       roles: ['strapi-super-admin'],
     },
   },
@@ -131,9 +131,21 @@ export default ({ env }) => ({
     enabled: true,
     config: {
       contentTypes: {
-        article: {
+        blog_post: {
           field: 'slug',
           references: 'title',
+        },
+        blog_author: {
+          field: 'slug',
+          references: 'lastName',
+        },
+        tag: {
+          field: 'slug',
+          references: 'title',
+        },
+        team_member: {
+          field: 'slug',
+          references: 'lastName',
         },
       },
     },

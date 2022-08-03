@@ -970,7 +970,7 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     description: ''
   }
   options: {
-    draftAndPublish: true
+    draftAndPublish: false
   }
   attributes: {
     firstName: StringAttribute & RequiredAttribute
@@ -987,7 +987,6 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
       'manyToMany',
       'api::blog-post.blog-post'
     >
-    webflowId: StringAttribute
     team_member: RelationAttribute<
       'api::blog-author.blog-author',
       'oneToOne',
@@ -996,9 +995,9 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     twitter: StringAttribute
     github: StringAttribute
     orcid: StringAttribute
+    slug: UIDAttribute<'api::blog-author.blog-author', 'lastName'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
@@ -1030,15 +1029,15 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
       SetMinMaxLength<{
         maxLength: 200
       }>
-    tags: RelationAttribute<'api::blog-post.blog-post', 'oneToMany', 'api::tag.tag'>
     blog_authors: RelationAttribute<
       'api::blog-post.blog-post',
       'manyToMany',
       'api::blog-author.blog-author'
     >
-    webflowId: StringAttribute
-    updateId: StringAttribute
     publishDate: DateTimeAttribute
+    slug: UIDAttribute<'api::blog-post.blog-post', 'title'>
+    blog_tags: RelationAttribute<'api::blog-post.blog-post', 'manyToMany', 'api::tag.tag'>
+    SEO: ComponentAttribute<'shared.seo'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -1070,86 +1069,6 @@ export interface ApiCategoryCategory extends CollectionTypeSchema {
     createdBy: RelationAttribute<'api::category.category', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::category.category', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface ApiContentContentInterfaceContentContentInterface extends CollectionTypeSchema {
-  info: {
-    singularName: 'content-content-interface'
-    pluralName: 'content-content-interfaces'
-    displayName: 'Content-Content Interface'
-    description: 'Interface between Strapi and Webflow content for e.g. blog posts.'
-  }
-  options: {
-    draftAndPublish: true
-  }
-  attributes: {
-    type: StringAttribute & RequiredAttribute
-    webflowCollectionId: StringAttribute & RequiredAttribute
-    needsUpdate: BooleanAttribute & RequiredAttribute & DefaultTo<true>
-    map: JSONAttribute & RequiredAttribute
-    extraMaps: JSONAttribute
-    references: StringAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'api::content-content-interface.content-content-interface',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    updatedBy: RelationAttribute<
-      'api::content-content-interface.content-content-interface',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface ApiContentUpdateInterfaceContentUpdateInterface extends CollectionTypeSchema {
-  info: {
-    singularName: 'content-update-interface'
-    pluralName: 'content-update-interfaces'
-    displayName: 'Content-Update Interface'
-    description: ''
-  }
-  options: {
-    draftAndPublish: true
-  }
-  attributes: {
-    type: StringAttribute & RequiredAttribute & UniqueAttribute
-    name: StringAttribute & RequiredAttribute & DefaultTo<'title'>
-    body: StringAttribute & RequiredAttribute
-    image: StringAttribute & DefaultTo<'image'>
-    url: StringAttribute
-    slug: StringAttribute
-    extraMaps: JSONAttribute
-    published: StringAttribute & RequiredAttribute
-    by: StringAttribute
-    update_category: RelationAttribute<
-      'api::content-update-interface.content-update-interface',
-      'oneToOne',
-      'api::update-category.update-category'
-    >
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'api::content-update-interface.content-update-interface',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    updatedBy: RelationAttribute<
-      'api::content-update-interface.content-update-interface',
-      'oneToOne',
-      'admin::user'
-    > &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -1301,7 +1220,6 @@ export interface ApiJoteArticleJoteArticle extends CollectionTypeSchema {
     >
     doi: StringAttribute & RequiredAttribute & UniqueAttribute
     references: JSONAttribute
-    webflowId: StringAttribute & UniqueAttribute
     updateId: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
@@ -1387,17 +1305,15 @@ export interface ApiPositionPosition extends CollectionTypeSchema {
     description: ''
   }
   options: {
-    draftAndPublish: true
+    draftAndPublish: false
   }
   attributes: {
     title: StringAttribute & RequiredAttribute & UniqueAttribute
     description: RichTextAttribute
     email: EmailAttribute
     department: StringAttribute
-    webflowId: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::position.position', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::position.position', 'oneToOne', 'admin::user'> &
@@ -1410,18 +1326,23 @@ export interface ApiTagTag extends CollectionTypeSchema {
   info: {
     singularName: 'tag'
     pluralName: 'tags'
-    displayName: 'Tag'
+    displayName: 'Blog Tag'
     description: ''
   }
   options: {
-    draftAndPublish: true
+    draftAndPublish: false
   }
   attributes: {
-    title: StringAttribute & RequiredAttribute
-    webflowId: StringAttribute
+    title: StringAttribute &
+      RequiredAttribute &
+      UniqueAttribute &
+      SetMinMaxLength<{
+        maxLength: 25
+      }>
+    slug: UIDAttribute<'api::tag.tag', 'title'>
+    blog_posts: RelationAttribute<'api::tag.tag', 'manyToMany', 'api::blog-post.blog-post'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::tag.tag', 'oneToOne', 'admin::user'> & PrivateAttribute
     updatedBy: RelationAttribute<'api::tag.tag', 'oneToOne', 'admin::user'> & PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
@@ -1436,7 +1357,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     description: ''
   }
   options: {
-    draftAndPublish: true
+    draftAndPublish: false
   }
   attributes: {
     firstName: StringAttribute & RequiredAttribute
@@ -1451,7 +1372,6 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     >
     show_pronouns: BooleanAttribute & RequiredAttribute & DefaultTo<true>
     pronouns: StringAttribute & RequiredAttribute
-    webflowId: StringAttribute & UniqueAttribute
     azureID: StringAttribute & UniqueAttribute
     twitter: StringAttribute & UniqueAttribute
     github: StringAttribute & UniqueAttribute
@@ -1461,9 +1381,9 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     department: EnumerationAttribute<
       ['Editorial', 'Board', 'IT', 'Design', 'Outreach', 'Production']
     >
+    slug: UIDAttribute<'api::team-member.team-member', 'lastName'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
@@ -1480,17 +1400,15 @@ export interface ApiUpdateCategoryUpdateCategory extends CollectionTypeSchema {
     description: ''
   }
   options: {
-    draftAndPublish: true
+    draftAndPublish: false
   }
   attributes: {
     title: StringAttribute & RequiredAttribute
     symbol: MediaAttribute & RequiredAttribute
     in: StringAttribute
     inurl: StringAttribute
-    webflowId: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<
       'api::update-category.update-category',
       'oneToOne',
@@ -1555,12 +1473,41 @@ export interface SectionsHero extends ComponentSchema {
 export interface SharedSeo extends ComponentSchema {
   info: {
     name: 'Seo'
-    icon: 'allergies'
+    icon: 'search'
+    displayName: 'SEO'
+    description: ''
   }
   attributes: {
     metaTitle: StringAttribute & RequiredAttribute
     metaDescription: TextAttribute & RequiredAttribute
     shareImage: MediaAttribute
+    metaSocial: ComponentAttribute<'shared.shared-social', true> & RequiredAttribute
+    keywords: TextAttribute
+    metaRobots: StringAttribute
+    structuredData: JSONAttribute
+    metaViewport: StringAttribute
+    canonicalURL: StringAttribute
+  }
+}
+
+export interface SharedSharedSocial extends ComponentSchema {
+  info: {
+    displayName: 'shared.social'
+    icon: 'share-alt'
+  }
+  attributes: {
+    socialNetwork: EnumerationAttribute<['facebook', 'twitter']> & RequiredAttribute
+    description: TextAttribute &
+      RequiredAttribute &
+      SetMinMaxLength<{
+        maxLength: 65
+      }>
+    title: StringAttribute &
+      RequiredAttribute &
+      SetMinMaxLength<{
+        maxLength: 60
+      }>
+    image: MediaAttribute
   }
 }
 
@@ -1591,8 +1538,6 @@ declare global {
       'api::blog-author.blog-author': ApiBlogAuthorBlogAuthor
       'api::blog-post.blog-post': ApiBlogPostBlogPost
       'api::category.category': ApiCategoryCategory
-      'api::content-content-interface.content-content-interface': ApiContentContentInterfaceContentContentInterface
-      'api::content-update-interface.content-update-interface': ApiContentUpdateInterfaceContentUpdateInterface
       'api::department.department': ApiDepartmentDepartment
       'api::editor.editor': ApiEditorEditor
       'api::global.global': ApiGlobalGlobal
@@ -1609,6 +1554,7 @@ declare global {
       'cote.position-or-editor': CotePositionOrEditor
       'sections.hero': SectionsHero
       'shared.seo': SharedSeo
+      'shared.shared-social': SharedSharedSocial
     }
   }
 }

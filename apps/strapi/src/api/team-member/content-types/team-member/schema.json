@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -52,10 +52,6 @@
       "regex": "((he|she|they|it)(\\/(her?|she|they|him|her|them|its?))+)",
       "required": true
     },
-    "webflowId": {
-      "type": "string",
-      "unique": true
-    },
     "azureID": {
       "type": "string",
       "unique": true
@@ -92,6 +88,10 @@
         "Outreach",
         "Production"
       ]
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "lastName"
     }
   }
 }

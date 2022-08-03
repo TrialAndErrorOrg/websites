@@ -20,12 +20,14 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "metaSocial": {
       "displayName": "shared.social",
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "shared.shared-social",
       "required": true
     },

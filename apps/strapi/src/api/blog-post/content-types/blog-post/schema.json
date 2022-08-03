@@ -34,25 +34,29 @@
       "required": true,
       "maxLength": 200
     },
-    "tags": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::tag.tag"
-    },
     "blog_authors": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::blog-author.blog-author",
       "inversedBy": "blog_posts"
     },
-    "webflowId": {
-      "type": "string"
-    },
-    "updateId": {
-      "type": "string"
-    },
     "publishDate": {
       "type": "datetime"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "blog_tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "blog_posts"
+    },
+    "SEO": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }

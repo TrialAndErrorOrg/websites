@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -42,9 +42,6 @@
       "target": "api::blog-post.blog-post",
       "mappedBy": "blog_authors"
     },
-    "webflowId": {
-      "type": "string"
-    },
     "team_member": {
       "type": "relation",
       "relation": "oneToOne",
@@ -62,6 +59,10 @@
     "orcid": {
       "type": "string",
       "regex": "https://orcid.org/.*"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "lastName"
     }
   }
 }

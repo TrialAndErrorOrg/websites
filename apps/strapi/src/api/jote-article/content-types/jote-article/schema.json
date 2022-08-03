@@ -55,10 +55,6 @@
     "references": {
       "type": "json"
     },
-    "webflowId": {
-      "type": "string",
-      "unique": true
-    },
     "updateId": {
       "type": "string"
     }

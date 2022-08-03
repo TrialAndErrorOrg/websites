@@ -4,21 +4,30 @@
   "info": {
     "singularName": "tag",
     "pluralName": "tags",
-    "displayName": "Tag",
+    "displayName": "Blog Tag",
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string",
       "required": true,
-      "regex": "[^A-Z]"
+      "regex": "[^A-Z]",
+      "unique": true,
+      "maxLength": 25
     },
-    "webflowId": {
-      "type": "string"
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "blog_posts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog-post.blog-post",
+      "mappedBy": "blog_tags"
     }
   }
 }

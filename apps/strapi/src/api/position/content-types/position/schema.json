@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -25,7 +25,6 @@
     },
     "department": {
       "type": "string"
-    },
-    "webflowId": { "type": "string" }
+    }
   }
 }
