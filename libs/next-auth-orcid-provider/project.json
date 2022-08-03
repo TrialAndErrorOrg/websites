@@ -1,0 +1,34 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/next-auth-orcid-provider/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/next-auth-orcid-provider",
+        "tsConfig": "libs/next-auth-orcid-provider/tsconfig.lib.json",
+        "packageJson": "libs/next-auth-orcid-provider/package.json",
+        "main": "libs/next-auth-orcid-provider/src/index.ts",
+        "assets": ["libs/next-auth-orcid-provider/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/next-auth-orcid-provider/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/next-auth-orcid-provider"],
+      "options": {
+        "jestConfig": "libs/next-auth-orcid-provider/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
