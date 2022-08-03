@@ -1,24 +1,29 @@
+import { withTRPC } from "@trpc/next"
+import superjson from "superjson"
 import App, { AppProps } from "next/app"
 import Head from "next/head"
 import "../assets/css/style.css"
 import { createContext } from "react"
-import { fetchAPI } from "../lib/api"
-import { getStrapiMedia } from "../lib/media"
+import { SessionProvider } from "next-auth/react"
+// import { fetchAPI } from "../lib/api"
+// import { getStrapiMedia } from "../lib/media"
+import { AppRouter } from "../server/router"
 
 // Store Strapi Global object in context
 export const GlobalContext = createContext({})
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  const { global } = pageProps
-
-  return (
-    <>
-      {/* <GlobalContext.Provider value={global?.attributes}> */}
+const MyApp = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) => (
+  <>
+    {/* <GlobalContext.Provider value={global?.attributes}> */}
+    <SessionProvider session={session}>
       <Component {...pageProps} />
-      {/* </GlobalContext.Provider> */}
-    </>
-  )
-}
+    </SessionProvider>
+    {/* </GlobalContext.Provider> */}
+  </>
+)
 
 // getInitialProps disables automatic static optimization for pages that don't
 // have getStaticProps. So article, category and home pages still get SSG.
@@ -40,5 +45,34 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 //   // Pass the data to our page via props
 //   return { ...appProps, pageProps: { global: globalRes.data } }
 // }
+const getBaseUrl = () => {
+  if (typeof window !== "undefined") {
+    return ""
+  }
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}` // SSR should use vercel url
 
-export default MyApp
+  return `http://localhost:${process.env.PORT ?? 4200}` // dev SSR should use localhost
+}
+
+export default withTRPC<AppRouter>({
+  config: ({ ctx }) => {
+    /**
+     * If you want to use SSR, you need to use the server's full URL
+     * @link https://trpc.io/docs/ssr
+     */
+    const url = `${getBaseUrl()}/api/trpc`
+
+    return {
+      url,
+      transformer: superjson,
+      /**
+       * @link https://react-query.tanstack.com/reference/QueryClient
+       */
+      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+    }
+  },
+  /**
+   * @link https://trpc.io/docs/ssr
+   */
+  ssr: false,
+})(MyApp)

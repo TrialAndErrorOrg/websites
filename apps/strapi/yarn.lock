@@ -2201,6 +2201,14 @@
     "@strapi/utils" "4.3.2"
     lodash "4.17.21"
 
+"@strapi/plugin-i18n@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@strapi/plugin-i18n/-/plugin-i18n-4.3.2.tgz#fccb960d01a4cfebce765ba468fe60ce7e134820"
+  integrity sha512-0Kb8JF4nXzXQBInobRzfVpVsMlJQWd7gvqhKW953vTKqWH6V/oSyd5LbcEk3ppmo6pIBKxz76TfOuj1j37MFdw==
+  dependencies:
+    "@strapi/utils" "4.3.2"
+    lodash "4.17.21"
+
 "@strapi/plugin-seo@^1.7.4":
   version "1.7.4"
   resolved "https://registry.npmjs.org/@strapi/plugin-seo/-/plugin-seo-1.7.4.tgz"

@@ -6,6 +6,7 @@
   "dependencies": {
     "@strapi-newsletter/strapi": "^0.1.2",
     "@strapi/plugin-documentation": "^4.3.0",
+    "@strapi/plugin-i18n": "^4.3.2",
     "@strapi/plugin-seo": "^1.7.4",
     "@strapi/plugin-users-permissions": "^4.3.0",
     "@strapi/strapi": "4.3.0",

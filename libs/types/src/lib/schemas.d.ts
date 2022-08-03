@@ -655,6 +655,41 @@ export interface PluginStrapiNewsletterSubscribedUser extends CollectionTypeSche
   }
 }
 
+export interface PluginI18NLocale extends CollectionTypeSchema {
+  info: {
+    singularName: 'locale'
+    pluralName: 'locales'
+    collectionName: 'locales'
+    displayName: 'Locale'
+    description: ''
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    name: StringAttribute &
+      SetMinMax<{
+        min: 1
+        max: 50
+      }>
+    code: StringAttribute & UniqueAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::i18n.locale', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::i18n.locale', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+  }
+}
+
 export interface PluginUsersPermissionsPermission extends CollectionTypeSchema {
   info: {
     name: 'permission'
@@ -942,15 +977,49 @@ export interface ApiArticleArticle extends CollectionTypeSchema {
     timestamps: true
     draftAndPublish: true
   }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
   attributes: {
-    title: StringAttribute & RequiredAttribute
-    description: TextAttribute & RequiredAttribute
-    content: RichTextAttribute & RequiredAttribute
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    description: TextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    content: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     slug: UIDAttribute<'api::article.article', 'title'> & RequiredAttribute
     category: RelationAttribute<'api::article.article', 'manyToOne', 'api::category.category'>
-    image: MediaAttribute
+    image: MediaAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     author: RelationAttribute<'api::article.article', 'manyToOne', 'api::writer.writer'>
-    seo: ComponentAttribute<'shared.seo'> & RequiredAttribute
+    seo: ComponentAttribute<'shared.seo'> &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -958,6 +1027,8 @@ export interface ApiArticleArticle extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::article.article', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    localizations: RelationAttribute<'api::article.article', 'oneToMany', 'api::article.article'>
+    locale: StringAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -996,6 +1067,7 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     github: StringAttribute
     orcid: StringAttribute
     slug: UIDAttribute<'api::blog-author.blog-author', 'lastName'>
+    SEO: ComponentAttribute<'shared.seo'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
@@ -1038,6 +1110,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
     slug: UIDAttribute<'api::blog-post.blog-post', 'title'>
     blog_tags: RelationAttribute<'api::blog-post.blog-post', 'manyToMany', 'api::tag.tag'>
     SEO: ComponentAttribute<'shared.seo'>
+    related: RelationAttribute<'api::blog-post.blog-post', 'oneToMany', 'api::blog-post.blog-post'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -1382,6 +1455,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       ['Editorial', 'Board', 'IT', 'Design', 'Outreach', 'Production']
     >
     slug: UIDAttribute<'api::team-member.team-member', 'lastName'>
+    SEO: ComponentAttribute<'shared.seo'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
@@ -1529,6 +1603,7 @@ declare global {
       'plugin::navigation.navigations-items-related': PluginNavigationNavigationsItemsRelated
       'plugin::strapi-newsletter.newsletter': PluginStrapiNewsletterNewsletter
       'plugin::strapi-newsletter.subscribed-user': PluginStrapiNewsletterSubscribedUser
+      'plugin::i18n.locale': PluginI18NLocale
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
