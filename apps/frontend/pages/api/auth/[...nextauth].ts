@@ -1,25 +1,34 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import NextAuth, { type NextAuthOptions } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
+import OrcidProvider from "next-auth-orcid-provider"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 // Prisma adapter for NextAuth, optional and can be removed
 // eslint-disable-next-line import/extensions
 import { env } from "../../../server/env.mjs"
 
+console.log(
+  GitHubProvider({
+    clientId: env.GITHUB_CLIENT_ID,
+    clientSecret: env.GITHUB_CLIENT_SECRET,
+  })
+)
+console.log(
+  OrcidProvider({
+    clientId: env.ORCID_CLIENT_ID,
+    clientSecret: env.ORCID_CLIENT_SECRET,
+  })
+)
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   // Configure one or more authentication providers
   callbacks: {
     //    ...sharedNextAuthOptions.callbacks,
-    // session({ session, user }) {
-    //   if (session.user) {
-    //     // eslint-disable-next-line no-param-reassign
-    //     session.user.id = user.id
-    //   }
-    //   session.strategy = "jwt"
-    //   return session
-    // },
+    session({ session, user, token }) {
+      console.log("session", session, user, token)
+      return { ...session, orcid: token.sub, token }
+    },
 
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
@@ -34,6 +43,10 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
+    OrcidProvider({
+      clientId: env.ORCID_CLIENT_ID,
+      clientSecret: env.ORCID_CLIENT_SECRET,
     }),
     // ...add more providers here
     CredentialsProvider({

@@ -1,11 +1,11 @@
-const withNx = require('@nrwl/next/plugins/with-nx')
+const withNx = require("@nrwl/next/plugins/with-nx")
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
 })
 
-const withPlugins = require('next-compose-plugins')
-const withSWRTypes = require('next-typed-api-with-swr')
+const withPlugins = require("next-compose-plugins")
+const withSWRTypes = require("next-typed-api-with-swr")
 /**
  * @type {import('next').NextConfig}
  */
@@ -17,11 +17,11 @@ const nextConfig = {
   staticPageGenerationTimeout: 120,
   webpack(config, { dev }) {
     if (dev) {
-      config.devtool = 'cheap-module-source-map'
+      config.devtool = "cheap-module-source-map"
     }
     return config
   },
-  images: { domains: ['avatars.githubusercontent.com'] },
+  images: { domains: ["avatars.githubusercontent.com"] },
 }
 
 module.exports = withPlugins([[withNx], [withBundleAnalyzer]], nextConfig)

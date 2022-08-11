@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react"
 import Articles from "../components/articles"
 // import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -9,12 +10,15 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const { posts } = props
+  const { data, status } = useSession()
   // <Layout categories={categories}>
   return (
     <>
       {/* <Seo seo={homepage?.attributes?.seo} /> */}
       <div className="uk-section">
         <div className="uk-container uk-container-large">
+          {JSON.stringify(data)}
+          {JSON.stringify(status)}
           {/* <h1>{homepage?.attributes?.hero?.title}</h1> */}
           {/* <Articles articles={articles} /> */}
         </div>

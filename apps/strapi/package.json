@@ -35,7 +35,7 @@
   "scripts": {
     "dev": "yarn develop-strapi",
     "sstart": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
-    "develop-strapi": "strapi ts:generate-types --verbose -o ../../libs/types/src/lib && strapi develop --watch-admin",
+    "develop-strapi": "strapi ts:generate-types --verbose -o ../../libs/types/src/lib && ts-to-zod ../../libs/types/src/lib/schemas.d.ts ../../libs/types/src/lib/validators.ts && strapi develop --watch-admin",
     "start-strapi": "strapi start",
     "bbuild": "strapi build",
     "sstrapi": "strapi",
@@ -59,5 +59,8 @@
     "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ts-to-zod": "^1.12.0"
+  }
 }
