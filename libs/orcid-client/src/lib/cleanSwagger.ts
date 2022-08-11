@@ -20,4 +20,6 @@ const cleanSwagger = JSON.stringify(
 )
   .replace(/_rc\d/g, '')
   .replace(/V3_0|(?<=\w)v3/gi, '')
+// .replace(/Development Member API v3\.0/gi, 'orcid')
+
 writeFileSync(join(__dirname, 'cleanSwagger.json'), cleanSwagger)
