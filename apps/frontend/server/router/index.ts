@@ -7,6 +7,7 @@ import { authRouter } from "./auth"
 import { blogPostRouter } from "./blogPost"
 import { teamMemberRouter } from "./teamMember"
 import { blogAuthorRouter } from "./blogAuthor"
+import { orcidRouter } from "./orcid"
 
 export const appRouter = createRouter()
   .transformer(superjson)
@@ -15,6 +16,7 @@ export const appRouter = createRouter()
   .merge("blog.", blogPostRouter)
   .merge("blogAuthor.", blogAuthorRouter)
   .merge("teamMember.", teamMemberRouter)
+  .merge("orcid.", orcidRouter)
 
 // export type definition of API
 export type AppRouter = typeof appRouter

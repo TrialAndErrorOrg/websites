@@ -1,19 +1,11 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { keys} from "ts-transformer-keys"
-import { enumerate} from "ts-transformer-enumerate"
-import { z, ZodTupleDef } from "zod"
-import { createRouter } from "./context"
+import { z } from "zod"
 import { ApiTeamMemberTeamMember } from "@/types"
-const x  = Object.freeze(enumerate<'hey'|'ho'>())
-
-const teamMemberKeys = keys<ApiTeamMemberTeamMember["attributes"]>()
-const y = Object.freeze(teamMemberKeys.map(key=>z.literal(key)))
-const teamMemberRegex = new RegExp(`^(${teamMemberKeys.join("|")})$`)
+import { createRouter } from "./context"
 
 export const teamMemberRouter = createRouter()
   .query("getAll", {
-    input: z.union(y),
     async resolve({ ctx, input }) {
       return await ctx.strapi
         .from<ApiTeamMemberTeamMember["attributes"]>("team-members")

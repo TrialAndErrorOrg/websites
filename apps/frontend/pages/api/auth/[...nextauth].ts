@@ -8,25 +8,12 @@ import CredentialsProvider from "next-auth/providers/credentials"
 // eslint-disable-next-line import/extensions
 import { env } from "../../../server/env.mjs"
 
-console.log(
-  GitHubProvider({
-    clientId: env.GITHUB_CLIENT_ID,
-    clientSecret: env.GITHUB_CLIENT_SECRET,
-  })
-)
-console.log(
-  OrcidProvider({
-    clientId: env.ORCID_CLIENT_ID,
-    clientSecret: env.ORCID_CLIENT_SECRET,
-  })
-)
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   // Configure one or more authentication providers
   callbacks: {
     //    ...sharedNextAuthOptions.callbacks,
-    session({ session, user, token }) {
-      console.log("session", session, user, token)
+    session({ session, token }) {
       return { ...session, orcid: token.sub, token }
     },
 

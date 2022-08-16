@@ -19,6 +19,7 @@ export const strapiClientOptions: StrapiClientOptions = {
   headers: {}, // Custom Headers
   persistSession: false,
 }
+
 export const strapi = global.strapi || createClient(strapiClientOptions)
 
 if (env.NODE_ENV !== "production") {

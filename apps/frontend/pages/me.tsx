@@ -1,12 +1,8 @@
-import { useSession } from "next-auth/react"
+import { trpc } from "../utils/trpc"
 
 const Me = () => {
-  const { data } = useSession()
-  return (
-    <div>
-      <h1>Me</h1>
-    </div>
-  )
+  const { data } = trpc.useQuery(["orcid.me"])
+  return <div>{JSON.stringify(data)}</div>
 }
 
 export default Me
