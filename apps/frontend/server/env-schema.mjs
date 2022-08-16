@@ -10,5 +10,7 @@ export const envSchema = z.object({
   GITHUB_CLIENT_SECRET: z.string(),
   ORCID_CLIENT_ID: z.string(),
   ORCID_CLIENT_SECRET: z.string(),
-  VERCEL_URL: z.string().url(),
+  VERCEL_URL: z.string().url().optional(),
+  // ORCID_ACCESS_SECRET: z.string(),
+  PORT: z.string().optional(),
 })

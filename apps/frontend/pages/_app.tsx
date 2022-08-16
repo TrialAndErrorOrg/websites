@@ -1,29 +1,74 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { withTRPC } from "@trpc/next"
 import superjson from "superjson"
-import App, { AppProps } from "next/app"
+import App, { AppProps as NextAppProps } from "next/app"
 import Head from "next/head"
 import "../assets/css/style.css"
 import { createContext } from "react"
 import { SessionProvider } from "next-auth/react"
 // import { fetchAPI } from "../lib/api"
 // import { getStrapiMedia } from "../lib/media"
+import { GetAttributesValues } from "@strapi/strapi"
+import type { ReactElement, ReactNode } from "react"
+import type { NextPage } from "next"
+import { Session } from "next-auth"
 import { AppRouter } from "../server/router"
 
-// Store Strapi Global object in context
-export const GlobalContext = createContext({})
+// modified version - allows for custom pageProps type, falling back to 'any'
+type AppProps<P = any> = {
+  pageProps: P
+} & Omit<NextAppProps<P>, "pageProps">
+
+export type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type SEO = GetAttributesValues<"api::global.global">
+
+type AppPropsWithEverything = AppProps<{
+  global: SEO
+  session: Session
+}>
+
+type AppPropsWithLayoutAndAuthAndGlobalSEO = AppPropsWithEverything & {
+  Component: NextPageWithLayout
+}
+
+export const GlobalContext = createContext<SEO>({
+  defaultSeo: {
+    metaDescription: "",
+    metaTitle: "",
+    shareImage: "",
+    metaSocial: [],
+  },
+  siteName: "",
+})
 
 const MyApp = ({
   Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) => (
-  <>
-    {/* <GlobalContext.Provider value={global?.attributes}> */}
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
-    {/* </GlobalContext.Provider> */}
-  </>
-)
+  pageProps: { session, global, ...pageProps },
+}: AppPropsWithLayoutAndAuthAndGlobalSEO) => {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
+  return (
+    <>
+      <Head>
+        <title>{global?.defaultSeo?.metaTitle}</title>
+        <meta
+          name="description"
+          content={global?.defaultSeo?.metaDescription}
+        />
+        <meta property="og:title" content={global?.defaultSeo?.metaTitle} />
+        <link rel="shortcut icon" href={global?.favicon?.url} />
+      </Head>
+      <GlobalContext.Provider value={global}>
+        <SessionProvider session={session}>
+          {getLayout(<Component {...{ ...pageProps, session, global }} />)}
+        </SessionProvider>
+      </GlobalContext.Provider>
+    </>
+  )
+}
 
 // getInitialProps disables automatic static optimization for pages that don't
 // have getStaticProps. So article, category and home pages still get SSG.
@@ -54,25 +99,56 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 4200}` // dev SSR should use localhost
 }
 
-export default withTRPC<AppRouter>({
-  config: ({ ctx }) => {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
+MyApp.getInitialProps = async (ctx): Promise<AppPropsWithEverything> => {
+  // Calls page's `getInitialProps` and fills `appProps.pageProps`
+  const { pageProps, ...appProps } = await App.getInitialProps(ctx)
+  // Fetch global site settings from Strapi
+  const globalRes = await strapi
+    ?.from<GetAttributesValues<"api::global.global">>("global")
+    .select()
+    .populate()
+    .get()
+
+  // console.log(globalRes)
+  // Pass the data to our page via props
+  return {
+    ...appProps,
+    pageProps: { ...pageProps, global: globalRes?.data ?? {} },
+  }
+}
+
+const AppWithTRPC = withTRPC<AppRouter>({
+  config({ ctx }) {
+    if (typeof window !== "undefined") {
+      // during client requests
+      return {
+        transformer: superjson, // optional - adds superjson serialization
+        url: "/api/trpc",
+      }
+    }
+    // during SSR below
+
+    // optional: use SSG-caching for each rendered page (see caching section for more details)
+    const ONE_DAY_SECONDS = 60 * 60 * 24
+    ctx?.res?.setHeader(
+      "Cache-Control",
+      `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
+    )
+
+    // The server needs to know your app's full url
+    // On render.com you can use `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}/api/trpc`
     const url = `${getBaseUrl()}/api/trpc`
 
     return {
+      transformer: superjson, // optional - adds superjson serialization
       url,
-      transformer: superjson,
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+      headers: {
+        // optional - inform server that it's an ssr request
+        "x-ssr": "1",
+      },
     }
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
-  ssr: false,
+  ssr: true,
 })(MyApp)
+
+export default AppWithTRPC

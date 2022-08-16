@@ -21,7 +21,7 @@ const nextConfig = {
     }
     return config
   },
-  images: { domains: ["avatars.githubusercontent.com"] },
+  images: { domains: ["avatars.githubusercontent.com", "cote.azureedge.net"] },
 }
 
 module.exports = withPlugins([[withNx], [withBundleAnalyzer]], nextConfig)

@@ -1,20 +1,26 @@
 import Head from "next/head"
 import { useContext } from "react"
 import { GlobalContext } from "../pages/_app"
-import { getStrapiMedia } from "../lib/media"
+import { GetAttributesValues } from "@strapi/strapi"
 
-const Seo = ({ seo }) => {
+type SEO = GetAttributesValues<"api::global.global">
+interface SeoProps {
+  seo?: SEO
+}
+export const Seo = ({ seo }: SeoProps) => {
   const { defaultSeo, siteName } = useContext(GlobalContext)
+
   const seoWithDefaults = {
     ...defaultSeo,
     ...seo,
   }
+  console.log({ seoWithDefaults })
   const fullSeo = {
     ...seoWithDefaults,
     // Add title suffix
     metaTitle: `${seoWithDefaults.metaTitle} | ${siteName}`,
     // Get full image URL
-    shareImage: getStrapiMedia(seoWithDefaults.shareImage),
+    shareImage: seoWithDefaults.shareImage?.url,
   }
 
   return (
@@ -40,10 +46,8 @@ const Seo = ({ seo }) => {
           <meta name="image" content={fullSeo.shareImage} />
         </>
       )}
-      {fullSeo.article && <meta property="og:type" content="article" />}
+      {/* {fullSeo.article && <meta property="og:type" content="article" />} */}
       <meta name="twitter:card" content="summary_large_image" />
     </Head>
   )
 }
-
-export default Seo

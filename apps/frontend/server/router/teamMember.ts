@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { z } from "zod"
-import { ApiTeamMemberTeamMember } from "@/types"
+import { GetAttributesValues } from "@strapi/strapi"
 import { createRouter } from "./context"
+
+type TeamMember = GetAttributesValues<"api::team-member.team-member">
 
 export const teamMemberRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx, input }) {
       return await ctx.strapi
-        .from<ApiTeamMemberTeamMember["attributes"]>("team-members")
+        .from<TeamMember>("team-members")
         .select(input)
+        .populate()
         .get()
     },
   })
@@ -17,7 +20,7 @@ export const teamMemberRouter = createRouter()
     input: z.string(),
     async resolve({ ctx, input }) {
       return await ctx.strapi
-        .from<ApiTeamMemberTeamMember["attributes"]>("team-members")
+        .from<TeamMember>("team-members")
         .select(["SEO"])
         .equalTo("slug", input)
         .get()
@@ -27,8 +30,9 @@ export const teamMemberRouter = createRouter()
     input: z.string(),
     async resolve({ ctx, input }) {
       return await ctx.strapi
-        .from<ApiTeamMemberTeamMember["attributes"]>("team-members")
-        .select(["SEO"])
+        .from<TeamMember>("team-members")
+        .select()
+        .populate()
         .equalTo("slug", input)
         .get()
     },
