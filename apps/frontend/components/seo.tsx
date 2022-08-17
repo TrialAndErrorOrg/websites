@@ -2,13 +2,16 @@ import Head from "next/head"
 import { useContext } from "react"
 import { GlobalContext } from "../pages/_app"
 import { GetAttributesValues } from "@strapi/strapi"
+import { trpc } from "../utils/trpc"
 
 type SEO = GetAttributesValues<"api::global.global">
 interface SeoProps {
-  seo?: SEO
+  seo?: SEO["defaultSeo"]
 }
 export const Seo = ({ seo }: SeoProps) => {
-  const { defaultSeo, siteName } = useContext(GlobalContext)
+  // const { defaultSeo, siteName } = useContext(GlobalContext)
+  const { data } = trpc.useQuery(["seo.default"])
+  const { defaultSeo, siteName } = data?.data || {}
 
   const seoWithDefaults = {
     ...defaultSeo,

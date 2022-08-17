@@ -1067,13 +1067,65 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     github: StringAttribute
     orcid: StringAttribute
     slug: UIDAttribute<'api::blog-author.blog-author', 'lastName'>
-    SEO: ComponentAttribute<'shared.seo'>
+    seo: ComponentAttribute<'shared.seo'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiBlogHomeBlogHome extends SingleTypeSchema {
+  info: {
+    singularName: 'blog-home'
+    pluralName: 'blog-homes'
+    displayName: 'Blog Home'
+    description: ''
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    description: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    seo: ComponentAttribute<'shared.seo'> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::blog-home.blog-home', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::blog-home.blog-home', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::blog-home.blog-home',
+      'oneToMany',
+      'api::blog-home.blog-home'
+    >
+    locale: StringAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -1109,7 +1161,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
     publishDate: DateTimeAttribute
     slug: UIDAttribute<'api::blog-post.blog-post', 'title'>
     blog_tags: RelationAttribute<'api::blog-post.blog-post', 'manyToMany', 'api::tag.tag'>
-    SEO: ComponentAttribute<'shared.seo'>
+    seo: ComponentAttribute<'shared.seo'>
     related: RelationAttribute<'api::blog-post.blog-post', 'oneToMany', 'api::blog-post.blog-post'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
@@ -1455,13 +1507,57 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       ['Editorial', 'Board', 'IT', 'Design', 'Outreach', 'Production']
     >
     slug: UIDAttribute<'api::team-member.team-member', 'lastName'>
-    SEO: ComponentAttribute<'shared.seo'>
+    seo: ComponentAttribute<'shared.seo'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiTeamPageTeamPage extends SingleTypeSchema {
+  info: {
+    singularName: 'team-page'
+    pluralName: 'team-pages'
+    displayName: 'Team Page'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    seo: ComponentAttribute<'shared.seo'> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    content: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::team-page.team-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::team-page.team-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::team-page.team-page',
+      'oneToMany',
+      'api::team-page.team-page'
+    >
+    locale: StringAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -1611,6 +1707,7 @@ declare global {
       'plugin::strapi-stripe.strapi-stripe-payment': PluginStrapiStripeStrapiStripePayment
       'api::article.article': ApiArticleArticle
       'api::blog-author.blog-author': ApiBlogAuthorBlogAuthor
+      'api::blog-home.blog-home': ApiBlogHomeBlogHome
       'api::blog-post.blog-post': ApiBlogPostBlogPost
       'api::category.category': ApiCategoryCategory
       'api::department.department': ApiDepartmentDepartment
@@ -1624,6 +1721,7 @@ declare global {
       'api::position.position': ApiPositionPosition
       'api::tag.tag': ApiTagTag
       'api::team-member.team-member': ApiTeamMemberTeamMember
+      'api::team-page.team-page': ApiTeamPageTeamPage
       'api::update-category.update-category': ApiUpdateCategoryUpdateCategory
       'api::writer.writer': ApiWriterWriter
       'cote.position-or-editor': CotePositionOrEditor

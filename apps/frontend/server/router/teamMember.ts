@@ -21,7 +21,7 @@ export const teamMemberRouter = createRouter()
     async resolve({ ctx, input }) {
       return await ctx.strapi
         .from<TeamMember>("team-members")
-        .select(["SEO"])
+        .select(["seo"])
         .equalTo("slug", input)
         .get()
     },

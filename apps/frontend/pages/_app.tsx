@@ -13,6 +13,7 @@ import type { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { Session } from "next-auth"
 import { AppRouter } from "../server/router"
+import { strapi } from "../server/db/client"
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
@@ -99,23 +100,34 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 4200}` // dev SSR should use localhost
 }
 
-MyApp.getInitialProps = async (ctx): Promise<AppPropsWithEverything> => {
-  // Calls page's `getInitialProps` and fills `appProps.pageProps`
-  const { pageProps, ...appProps } = await App.getInitialProps(ctx)
-  // Fetch global site settings from Strapi
-  const globalRes = await strapi
-    ?.from<GetAttributesValues<"api::global.global">>("global")
-    .select()
-    .populate()
-    .get()
+// MyApp.getInitialProps = async (ctx): Promise<AppPropsWithEverything> => {
+//   // Calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const { pageProps, ...appProps } = await App.getInitialProps(ctx)
+//   // Fetch global site settings from Strapi
 
-  // console.log(globalRes)
-  // Pass the data to our page via props
-  return {
-    ...appProps,
-    pageProps: { ...pageProps, global: globalRes?.data ?? {} },
-  }
-}
+//   // const globalRes = await strapi
+//   //   ?.from<GetAttributesValues<"api::global.global">>("global")
+//   //   .select()
+//   //   .populate()
+//   //   .get()
+
+//   const {
+//     data: { attributes },
+//   } = await (
+//     await fetch(`${process.env.STRAPI_ENDPOINT}/global?populate=%2A`, {
+//       headers: {
+//         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+//       },
+//     })
+//   ).json()
+
+//   // console.log(globalRes)
+//   // Pass the data to our page via props
+//   return {
+//     ...appProps,
+//     pageProps: { ...pageProps, global: attributes ?? {} },
+//   }
+// }
 
 const AppWithTRPC = withTRPC<AppRouter>({
   config({ ctx }) {

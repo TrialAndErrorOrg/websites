@@ -1,24 +1,23 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { z } from "zod"
+import { GetAttributesValues } from "@strapi/strapi"
 import { createRouter } from "./context"
-import { ApiBlogPostBlogPost } from "@/types"
+
+type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
 
 export const blogPostRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx }) {
-      return await ctx.strapi
-        .from<ApiBlogPostBlogPost>("blog-posts")
-        .select()
-        .get()
+      return await ctx.strapi.from<BlogPost>("blog-posts").select().get()
     },
   })
   .query("getSEOBySlug", {
     input: z.string(),
     async resolve({ ctx, input }) {
       return await ctx.strapi
-        .from<ApiBlogPostBlogPost["attributes"]>("blog-posts")
-        .select(["SEO"])
+        .from<BlogPost>("blog-posts")
+        .select(["seo"])
         .equalTo("slug", input)
         .get()
     },
@@ -27,8 +26,8 @@ export const blogPostRouter = createRouter()
     input: z.string(),
     async resolve({ ctx, input }) {
       return await ctx.strapi
-        .from<ApiBlogPostBlogPost["attributes"]>("blog-posts")
-        .select(["SEO"])
+        .from<BlogPost>("blog-posts")
+        .select()
         .equalTo("slug", input)
         .get()
     },
@@ -37,7 +36,7 @@ export const blogPostRouter = createRouter()
     input: z.string(),
     async resolve({ ctx, input }) {
       return await ctx.strapi
-        .from<ApiBlogPostBlogPost["attributes"]>("blog-posts")
+        .from<BlogPost>("blog-posts")
         .select(["related"])
         .equalTo("slug", input)
         .get()

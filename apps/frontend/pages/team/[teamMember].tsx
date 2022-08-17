@@ -1,8 +1,7 @@
 import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
-import { GetServerSideProps } from "next"
-import { Seo } from "apps/frontend/components/seo"
 import { useRouter } from "next/router"
+import { Seo } from "../../components/SEO"
 
 interface TeamMemberProps {
   slug: string
@@ -33,7 +32,7 @@ const TeamMember = () => {
     lastName,
     pronouns,
     show_pronouns,
-    SEO,
+    seo,
     bio,
     email,
     github,
@@ -46,7 +45,7 @@ const TeamMember = () => {
 
   return (
     <>
-      <Seo seo={SEO} />
+      <Seo seo={seo} />
       <main>
         <h1>{`${firstName}${lastName ? ` ${lastName}` : ""}`}</h1>
         {image && (
