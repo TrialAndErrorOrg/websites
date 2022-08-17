@@ -20,7 +20,8 @@ type StrapiApiTypes = StrapiTypesWithSeo<FilteredStrapiApiStrings>
 export const seoRouter = createRouter()
   .query("default", {
     async resolve({ ctx }) {
-      return await ctx.strapi.from<Global>("global").select().populate().get()
+      return (await ctx.strapi.from<Global>("global").select().populate().get())
+        ?.data?.[0]
     },
   })
   .query("get", {

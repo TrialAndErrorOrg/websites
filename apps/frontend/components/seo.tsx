@@ -1,6 +1,4 @@
 import Head from "next/head"
-import { useContext } from "react"
-import { GlobalContext } from "../pages/_app"
 import { GetAttributesValues } from "@strapi/strapi"
 import { trpc } from "../utils/trpc"
 
@@ -11,7 +9,7 @@ interface SeoProps {
 export const Seo = ({ seo }: SeoProps) => {
   // const { defaultSeo, siteName } = useContext(GlobalContext)
   const { data } = trpc.useQuery(["seo.default"])
-  const { defaultSeo, siteName } = data?.data || {}
+  const { defaultSeo, siteName } = data || {}
 
   const seoWithDefaults = {
     ...defaultSeo,
