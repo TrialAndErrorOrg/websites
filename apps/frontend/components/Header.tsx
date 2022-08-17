@@ -4,92 +4,19 @@ import Image from "next/image"
 
 import { Fragment } from "react"
 import { Popover, Transition } from "@headlessui/react"
-import {
-  ChartBarIcon,
-  CursorClickIcon,
-  DocumentReportIcon,
-  MenuIcon,
-  RefreshIcon,
-  ShieldCheckIcon,
-  ViewGridIcon,
-  XIcon,
-} from "@heroicons/react/outline"
+import { MenuIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
-import { trpc } from "../utils/trpc"
 import { GetAttributesValues } from "@strapi/strapi"
-
-const solutions = [
-  {
-    name: "Analytics",
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "#",
-    icon: ChartBarIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
-    icon: CursorClickIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers' data will be safe and secure.",
-    href: "#",
-    icon: ShieldCheckIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools that you're already using.",
-    href: "#",
-    icon: ViewGridIcon,
-  },
-  {
-    name: "Automations",
-    description:
-      "Build strategic funnels that will drive your customers to convert",
-    href: "#",
-    icon: RefreshIcon,
-  },
-  {
-    name: "Reports",
-    description:
-      "Get detailed reports that will help you make more informed decisions ",
-    href: "#",
-    icon: DocumentReportIcon,
-  },
-]
-const resources = [
-  {
-    name: "Help Center",
-    description:
-      "Get all of your questions answered in our forums or contact support.",
-    href: "#",
-  },
-  {
-    name: "Guides",
-    description:
-      "Learn how to maximize our platform to get the most out of it.",
-    href: "#",
-  },
-  {
-    name: "Events",
-    description:
-      "See what meet-ups and other events we might be planning near you.",
-    href: "#",
-  },
-  {
-    name: "Security",
-    description: "Understand how we take your privacy seriously.",
-    href: "#",
-  },
-]
+import { trpc } from "../utils/trpc"
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
 const PlainLink = ({ slug, title }: { slug: string; title: string }) => (
   <Link href={slug}>
-    <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+    <a
+      href={slug}
+      className="text-base font-medium text-gray-500 hover:text-gray-900"
+    >
       {title}
     </a>
   </Link>
@@ -99,71 +26,68 @@ type Menu = GetAttributesValues<"plugin::menus.menu">
 type MenuItem = GetAttributesValues<"plugin::menus.menu-item">
 type HeaderType = MenuItem & { children: MenuItem[] }
 
-const Popout = ({ header }: { header: HeaderType }) => {
-  const x = 3
-  return (
-    <Popover className="relative">
-      {({ open }) => (
-        <>
-          <Popover.Button
+const Popout = ({ header }: { header: HeaderType }) => (
+  <Popover className="relative">
+    {({ open }) => (
+      <>
+        <Popover.Button
+          className={classNames(
+            open ? "text-gray-900" : "text-gray-500",
+            "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          )}
+        >
+          <span>{header.title}</span>
+          <ChevronDownIcon
             className={classNames(
-              open ? "text-gray-900" : "text-gray-500",
-              "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              open ? "text-gray-600" : "text-gray-400",
+              "ml-2 h-5 w-5 group-hover:text-gray-500"
             )}
-          >
-            <span>{header.title}</span>
-            <ChevronDownIcon
-              className={classNames(
-                open ? "text-gray-600" : "text-gray-400",
-                "ml-2 h-5 w-5 group-hover:text-gray-500"
-              )}
-              aria-hidden="true"
-            />
-          </Popover.Button>
+            aria-hidden="true"
+          />
+        </Popover.Button>
 
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-200"
-            enterFrom="opacity-0 translate-y-1"
-            enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-150"
-            leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 translate-y-1"
-          >
-            <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
-              <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
-                  {header.children?.map((child) => (
-                    <a
-                      key={child.title}
-                      href={child.url}
-                      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
-                    >
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
-                        {/* <solution.icon
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-200"
+          enterFrom="opacity-0 translate-y-1"
+          enterTo="opacity-100 translate-y-0"
+          leave="transition ease-in duration-150"
+          leaveFrom="opacity-100 translate-y-0"
+          leaveTo="opacity-0 translate-y-1"
+        >
+          <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
+            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
+                {header.children?.map((child) => (
+                  <a
+                    key={child.title}
+                    href={child.url}
+                    className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+                  >
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
+                      {/* <solution.icon
                                   className="h-6 w-6"
                                   aria-hidden="true"
                                 /> */}
-                      </div>
-                      <div className="ml-4">
-                        <p className="text-base font-medium text-gray-900">
-                          {child.title}
-                        </p>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {/* {header.description} */}
-                        </p>
-                      </div>
-                    </a>
-                  ))}
-                </div>
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-base font-medium text-gray-900">
+                        {child.title}
+                      </p>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {/* {header.description} */}
+                      </p>
+                    </div>
+                  </a>
+                ))}
               </div>
-            </Popover.Panel>
-          </Transition>
-        </>
-      )}
-    </Popover>
-  )
-}
+            </div>
+          </Popover.Panel>
+        </Transition>
+      </>
+    )}
+  </Popover>
+)
 
 const MainNav = ({ headers }: { headers: Menu }) => (
   <Popover.Group as="nav" className="hidden space-x-10 md:flex">
@@ -172,16 +96,17 @@ const MainNav = ({ headers }: { headers: Menu }) => (
         if (header.title === "Home") {
           return null
         }
+        // @ts-expect-error Header does hoave children, generated type is incorrect
         if (header.children?.length === 0) {
           return (
             <PlainLink
               key={header.title}
-              slug={header.url}
+              slug={header.url!}
               title={header.title}
             />
           )
         }
-        return <Popout key={header.title} header={header as Header} />
+        return <Popout key={header.title} header={header as HeaderType} />
       })
       .filter(Boolean)}
   </Popover.Group>
@@ -264,7 +189,7 @@ const MainNav = ({ headers }: { headers: Menu }) => (
 
 export const Header = () => {
   const { data } = trpc.useQuery(["nav.main"])
-  const headers = data?.data?.[0] ?? []
+  const headers = data?.data?.[0] ?? ({} as Menu)
   console.log({ headers })
 
   return (
@@ -272,6 +197,7 @@ export const Header = () => {
       <div className="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href="/">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a>
               <span className="sr-only">Home</span>
               <Image
