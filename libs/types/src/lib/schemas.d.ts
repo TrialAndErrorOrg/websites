@@ -18,8 +18,8 @@ import {
   SetMinMax,
   TextAttribute,
   UIDAttribute,
-  SetPluginOptions,
   MediaAttribute,
+  SetPluginOptions,
   RichTextAttribute,
   ComponentAttribute,
   SingleTypeSchema,
@@ -394,190 +394,6 @@ export interface PluginPublisherAction extends CollectionTypeSchema {
   }
 }
 
-export interface PluginNavigationAudience extends CollectionTypeSchema {
-  info: {
-    singularName: 'audience'
-    pluralName: 'audiences'
-    displayName: 'Audience'
-    name: 'audience'
-  }
-  options: {
-    increments: true
-    comment: 'Audience'
-  }
-  attributes: {
-    name: StringAttribute & RequiredAttribute
-    key: UIDAttribute<'plugin::navigation.audience', 'name'>
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::navigation.audience', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::navigation.audience', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginNavigationNavigation extends CollectionTypeSchema {
-  info: {
-    singularName: 'navigation'
-    pluralName: 'navigations'
-    displayName: 'Navigation'
-    name: 'navigation'
-  }
-  options: {
-    increments: true
-    comment: ''
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    name: TextAttribute & RequiredAttribute
-    slug: UIDAttribute & RequiredAttribute
-    visible: BooleanAttribute & DefaultTo<false>
-    items: RelationAttribute<
-      'plugin::navigation.navigation',
-      'oneToMany',
-      'plugin::navigation.navigation-item'
-    >
-    localizations: RelationAttribute<
-      'plugin::navigation.navigation',
-      'oneToMany',
-      'plugin::navigation.navigation'
-    >
-    localeCode: StringAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::navigation.navigation', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::navigation.navigation', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginNavigationNavigationItem extends CollectionTypeSchema {
-  info: {
-    singularName: 'navigation-item'
-    pluralName: 'navigation-items'
-    displayName: 'Navigation Item'
-    name: 'navigation-item'
-  }
-  options: {
-    increments: true
-    timestamps: true
-    comment: 'Navigation Item'
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-    i18n: {
-      localized: false
-    }
-  }
-  attributes: {
-    title: TextAttribute &
-      RequiredAttribute &
-      SetPluginOptions<{
-        i18n: {
-          localized: false
-        }
-      }>
-    type: EnumerationAttribute<['INTERNAL', 'EXTERNAL', 'WRAPPER']> & DefaultTo<'INTERNAL'>
-    path: TextAttribute
-    externalPath: TextAttribute
-    uiRouterKey: StringAttribute
-    menuAttached: BooleanAttribute & DefaultTo<false>
-    order: IntegerAttribute & DefaultTo<0>
-    collapsed: BooleanAttribute & DefaultTo<false>
-    related: RelationAttribute<
-      'plugin::navigation.navigation-item',
-      'oneToOne',
-      'plugin::navigation.navigations-items-related'
-    >
-    parent: RelationAttribute<
-      'plugin::navigation.navigation-item',
-      'oneToOne',
-      'plugin::navigation.navigation-item'
-    >
-    master: RelationAttribute<
-      'plugin::navigation.navigation-item',
-      'manyToOne',
-      'plugin::navigation.navigation'
-    >
-    audience: RelationAttribute<
-      'plugin::navigation.navigation-item',
-      'oneToMany',
-      'plugin::navigation.audience'
-    >
-    additionalFields: JSONAttribute & DefaultTo<{}>
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::navigation.navigation-item', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::navigation.navigation-item', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginNavigationNavigationsItemsRelated extends CollectionTypeSchema {
-  info: {
-    singularName: 'navigations-items-related'
-    pluralName: 'navigations-items-relateds'
-    displayName: 'Navigations Items Related'
-    name: 'navigations_items_related'
-  }
-  options: {
-    increments: true
-    timestamps: false
-    populateCreatorFields: false
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-    i18n: {
-      localized: false
-    }
-  }
-  attributes: {
-    related_id: StringAttribute & RequiredAttribute
-    related_type: StringAttribute & RequiredAttribute
-    field: StringAttribute & RequiredAttribute
-    order: IntegerAttribute & RequiredAttribute
-    master: StringAttribute & RequiredAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'plugin::navigation.navigations-items-related',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    updatedBy: RelationAttribute<
-      'plugin::navigation.navigations-items-related',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
 export interface PluginStrapiNewsletterNewsletter extends CollectionTypeSchema {
   info: {
     singularName: 'newsletter'
@@ -817,6 +633,72 @@ export interface PluginUsersPermissionsUser extends CollectionTypeSchema {
     createdBy: RelationAttribute<'plugin::users-permissions.user', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::users-permissions.user', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginMenusMenu extends CollectionTypeSchema {
+  info: {
+    displayName: 'Menu'
+    singularName: 'menu'
+    pluralName: 'menus'
+    tableName: 'menus'
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    title: StringAttribute & RequiredAttribute
+    slug: UIDAttribute<'plugin::menus.menu', 'title'> & RequiredAttribute
+    items: RelationAttribute<'plugin::menus.menu', 'oneToMany', 'plugin::menus.menu-item'>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::menus.menu', 'oneToOne', 'admin::user'> & PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::menus.menu', 'oneToOne', 'admin::user'> & PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginMenusMenuItem extends CollectionTypeSchema {
+  info: {
+    displayName: 'Menu Item'
+    singularName: 'menu-item'
+    pluralName: 'menu-items'
+    tableName: 'menu_items'
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    order: IntegerAttribute
+    title: StringAttribute & RequiredAttribute
+    url: StringAttribute
+    target: EnumerationAttribute<['_blank', '_parent', '_self', '_top']>
+    root_menu: RelationAttribute<'plugin::menus.menu-item', 'manyToOne', 'plugin::menus.menu'> &
+      RequiredAttribute
+    parent: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'plugin::menus.menu-item'>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -1619,6 +1501,22 @@ export interface ApiWriterWriter extends CollectionTypeSchema {
   }
 }
 
+export interface ComponentsCta extends ComponentSchema {
+  info: {
+    displayName: 'cta'
+    icon: 'arrow-circle-right'
+    description: ''
+  }
+  attributes: {
+    title: StringAttribute & RequiredAttribute
+    url: StringAttribute & RequiredAttribute
+    icon: MediaAttribute
+    type: EnumerationAttribute<['primary', 'secondary', 'tertiary']> &
+      RequiredAttribute &
+      DefaultTo<'primary'>
+  }
+}
+
 export interface CotePositionOrEditor extends ComponentSchema {
   info: {
     displayName: 'position-or-editor'
@@ -1634,9 +1532,18 @@ export interface SectionsHero extends ComponentSchema {
   info: {
     name: 'Hero'
     icon: 'address-card'
+    displayName: 'hero'
+    description: ''
   }
   attributes: {
     title: StringAttribute & RequiredAttribute
+    body: TextAttribute &
+      RequiredAttribute &
+      SetMinMaxLength<{
+        maxLength: 200
+      }>
+    image: MediaAttribute & RequiredAttribute
+    cta: ComponentAttribute<'components.cta', true>
   }
 }
 
@@ -1662,8 +1569,9 @@ export interface SharedSeo extends ComponentSchema {
 
 export interface SharedSharedSocial extends ComponentSchema {
   info: {
-    displayName: 'shared.social'
+    displayName: 'social'
     icon: 'share-alt'
+    description: ''
   }
   attributes: {
     socialNetwork: EnumerationAttribute<['facebook', 'twitter']> & RequiredAttribute
@@ -1693,16 +1601,14 @@ declare global {
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate
       'plugin::entity-notes.note': PluginEntityNotesNote
       'plugin::publisher.action': PluginPublisherAction
-      'plugin::navigation.audience': PluginNavigationAudience
-      'plugin::navigation.navigation': PluginNavigationNavigation
-      'plugin::navigation.navigation-item': PluginNavigationNavigationItem
-      'plugin::navigation.navigations-items-related': PluginNavigationNavigationsItemsRelated
       'plugin::strapi-newsletter.newsletter': PluginStrapiNewsletterNewsletter
       'plugin::strapi-newsletter.subscribed-user': PluginStrapiNewsletterSubscribedUser
       'plugin::i18n.locale': PluginI18NLocale
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
+      'plugin::menus.menu': PluginMenusMenu
+      'plugin::menus.menu-item': PluginMenusMenuItem
       'plugin::strapi-stripe.strapi-stripe-product': PluginStrapiStripeStrapiStripeProduct
       'plugin::strapi-stripe.strapi-stripe-payment': PluginStrapiStripeStrapiStripePayment
       'api::article.article': ApiArticleArticle
@@ -1724,6 +1630,7 @@ declare global {
       'api::team-page.team-page': ApiTeamPageTeamPage
       'api::update-category.update-category': ApiUpdateCategoryUpdateCategory
       'api::writer.writer': ApiWriterWriter
+      'components.cta': ComponentsCta
       'cote.position-or-editor': CotePositionOrEditor
       'sections.hero': SectionsHero
       'shared.seo': SharedSeo

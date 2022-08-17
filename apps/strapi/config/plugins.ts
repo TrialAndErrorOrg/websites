@@ -154,6 +154,6 @@ export default ({ env }) => ({
     enabled: true,
   },
   navigation: {
-    enabled: true,
+    enabled: false,
   },
 })

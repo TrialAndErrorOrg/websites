@@ -17,7 +17,7 @@ export const Seo = ({ seo }: SeoProps) => {
     ...defaultSeo,
     ...seo,
   }
-  console.log({ seoWithDefaults })
+
   const fullSeo = {
     ...seoWithDefaults,
     // Add title suffix

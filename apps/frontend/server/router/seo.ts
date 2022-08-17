@@ -33,10 +33,12 @@ export const seoRouter = createRouter()
       "blog-home",
     ]),
     async resolve({ ctx, input }) {
-      return await ctx.strapi
+      const res = await ctx.strapi
         .from<StrapiApiTypes>(input)
         .select(["seo"])
         .populate()
         .get()
+
+      return res?.data?.[0]?.seo ?? {}
     },
   })

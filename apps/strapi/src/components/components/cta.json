@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_components_ctas",
+  "info": {
+    "displayName": "cta",
+    "icon": "arrow-circle-right",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary",
+        "tertiary"
+      ],
+      "required": true,
+      "default": "primary"
+    }
+  }
+}

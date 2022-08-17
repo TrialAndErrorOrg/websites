@@ -1,25 +1,15 @@
+import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
 import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { Seo } from "../../components/SEO"
+import { NextPageWithLayout } from "../_app"
 
-interface TeamMemberProps {
-  slug: string
-}
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   return {
-//     props: {
-//       slug: params?.teamMember,
-//     } as TeamMemberProps,
-//   }
-// }
-
-const TeamMember = () => {
+const TeamMember: NextPageWithLayout = () => {
   const {
     query: { teamMember: slug },
   } = useRouter()
-  console.log(slug)
+
   const { data: teamMember } = trpc.useQuery([
     "teamMember.getBySlug",
     slug as string,
@@ -94,3 +84,5 @@ const TeamMember = () => {
   )
 }
 export default TeamMember
+
+TeamMember.getLayout = (page) => <BaseLayout>{page}</BaseLayout>

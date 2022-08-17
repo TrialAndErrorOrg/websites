@@ -9,7 +9,11 @@ type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
 export const blogPostRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx }) {
-      return await ctx.strapi.from<BlogPost>("blog-posts").select().get()
+      return await ctx.strapi
+        .from<BlogPost>("blog-posts")
+        .select()
+        .populate()
+        .get()
     },
   })
   .query("getSEOBySlug", {
@@ -29,6 +33,7 @@ export const blogPostRouter = createRouter()
         .from<BlogPost>("blog-posts")
         .select()
         .equalTo("slug", input)
+        .populate()
         .get()
     },
   })
