@@ -156,4 +156,7 @@ export default ({ env }) => ({
   navigation: {
     enabled: false,
   },
+  ckeditor: {
+    enabled: true,
+  },
 })

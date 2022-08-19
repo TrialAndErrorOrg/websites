@@ -73,8 +73,8 @@ export const Hero = ({ hero }: { hero: HeroType }) => (
                 {hero.title}
               </span>
               <span className="mt-1 block text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl">
-                <span className="block text-gray-900">Data to enrich your</span>
-                <span className="block text-indigo-600">online business</span>
+                <span className="block text-blue-500">Data to enrich your</span>
+                <span className="block text-orange-600">online business</span>
               </span>
             </h1>
             <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
@@ -83,12 +83,21 @@ export const Hero = ({ hero }: { hero: HeroType }) => (
             <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
               {hero.cta?.map((cta) => (
                 <Link key={cta.url} href={cta.url}>
-                  <a
-                    className="focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out hover:bg-indigo-500 focus:border-indigo-700 focus:outline-none active:bg-indigo-700"
-                    href={cta.url}
-                  >
-                    {cta.title}
-                  </a>
+                  {cta.type === "primary" ? (
+                    <a
+                      className="focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-base font-bold leading-6 text-white transition duration-150 ease-in-out hover:bg-orange-500 focus:border-orange-700 focus:outline-none active:bg-orange-700"
+                      href={cta.url}
+                    >
+                      {cta.title}
+                    </a>
+                  ) : (
+                    <a
+                      className="focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-bold leading-6 text-blue-500 transition duration-150 ease-in-out hover:text-orange-500 focus:border-orange-700 focus:outline-none active:bg-orange-700"
+                      href={cta.title}
+                    >
+                      {cta.title}
+                    </a>
+                  )}
                 </Link>
               ))}
             </div>

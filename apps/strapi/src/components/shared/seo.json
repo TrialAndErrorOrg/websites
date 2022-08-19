@@ -29,7 +29,7 @@
       "type": "component",
       "repeatable": true,
       "component": "shared.shared-social",
-      "required": true
+      "required": false
     },
     "keywords": {
       "type": "text",

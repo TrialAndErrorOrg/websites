@@ -8,6 +8,7 @@ import { MenuIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { GetAttributesValues } from "@strapi/strapi"
 import { trpc } from "../utils/trpc"
+import { useSession } from "next-auth/react"
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
@@ -33,7 +34,7 @@ const Popout = ({ header }: { header: HeaderType }) => (
         <Popover.Button
           className={classNames(
             open ? "text-gray-900" : "text-gray-500",
-            "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
           )}
         >
           <span>{header.title}</span>
@@ -64,7 +65,7 @@ const Popout = ({ header }: { header: HeaderType }) => (
                     href={child.url}
                     className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
                   >
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white sm:h-12 sm:w-12">
                       {/* <solution.icon
                                   className="h-6 w-6"
                                   aria-hidden="true"
@@ -89,6 +90,31 @@ const Popout = ({ header }: { header: HeaderType }) => (
   </Popover>
 )
 
+const SignIn = () => {
+  const { data: session, status } = useSession()
+
+  return session && status === "authenticated" ? (
+    <Link href="/api/auth/signout">
+      <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+        Sign out
+      </a>
+    </Link>
+  ) : (
+    <div className="flex gap-4">
+      <Link href="/api/auth/signin">
+        <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+          Sign in
+        </a>
+      </Link>
+      <Link href="/api/auth/signin">
+        <a className="bg-orange-500 text-base font-bold text-white hover:bg-orange-900">
+          Sign up
+        </a>
+      </Link>
+    </div>
+  )
+}
+
 const MainNav = ({ headers }: { headers: Menu }) => (
   <Popover.Group as="nav" className="hidden space-x-10 md:flex">
     {headers?.items
@@ -109,6 +135,7 @@ const MainNav = ({ headers }: { headers: Menu }) => (
         return <Popout key={header.title} header={header as HeaderType} />
       })
       .filter(Boolean)}
+    <SignIn />
   </Popover.Group>
 )
 
@@ -125,7 +152,7 @@ const MainNav = ({ headers }: { headers: Menu }) => (
 //                 <Popover.Button
 //                   className={classNames(
 //                     open ? "text-gray-900" : "text-gray-500",
-//                     "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+//                     "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
 //                   )}
 //                 >
 //                   <span>More</span>
@@ -181,7 +208,7 @@ const MainNav = ({ headers }: { headers: Menu }) => (
 //           </a>
 //           <a
 //             href="#"
-//             className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+//             className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-orange-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-orange-700"
 //           >
 //             Sign up
 //           </a>
@@ -211,7 +238,7 @@ export const Header = () => {
           </Link>
         </div>
         <div className="-my-2 -mr-2 md:hidden">
-          <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+          <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500">
             <span className="sr-only">Open menu</span>
             <MenuIcon className="h-6 w-6" aria-hidden="true" />
           </Popover.Button>
@@ -239,14 +266,14 @@ export const Header = () => {
                 <div>
                   <Image
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    src="https://tailwindui.com/img/logos/workflow-mark-orange-600.svg"
                     alt="Workflow"
                     width={32}
                     height={32}
                   />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500">
                     <span className="sr-only">Close menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -260,7 +287,7 @@ export const Header = () => {
                       href={solution.href}
                       className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                     >
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 text-white">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white">
                         <solution.icon className="h-6 w-6" aria-hidden="true" />
                       </div>
                       <div className="ml-4 text-base font-medium text-gray-900">
@@ -306,13 +333,13 @@ export const Header = () => {
               <div className="mt-6">
                 <a
                   href="#"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-orange-700"
                 >
                   Sign up
                 </a>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Existing customer?{" "}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-500">
+                  <a href="#" className="text-orange-600 hover:text-orange-500">
                     Sign in
                   </a>
                 </p>

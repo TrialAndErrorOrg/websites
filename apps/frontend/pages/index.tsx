@@ -8,9 +8,10 @@ import { NextPageWithLayout } from "./_app"
 // import { fetchAPI } from "../lib/api"
 
 const Home: NextPageWithLayout = () => {
-  const { data, status } = useSession()
+  // const { data, status } = useSession()
   const { data: page } = trpc.useQuery(["page.get", "homepage"])
   const { seo, hero } = page ?? { seo: {}, hero: {} }
+
   console.log({ page })
   return (
     <>
@@ -18,7 +19,7 @@ const Home: NextPageWithLayout = () => {
       <Hero hero={hero} />
 
       <div className="uk-section">
-        <div className="uk-container uk-container-large"></div>
+        <p>Some text</p>
       </div>
     </>
   )

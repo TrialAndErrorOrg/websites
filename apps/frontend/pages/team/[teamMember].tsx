@@ -1,3 +1,4 @@
+import { Content } from "apps/frontend/components/Content"
 import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
 import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
@@ -47,7 +48,7 @@ const TeamMember: NextPageWithLayout = () => {
           />
         )}
 
-        {bio && <p>{JSON.stringify(bio)}</p>}
+        {bio && <Content>{bio}</Content>}
         <div>
           <h2>Links</h2>
           <ul>

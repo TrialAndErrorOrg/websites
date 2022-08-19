@@ -9,7 +9,7 @@ const Blog: NextPageWithLayout = () => {
   const { data: blogPosts } = trpc.useQuery(["blog.getAll"])
   return (
     <>
-      <Seo seo={seo?.data?.[0]?.seo} />
+      <Seo seo={seo} />
       <main>{<BlogPosts posts={blogPosts?.data ?? []} />}</main>
     </>
   )

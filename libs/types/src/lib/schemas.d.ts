@@ -1558,7 +1558,7 @@ export interface SharedSeo extends ComponentSchema {
     metaTitle: StringAttribute & RequiredAttribute
     metaDescription: TextAttribute & RequiredAttribute
     shareImage: MediaAttribute
-    metaSocial: ComponentAttribute<'shared.shared-social', true> & RequiredAttribute
+    metaSocial: ComponentAttribute<'shared.shared-social', true>
     keywords: TextAttribute
     metaRobots: StringAttribute
     structuredData: JSONAttribute
