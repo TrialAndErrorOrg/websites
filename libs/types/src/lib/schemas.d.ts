@@ -19,10 +19,11 @@ import {
   TextAttribute,
   UIDAttribute,
   MediaAttribute,
+  SingleTypeSchema,
   SetPluginOptions,
   RichTextAttribute,
   ComponentAttribute,
-  SingleTypeSchema,
+  DateAttribute,
   ComponentSchema,
 } from '@strapi/strapi'
 
@@ -394,6 +395,74 @@ export interface PluginPublisherAction extends CollectionTypeSchema {
   }
 }
 
+export interface PluginMenusMenu extends CollectionTypeSchema {
+  info: {
+    displayName: 'Menu'
+    singularName: 'menu'
+    pluralName: 'menus'
+    tableName: 'menus'
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    title: StringAttribute & RequiredAttribute
+    slug: UIDAttribute<'plugin::menus.menu', 'title'> & RequiredAttribute
+    items: RelationAttribute<'plugin::menus.menu', 'oneToMany', 'plugin::menus.menu-item'>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::menus.menu', 'oneToOne', 'admin::user'> & PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::menus.menu', 'oneToOne', 'admin::user'> & PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginMenusMenuItem extends CollectionTypeSchema {
+  info: {
+    displayName: 'Menu Item'
+    singularName: 'menu-item'
+    pluralName: 'menu-items'
+    tableName: 'menu_items'
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    order: IntegerAttribute
+    title: StringAttribute & RequiredAttribute
+    url: StringAttribute
+    target: EnumerationAttribute<['_blank', '_parent', '_self', '_top']>
+    root_menu: RelationAttribute<'plugin::menus.menu-item', 'manyToOne', 'plugin::menus.menu'> &
+      RequiredAttribute
+    parent: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'plugin::menus.menu-item'>
+    description: TextAttribute
+    icon: MediaAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
 export interface PluginStrapiNewsletterNewsletter extends CollectionTypeSchema {
   info: {
     singularName: 'newsletter'
@@ -628,6 +697,12 @@ export interface PluginUsersPermissionsUser extends CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.role'
     >
+    applications: RelationAttribute<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::application.application'
+    >
+    avatar: MediaAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'plugin::users-permissions.user', 'oneToOne', 'admin::user'> &
@@ -638,12 +713,14 @@ export interface PluginUsersPermissionsUser extends CollectionTypeSchema {
   }
 }
 
-export interface PluginMenusMenu extends CollectionTypeSchema {
+export interface PluginCommentsComment extends CollectionTypeSchema {
   info: {
-    displayName: 'Menu'
-    singularName: 'menu'
-    pluralName: 'menus'
-    tableName: 'menus'
+    tableName: 'plugin-comments-comments'
+    singularName: 'comment'
+    pluralName: 'comments'
+    displayName: 'Comment'
+    description: 'Comment content type'
+    kind: 'collectionType'
   }
   options: {
     draftAndPublish: false
@@ -657,23 +734,46 @@ export interface PluginMenusMenu extends CollectionTypeSchema {
     }
   }
   attributes: {
-    title: StringAttribute & RequiredAttribute
-    slug: UIDAttribute<'plugin::menus.menu', 'title'> & RequiredAttribute
-    items: RelationAttribute<'plugin::menus.menu', 'oneToMany', 'plugin::menus.menu-item'>
+    content: TextAttribute & RequiredAttribute
+    blocked: BooleanAttribute & DefaultTo<false>
+    blockedThread: BooleanAttribute & DefaultTo<false>
+    blockReason: StringAttribute
+    authorUser: RelationAttribute<
+      'plugin::comments.comment',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >
+    authorId: StringAttribute
+    authorName: StringAttribute
+    authorEmail: EmailAttribute
+    authorAvatar: StringAttribute
+    removed: BooleanAttribute
+    approvalStatus: StringAttribute
+    related: StringAttribute
+    reports: RelationAttribute<
+      'plugin::comments.comment',
+      'oneToMany',
+      'plugin::comments.comment-report'
+    >
+    threadOf: RelationAttribute<'plugin::comments.comment', 'oneToOne', 'plugin::comments.comment'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::menus.menu', 'oneToOne', 'admin::user'> & PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::menus.menu', 'oneToOne', 'admin::user'> & PrivateAttribute
+    createdBy: RelationAttribute<'plugin::comments.comment', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::comments.comment', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
-export interface PluginMenusMenuItem extends CollectionTypeSchema {
+export interface PluginCommentsCommentReport extends CollectionTypeSchema {
   info: {
-    displayName: 'Menu Item'
-    singularName: 'menu-item'
-    pluralName: 'menu-items'
-    tableName: 'menu_items'
+    tableName: 'plugin-comments-reports'
+    singularName: 'comment-report'
+    pluralName: 'comment-reports'
+    displayName: 'Reports'
+    description: 'Reports content type'
+    kind: 'collectionType'
   }
   options: {
     draftAndPublish: false
@@ -687,18 +787,21 @@ export interface PluginMenusMenuItem extends CollectionTypeSchema {
     }
   }
   attributes: {
-    order: IntegerAttribute
-    title: StringAttribute & RequiredAttribute
-    url: StringAttribute
-    target: EnumerationAttribute<['_blank', '_parent', '_self', '_top']>
-    root_menu: RelationAttribute<'plugin::menus.menu-item', 'manyToOne', 'plugin::menus.menu'> &
-      RequiredAttribute
-    parent: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'plugin::menus.menu-item'>
+    content: TextAttribute
+    reason: EnumerationAttribute<['BAD_LANGUAGE', 'DISCRIMINATION', 'OTHER']> &
+      RequiredAttribute &
+      DefaultTo<'OTHER'>
+    resolved: BooleanAttribute & DefaultTo<false>
+    related: RelationAttribute<
+      'plugin::comments.comment-report',
+      'manyToOne',
+      'plugin::comments.comment'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
+    createdBy: RelationAttribute<'plugin::comments.comment-report', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
+    updatedBy: RelationAttribute<'plugin::comments.comment-report', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -841,6 +944,96 @@ export interface PluginStrapiStripeStrapiStripePayment extends CollectionTypeSch
       'oneToOne',
       'admin::user'
     > &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiAboutPageAboutPage extends SingleTypeSchema {
+  info: {
+    singularName: 'about-page'
+    pluralName: 'about-pages'
+    displayName: 'About Page'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    body: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    seo: ComponentAttribute<'shared.seo'> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::about-page.about-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::about-page.about-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::about-page.about-page',
+      'oneToMany',
+      'api::about-page.about-page'
+    >
+    locale: StringAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiApplicationApplication extends CollectionTypeSchema {
+  info: {
+    singularName: 'application'
+    pluralName: 'applications'
+    displayName: 'Application'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    motivation: RichTextAttribute & RequiredAttribute
+    position: RelationAttribute<
+      'api::application.application',
+      'manyToOne',
+      'api::position.position'
+    >
+    users_permissions_user: RelationAttribute<
+      'api::application.application',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >
+    experience: RichTextAttribute & RequiredAttribute
+    documents: MediaAttribute
+    contact: EmailAttribute & RequiredAttribute
+    state: EnumerationAttribute<['submitted', 'responded', 'draft', 'accepted', 'rejected']> &
+      RequiredAttribute &
+      DefaultTo<'draft'>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -1030,7 +1223,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
       SetMinMaxLength<{
         minLength: 200
       }>
-    excerpt: StringAttribute &
+    excerpt: TextAttribute &
       RequiredAttribute &
       SetMinMaxLength<{
         maxLength: 200
@@ -1098,6 +1291,58 @@ export interface ApiDepartmentDepartment extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'api::department.department', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiDonatePageDonatePage extends SingleTypeSchema {
+  info: {
+    singularName: 'donate-page'
+    pluralName: 'donate-pages'
+    displayName: 'Donate Page'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    body: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    seo: ComponentAttribute<'shared.seo'> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::donate-page.donate-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::donate-page.donate-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::donate-page.donate-page',
+      'oneToMany',
+      'api::donate-page.donate-page'
+    >
+    locale: StringAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -1304,6 +1549,225 @@ export interface ApiJoteAuthorJoteAuthor extends CollectionTypeSchema {
   }
 }
 
+export interface ApiLegalPageLegalPage extends SingleTypeSchema {
+  info: {
+    singularName: 'legal-page'
+    pluralName: 'legal-pages'
+    displayName: 'Legal Page'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    documents: MediaAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    body: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::legal-page.legal-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::legal-page.legal-page', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::legal-page.legal-page',
+      'oneToMany',
+      'api::legal-page.legal-page'
+    >
+    locale: StringAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
+  info: {
+    singularName: 'open-position'
+    pluralName: 'open-positions'
+    displayName: 'Open Position'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    body: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    type: EnumerationAttribute<['internship', 'volunteer']> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    startDate: DateAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    paid: BooleanAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      DefaultTo<false>
+    requirements: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    moreInfoMail: EmailAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      DefaultTo<'info@trialanderror.org'>
+    image: MediaAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    slug: UIDAttribute<'api::open-position.open-position', 'title'> &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    vacancies: IntegerAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      DefaultTo<1>
+    applyUrl: StringAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::open-position.open-position', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'api::open-position.open-position', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::open-position.open-position',
+      'oneToMany',
+      'api::open-position.open-position'
+    >
+    locale: StringAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ApiOpenPositionsPageOpenPositionsPage extends SingleTypeSchema {
+  info: {
+    singularName: 'open-positions-page'
+    pluralName: 'open-positions-pages'
+    displayName: 'Open Positions Page'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    body: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    noPositionsText: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<
+      'api::open-positions-page.open-positions-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    updatedBy: RelationAttribute<
+      'api::open-positions-page.open-positions-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      PrivateAttribute
+    localizations: RelationAttribute<
+      'api::open-positions-page.open-positions-page',
+      'oneToMany',
+      'api::open-positions-page.open-positions-page'
+    >
+    locale: StringAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
 export interface ApiPositionPosition extends CollectionTypeSchema {
   info: {
     singularName: 'position'
@@ -1319,6 +1783,11 @@ export interface ApiPositionPosition extends CollectionTypeSchema {
     description: RichTextAttribute
     email: EmailAttribute
     department: StringAttribute
+    applications: RelationAttribute<
+      'api::position.position',
+      'oneToMany',
+      'api::application.application'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::position.position', 'oneToOne', 'admin::user'> &
@@ -1601,22 +2070,27 @@ declare global {
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate
       'plugin::entity-notes.note': PluginEntityNotesNote
       'plugin::publisher.action': PluginPublisherAction
+      'plugin::menus.menu': PluginMenusMenu
+      'plugin::menus.menu-item': PluginMenusMenuItem
       'plugin::strapi-newsletter.newsletter': PluginStrapiNewsletterNewsletter
       'plugin::strapi-newsletter.subscribed-user': PluginStrapiNewsletterSubscribedUser
       'plugin::i18n.locale': PluginI18NLocale
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
-      'plugin::menus.menu': PluginMenusMenu
-      'plugin::menus.menu-item': PluginMenusMenuItem
+      'plugin::comments.comment': PluginCommentsComment
+      'plugin::comments.comment-report': PluginCommentsCommentReport
       'plugin::strapi-stripe.strapi-stripe-product': PluginStrapiStripeStrapiStripeProduct
       'plugin::strapi-stripe.strapi-stripe-payment': PluginStrapiStripeStrapiStripePayment
+      'api::about-page.about-page': ApiAboutPageAboutPage
+      'api::application.application': ApiApplicationApplication
       'api::article.article': ApiArticleArticle
       'api::blog-author.blog-author': ApiBlogAuthorBlogAuthor
       'api::blog-home.blog-home': ApiBlogHomeBlogHome
       'api::blog-post.blog-post': ApiBlogPostBlogPost
       'api::category.category': ApiCategoryCategory
       'api::department.department': ApiDepartmentDepartment
+      'api::donate-page.donate-page': ApiDonatePageDonatePage
       'api::editor.editor': ApiEditorEditor
       'api::global.global': ApiGlobalGlobal
       'api::homepage.homepage': ApiHomepageHomepage
@@ -1624,6 +2098,9 @@ declare global {
       'api::jote-article.jote-article': ApiJoteArticleJoteArticle
       'api::jote-article-category.jote-article-category': ApiJoteArticleCategoryJoteArticleCategory
       'api::jote-author.jote-author': ApiJoteAuthorJoteAuthor
+      'api::legal-page.legal-page': ApiLegalPageLegalPage
+      'api::open-position.open-position': ApiOpenPositionOpenPosition
+      'api::open-positions-page.open-positions-page': ApiOpenPositionsPageOpenPositionsPage
       'api::position.position': ApiPositionPosition
       'api::tag.tag': ApiTagTag
       'api::team-member.team-member': ApiTeamMemberTeamMember

@@ -9,11 +9,15 @@ type TeamMember = GetAttributesValues<"api::team-member.team-member">
 export const teamMemberRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx, input }) {
-      return await ctx.strapi
-        .from<TeamMember>("team-members")
-        .select(input)
-        .populate()
-        .get()
+      return (
+        (
+          await ctx.strapi
+            .from<TeamMember>("team-members")
+            .select(input)
+            .populate()
+            .get()
+        ).data ?? []
+      )
     },
   })
   .query("getSEOBySlug", {

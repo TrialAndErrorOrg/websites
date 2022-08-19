@@ -14,9 +14,9 @@
     @apply text-lg;
   }
   a {
-    @apply font-bold text-blue-600 underline hover:text-orange-600 focus-visible:outline-orange-500;
+    @apply font-bold text-blue-600 hover:text-orange-600 focus:outline-none focus-visible:outline-orange-500;
   }
   button:focus {
-    @apply outline-orange-500;
+    @apply outline-none;
   }
 }

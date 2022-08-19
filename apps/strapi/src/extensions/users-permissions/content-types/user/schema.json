@@ -68,6 +68,13 @@
       "relation": "oneToMany",
       "target": "api::application.application",
       "mappedBy": "users_permissions_user"
+    },
+    "avatar": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

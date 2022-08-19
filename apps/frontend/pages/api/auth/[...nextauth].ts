@@ -16,17 +16,31 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   callbacks: {
     //    ...sharedNextAuthOptions.callbacks,
-    session({ session, token }) {
-      return { ...session, orcid: token.sub, token }
-    },
 
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
-      console.log(url)
       if (url.startsWith("/")) return `${baseUrl}${url}`
       // Allows callback URLs on the same origin
       if (new URL(url).origin === baseUrl) return url
       return baseUrl
+    },
+    async session({ session, token, user }) {
+      session.jwt = token.jwt
+      session.id = token.id
+      return session
+    },
+
+    async jwt({ token, user, account }) {
+      const isSignIn = !!user
+      if (isSignIn) {
+        const response = await fetch(
+          `${env.STRAPI_ENDPOINT}/auth/${account?.provider}/callback?access_token=${account?.access_token}`
+        )
+        const data = await response.json()
+        token.jwt = data.jwt
+        token.id = data.user.id
+      }
+      return token
     },
   },
   providers: [

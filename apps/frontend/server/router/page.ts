@@ -30,8 +30,6 @@ export const pageRouter = createRouter().query("get", {
         { path: "seo", children: "*" },
       ])
       .get()
-
-    console.log({ res })
     return res?.data ?? {}
   },
 })

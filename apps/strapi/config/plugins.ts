@@ -1,3 +1,4 @@
+import menus from './menus'
 export default ({ env }) => ({
   upload: {
     config: {
@@ -159,4 +160,5 @@ export default ({ env }) => ({
   ckeditor: {
     enabled: true,
   },
+  menus,
 })

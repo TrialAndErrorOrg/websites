@@ -30,7 +30,7 @@
       "minLength": 200
     },
     "excerpt": {
-      "type": "string",
+      "type": "text",
       "required": true,
       "maxLength": 200
     },
