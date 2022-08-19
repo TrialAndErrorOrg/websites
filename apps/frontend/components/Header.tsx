@@ -229,7 +229,7 @@ export const Header = () => {
               <span className="sr-only">Home</span>
               <Image
                 className="h-8 w-auto sm:h-10"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_blue_background_b87382260b.svg"
                 alt=""
                 width="32"
                 height="32"

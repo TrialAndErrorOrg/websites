@@ -9,6 +9,9 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { env } from "../../../server/env.mjs"
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/auth/signin",
+  },
   // Include user.id on session
   // Configure one or more authentication providers
   callbacks: {
