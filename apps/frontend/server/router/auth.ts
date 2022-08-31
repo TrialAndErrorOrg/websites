@@ -1,7 +1,9 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
+import { GetAttributesValues } from "@strapi/strapi"
 import { TRPCError } from "@trpc/server"
 import { createRouter } from "./context"
 
+type User = GetAttributesValues<"plugin::users-permissions.user">
 export const authRouter = createRouter()
   .query("getSession", {
     resolve({ ctx }) {
@@ -15,6 +17,26 @@ export const authRouter = createRouter()
       throw new TRPCError({ code: "UNAUTHORIZED" })
     }
     return next()
+  })
+  .query("avatar", {
+    async resolve({ ctx: { session, strapi } }) {
+      const { user } = session ?? {}
+      if (!session || !user || !user.email) return ""
+      if (user?.image) {
+        return user.image
+      }
+
+      const image = await strapi
+        .from<User>("users")
+        .select(["avatar", "provider"])
+        .equalTo("email", user.email)
+        .get()
+
+      if (image?.data?.[0]?.avatar) {
+        return image.data[0].avatar
+      }
+      return ""
+    },
   })
   .query("getSecretMessage", {
     async resolve() {

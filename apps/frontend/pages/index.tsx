@@ -12,7 +12,6 @@ const Home: NextPageWithLayout = () => {
   const { data: page } = trpc.useQuery(["page.get", "homepage"])
   const { seo, hero } = page ?? { seo: {}, hero: {} }
 
-  console.log({ page })
   return (
     <>
       <Seo seo={seo} />

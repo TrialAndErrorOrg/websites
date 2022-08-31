@@ -3,13 +3,14 @@ import Link from "next/link"
 import Image from "next/image"
 
 import { Fragment } from "react"
-import { Menu, Popover, Transition } from "@headlessui/react"
+import { Menu, Popover, Switch, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { GetAttributesValues } from "@strapi/strapi"
 import { trpc } from "../utils/trpc"
 import { useSession } from "next-auth/react"
 import Trpc from "../pages/api/trpc/[trpc]"
+import { useDarkTheme } from "../hooks/useDarkTheme"
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
@@ -95,9 +96,74 @@ const Popout = ({ header }: { header: HeaderType }) => (
   </Popover>
 )
 
+const ToggleDarkMode = () => {
+  const { darkTheme, toggleDarkTheme } = useDarkTheme()
+
+  return (
+    <Switch
+      checked={!!darkTheme}
+      onChange={toggleDarkTheme}
+      className={classNames(
+        darkTheme ? "bg-indigo-600" : "bg-gray-200",
+        "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      )}
+    >
+      <span className="sr-only">Use setting</span>
+      <span
+        className={classNames(
+          darkTheme ? "translate-x-5" : "translate-x-0",
+          "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+        )}
+      >
+        <span
+          className={classNames(
+            darkTheme
+              ? "opacity-0 duration-100 ease-out"
+              : "opacity-100 duration-200 ease-in",
+            "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+          )}
+          aria-hidden="true"
+        >
+          <svg
+            className="h-3 w-3 text-gray-400"
+            fill="none"
+            viewBox="0 0 12 12"
+          >
+            <path
+              d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        <span
+          className={classNames(
+            darkTheme
+              ? "opacity-100 duration-200 ease-in"
+              : "opacity-0 duration-100 ease-out",
+            "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+          )}
+          aria-hidden="true"
+        >
+          <svg
+            className="h-3 w-3 text-indigo-600"
+            fill="currentColor"
+            viewBox="0 0 12 12"
+          >
+            <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+          </svg>
+        </span>
+      </span>
+    </Switch>
+  )
+}
+
 const SignIn = () => {
   const { data: session, status } = useSession()
   const { data: userNavigation } = trpc.useQuery(["nav.user"])
+  const { data: avatar } = trpc.useQuery(["auth.avatar"])
 
   return session && status === "authenticated" ? (
     <div className="ml-4 flex items-center md:ml-6">
@@ -114,11 +180,14 @@ const SignIn = () => {
         <div>
           <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <span className="sr-only">Open user menu</span>
-            <img
-              className="h-8 w-8 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
+            <span className="h-8 w-8 overflow-clip rounded-full">
+              <Image
+                src={avatar}
+                height="32"
+                width="32"
+                alt="Your profile picture"
+              />
+            </span>
           </Menu.Button>
         </div>
         <Transition
@@ -186,6 +255,8 @@ const MainNav = ({ headers }: { headers: Menu }) => (
         return <Popout key={header.title} header={header as HeaderType} />
       })
       .filter(Boolean)}
+
+    <ToggleDarkMode />
     <SignIn />
   </Popover.Group>
 )
@@ -268,11 +339,10 @@ const MainNav = ({ headers }: { headers: Menu }) => (
 export const Header = () => {
   const { data: nav } = trpc.useQuery(["nav.main"])
   const headers = nav ?? ({} as Menu)
-  console.log({ headers })
 
   return (
-    <Popover className="relative bg-white">
-      <div className="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
+    <Popover className="sticky top-0 z-10 bg-white">
+      <div className=" flex items-center justify-between px-4 py-5 sm:px-6 md:justify-start md:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href="/">
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

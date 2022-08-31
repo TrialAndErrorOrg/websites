@@ -2,7 +2,11 @@ const { createGlobPatternsForDependencies } = require("@nrwl/react/tailwind")
 
 const { join } = require("path")
 
+/**
+ * @type {import('tailwindcss').Config}
+ */
 module.exports = {
+  darkMode: "class",
   presets: [require("../../tailwind-workspace-preset.js")],
   content: [
     join(__dirname, "**/*!(*.stories|*.spec).{ts,tsx,html}"),

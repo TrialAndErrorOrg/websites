@@ -22,7 +22,6 @@ const plugin = (plugin: any) => {
     ...defaultAttrs,
     ...customAttrs,
   }
-  console.log(plugin.contentTypes['menu-item'].schema.attributes)
 
   return plugin
 }
