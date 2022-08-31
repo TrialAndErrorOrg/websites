@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react"
 import { Hero } from "../components/Hero"
 // import Layout from "../components/layout"
 import { Seo } from "../components/SEO"
@@ -9,16 +8,20 @@ import { NextPageWithLayout } from "./_app"
 
 const Home: NextPageWithLayout = () => {
   // const { data, status } = useSession()
-  const { data: page } = trpc.useQuery(["page.get", "homepage"])
-  const { seo, hero } = page ?? { seo: {}, hero: {} }
+  const { data: page, error, isFetching } = trpc.useQuery(["page.homepage"])
+  // const { seo, hero,  } = page
+  console.log(page, error, isFetching)
 
   return (
     <>
-      <Seo seo={seo} />
-      <Hero hero={hero} />
+      <Seo seo={page?.seo} />
+      <Hero hero={page?.hero} />
 
       <div className="uk-section">
-        <p>Some text</p>
+        <article
+          className="prose prose-slate dark:prose-invert"
+          dangerouslySetInnerHTML={{ __html: page?.body ?? "" }}
+        />
       </div>
     </>
   )

@@ -9,7 +9,7 @@ type TeamMember = GetAttributesValues<"api::team-member.team-member">
 export const teamMemberRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx, input }) {
-      return (
+      const data =
         (
           await ctx.strapi
             .from<TeamMember>("team-members")
@@ -17,7 +17,12 @@ export const teamMemberRouter = createRouter()
             .populate()
             .get()
         ).data ?? []
-      )
+      const sorted = data.sort((a, b) => {
+        if ((a?.department ?? "") < (b?.department ?? "")) return -1
+        if ((a?.department ?? "") > (b?.department ?? "")) return 1
+        return 0
+      })
+      return sorted
     },
   })
   .query("getSEOBySlug", {

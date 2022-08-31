@@ -12,8 +12,16 @@ const withSWRTypes = require("next-typed-api-with-swr")
 const nextConfig = {
   /* config options here */
   swcMinify: true,
-  experimental: { nftTracing: true, topLevelAwait: true },
-  experiments: { topLevelAwait: true },
+  experimental: {
+    nftTracing: true,
+    topLevelAwait: true,
+    images: {
+      allowFutureImage: true,
+    },
+  },
+  experiments: {
+    topLevelAwait: true,
+  },
   staticPageGenerationTimeout: 120,
   webpack(config, { dev }) {
     if (dev) {

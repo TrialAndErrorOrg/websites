@@ -4,12 +4,11 @@ import Image from "next/image"
 
 import { Fragment } from "react"
 import { Menu, Popover, Switch, Transition } from "@headlessui/react"
-import { BellIcon, MenuIcon } from "@heroicons/react/outline"
+import { BellIcon, MenuIcon, MoonIcon, SunIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { GetAttributesValues } from "@strapi/strapi"
-import { trpc } from "../utils/trpc"
 import { useSession } from "next-auth/react"
-import Trpc from "../pages/api/trpc/[trpc]"
+import { trpc } from "../utils/trpc"
 import { useDarkTheme } from "../hooks/useDarkTheme"
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
@@ -18,14 +17,14 @@ const PlainLink = ({ slug, title }: { slug: string; title: string }) => (
   <Link href={slug}>
     <a
       href={slug}
-      className="text-base font-medium text-gray-500 hover:text-gray-900"
+      className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-slate-100 dark:hover:text-white"
     >
       {title}
     </a>
   </Link>
 )
 
-type Menu = GetAttributesValues<"plugin::menus.menu">
+type MenuType = GetAttributesValues<"plugin::menus.menu">
 type MenuItem = GetAttributesValues<"plugin::menus.menu-item">
 type HeaderType = MenuItem & { children: MenuItem[] }
 
@@ -35,15 +34,19 @@ const Popout = ({ header }: { header: HeaderType }) => (
       <>
         <Popover.Button
           className={classNames(
-            open ? "text-gray-900" : "text-gray-500",
-            "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+            open
+              ? "text-slate-900 dark:text-white"
+              : "text-gray-500 dark:text-slate-100",
+            "focus-visible-visible:outline-none focus-visible-visible:ring-2 focus-visible-visible:ring-orange-500 focus-visible-visible:ring-offset-2 group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 dark:hover:text-white"
           )}
         >
           <span>{header.title}</span>
           <ChevronDownIcon
             className={classNames(
-              open ? "text-gray-600" : "text-gray-400",
-              "ml-2 h-5 w-5 group-hover:text-gray-500"
+              open
+                ? "text-gray-600 dark:text-slate-200"
+                : "text-gray-400 dark:text-slate-300",
+              "ml-2 h-5 w-5 group-hover:text-gray-500 dark:group-hover:text-slate-300"
             )}
             aria-hidden="true"
           />
@@ -60,12 +63,12 @@ const Popout = ({ header }: { header: HeaderType }) => (
         >
           <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform lg:left-1/2 lg:ml-0 lg:max-w-2xl lg:-translate-x-1/2">
             <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-              <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
+              <div className="relative grid gap-6 bg-white px-5 py-6 dark:bg-blue-400 sm:gap-8 sm:p-8 lg:grid-cols-2">
                 {header.children?.map((child) => (
                   <a
                     key={child.title}
                     href={child.url}
-                    className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+                    className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-blue-50"
                   >
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-clip rounded-md bg-orange-500 text-white sm:h-12 sm:w-12">
                       {child.icon && (
@@ -78,10 +81,10 @@ const Popout = ({ header }: { header: HeaderType }) => (
                       )}
                     </div>
                     <div className="ml-4">
-                      <p className="text-base font-medium text-gray-900">
+                      <p className="text-base font-medium text-slate-900 dark:text-white">
                         {child.title}
                       </p>
-                      <p className="mt-1 text-sm font-normal text-slate-500">
+                      <p className="mt-1 text-sm font-normal text-slate-500 dark:text-slate-200">
                         {child?.description}
                       </p>
                     </div>
@@ -104,15 +107,26 @@ const ToggleDarkMode = () => {
       checked={!!darkTheme}
       onChange={toggleDarkTheme}
       className={classNames(
-        darkTheme ? "bg-indigo-600" : "bg-gray-200",
-        "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        // darkTheme ? "bg-orange-600" : "bg-gray-200",
+        "group relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
       )}
     >
-      <span className="sr-only">Use setting</span>
+      <span className="sr-only">Set darkmode</span>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute h-full w-full rounded-md"
+      />
+      <span
+        aria-hidden="true"
+        className={classNames(
+          darkTheme ? "bg-orange-600" : "bg-gray-200",
+          "pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out"
+        )}
+      />
       <span
         className={classNames(
-          darkTheme ? "translate-x-5" : "translate-x-0",
-          "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+          darkTheme ? "translate-x-3" : "translate-x-0",
+          "pointer-events-none absolute left-0 inline-block  h-6 w-6 transform rounded-full bg-white text-slate-700 shadow ring-0 transition duration-200 ease-in-out"
         )}
       >
         <span
@@ -120,40 +134,22 @@ const ToggleDarkMode = () => {
             darkTheme
               ? "opacity-0 duration-100 ease-out"
               : "opacity-100 duration-200 ease-in",
-            "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+            "absolute inset-0 flex h-[100%] w-[100%] items-center justify-center transition-opacity"
           )}
           aria-hidden="true"
         >
-          <svg
-            className="h-3 w-3 text-gray-400"
-            fill="none"
-            viewBox="0 0 12 12"
-          >
-            <path
-              d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <SunIcon />
         </span>
         <span
           className={classNames(
             darkTheme
               ? "opacity-100 duration-200 ease-in"
               : "opacity-0 duration-100 ease-out",
-            "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+            "absolute inset-0 flex h-[100%] w-[100%] items-center justify-center transition-opacity"
           )}
           aria-hidden="true"
         >
-          <svg
-            className="h-3 w-3 text-indigo-600"
-            fill="currentColor"
-            viewBox="0 0 12 12"
-          >
-            <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
-          </svg>
+          <MoonIcon />
         </span>
       </span>
     </Switch>
@@ -169,7 +165,7 @@ const SignIn = () => {
     <div className="ml-4 flex items-center md:ml-6">
       <button
         type="button"
-        className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="rounded-full  p-1 text-gray-400 hover:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:text-slate-200 dark:hover:text-slate-300"
       >
         <span className="sr-only">View notifications</span>
         <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -178,7 +174,7 @@ const SignIn = () => {
       {/* Profile dropdown */}
       <Menu as="div" className="relative ml-3">
         <div>
-          <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <Menu.Button className="flex max-w-xs items-center rounded-full bg-white p-[2px] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2">
             <span className="sr-only">Open user menu</span>
             <span className="h-8 w-8 overflow-clip rounded-full">
               <Image
@@ -199,15 +195,15 @@ const SignIn = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus-visible:outline-none dark:bg-blue-500 dark:ring-white">
             {userNavigation?.items?.map((item) => (
               <Menu.Item key={item.title}>
                 {({ active }) => (
                   <a
                     href={item.url}
                     className={classNames(
-                      active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
+                      active ? "bg-gray-100 dark:bg-blue-200" : "",
+                      "block px-4 py-2 text-sm text-slate-700 dark:bg-blue-500 dark:text-slate-200"
                     )}
                   >
                     {item.title}
@@ -222,7 +218,7 @@ const SignIn = () => {
   ) : (
     <div className="flex gap-4">
       <Link href="/api/auth/signin">
-        <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+        <a className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white">
           Sign in
         </a>
       </Link>
@@ -235,7 +231,7 @@ const SignIn = () => {
   )
 }
 
-const MainNav = ({ headers }: { headers: Menu }) => (
+const MainNav = ({ headers }: { headers: MenuType }) => (
   <Popover.Group as="nav" className="hidden space-x-10 md:flex">
     {headers?.items
       ?.map((header) => {
@@ -274,7 +270,7 @@ const MainNav = ({ headers }: { headers: Menu }) => (
 //                 <Popover.Button
 //                   className={classNames(
 //                     open ? "text-gray-900" : "text-gray-500",
-//                     "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+//                     "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus-visible-visible:outline-none focus-visible-visible:ring-2 focus-visible-visible:ring-orange-500 focus-visible-visible:ring-offset-2"
 //                   )}
 //                 >
 //                   <span>More</span>
@@ -338,10 +334,10 @@ const MainNav = ({ headers }: { headers: Menu }) => (
 
 export const Header = () => {
   const { data: nav } = trpc.useQuery(["nav.main"])
-  const headers = nav ?? ({} as Menu)
+  const headers = nav ?? ({} as MenuType)
 
   return (
-    <Popover className="sticky top-0 z-10 bg-white">
+    <Popover className="sticky top-0 z-10 bg-white dark:bg-blue-600">
       <div className=" flex items-center justify-between px-4 py-5 sm:px-6 md:justify-start md:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href="/">
@@ -359,7 +355,7 @@ export const Header = () => {
           </Link>
         </div>
         <div className="-my-2 -mr-2 md:hidden">
-          <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500">
+          <Popover.Button className="focus-visible-visible:outline-none focus-visible-visible:ring-2 focus-visible-visible:ring-inset focus-visible-visible:ring-orange-500 inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
             <span className="sr-only">Open menu</span>
             <MenuIcon className="h-6 w-6" aria-hidden="true" />
           </Popover.Button>
@@ -378,7 +374,7 @@ export const Header = () => {
         leaveTo="opacity-0 scale-95"
       >
         <Popover.Panel
-          focus
+          focus-visible
           className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
         >
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
@@ -394,7 +390,7 @@ export const Header = () => {
                   />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus-visible-visible:outline-none focus-visible-visible:ring-2 focus-visible-visible:ring-inset focus-visible-visible:ring-orange-500">
                     <span className="sr-only">Close menu</span>
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>

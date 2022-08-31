@@ -8,16 +8,14 @@ import { NextPageWithLayout } from "../_app"
 
 const Team: NextPageWithLayout = () => {
   // const { data: team } = trpc.useQuery(["teamMember.getAll"])
-  const { data: page } = trpc.useQuery(["page.get", "team-page"])
-  const { content, seo } = page ?? { content: {}, seo: {} }
+  const { data: page } = trpc.useQuery(["page.team-page"])
 
-  console.log(page)
   return (
     <>
-      <Seo seo={seo} />
+      <Seo seo={page?.seo} />
       <main className="item-center flex flex-col gap-10">
         <h1 className="text-4xl font-bold">Meet the Team!</h1>
-        <p>{content.content}</p>
+        <div dangerouslySetInnerHTML={{ __html: page?.content ?? <p></p> }} />
         {/* <TeamGrid teamMembers={team ?? []} /> */}
         <TeamList />
       </main>

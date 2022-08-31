@@ -1404,14 +1404,17 @@ export interface ApiHomepageHomepage extends SingleTypeSchema {
     pluralName: 'homepages'
     displayName: 'Homepage'
     name: 'homepage'
+    description: ''
   }
   options: {
     increments: true
     timestamps: true
+    draftAndPublish: false
   }
   attributes: {
     seo: ComponentAttribute<'shared.seo'>
     hero: ComponentAttribute<'sections.hero'> & RequiredAttribute
+    body: RichTextAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::homepage.homepage', 'oneToOne', 'admin::user'> &
@@ -1859,6 +1862,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     >
     slug: UIDAttribute<'api::team-member.team-member', 'lastName'>
     seo: ComponentAttribute<'shared.seo'>
+    linkedin: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
