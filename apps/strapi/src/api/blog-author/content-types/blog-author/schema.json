@@ -14,16 +14,16 @@
   "attributes": {
     "firstName": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "lastName": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "image": {
       "type": "media",
       "multiple": false,
-      "required": true,
+      "required": false,
       "allowedTypes": [
         "images"
       ]
@@ -31,7 +31,7 @@
     "bio": {
       "type": "richtext",
       "maxLength": 300,
-      "required": true
+      "required": false
     },
     "email": {
       "type": "email"
@@ -42,11 +42,11 @@
       "target": "api::blog-post.blog-post",
       "mappedBy": "blog_authors"
     },
-    "team_member": {
+    "team_members": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::team-member.team-member",
-      "inversedBy": "blog_author"
+      "mappedBy": "blog_author"
     },
     "twitter": {
       "type": "string",

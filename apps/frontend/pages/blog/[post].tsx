@@ -5,6 +5,7 @@ import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { differenceInDays, formatDistanceToNow } from "date-fns"
 import { NextPageWithLayout } from "../_app"
 
 const BlogPost: NextPageWithLayout = () => {
@@ -14,10 +15,11 @@ const BlogPost: NextPageWithLayout = () => {
   const blogPost = data?.data?.[0]
   const {
     title,
-    post: body,
+    body,
     seo,
     image,
     blog_tags,
+    publishedAt,
     blog_authors,
     publishDate,
   } = blogPost ?? {}
@@ -25,7 +27,7 @@ const BlogPost: NextPageWithLayout = () => {
   return (
     <>
       <Seo seo={seo} />
-      <article className="prose prose-slate dark:prose-invert">
+      <article className="prose prose-slate mx-auto max-w-7xl px-4 dark:prose-invert sm:px-6 lg:px-8">
         <Image
           src={image?.url}
           width={image?.width}
@@ -34,25 +36,47 @@ const BlogPost: NextPageWithLayout = () => {
         />
         <h1>{title}</h1>
         <div>
-          <time dateTime={publishDate}>{publishDate}</time>
-          {blog_authors?.map((author) => (
-            <Link href={`/team/${author.slug}`} key={author.slug}>
-              <a>
-                <Image
-                  src={author?.image?.url}
-                  width={author?.image?.width}
-                  height={author?.image?.height}
-                  alt={author?.image?.alt}
-                />
-                <h2>
-                  {author.firstName} {author.lastName}
-                </h2>
-              </a>
-            </Link>
-          ))}
+          <span>
+            {`Published ${formatDistanceToNow(
+              publishDate || publishedAt
+                ? new Date(publishDate ?? publishedAt)
+                : new Date()
+            )}`}
+          </span>
+          <div className="flex gap-2">
+            {blog_tags?.map((tag) => (
+              <span
+                className="rounded-full bg-orange-50 px-3 py-1 text-sm text-orange-900"
+                key={tag.title}
+              >
+                {tag.title}
+              </span>
+            ))}
+          </div>
+          <div>
+            {blog_authors?.map((author) => (
+              <Link href={`/team/${author.slug}`} key={author.slug}>
+                <a>
+                  <Image
+                    src={author?.image?.url}
+                    width={author?.image?.width}
+                    height={author?.image?.height}
+                    alt={author?.image?.alt}
+                  />
+                  <h2>
+                    {author.firstName} {author.lastName}
+                  </h2>
+                </a>
+              </Link>
+            ))}
+          </div>
         </div>
-        {JSON.stringify(blogPost)}
-        <Content>{body}</Content>
+
+        <div
+          className="mx-auto max-w-3xl"
+          dangerouslySetInnerHTML={{ __html: body ?? "" }}
+        />
+        {/* <Content>{body}</Content> */}
       </article>
     </>
   )

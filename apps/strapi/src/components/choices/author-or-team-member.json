@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_choices_author_or_team_members",
+  "info": {
+    "displayName": "Author or Team Member",
+    "icon": "grin-beam",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "team_members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-member.team-member"
+    },
+    "blog_authors": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::blog-author.blog-author"
+    }
+  }
+}

@@ -14,7 +14,8 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "image": {
       "type": "media",
@@ -24,7 +25,7 @@
         "images"
       ]
     },
-    "post": {
+    "body": {
       "type": "richtext",
       "required": true,
       "minLength": 200
@@ -62,6 +63,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::blog-post.blog-post"
+    },
+    "team_members": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::team-member.team-member",
+      "inversedBy": "blog_posts"
     }
   }
 }

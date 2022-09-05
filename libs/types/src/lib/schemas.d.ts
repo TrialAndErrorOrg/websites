@@ -1119,11 +1119,10 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     draftAndPublish: false
   }
   attributes: {
-    firstName: StringAttribute & RequiredAttribute
-    lastName: StringAttribute & RequiredAttribute
-    image: MediaAttribute & RequiredAttribute
+    firstName: StringAttribute
+    lastName: StringAttribute
+    image: MediaAttribute
     bio: RichTextAttribute &
-      RequiredAttribute &
       SetMinMaxLength<{
         maxLength: 300
       }>
@@ -1133,9 +1132,9 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
       'manyToMany',
       'api::blog-post.blog-post'
     >
-    team_member: RelationAttribute<
+    team_members: RelationAttribute<
       'api::blog-author.blog-author',
-      'oneToOne',
+      'oneToMany',
       'api::team-member.team-member'
     >
     twitter: StringAttribute
@@ -1218,7 +1217,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
   attributes: {
     title: StringAttribute & RequiredAttribute
     image: MediaAttribute & RequiredAttribute
-    post: RichTextAttribute &
+    body: RichTextAttribute &
       RequiredAttribute &
       SetMinMaxLength<{
         minLength: 200
@@ -1238,6 +1237,11 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
     blog_tags: RelationAttribute<'api::blog-post.blog-post', 'manyToMany', 'api::tag.tag'>
     seo: ComponentAttribute<'shared.seo'>
     related: RelationAttribute<'api::blog-post.blog-post', 'oneToMany', 'api::blog-post.blog-post'>
+    team_members: RelationAttribute<
+      'api::blog-post.blog-post',
+      'manyToMany',
+      'api::team-member.team-member'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -1844,11 +1848,6 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     email: EmailAttribute
     bio: RichTextAttribute
     image: MediaAttribute
-    blog_author: RelationAttribute<
-      'api::team-member.team-member',
-      'oneToOne',
-      'api::blog-author.blog-author'
-    >
     show_pronouns: BooleanAttribute & RequiredAttribute & DefaultTo<true>
     pronouns: StringAttribute & RequiredAttribute
     azureID: StringAttribute & UniqueAttribute
@@ -1863,6 +1862,16 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     slug: UIDAttribute<'api::team-member.team-member', 'lastName'>
     seo: ComponentAttribute<'shared.seo'>
     linkedin: StringAttribute
+    blog_author: RelationAttribute<
+      'api::team-member.team-member',
+      'manyToOne',
+      'api::blog-author.blog-author'
+    >
+    blog_posts: RelationAttribute<
+      'api::team-member.team-member',
+      'manyToMany',
+      'api::blog-post.blog-post'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
@@ -1971,6 +1980,26 @@ export interface ApiWriterWriter extends CollectionTypeSchema {
     createdBy: RelationAttribute<'api::writer.writer', 'oneToOne', 'admin::user'> & PrivateAttribute
     updatedBy: RelationAttribute<'api::writer.writer', 'oneToOne', 'admin::user'> & PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface ChoicesAuthorOrTeamMember extends ComponentSchema {
+  info: {
+    displayName: 'Author or Team Member'
+    icon: 'grin-beam'
+    description: ''
+  }
+  attributes: {
+    team_members: RelationAttribute<
+      'choices.author-or-team-member',
+      'oneToMany',
+      'api::team-member.team-member'
+    >
+    blog_authors: RelationAttribute<
+      'choices.author-or-team-member',
+      'oneToMany',
+      'api::blog-author.blog-author'
+    >
   }
 }
 
@@ -2111,6 +2140,7 @@ declare global {
       'api::team-page.team-page': ApiTeamPageTeamPage
       'api::update-category.update-category': ApiUpdateCategoryUpdateCategory
       'api::writer.writer': ApiWriterWriter
+      'choices.author-or-team-member': ChoicesAuthorOrTeamMember
       'components.cta': ComponentsCta
       'cote.position-or-editor': CotePositionOrEditor
       'sections.hero': SectionsHero

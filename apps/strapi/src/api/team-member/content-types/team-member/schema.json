@@ -36,12 +36,6 @@
         "videos"
       ]
     },
-    "blog_author": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::blog-author.blog-author",
-      "mappedBy": "team_member"
-    },
     "show_pronouns": {
       "type": "boolean",
       "default": true,
@@ -101,6 +95,18 @@
     "linkedin": {
       "type": "string",
       "regex": "https:\\/\\/(www\\.)?linkedin.com\\/in\\/.*"
+    },
+    "blog_author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::blog-author.blog-author",
+      "inversedBy": "team_members"
+    },
+    "blog_posts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::blog-post.blog-post",
+      "mappedBy": "team_members"
     }
   }
 }
