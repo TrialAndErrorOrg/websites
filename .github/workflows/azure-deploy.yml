@@ -40,7 +40,7 @@ jobs:
       #       ${{ runner.os }}-yarn-
 
       - name: install & build
-        run: npm ci && NODE_ENV=production npm run build
+        run: yarn && NODE_ENV=production yarn build
         working-directory: ${{env.working-directory}}
 
       - name: 'Tar files'
