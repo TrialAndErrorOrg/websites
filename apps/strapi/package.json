@@ -11,6 +11,7 @@
     "@strapi/plugin-seo": "^1.7.4",
     "@strapi/plugin-users-permissions": "^4.3.0",
     "@strapi/strapi": "4.3.0",
+    "@webbio/strapi-plugin-scheduler": "^0.1.2",
     "lodash.set": "^4.3.2",
     "passport-azure-ad-oauth2": "^0.0.4",
     "passport-github2": "^0.1.12",

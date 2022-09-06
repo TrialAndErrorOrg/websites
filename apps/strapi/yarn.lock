@@ -3424,6 +3424,11 @@
     "@webassemblyjs/ast" "1.11.1"
     "@xtuc/long" "4.2.2"
 
+"@webbio/strapi-plugin-scheduler@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@webbio/strapi-plugin-scheduler/-/strapi-plugin-scheduler-0.1.2.tgz#387d7d496cc9a4e4420aae5905e292172ba1b541"
+  integrity sha512-m/7pOtjCelvSYfm6apQd+VFKimT9i6iGO0iPftlVmAt01QuOfz+bv6FDS5XbYpuwOS7ZVBapa2NfKz9B4vA7dg==
+
 "@webpack-cli/configtest@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@webpack-cli/configtest/-/configtest-1.2.0.tgz"
