@@ -5,7 +5,7 @@ index c09accf..46ba7f8 100644
 @@ -43,7 +43,47 @@ const LeftMenu = () => {
    const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
    const intlSingleTypeLinks = toIntl(singleTypeLinks);
- 
+
 +  const categories= {
 +  COTE : ["Team Member", "Position", "Department", "Initiative"],
 +  JOTE : ["JOTE Article", "JOTE Author", "JOTE Article Category", "Editor"],
@@ -53,7 +53,7 @@ index c09accf..46ba7f8 100644
 @@ -81,6 +121,10 @@ const LeftMenu = () => {
      defaultMessage: 'Content',
    });
- 
+
 +console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
 +        object.title.toLowerCase()
 +      ))
@@ -66,7 +66,7 @@ index 2b19ff7..b62c509 100644
 --- a/node_modules/@strapi/admin/admin/src/index.js
 +++ b/node_modules/@strapi/admin/admin/src/index.js
 @@ -8,11 +8,11 @@ import appReducers from './reducers';
- 
+
  window.strapi = {
    backendURL: process.env.STRAPI_ADMIN_BACKEND_URL,
 -  isEE: false,
@@ -77,7 +77,7 @@ index 2b19ff7..b62c509 100644
 -  projectType: 'Community',
 +  projectType: 'Enterprise',
  };
- 
+
  const customConfig = appCustomisations;
 diff --git a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
 index e2b1a47..ea98ae0 100644
@@ -85,13 +85,13 @@ index e2b1a47..ea98ae0 100644
 +++ b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
 @@ -17,11 +17,11 @@ const DividerFull = styled(Divider)`
  `;
- 
+
  const Login = loginProps => {
 -  const ssoEnabled = strapi.features.isEnabled(strapi.features.SSO);
 +  const ssoEnabled = true;
    const { isLoading, data: providers } = useAuthProviders({ ssoEnabled });
    const { formatMessage } = useIntl();
- 
+
 -  if (!ssoEnabled || (!isLoading && providers.length === 0)) {
 +  if ( (!isLoading && providers.length === 0)) {
      return (
@@ -103,7 +103,7 @@ index 024abd3..a05bcd4 100644
 +++ b/node_modules/@strapi/admin/ee/admin/pages/AuthResponse/index.js
 @@ -6,25 +6,26 @@ import { auth, LoadingIndicatorPage, request } from '@strapi/helper-plugin';
  import { getRequestUrl } from '../../../../admin/src/utils';
- 
+
  const AuthResponse = () => {
 -  const {
 -    params: { authResponse },
@@ -135,16 +135,16 @@ index 024abd3..a05bcd4 100644
 -    );
 -  }, [push]);
 +  }
- 
+
 -  const fetchUserInfo = useCallback(async () => {
 +  const fetchUserInfo = async () => {
      try {
        const jwtToken = Cookies.get('jwtToken');
- 
+
 @@ -39,22 +40,30 @@ const AuthResponse = () => {
- 
+
          Cookies.remove('jwtToken');
- 
+
 -        push('/auth/login');
 +        window.location.href = `/admin/auth/login`
        }
@@ -158,13 +158,13 @@ index 024abd3..a05bcd4 100644
 +  }
 +  if(url.includes('error')){
 +    redirectToOops();
- 
+
 -  useEffect(() => {
 -    if (authResponse === 'error') {
 -      redirectToOops();
 -    }
 +  }
- 
+
 -    if (authResponse === 'success') {
 -      fetchUserInfo();
 -    }
@@ -179,7 +179,7 @@ index 024abd3..a05bcd4 100644
 +  //     fetchUserInfo();
 +  //   }
 +  // }, [authResponse, fetchUserInfo, redirectToOops]);
- 
+
    return <LoadingIndicatorPage />;
  };
 diff --git a/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js b/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js
@@ -188,13 +188,13 @@ index 5504f1e..a687f41 100644
 +++ b/node_modules/@strapi/admin/ee/server/controllers/authentication/middlewares.js
 @@ -100,7 +100,9 @@ const redirectWithAuth = ctx => {
    const jwt = getService('token').createJwtToken(user);
- 
+
    const isProduction = strapi.config.get('environment') === 'production';
 +  console.log(isProduction)
- 
+
 +  console.log(strapi.config.get('environment'))
    const cookiesOptions = { httpOnly: false, secure: isProduction, overwrite: true };
- 
+
    strapi.eventHub.emit('admin.auth.success', { user, provider });
 diff --git a/node_modules/@strapi/admin/server/controllers/admin.js b/node_modules/@strapi/admin/server/controllers/admin.js
 index 97a45b5..5d54c2f 100644
@@ -211,4 +211,4 @@ index 97a45b5..5d54c2f 100644
 +      return { data: { isEE: true, features: ['sso'] } };
      }
    },
- 
+

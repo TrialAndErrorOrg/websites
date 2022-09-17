@@ -6,13 +6,32 @@ import { createRouter } from "./context"
 
 type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
 
+const order = ["asc", "desc"] as const
+const orderBy = ["title", "publishDate", "publishedAt"] as const
+type SortArr = { field: typeof orderBy[number]; order: typeof order[number] }[]
+
 export const blogPostRouter = createRouter()
   .query("getAll", {
-    async resolve({ ctx }) {
+    input: z.object({
+      order: z.enum(order).default("desc"),
+      orderBy: z.enum(orderBy).default("publishDate"),
+      limit: z.number().min(1).max(100).default(20),
+      start: z.number().min(0).default(0),
+    }),
+    async resolve({ ctx, input }) {
+      const sortByArray = (
+        input.orderBy === "title"
+          ? [{ field: "title", order: input.order }]
+          : [
+              { field: "publishDate", order: input.order },
+              { field: "publishedAt", order: input.order },
+            ]
+      ) as SortArr
       return await ctx.strapi
         .from<BlogPost>("blog-posts")
         .select()
         .populate()
+        .sortBy(sortByArray)
         .get()
     },
   })

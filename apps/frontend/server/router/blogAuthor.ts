@@ -5,6 +5,7 @@ import { GetAttributesValues } from "@strapi/strapi"
 import { createRouter } from "./context"
 
 type BlogAuthor = GetAttributesValues<"api::blog-author.blog-author">
+type TeamMember = GetAttributesValues<"api::team-member.team-member">
 
 export const blogAuthorRouter = createRouter()
   .query("getAll", {
@@ -25,11 +26,19 @@ export const blogAuthorRouter = createRouter()
   .query("getBySlug", {
     input: z.string(),
     async resolve({ ctx, input }) {
-      return await ctx.strapi
-        .from<BlogAuthor>("blog-authors")
-        .select()
-        .equalTo("slug", input)
-        .get()
+      try {
+        return await ctx.strapi
+          .from<TeamMember>("team-members")
+          .select()
+          .equalTo("slug", input)
+          .get()
+      } catch (error) {
+        return await ctx.strapi
+          .from<BlogAuthor>("blog-authors")
+          .select()
+          .equalTo("slug", input)
+          .get()
+      }
     },
   })
   .query("getBlogAuthorsBySlug", {

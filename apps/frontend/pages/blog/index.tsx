@@ -6,7 +6,7 @@ import { NextPageWithLayout } from "../_app"
 
 const Blog: NextPageWithLayout = () => {
   const { data: seo } = trpc.useQuery(["seo.get", "blog-home"])
-  const { data: blogPosts } = trpc.useQuery(["blog.getAll"])
+  const { data: blogPosts } = trpc.useQuery(["blog.getAll", {}])
   return (
     <>
       <Seo seo={seo} />

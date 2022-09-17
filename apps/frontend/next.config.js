@@ -5,7 +5,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const withPlugins = require("next-compose-plugins")
-const withSWRTypes = require("next-typed-api-with-swr")
 /**
  * @type {import('next').NextConfig}
  */
@@ -18,6 +17,7 @@ const nextConfig = {
     images: {
       allowFutureImage: true,
     },
+    newNextLinkBehavior: true,
   },
   experiments: {
     topLevelAwait: true,

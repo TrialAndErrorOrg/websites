@@ -26,12 +26,12 @@ export const seoRouter = createRouter()
   })
   .query("get", {
     input: z.enum([
-      "blog_post",
-      "team_member",
-      "blog_author",
-      "team_page",
+      "blog-post",
+      "team-member",
+      "blog-author",
+      "team-page",
       "homepage",
-      "blog_home",
+      "blog-home",
     ]),
     async resolve({ ctx, input }) {
       const res = await ctx.strapi
