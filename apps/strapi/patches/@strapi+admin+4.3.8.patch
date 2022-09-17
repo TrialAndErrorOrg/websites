@@ -1,0 +1,326 @@
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+index b7e0ddc..6a85af0 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+@@ -44,7 +44,47 @@ const LeftMenu = () => {
+   const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
+   const intlSingleTypeLinks = toIntl(singleTypeLinks);
+ 
++  const categories= {
++  COTE : ["Team Member", "Position", "Department", "Initiative"],
++  JOTE : ["JOTE Article", "JOTE Author", "JOTE Article Category", "Editor"],
++  Meta: ["Content-Content Interface", "Content-Update Interface"],
++  Website: ["Update Category","Category"],
++  Blog: ["Blog Author", "Blog Post", "Tag"],
++  Podcast: ["Podcast Episode", "Podcast Topic", "Podcast Theme"],
++  }
++
++  const links = intlCollectionTypeLinks.reduce((acc,curr)=>{
++   const entry= Object.entries(categories).find(([key,arr])=>arr.includes(curr.title))
++   if(entry){
++     const [category, val] = entry
++     acc[category]=[...(acc[category]||[]), curr]
++     return acc
++   }
++   acc.Misc= [...(acc.Misc||[]), curr]
++
++   return acc
++
++  },{})
++
++  const menus = Object.entries(links).map(([category,link])=>({
++    id: `${category}Types`,
++      title: {
++        id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
++        defaultMessage: `${category}`,
++        },
++        searchable:true,
++      links: sortBy(matchByTitle(link, search), object =>
++        object.title.toLowerCase()
++      ),
++      }
++ ))
++
++
++
++
++
+   const menu = [
++    ...menus,
+     {
+       id: 'collectionTypes',
+       title: {
+@@ -82,6 +122,10 @@ const LeftMenu = () => {
+     defaultMessage: 'Content',
+   });
+ 
++console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++        object.title.toLowerCase()
++      ))
++
+   return (
+     <SubNav ariaLabel={label}>
+       <SubNavHeader
+diff --git a/node_modules/@strapi/admin/admin/src/index.js b/node_modules/@strapi/admin/admin/src/index.js
+index 1f9b40f..51d605a 100644
+--- a/node_modules/@strapi/admin/admin/src/index.js
++++ b/node_modules/@strapi/admin/admin/src/index.js
+@@ -8,11 +8,11 @@ import appReducers from './reducers';
+ 
+ window.strapi = {
+   backendURL: process.env.STRAPI_ADMIN_BACKEND_URL,
+-  isEE: false,
++  isEE: true,
+   features: {
+     SSO: 'sso',
+   },
+-  projectType: 'Community',
++  projectType: 'Enterprise',
+ };
+ 
+ const customConfig = appCustomisations;
+diff --git a/node_modules/@strapi/admin/admin/src/pages/SettingsPage/pages/ApplicationInfosPage/index.js b/node_modules/@strapi/admin/admin/src/pages/SettingsPage/pages/ApplicationInfosPage/index.js
+index 1adc22f..aa29637 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/SettingsPage/pages/ApplicationInfosPage/index.js
++++ b/node_modules/@strapi/admin/admin/src/pages/SettingsPage/pages/ApplicationInfosPage/index.js
+@@ -39,7 +39,7 @@ const ApplicationInfosPage = () => {
+ 
+   const { data } = useQuery('project-settings', fetchProjectSettings);
+ 
+-  const currentPlan = appInfos.communityEdition
++  const currentPlan = false
+     ? 'app.components.UpgradePlanModal.text-ce'
+     : 'app.components.UpgradePlanModal.text-ee';
+ 
+diff --git a/node_modules/@strapi/admin/ee/admin/hooks/useAuthProviders/index.js b/node_modules/@strapi/admin/ee/admin/hooks/useAuthProviders/index.js
+index f31b0ad..d44cd6b 100644
+--- a/node_modules/@strapi/admin/ee/admin/hooks/useAuthProviders/index.js
++++ b/node_modules/@strapi/admin/ee/admin/hooks/useAuthProviders/index.js
+@@ -15,14 +15,14 @@ const useAuthProviders = ({ ssoEnabled }) => {
+ 
+   const fetchAuthProviders = async () => {
+     try {
+-      if (!ssoEnabled) {
+-        dispatch({
+-          type: 'GET_DATA_SUCCEEDED',
+-          data: [],
+-        });
+-
+-        return;
+-      }
++      // if (!ssoEnabled) {
++      //   dispatch({
++      //     type: 'GET_DATA_SUCCEEDED',
++      //     data: [],
++      //   });
++
++      //   return;
++      // }
+ 
+       const requestUrl = getRequestUrl('providers');
+       const data = await request(requestUrl, { method: 'GET' });
+diff --git a/node_modules/@strapi/admin/ee/admin/hooks/useSettingsMenu/utils/customGlobalLinks.js b/node_modules/@strapi/admin/ee/admin/hooks/useSettingsMenu/utils/customGlobalLinks.js
+index ec5e790..9b1668b 100644
+--- a/node_modules/@strapi/admin/ee/admin/hooks/useSettingsMenu/utils/customGlobalLinks.js
++++ b/node_modules/@strapi/admin/ee/admin/hooks/useSettingsMenu/utils/customGlobalLinks.js
+@@ -1,7 +1,7 @@
+ import adminPermissions from '../../../../../admin/src/permissions';
+ 
+-const ssoGlobalRoutes = strapi.features.isEnabled(strapi.features.SSO)
+-  ? [
++const ssoGlobalRoutes =
++   [
+       {
+         intlLabel: { id: 'Settings.sso.title', defaultMessage: 'Single Sign-On' },
+         to: '/settings/single-sign-on',
+@@ -10,7 +10,6 @@ const ssoGlobalRoutes = strapi.features.isEnabled(strapi.features.SSO)
+         permissions: adminPermissions.settings.sso.main,
+       },
+     ]
+-  : [];
+ 
+ const customGlobalLinks = [...ssoGlobalRoutes];
+ 
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
+index ff4a5b8..84d68c7 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Login/index.js
+@@ -17,7 +17,7 @@ const DividerFull = styled(Divider)`
+ `;
+ 
+ const Login = (loginProps) => {
+-  const ssoEnabled = strapi.features.isEnabled(strapi.features.SSO);
++  const ssoEnabled = true
+   const { isLoading, data: providers } = useAuthProviders({ ssoEnabled });
+   const { formatMessage } = useIntl();
+ 
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Providers/index.js b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Providers/index.js
+index 9088bfe..9a1a143 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Providers/index.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/AuthPage/components/Providers/index.js
+@@ -24,7 +24,7 @@ const DividerFull = styled(Divider)`
+ `;
+ 
+ const Providers = () => {
+-  const ssoEnabled = strapi.features.isEnabled(strapi.features.SSO);
++  const ssoEnabled = true
+ 
+   const { push } = useHistory();
+   const { formatMessage } = useIntl();
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/formDataModel.js b/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/formDataModel.js
+index 6524349..2d00b37 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/formDataModel.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/formDataModel.js
+@@ -1,10 +1,9 @@
+ import baseModel from '../../../../../../../../../admin/src/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/formDataModel';
+ 
+-const ssoInputsModel = strapi.features.isEnabled(strapi.features.SSO)
+-  ? {
++const ssoInputsModel =
++   {
+       useSSORegistration: true,
+     }
+-  : {};
+ 
+ const formDataModel = {
+   ...baseModel,
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/roleSettingsForm.js b/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/roleSettingsForm.js
+index 02974fe..b8b5c56 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/roleSettingsForm.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/pages/Users/ListPage/ModalForm/utils/roleSettingsForm.js
+@@ -1,5 +1,5 @@
+-const form = strapi.features.isEnabled(strapi.features.SSO)
+-  ? [
++const form =
++   [
+       [
+         {
+           intlLabel: {
+@@ -19,6 +19,5 @@ const form = strapi.features.isEnabled(strapi.features.SSO)
+         },
+       ],
+     ]
+-  : [];
+ 
+ export default form;
+diff --git a/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/utils/customRoutes.js b/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/utils/customRoutes.js
+index ced0080..8270826 100644
+--- a/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/utils/customRoutes.js
++++ b/node_modules/@strapi/admin/ee/admin/pages/SettingsPage/utils/customRoutes.js
+@@ -1,4 +1,4 @@
+-const ssoRoutes = strapi.features.isEnabled(strapi.features.SSO)
++const ssoRoutes = true
+   ? [
+       {
+         async Component() {
+diff --git a/node_modules/@strapi/admin/ee/server/bootstrap.js b/node_modules/@strapi/admin/ee/server/bootstrap.js
+index 4bfe066..604fc63 100644
+--- a/node_modules/@strapi/admin/ee/server/bootstrap.js
++++ b/node_modules/@strapi/admin/ee/server/bootstrap.js
+@@ -27,7 +27,7 @@ const SSO_ACTIONS = [
+ module.exports = async () => {
+   const { actionProvider } = getService('permission');
+ 
+-  if (features.isEnabled('sso')) {
++  if (true) {
+     await actionProvider.registerMany(SSO_ACTIONS);
+   }
+ 
+diff --git a/node_modules/@strapi/admin/ee/server/services/passport.js b/node_modules/@strapi/admin/ee/server/services/passport.js
+index 1e0960f..a746c47 100644
+--- a/node_modules/@strapi/admin/ee/server/services/passport.js
++++ b/node_modules/@strapi/admin/ee/server/services/passport.js
+@@ -9,7 +9,7 @@ const sso = require('./passport/sso');
+ const getPassportStrategies = () => {
+   const localStrategy = createLocalStrategy(strapi);
+ 
+-  if (!features.isEnabled('sso')) {
++  if (false) {
+     return [localStrategy];
+   }
+ 
+@@ -27,6 +27,6 @@ module.exports = {
+   getPassportStrategies,
+ };
+ 
+-if (features.isEnabled('sso')) {
++if (true) {
+   Object.assign(module.exports, sso);
+ }
+diff --git a/node_modules/@strapi/admin/ee/server/validation/role.js b/node_modules/@strapi/admin/ee/server/validation/role.js
+index fa8a3f4..7fc51d0 100644
+--- a/node_modules/@strapi/admin/ee/server/validation/role.js
++++ b/node_modules/@strapi/admin/ee/server/validation/role.js
+@@ -24,7 +24,7 @@ const rolesDeleteSchema = yup
+         try {
+           await strapi.admin.services.role.checkRolesIdForDeletion(ids);
+ 
+-          if (features.isEnabled('sso')) {
++          if (true) {
+             await strapi.admin.services.role.ssoCheckRolesIdForDeletion(ids);
+           }
+         } catch (e) {
+@@ -43,7 +43,7 @@ const roleDeleteSchema = yup
+     try {
+       await strapi.admin.services.role.checkRolesIdForDeletion([id]);
+ 
+-      if (features.isEnabled('sso')) {
++      if (true) {
+         await strapi.admin.services.role.ssoCheckRolesIdForDeletion([id]);
+       }
+     } catch (e) {
+diff --git a/node_modules/@strapi/admin/ee/server/validation/user.js b/node_modules/@strapi/admin/ee/server/validation/user.js
+index 94057b5..f0f6c31 100644
+--- a/node_modules/@strapi/admin/ee/server/validation/user.js
++++ b/node_modules/@strapi/admin/ee/server/validation/user.js
+@@ -15,7 +15,7 @@ const ssoUserCreationInputExtension = yup
+ const validateUserCreationInput = (data) => {
+   let schema = schemas.userCreationSchema;
+ 
+-  if (features.isEnabled('sso')) {
++  if (true) {
+     schema = schema.concat(ssoUserCreationInputExtension);
+   }
+ 
+diff --git a/node_modules/@strapi/admin/server/controllers/admin.js b/node_modules/@strapi/admin/server/controllers/admin.js
+index 4a2338d..382b869 100644
+--- a/node_modules/@strapi/admin/server/controllers/admin.js
++++ b/node_modules/@strapi/admin/server/controllers/admin.js
+@@ -36,9 +36,9 @@ module.exports = {
+   async getProjectType() {
+     // FIXME
+     try {
+-      return { data: { isEE: strapi.EE, features: ee.features.getEnabled() } };
++      return { data: { isEE: true, features: ['sso'] } };
+     } catch (err) {
+-      return { data: { isEE: false, features: [] } };
++      return { data: { isEE: true, features: ['sso'] } };
+     }
+   },
+ 
+diff --git a/node_modules/@strapi/admin/server/services/permission/queries.js b/node_modules/@strapi/admin/server/services/permission/queries.js
+index dc3939d..df0c06b 100644
+--- a/node_modules/@strapi/admin/server/services/permission/queries.js
++++ b/node_modules/@strapi/admin/server/services/permission/queries.js
+@@ -187,7 +187,7 @@ const cleanPermissionsInDatabase = async () => {
+ };
+ 
+ const ensureBoundPermissionsInDatabase = async () => {
+-  if (strapi.EE) {
++  if (true) {
+     return;
+   }
+ 
+diff --git a/node_modules/@strapi/admin/strapi-server.js b/node_modules/@strapi/admin/strapi-server.js
+index 988bed0..b443f62 100644
+--- a/node_modules/@strapi/admin/strapi-server.js
++++ b/node_modules/@strapi/admin/strapi-server.js
+@@ -8,7 +8,7 @@ const mergeRoutes = (a, b, key) => {
+   return _.isArray(a) && _.isArray(b) && key === 'routes' ? a.concat(b) : undefined;
+ };
+ 
+-if (process.env.STRAPI_DISABLE_EE !== 'true' && strapi.EE) {
++if (true) {
+   const eeAdmin = require('./ee/strapi-server');
+ 
+   module.exports = _.mergeWith({}, admin, eeAdmin, mergeRoutes);
