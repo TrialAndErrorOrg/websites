@@ -19,6 +19,7 @@ import {
   TextAttribute,
   UIDAttribute,
   MediaAttribute,
+  BigIntegerAttribute,
   SingleTypeSchema,
   SetPluginOptions,
   RichTextAttribute,
@@ -713,6 +714,37 @@ export interface PluginUsersPermissionsUser extends CollectionTypeSchema {
   }
 }
 
+export interface PluginSchedulerScheduler extends CollectionTypeSchema {
+  info: {
+    collectionName: 'scheduler'
+    singularName: 'scheduler'
+    pluralName: 'scheduler'
+    displayName: 'scheduler'
+    description: ''
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    scheduledDatetime: DateTimeAttribute
+    uid: StringAttribute
+    contentId: BigIntegerAttribute
+    scheduleType: StringAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::scheduler.scheduler', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::scheduler.scheduler', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
 export interface PluginCommentsComment extends CollectionTypeSchema {
   info: {
     tableName: 'plugin-comments-comments'
@@ -1215,7 +1247,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
     draftAndPublish: true
   }
   attributes: {
-    title: StringAttribute & RequiredAttribute
+    title: StringAttribute & RequiredAttribute & UniqueAttribute
     image: MediaAttribute & RequiredAttribute
     body: RichTextAttribute &
       RequiredAttribute &
@@ -2111,6 +2143,7 @@ declare global {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
+      'plugin::scheduler.scheduler': PluginSchedulerScheduler
       'plugin::comments.comment': PluginCommentsComment
       'plugin::comments.comment-report': PluginCommentsCommentReport
       'plugin::strapi-stripe.strapi-stripe-product': PluginStrapiStripeStrapiStripeProduct
