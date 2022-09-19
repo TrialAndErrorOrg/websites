@@ -84,7 +84,10 @@ export const Footer = () => {
   const { data: socials } = trpc.useQuery(["nav.get", "socials"])
 
   return (
-    <footer className="bg-white bg-blue-700" aria-labelledby="footer-heading">
+    <footer
+      className="bg-white dark:bg-blue-700"
+      aria-labelledby="footer-heading"
+    >
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -272,7 +275,7 @@ export const Footer = () => {
               )
             })}
           </div>
-          <p className="mt-8 text-base text-gray-400 md:order-1 md:mt-0">
+          <p className="mt-8 text-base text-gray-400 dark:text-slate-200 md:order-1 md:mt-0">
             &copy;{" "}
             {new Date().getFullYear() > 2022
               ? `2022-${new Date().getFullYear()}`

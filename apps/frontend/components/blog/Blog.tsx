@@ -44,16 +44,17 @@ export const BlogPosts = ({
                     <Link
                       key={slug}
                       href={`/blog/${slug ?? postTitle}`}
-                      className="text-xs font-normal text-slate-400 hover:underline"
+                      className="text-xs font-normal text-slate-400 hover:underline dark:text-slate-200"
                     >
-                      #{title}
+                      #{postTitle}
                     </Link>
                   ))}
                 </div>
-                <Link href={`/blog/${post.slug}`} className="mt-2 block">
-                  <p className="text-xl font-semibold text-slate-900 dark:text-white">
+                <Link href={`/blog/${post.slug}`} className="group mt-2 block">
+                  <h2 className="cia group-hover:cia-active box-border inline break-words border-none text-2xl font-bold text-slate-900 dark:text-white">
                     {post.title}
-                  </p>
+                  </h2>
+
                   <p className="mt-3 text-sm font-normal text-slate-400 dark:text-slate-200">
                     {post.excerpt}
                   </p>

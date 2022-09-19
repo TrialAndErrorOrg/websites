@@ -3,6 +3,9 @@
 @tailwind utilities;
 @tailwind variants;
 
+:root {
+  --orange: #ffa500;
+}
 @layer base {
   h1 {
     font-family: "Overpass", sans-serif;
@@ -19,8 +22,23 @@
   a {
     @apply font-bold text-blue-600 hover:text-orange-600 focus:outline-none focus-visible:outline-orange-500;
   }
+
   button:focus {
     @apply outline-none;
+  }
+
+  .cia {
+    padding-bottom: 0.2%;
+    transition: background-size 0.6s ease-out;
+    background: linear-gradient(var(--orange), var(--orange)) no-repeat left
+      123%/0 50%;
+  }
+  .cia:hover {
+    background-size: 100% 50%;
+  }
+
+  .cia-active {
+    background-size: 100% 50%;
   }
 }
 
