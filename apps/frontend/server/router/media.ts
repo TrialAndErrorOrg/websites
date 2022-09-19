@@ -15,7 +15,7 @@ export const pageRouter = createRouter()
     },
   })
   .query("svg-logo", {
-    async resolve({ ctx }) {
+    async resolve() {
       return await (
         await fetch(
           "https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_blue_background_b87382260b.svg?updated_at=2022-08-19T18:39:49.674Z"

@@ -1,12 +1,13 @@
-import { BlogPosts } from "apps/frontend/components/blog/Blog"
-import { Seo } from "apps/frontend/components/SEO"
-import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
-import { trpc } from "apps/frontend/utils/trpc"
 import { useRouter } from "next/router"
+import { BlogPosts } from "../../components/blog/Blog"
+import { Seo } from "../../components/SEO"
+import { BaseLayout } from "../../layouts/BaseLayout"
+import { trpc } from "../../utils/trpc"
 import { NextPageWithLayout } from "../_app"
 
 const Blog: NextPageWithLayout = () => {
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     query: { sort, order, filter },
   } = useRouter()
   const { data: seo } = trpc.useQuery(["seo.get", "blog-home"])
@@ -27,7 +28,9 @@ const Blog: NextPageWithLayout = () => {
           }
         }
       />
-      <main>{<BlogPosts posts={blogPosts?.data ?? []} />}</main>
+      <main>
+        <BlogPosts posts={blogPosts?.data ?? []} />
+      </main>
     </>
   )
 }

@@ -28,5 +28,5 @@
     "jest.config.js",
     "../../libs/types/src/lib/schemas.d.ts"
   ],
-  "exclude": ["node_modules", "**/katexSlatePlugin.tsx"]
+  "exclude": ["node_modules", "**/katexSlatePlugin.tsx", "out", "dist"]
 }

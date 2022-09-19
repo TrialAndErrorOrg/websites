@@ -1,8 +1,8 @@
-import { Content } from "apps/frontend/components/Content"
-import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
-import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
 import { useRouter } from "next/router"
+import { Content } from "../../components/Content"
+import { BaseLayout } from "../../layouts/BaseLayout"
+import { trpc } from "../../utils/trpc"
 import { Seo } from "../../components/SEO"
 import { NextPageWithLayout } from "../_app"
 
@@ -19,10 +19,7 @@ const TeamMember: NextPageWithLayout = () => {
 
   const {
     firstName,
-    position,
     lastName,
-    pronouns,
-    show_pronouns,
     seo,
     bio,
     email,
@@ -30,7 +27,6 @@ const TeamMember: NextPageWithLayout = () => {
     twitter,
     orcid,
     image,
-    department,
     personalWebsite,
   } = teamMember?.data?.[0] ?? {}
 

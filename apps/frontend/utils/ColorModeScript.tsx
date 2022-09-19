@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 export type ColorModeScriptProps = {
   type?: "localStorage" | "cookie"
   initialColorMode?: "light" | "dark" | "system"
@@ -15,12 +16,16 @@ const normalize = (initialColorMode: "light" | "dark" | "system") => {
   return value
 }
 
-export const getScriptSrc = (props: ColorModeScriptProps = {}) => {
-  const {
-    initialColorMode = "light",
-    type = "localStorage",
-    storageKey: key = "color-mode",
-  } = props
+export const getScriptSrc = ({
+  initialColorMode = "light",
+  type = "localStorage",
+  storageKey: key = "color-mode",
+}: ColorModeScriptProps = {}) => {
+  // const {
+  //   initialColorMode = "light",
+  //   type = "localStorage",
+  //   storageKey: key = "color-mode",
+  // } = props
 
   // runtime safe-guard against invalid color mode values
   const init = normalize(initialColorMode)

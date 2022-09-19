@@ -1,10 +1,10 @@
-import { Seo } from "apps/frontend/components/SEO"
-import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
-import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { formatDistanceToNow } from "date-fns"
+import { trpc } from "../../utils/trpc"
+import { BaseLayout } from "../../layouts/BaseLayout"
+import { Seo } from "../../components/SEO"
 import { NextPageWithLayout } from "../_app"
 
 const BlogPost: NextPageWithLayout = () => {
@@ -17,9 +17,9 @@ const BlogPost: NextPageWithLayout = () => {
     body,
     seo,
     image,
-    blog_tags,
+    blog_tags: blogTags,
     publishedAt,
-    blog_authors,
+    blog_authors: blogAuthors,
     publishDate,
   } = blogPost ?? {}
 
@@ -45,7 +45,7 @@ const BlogPost: NextPageWithLayout = () => {
               )}`}
             </span>
             <div className="flex gap-2">
-              {blog_tags?.map((tag) => (
+              {blogTags?.map((tag) => (
                 <span
                   className="rounded-full bg-orange-50 px-3 py-1 text-sm text-orange-900"
                   key={tag.title}
@@ -55,19 +55,17 @@ const BlogPost: NextPageWithLayout = () => {
               ))}
             </div>
             <div>
-              {blog_authors?.map((author) => (
+              {blogAuthors?.map((author) => (
                 <Link href={`/team/${author.slug}`} key={author.slug}>
-                  <a>
-                    <Image
-                      src={author?.image?.url}
-                      width={author?.image?.width}
-                      height={author?.image?.height}
-                      alt={author?.image?.alt}
-                    />
-                    <h2>
-                      {author.firstName} {author.lastName}
-                    </h2>
-                  </a>
+                  <Image
+                    src={author?.image?.url}
+                    width={author?.image?.width}
+                    height={author?.image?.height}
+                    alt={author?.image?.alt}
+                  />
+                  <h2>
+                    {author.firstName} {author.lastName}
+                  </h2>
                 </Link>
               ))}
             </div>

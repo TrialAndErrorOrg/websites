@@ -1,23 +1,6 @@
-import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/future/image"
 import { FaGithub, FaLinkedin, FaOrcid, FaTwitter } from "react-icons/fa"
-
-/*
-  This example requires Tailwind CSS v2.0+
-
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+import { trpc } from "../../utils/trpc"
 
 export const TeamList = () => {
   const { data: people } = trpc.useQuery(["teamMember.getAll"])
@@ -36,10 +19,7 @@ export const TeamList = () => {
             </p>
           </div>
           <div className="lg:col-span-2">
-            <ul
-              role="list"
-              className="space-y-12 sm:-mt-8 sm:space-y-0 sm:divide-y sm:divide-gray-200 lg:gap-x-8 lg:space-y-0"
-            >
+            <ul className="space-y-12 sm:-mt-8 sm:space-y-0 sm:divide-y sm:divide-gray-200 lg:gap-x-8 lg:space-y-0">
               {people &&
                 people.map(
                   ({
@@ -49,14 +29,10 @@ export const TeamList = () => {
                     show_pronouns,
                     lastName,
                     bio,
-                    department,
-                    personalWebsite,
-                    email,
                     image,
                     github,
                     twitter,
                     orcid,
-                    slug,
                     linkedin,
                   }) => (
                     <li key={lastName} className="sm:py-8">
@@ -103,10 +79,7 @@ export const TeamList = () => {
                               />
                             </div>
                             <div className="flex">
-                              <ul
-                                role="list"
-                                className="flex  space-x-5 self-end  text-xl"
-                              >
+                              <ul className="flex  space-x-5 self-end  text-xl">
                                 {twitter && (
                                   <li>
                                     <a

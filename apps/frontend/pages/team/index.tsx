@@ -1,8 +1,6 @@
-import { Seo } from "apps/frontend/components/SEO"
-import TeamCard from "apps/frontend/components/team/TeamCard"
-import TeamGrid from "apps/frontend/components/team/TeamGrid"
-import { TeamList } from "apps/frontend/components/team/TeamList"
-import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
+import { Seo } from "../../components/SEO"
+import { TeamList } from "../../components/team/TeamList"
+import { BaseLayout } from "../../layouts/BaseLayout"
 import { trpc } from "../../utils/trpc"
 import { NextPageWithLayout } from "../_app"
 

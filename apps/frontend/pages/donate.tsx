@@ -1,5 +1,5 @@
 import { Seo } from "../components/SEO"
-import { BaseLayout } from "../Layouts/BaseLayout"
+import { BaseLayout } from "../layouts/BaseLayout"
 import { trpc } from "../utils/trpc"
 import { NextPageWithLayout } from "./_app"
 
