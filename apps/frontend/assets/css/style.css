@@ -5,12 +5,15 @@
 
 @layer base {
   h1 {
+    font-family: "Overpass", sans-serif;
     @apply text-2xl;
   }
   h2 {
+    font-family: "Overpass", sans-serif;
     @apply text-xl;
   }
   h3 {
+    font-family: "Overpass", sans-serif;
     @apply text-lg;
   }
   a {
@@ -19,4 +22,14 @@
   button:focus {
     @apply outline-none;
   }
+}
+
+html,
+body {
+  font-family: "Open Sans", sans-serif;
+  @apply h-full;
+}
+
+#__next {
+  @apply h-full;
 }
