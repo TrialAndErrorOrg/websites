@@ -12,11 +12,9 @@
     "clean": "tsx src/lib/cleanSwagger.ts"
   },
   "keywords": [
-    "unified",
-    "abstract",
-    "syntax",
-    "tree",
-    "ast"
+    "orcid",
+    "openapi",
+    "http-client"
   ],
   "devDependencies": {
     "openapi-typescript-codegen": "^0.23.0"

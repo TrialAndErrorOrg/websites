@@ -25,7 +25,8 @@
     "next-env.d.ts",
     "**/[*].tsx",
     "**/[...*].tsx",
-    "jest.config.js"
+    "jest.config.js",
+    "../../libs/types/src/lib/schemas.d.ts"
   ],
   "exclude": ["node_modules", "**/katexSlatePlugin.tsx"]
 }

@@ -6,32 +6,59 @@ import { createRouter } from "./context"
 
 type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
 
-const order = ["asc", "desc"] as const
-const orderBy = ["title", "publishDate", "publishedAt"] as const
-type SortArr = { field: typeof orderBy[number]; order: typeof order[number] }[]
+const orderEnum = ["asc", "desc"] as const
+const orderByEnum = ["title", "publishDate", "publishedAt"] as const
+type SortArr = {
+  field: typeof orderByEnum[number]
+  order: typeof orderEnum[number]
+}[]
+
+const makeSortArray = ({
+  order,
+  orderBy,
+}: {
+  order: typeof orderEnum[number]
+  orderBy: typeof orderByEnum[number]
+}): SortArr =>
+  (orderBy === "title"
+    ? [{ field: "title", order }]
+    : [
+        { field: "publishDate", order },
+        { field: "publishedAt", order },
+      ]) as SortArr
 
 export const blogPostRouter = createRouter()
   .query("getAll", {
     input: z.object({
-      order: z.enum(order).default("desc"),
-      orderBy: z.enum(orderBy).default("publishDate"),
+      order: z.enum(orderEnum).default("desc"),
+      orderBy: z.enum(orderByEnum).default("publishDate"),
       limit: z.number().min(1).max(100).default(20),
       start: z.number().min(0).default(0),
     }),
     async resolve({ ctx, input }) {
-      const sortByArray = (
-        input.orderBy === "title"
-          ? [{ field: "title", order: input.order }]
-          : [
-              { field: "publishDate", order: input.order },
-              { field: "publishedAt", order: input.order },
-            ]
-      ) as SortArr
       return await ctx.strapi
         .from<BlogPost>("blog-posts")
         .select()
         .populate()
-        .sortBy(sortByArray)
+        .sortBy(makeSortArray({ order: input.order, orderBy: input.orderBy }))
+        .get()
+    },
+  })
+  .query("getByTag", {
+    input: z.object({
+      tag: z.string(),
+      order: z.enum(orderEnum).default("desc"),
+      orderBy: z.enum(orderByEnum).default("publishDate"),
+      limit: z.number().min(1).max(100).default(20),
+      start: z.number().min(0).default(0),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.strapi
+        .from<BlogPost>("blog-posts")
+        .select()
+        .populate()
+        .filterDeep("blog_tags.name", "eq", input.tag)
+        .sortBy(makeSortArray({ order: input.order, orderBy: input.orderBy }))
         .get()
     },
   })

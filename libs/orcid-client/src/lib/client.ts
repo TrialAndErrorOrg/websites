@@ -6,6 +6,10 @@
 /* eslint-disable */
 // @ts-nocheck
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { GroupIdRecord } from './models/GroupIdRecord'
+import { GroupIdRecords } from './models/GroupIdRecords'
+import { Citation } from './models/Citation'
+import { BulkElement } from './models/BulkElement'
 
 export interface IRequestOptions extends AxiosRequestConfig {}
 

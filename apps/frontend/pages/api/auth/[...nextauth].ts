@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import NextAuth, { type NextAuthOptions } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
@@ -24,6 +25,7 @@ export const authOptions: NextAuthOptions = {
       if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async session({ session, token, user }) {
       session.jwt = token.jwt
       session.id = token.id

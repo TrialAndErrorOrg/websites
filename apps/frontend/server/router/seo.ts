@@ -40,6 +40,6 @@ export const seoRouter = createRouter()
         .populate()
         .get()
 
-      return res?.data?.[0]?.seo ?? {}
+      return res?.data?.[0]?.seo ?? ({} as StrapiApiTypes["seo"])
     },
   })

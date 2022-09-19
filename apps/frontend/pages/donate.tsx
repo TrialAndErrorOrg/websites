@@ -4,10 +4,10 @@ import { trpc } from "../utils/trpc"
 import { NextPageWithLayout } from "./_app"
 
 const Donate: NextPageWithLayout = () => {
-  const { data } = trpc.useQuery(["page.donate"])
+  const { data } = trpc.useQuery(["page.donate-page"])
   return (
     <>
-      <Seo seo={data?.seo ?? {}} />
+      <Seo seo={data?.seo} />
       <div>
         <h1>Donate</h1>
         <p>
@@ -19,4 +19,5 @@ const Donate: NextPageWithLayout = () => {
   )
 }
 
+export default Donate
 Donate.getLayout = (page) => <BaseLayout>{page}</BaseLayout>

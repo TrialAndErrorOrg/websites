@@ -1,5 +1,6 @@
 import axios from "axios"
 import { URLSearchParams } from "url"
+// eslint-disable-next-line import/extensions
 import { env } from "./env.mjs"
 
 interface OrcidData {

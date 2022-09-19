@@ -1,11 +1,10 @@
-import { Content } from "apps/frontend/components/Content"
 import { Seo } from "apps/frontend/components/SEO"
 import { BaseLayout } from "apps/frontend/Layouts/BaseLayout"
 import { trpc } from "apps/frontend/utils/trpc"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { differenceInDays, formatDistanceToNow } from "date-fns"
+import { formatDistanceToNow } from "date-fns"
 import { NextPageWithLayout } from "../_app"
 
 const BlogPost: NextPageWithLayout = () => {
@@ -39,8 +38,9 @@ const BlogPost: NextPageWithLayout = () => {
           <div>
             <span>
               {`Published ${formatDistanceToNow(
-                publishDate || publishedAt
-                  ? new Date(publishDate ?? publishedAt)
+                publishDate ?? publishedAt
+                  ? // @ts-expect-error for some reason this ternary doesn't work
+                    new Date(publishDate ?? publishedAt)
                   : new Date()
               )}`}
             </span>

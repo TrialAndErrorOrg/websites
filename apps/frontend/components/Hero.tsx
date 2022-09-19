@@ -73,37 +73,31 @@ export const Hero = ({ hero }: { hero?: HeroType }) =>
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:text-left">
               <h1>
-                <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">
+                <span className="block text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300 sm:text-base lg:text-sm xl:text-base">
                   {hero.title}
                 </span>
                 <span className="mt-1 block text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl">
-                  <span className="block text-blue-500">
+                  <span className="block text-blue-500 dark:text-white">
                     Data to enrich your
                   </span>
                   <span className="block text-orange-600">online business</span>
                 </span>
               </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+              <p className="mt-3 text-base text-slate-500 dark:text-slate-200 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                 {hero.body}
               </p>
-              <div className="mt-8 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
+              <div className="mt-8 flex gap-1 sm:mx-auto sm:max-w-lg sm:text-center lg:mx-0 lg:text-left">
                 {hero.cta?.map((cta) => (
-                  <Link key={cta.url} href={cta.url}>
-                    {cta.type === "primary" ? (
-                      <a
-                        className="focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-base font-bold leading-6 text-white transition duration-150 ease-in-out hover:bg-orange-500 focus:border-orange-700 focus:outline-none active:bg-orange-700"
-                        href={cta.url}
-                      >
-                        {cta.title}
-                      </a>
-                    ) : (
-                      <a
-                        className="focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-bold leading-6 text-blue-500 transition duration-150 ease-in-out hover:text-orange-500 focus:border-orange-700 focus:outline-none active:bg-orange-700"
-                        href={cta.title}
-                      >
-                        {cta.title}
-                      </a>
-                    )}
+                  <Link
+                    key={cta.url}
+                    href={cta.url}
+                    className={
+                      cta.type === "primary"
+                        ? "focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-orange-500 px-4 py-2 text-base font-bold leading-6 text-white transition duration-150 ease-in-out hover:bg-orange-500 focus:border-orange-700 focus:outline-none active:bg-orange-700"
+                        : "focus:shadow-outline-indigo inline-flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-bold leading-6 text-blue-500 transition duration-150 ease-in-out hover:text-orange-500 focus:border-orange-700 focus:outline-none active:bg-orange-700"
+                    }
+                  >
+                    {cta.title}
                   </Link>
                 ))}
               </div>

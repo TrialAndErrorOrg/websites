@@ -14,13 +14,11 @@ import { useDarkTheme } from "../hooks/useDarkTheme"
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
 const PlainLink = ({ slug, title }: { slug: string; title: string }) => (
-  <Link href={slug}>
-    <a
-      href={slug}
-      className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-slate-100 dark:hover:text-white"
-    >
-      {title}
-    </a>
+  <Link
+    href={slug}
+    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-slate-100 dark:hover:text-white"
+  >
+    {title}
   </Link>
 )
 
@@ -217,15 +215,17 @@ const SignIn = () => {
     </div>
   ) : (
     <div className="flex gap-4">
-      <Link href="/api/auth/signin">
-        <a className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white">
-          Sign in
-        </a>
+      <Link
+        href="/api/auth/signin"
+        className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white"
+      >
+        Sign in
       </Link>
-      <Link href="/api/auth/signin">
-        <a className="bg-orange-500 text-base font-bold text-white hover:bg-orange-900">
-          Sign up
-        </a>
+      <Link
+        href="/api/auth/signin"
+        className="bg-orange-500 text-base font-bold text-white hover:bg-orange-900"
+      >
+        Sign up
       </Link>
     </div>
   )
@@ -341,17 +341,14 @@ export const Header = () => {
       <div className=" flex items-center justify-between px-4 py-5 sm:px-6 md:justify-start md:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href="/">
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a>
-              <span className="sr-only">Home</span>
-              <Image
-                className="h-8 w-auto sm:h-10"
-                src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_blue_background_b87382260b.svg"
-                alt=""
-                width="32"
-                height="32"
-              />
-            </a>
+            <span className="sr-only">Home</span>
+            <Image
+              className="h-8 w-auto sm:h-10"
+              src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_blue_background_b87382260b.svg"
+              alt=""
+              width="32"
+              height="32"
+            />
           </Link>
         </div>
         <div className="-my-2 -mr-2 md:hidden">

@@ -1,8 +1,8 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { withTRPC } from "@trpc/next"
 import superjson from "superjson"
-import App, { AppProps as NextAppProps } from "next/app"
-import Head from "next/head"
+import { AppProps as NextAppProps } from "next/app"
+// import Head from "next/head"
 import "../assets/css/style.css"
 import { createContext } from "react"
 import { SessionProvider } from "next-auth/react"
@@ -13,7 +13,7 @@ import type { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { Session } from "next-auth"
 import { AppRouter } from "../server/router"
-import { strapi } from "../server/db/client"
+// import { strapi } from "../server/db/client"
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
@@ -26,12 +26,17 @@ export type NextPageWithLayout = NextPage & {
 
 type SEO = GetAttributesValues<"api::global.global">
 
-type AppPropsWithEverything = AppProps<{
-  global: SEO
-  session: Session
-}>
+// type AppPropsWithEverything = AppProps<{
+//   global: SEO
+//   session: Session
+// }>
 
-type AppPropsWithLayoutAndAuthAndGlobalSEO = AppPropsWithEverything & {
+// type AppPropsWithLayoutAndAuthAndGlobalSEO = AppPropsWithEverything & {
+//   Component: NextPageWithLayout
+// }
+type AppPropsWithLayoutAndAuth = AppProps<{
+  session: Session
+}> & {
   Component: NextPageWithLayout
 }
 
@@ -47,13 +52,13 @@ export const GlobalContext = createContext<SEO>({
 
 const MyApp = ({
   Component,
-  pageProps: { session, global, ...pageProps },
-}: AppPropsWithLayoutAndAuthAndGlobalSEO) => {
+  pageProps: { session, ...pageProps },
+}: AppPropsWithLayoutAndAuth) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{global?.defaultSeo?.metaTitle}</title>
         <meta
           name="description"
@@ -61,12 +66,12 @@ const MyApp = ({
         />
         <meta property="og:title" content={global?.defaultSeo?.metaTitle} />
         <link rel="shortcut icon" href={global?.favicon?.url} />
-      </Head>
-      <GlobalContext.Provider value={global}>
-        <SessionProvider session={session}>
-          {getLayout(<Component {...{ ...pageProps, session, global }} />)}
-        </SessionProvider>
-      </GlobalContext.Provider>
+      </Head> */}
+      {/* <GlobalContext.Provider value={global}> */}
+      <SessionProvider session={session}>
+        {getLayout(<Component {...{ ...pageProps }} />)}
+      </SessionProvider>
+      {/* </GlobalContext.Provider> */}
     </>
   )
 }

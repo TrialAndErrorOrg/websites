@@ -20,7 +20,7 @@ import Link from "next/link"
 import { FaOrcid, FaGithub } from "react-icons/fa"
 import { inferAsyncReturnType } from "@trpc/server"
 import { GetServerSideProps } from "next"
-import { getProviders, signIn, getSession, getCsrfToken } from "next-auth/react"
+import { getProviders, signIn, getCsrfToken } from "next-auth/react"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const providers = await getProviders()
@@ -79,13 +79,9 @@ const SignIn = ({ providers, csrfToken }: SignInProps) => (
                 // <a
                 // href="#"
                 href="/auth/signup"
+                className="font-medium text-orange-600 hover:text-orange-500"
               >
-                <a
-                  href="/auth/signup"
-                  className="font-medium text-orange-600 hover:text-orange-500"
-                >
-                  Sign up
-                </a>
+                Sign up
               </Link>
               {/* </a> */}
             </p>

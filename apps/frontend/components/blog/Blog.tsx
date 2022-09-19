@@ -4,17 +4,23 @@ import Link from "next/link"
 
 type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
 
-export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
-  <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
+export const BlogPosts = ({
+  posts,
+  title,
+}: {
+  posts: BlogPost[]
+  title?: string
+}) => (
+  <div className="relative bg-gray-50 px-4 pt-16 pb-20 dark:bg-blue-700 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
     <div className="absolute inset-0">
-      <div className="h-1/3 bg-white sm:h-2/3" />
+      <div className="h-1/3 bg-white dark:bg-blue-700 sm:h-2/3" />
     </div>
     <div className="relative mx-auto max-w-7xl">
       <div className="text-center">
-        <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          From the blog
+        <h2 className="dark:white text-3xl font-extrabold tracking-tight text-slate-800 dark:text-white sm:text-4xl">
+          {title ?? "From the blog"}
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-xl text-gray-500 sm:mt-4" />
+        <p className="mx-auto mt-3 max-w-2xl text-xl text-slate-500 dark:text-slate-300 sm:mt-4" />
       </div>
       <div className="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-2">
         {posts.map((post) => (
@@ -31,13 +37,13 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                 height={post.image.height}
               />
             </div>
-            <div className="flex flex-1 flex-col justify-between bg-white p-6">
+            <div className="flex flex-1 flex-col justify-between bg-white p-6 dark:bg-blue-500">
               <div className="flex-1">
                 <div className="flex flex-wrap gap-x-3">
-                  {post.blog_tags?.map(({ slug, title }) => (
+                  {post.blog_tags?.map(({ slug, title: postTitle }) => (
                     <Link
                       key={slug}
-                      href={`/blog/${slug ?? title}`}
+                      href={`/blog/${slug ?? postTitle}`}
                       className="text-xs font-normal text-slate-400 hover:underline"
                     >
                       #{title}
@@ -45,10 +51,10 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                   ))}
                 </div>
                 <Link href={`/blog/${post.slug}`} className="mt-2 block">
-                  <p className="text-xl font-semibold text-gray-900">
+                  <p className="text-xl font-semibold text-slate-900 dark:text-white">
                     {post.title}
                   </p>
-                  <p className="mt-3 text-sm font-normal text-slate-400">
+                  <p className="mt-3 text-sm font-normal text-slate-400 dark:text-slate-200">
                     {post.excerpt}
                   </p>
                 </Link>
@@ -76,7 +82,7 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                           alt=""
                         />
                       ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 capitalize text-white dark:bg-blue-500">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 capitalize text-white ">
                           {author?.lastName?.[0] ?? author?.firstName?.[0]}
                         </div>
                       )}
@@ -89,7 +95,8 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                       href={
                         author.slug ??
                         author?.lastName?.toLowerCase() ??
-                        author?.firstName?.toLowerCase()
+                        author?.firstName?.toLowerCase() ??
+                        "/"
                       }
                     >
                       <span className="sr-only">{`${author.firstName}${author.lastName}`}</span>
@@ -100,7 +107,7 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                           alt=""
                         />
                       ) : (
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 capitalize text-white dark:bg-blue-500">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 capitalize text-white">
                           {author?.lastName?.[0] ?? author?.firstName?.[0]}
                         </div>
                       )}
@@ -108,7 +115,7 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                   </div>
                 ))}
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">
                     <Link
                       href={
                         post?.team_members?.[0]?.slug ??
@@ -117,20 +124,19 @@ export const BlogPosts = ({ posts }: { posts: BlogPost[] }) => (
                         post?.blog_authors?.[0]?.lastName?.toLowerCase() ??
                         "/"
                       }
-                      className="hover:underline"
+                      className="text-slate-900 hover:underline dark:text-slate-50"
                     >
-                      <a>
-                        {post.team_members?.[0]?.firstName ??
-                          post.blog_authors?.[0]?.firstName}{" "}
-                        {post.team_members?.[0]?.lastName ??
-                          post.blog_authors?.[0]?.lastName}
-                      </a>
+                      {post.team_members?.[0]?.firstName ??
+                        post.blog_authors?.[0]?.firstName}{" "}
+                      {post.team_members?.[0]?.lastName ??
+                        post.blog_authors?.[0]?.lastName}
                     </Link>
                   </p>
-                  <div className="flex space-x-1 text-sm text-gray-500">
+                  <div className="flex space-x-1 text-sm text-slate-500 dark:text-slate-300">
                     <time dateTime={post.publishDate ?? post.publishedAt}>
-                      {(post.publishDate || post.publishedAt
-                        ? new Date(post.publishDate || post.publishedAt)
+                      {(post.publishDate ?? post.publishedAt
+                        ? // @ts-expect-error for some reason this ternary doesn't work
+                          new Date(post.publishDate || post.publishedAt)
                         : new Date()
                       ).toLocaleDateString("en-US", { dateStyle: "medium" })}
                     </time>

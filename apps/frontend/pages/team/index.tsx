@@ -15,7 +15,7 @@ const Team: NextPageWithLayout = () => {
       <Seo seo={page?.seo} />
       <main className="item-center flex flex-col gap-10">
         <h1 className="text-4xl font-bold">Meet the Team!</h1>
-        <div dangerouslySetInnerHTML={{ __html: page?.content ?? <p></p> }} />
+        <div dangerouslySetInnerHTML={{ __html: page?.content ?? "<p></p>" }} />
         {/* <TeamGrid teamMembers={team ?? []} /> */}
         <TeamList />
       </main>
