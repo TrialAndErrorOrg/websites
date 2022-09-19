@@ -1274,6 +1274,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
       'manyToMany',
       'api::team-member.team-member'
     >
+    academic: ComponentAttribute<'shared.academic'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -2081,6 +2082,21 @@ export interface SectionsHero extends ComponentSchema {
   }
 }
 
+export interface SharedAcademic extends ComponentSchema {
+  info: {
+    displayName: 'academic'
+    icon: 'award'
+  }
+  attributes: {
+    doi: StringAttribute & UniqueAttribute
+    abstract: TextAttribute &
+      SetMinMaxLength<{
+        minLength: 50
+        maxLength: 300
+      }>
+  }
+}
+
 export interface SharedSeo extends ComponentSchema {
   info: {
     name: 'Seo'
@@ -2177,6 +2193,7 @@ declare global {
       'components.cta': ComponentsCta
       'cote.position-or-editor': CotePositionOrEditor
       'sections.hero': SectionsHero
+      'shared.academic': SharedAcademic
       'shared.seo': SharedSeo
       'shared.shared-social': SharedSharedSocial
     }

@@ -69,6 +69,11 @@
       "relation": "manyToMany",
       "target": "api::team-member.team-member",
       "inversedBy": "blog_posts"
+    },
+    "academic": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.academic"
     }
   }
 }

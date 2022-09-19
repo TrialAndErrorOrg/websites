@@ -75,12 +75,14 @@ export const blogPostRouter = createRouter()
   .query("getBySlug", {
     input: z.string(),
     async resolve({ ctx, input }) {
-      return await ctx.strapi
+      const res = await ctx.strapi
         .from<BlogPost>("blog-posts")
         .select()
         .equalTo("slug", input)
         .populate()
         .get()
+
+      return res.data
     },
   })
   .query("getRelatedBySlug", {

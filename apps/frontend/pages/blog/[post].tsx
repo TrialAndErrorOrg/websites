@@ -1,17 +1,78 @@
+import { createSSGHelpers } from "@trpc/react/ssg"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { formatDistanceToNow } from "date-fns"
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next"
+import { GetAttributesValues } from "@strapi/strapi"
+import React from "react"
 import { trpc } from "../../utils/trpc"
 import { BaseLayout } from "../../layouts/BaseLayout"
 import { Seo } from "../../components/SEO"
-import { NextPageWithLayout } from "../_app"
+import { appRouter } from "../../server/router"
+import { createContext } from "../../server/router/context"
+import { BlogSeo } from "apps/frontend/components/BlogSEO"
 
-const BlogPost: NextPageWithLayout = () => {
-  const { query: post } = useRouter()
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ post: string }>
+) => {
+  const post = context.params!.post as string
 
-  const { data } = trpc.useQuery(["blog.getBySlug", post.post as string])
-  const blogPost = data?.data?.[0]
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: await createContext(),
+  })
+
+  await ssg.fetchQuery("blog.getBySlug", post)
+
+  const trpcState = ssg.dehydrate()
+  return {
+    props: {
+      trpcState,
+      post,
+    },
+    revalidate: 1,
+  }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  if (!strapi) {
+    return {
+      paths: [] as { params: { post: string } }[],
+      fallback: "blocking",
+    }
+  }
+  const { data: posts } = await strapi
+    .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
+    .select(["slug"])
+    .get()
+
+  return {
+    paths:
+      posts?.reduce((acc, { slug }) => {
+        if (!slug) return acc
+        acc.push({
+          params: {
+            post: slug,
+          },
+        })
+
+        return acc
+      }, [] as { params: { post: string } }[]) ?? [],
+    // https://nextjs.org/docs/basic-features/data-fetching#fallback-blocking
+    fallback: "blocking",
+  }
+}
+
+const BlogPost = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { post } = props
+
+  const { data } = trpc.useQuery(["blog.getBySlug", post as string])
+  const blogPost =
+    data?.[0] ?? ({} as GetAttributesValues<"api::blog-post.blog-post">)
   const {
     title,
     body,
@@ -21,11 +82,11 @@ const BlogPost: NextPageWithLayout = () => {
     publishedAt,
     blog_authors: blogAuthors,
     publishDate,
-  } = blogPost ?? {}
+  } = blogPost
 
   return (
     <>
-      <Seo seo={seo} />
+      <BlogSeo post={blogPost} />
       <article className="prose prose-slate mx-auto max-w-7xl px-4 dark:prose-invert sm:px-6 lg:px-8">
         <div className="mx-auto max-w-prose text-lg">
           <Image
@@ -46,12 +107,13 @@ const BlogPost: NextPageWithLayout = () => {
             </span>
             <div className="flex gap-2">
               {blogTags?.map((tag) => (
-                <span
+                <Link
                   className="rounded-full bg-orange-50 px-3 py-1 text-sm text-orange-900"
                   key={tag.title}
+                  href={`/blog?tag=${tag.title}`}
                 >
                   {tag.title}
-                </span>
+                </Link>
               ))}
             </div>
             <div>
@@ -83,4 +145,6 @@ const BlogPost: NextPageWithLayout = () => {
 
 export default BlogPost
 
-BlogPost.getLayout = (page) => <BaseLayout>{page}</BaseLayout>
+BlogPost.getLayout = (page: React.ReactElement) => (
+  <BaseLayout>{page}</BaseLayout>
+)

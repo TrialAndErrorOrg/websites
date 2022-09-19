@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_academics",
+  "info": {
+    "displayName": "academic",
+    "icon": "award"
+  },
+  "options": {},
+  "attributes": {
+    "doi": {
+      "type": "string",
+      "regex": "10\\.\\d+\\/.+",
+      "unique": true
+    },
+    "abstract": {
+      "type": "text",
+      "maxLength": 300,
+      "minLength": 50
+    }
+  }
+}
