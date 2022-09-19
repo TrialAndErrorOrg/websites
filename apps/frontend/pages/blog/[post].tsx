@@ -39,13 +39,8 @@ export const getStaticProps = async (
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  if (!strapi) {
-    return {
-      paths: [] as { params: { post: string } }[],
-      fallback: "blocking",
-    }
-  }
-  const { data: posts } = await strapi
+  const ctx = await createContext()
+  const { data: posts } = await ctx.strapi
     .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
     .select(["slug"])
     .get()
@@ -76,7 +71,6 @@ const BlogPost = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {
     title,
     body,
-    seo,
     image,
     blog_tags: blogTags,
     publishedAt,
