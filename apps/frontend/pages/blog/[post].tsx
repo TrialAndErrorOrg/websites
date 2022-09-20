@@ -27,8 +27,14 @@ export const getStaticProps = async (
   })
 
   await ssg.fetchQuery("blog.getBySlug", post)
+  await ssg.fetchQuery("nav.get", "footer")
+  await ssg.fetchQuery("nav.get", "socials")
+  await ssg.fetchQuery("nav.main")
+  await ssg.fetchQuery("nav.user")
 
-  const trpcState = ssg.dehydrate()
+  const trpcState = ssg.dehydrate({ dehydrateQueries: true })
+
+  console.log(trpcState.queries.map((x) => x.state.data))
   return {
     props: {
       trpcState,

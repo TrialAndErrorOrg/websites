@@ -157,7 +157,7 @@ const ToggleDarkMode = () => {
 const SignIn = () => {
   const { data: session, status } = useSession()
   const { data: userNavigation } = trpc.useQuery(["nav.user"])
-  const { data: avatar } = trpc.useQuery(["auth.avatar"])
+  // const { data: avatar } = trpc.useQuery(["auth.avatar"])
 
   return session && status === "authenticated" ? (
     <div className="ml-4 flex items-center md:ml-6">
@@ -175,12 +175,13 @@ const SignIn = () => {
           <Menu.Button className="flex max-w-xs items-center rounded-full bg-white p-[2px] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2">
             <span className="sr-only">Open user menu</span>
             <span className="h-8 w-8 overflow-clip rounded-full">
+              {/* {avatar ?
               <Image
                 src={avatar}
                 height="32"
                 width="32"
                 alt="Your profile picture"
-              />
+              /> */}
             </span>
           </Menu.Button>
         </div>
