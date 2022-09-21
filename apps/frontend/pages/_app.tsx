@@ -164,7 +164,7 @@ const AppWithTRPC = withTRPC<AppRouter>({
       },
     }
   },
-  ssr: true,
+  // ssr: true,
 })(MyApp)
 
 export default AppWithTRPC
