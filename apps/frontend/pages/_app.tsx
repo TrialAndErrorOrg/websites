@@ -14,6 +14,7 @@ import type { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { Session } from "next-auth"
 import { AppRouter } from "../server/router"
+import { Query, QueryClientConfig } from "react-query"
 // import { strapi } from "../server/db/client"
 
 // modified version - allows for custom pageProps type, falling back to 'any'
@@ -134,11 +135,11 @@ const getBaseUrl = () => {
 //     pageProps: { ...pageProps, global: attributes ?? {} },
 //   }
 // }
-const queryClientConfig = {
+const queryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
-      refectchOnMount: false,
-      refectchOnWindowFocus: false,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
     },
   },
 }
