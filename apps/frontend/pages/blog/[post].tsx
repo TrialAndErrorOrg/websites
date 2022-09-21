@@ -42,7 +42,7 @@ export const getStaticProps = async (
       trpcState: ssg.dehydrate(),
       post,
     },
-    revalidate: 1,
+    revalidate: 60 * 60 * 24 * 7,
   }
 }
 
