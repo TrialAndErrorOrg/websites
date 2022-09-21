@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { withTRPC } from "@trpc/next"
+import { httpBatchLink } from "@trpc/client/links/httpBatchLink"
 import superjson from "superjson"
 import { AppProps as NextAppProps } from "next/app"
 // import Head from "next/head"
@@ -135,36 +136,59 @@ const getBaseUrl = () => {
 // }
 
 const AppWithTRPC = withTRPC<AppRouter>({
-  config({ ctx }) {
+  config() {
     if (typeof window !== "undefined") {
       // during client requests
       return {
         transformer: superjson, // optional - adds superjson serialization
-        url: "/api/trpc",
+        links: [
+          httpBatchLink({
+            url: "/api/trpc",
+          }),
+        ],
       }
     }
     // during SSR below
 
     // optional: use SSG-caching for each rendered page (see caching section for more details)
-    const ONE_DAY_SECONDS = 60 * 60 * 24
-    ctx?.res?.setHeader(
-      "Cache-Control",
-      `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
-    )
+    // const ONE_DAY_SECONDS = 60 * 60 * 24
+    // ctx?.res?.setHeader(
+    //   "Cache-Control",
+    //   `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
+    // )
     // The server needs to know your app's full url
     // On render.com you can use `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}/api/trpc`
     const url = `${getBaseUrl()}/api/trpc`
 
     return {
       transformer: superjson, // optional - adds superjson serialization
-      url,
+      links: [
+        httpBatchLink({
+          url,
+        }),
+      ],
+      // headers: {
+      //   // optional - inform server that it's an ssr request
+      //   "x-ssr": "1",
+      // },
+    }
+  },
+  ssr: true,
+  responseMeta({ clientErrors }) {
+    if (clientErrors.length) {
+      // propagate http first error from API calls
+      return {
+        status: clientErrors[0].data?.httpStatus ?? 500,
+      }
+    }
+    // cache request for 1 day + revalidate once every second
+    const ONE_DAY_IN_SECONDS = 60 * 60 * 24
+    return {
       headers: {
-        // optional - inform server that it's an ssr request
-        "x-ssr": "1",
+        "cache-control": `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
       },
     }
   },
-  // ssr: true,
 })(MyApp)
 
 export default AppWithTRPC

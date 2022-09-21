@@ -7,6 +7,7 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from "next"
+import superjson from "superjson"
 import { GetAttributesValues } from "@strapi/strapi"
 import React from "react"
 import { trpc } from "../../utils/trpc"
@@ -15,61 +16,63 @@ import { Seo } from "../../components/SEO"
 import { appRouter } from "../../server/router"
 import { createContext } from "../../server/router/context"
 import { BlogSeo } from "apps/frontend/components/BlogSEO"
+import { useRouter } from "next/router"
 
-export const getStaticProps = async (
-  context: GetStaticPropsContext<{ post: string }>
-) => {
-  const post = context.params!.post as string
+// export const getStaticProps = async (
+//   context: GetStaticPropsContext<{ post: string }>
+// ) => {
+//   const post = context.params!.post as string
 
-  const ssg = createSSGHelpers({
-    router: appRouter,
-    ctx: await createContext(),
-  })
+//   const ssg = createSSGHelpers({
+//     router: appRouter,
+//     ctx: await createContext(),
+//     transformer: superjson,
+//   })
 
-  await ssg.fetchQuery("blog.getBySlug", post)
-  await ssg.fetchQuery("nav.get", "footer")
-  await ssg.fetchQuery("nav.get", "socials")
-  await ssg.fetchQuery("nav.main")
-  await ssg.fetchQuery("nav.user")
+//   await ssg.fetchQuery("blog.getBySlug", post)
+//   await ssg.fetchQuery("nav.get", "footer")
+//   await ssg.fetchQuery("nav.get", "socials")
+//   await ssg.fetchQuery("nav.main")
+//   await ssg.fetchQuery("nav.user")
 
-  const trpcState = ssg.dehydrate({ dehydrateQueries: true })
+//   const trpcState = ssg.dehydrate({ dehydrateQueries: true })
 
-  console.log(trpcState.queries.map((x) => x.state.data))
-  return {
-    props: {
-      trpcState,
-      post,
-    },
-    revalidate: 1,
-  }
-}
+//   console.log(trpcState.queries.map((x) => x.state.data))
+//   return {
+//     props: {
+//       trpcState,
+//       post,
+//     },
+//     revalidate: 1,
+//   }
+// }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const ctx = await createContext()
-  const { data: posts } = await ctx.strapi
-    .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
-    .select(["slug"])
-    .get()
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const ctx = await createContext()
+//   const { data: posts } = await ctx.strapi
+//     .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
+//     .select(["slug"])
+//     .get()
 
-  return {
-    paths:
-      posts?.reduce((acc, { slug }) => {
-        if (!slug) return acc
-        acc.push({
-          params: {
-            post: slug,
-          },
-        })
+//   return {
+//     paths:
+//       posts?.reduce((acc, { slug }) => {
+//         if (!slug) return acc
+//         acc.push({
+//           params: {
+//             post: slug,
+//           },
+//         })
 
-        return acc
-      }, [] as { params: { post: string } }[]) ?? [],
-    // https://nextjs.org/docs/basic-features/data-fetching#fallback-blocking
-    fallback: "blocking",
-  }
-}
+//         return acc
+//       }, [] as { params: { post: string } }[]) ?? [],
+//     // https://nextjs.org/docs/basic-features/data-fetching#fallback-blocking
+//     fallback: "blocking",
+//   }
+// }
 
-const BlogPost = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { post } = props
+const BlogPost = () => {
+  const post = useRouter().query.post as string
 
   const { data } = trpc.useQuery(["blog.getBySlug", post as string])
   const blogPost =
