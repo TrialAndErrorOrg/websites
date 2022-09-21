@@ -17,6 +17,7 @@ import { appRouter } from "../../server/router"
 import { createContext } from "../../server/router/context"
 import { BlogSeo } from "apps/frontend/components/BlogSEO"
 import { NextPageWithLayout } from "../_app"
+import { useRouter } from "next/router"
 
 // export const getStaticProps = async (
 //   context: GetStaticPropsContext<{ post: string }>
@@ -72,8 +73,9 @@ import { NextPageWithLayout } from "../_app"
 // }
 
 const BlogPost: NextPageWithLayout<{ post: string }> = (props) => {
-  const { post } = props
+  // const { post } = props
 
+  const post = useRouter().query.post as string
   const { data } = trpc.useQuery(["blog.getBySlug", post as string])
   const blogPost =
     data?.[0] ?? ({} as GetAttributesValues<"api::blog-post.blog-post">)
