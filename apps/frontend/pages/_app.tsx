@@ -134,6 +134,14 @@ const getBaseUrl = () => {
 //     pageProps: { ...pageProps, global: attributes ?? {} },
 //   }
 // }
+const queryClientConfig = {
+  defaultOptions: {
+    queries: {
+      refectchOnMount: false,
+      refectchOnWindowFocus: false,
+    },
+  },
+}
 
 const AppWithTRPC = withTRPC<AppRouter>({
   config({ ctx }) {
@@ -146,6 +154,7 @@ const AppWithTRPC = withTRPC<AppRouter>({
             url: "/api/trpc",
           }),
         ],
+        queryClientConfig,
       }
     }
     // during SSR below
@@ -181,6 +190,7 @@ const AppWithTRPC = withTRPC<AppRouter>({
         }
         return {}
       },
+      queryClientConfig,
     }
   },
   ssr: true,
