@@ -100,7 +100,8 @@ const getBaseUrl = () => {
   if (typeof window !== "undefined") {
     return ""
   }
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}` // SSR should use vercel url
+  if (process.env.NEXT_PUBLIC_VERCEL_URL)
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` // SSR should use vercel url
 
   return `http://localhost:${process.env.PORT ?? 4200}` // dev SSR should use localhost
 }
@@ -126,7 +127,6 @@ const getBaseUrl = () => {
 //     })
 //   ).json()
 
-//   // console.log(globalRes)
 //   // Pass the data to our page via props
 //   return {
 //     ...appProps,
@@ -151,7 +151,6 @@ const AppWithTRPC = withTRPC<AppRouter>({
       "Cache-Control",
       `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`
     )
-
     // The server needs to know your app's full url
     // On render.com you can use `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}/api/trpc`
     const url = `${getBaseUrl()}/api/trpc`
