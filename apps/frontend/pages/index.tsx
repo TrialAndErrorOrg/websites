@@ -1,14 +1,14 @@
-import { Hero } from "../components/Hero"
+import { Hero } from '../components/Hero'
 // import Layout from "../components/layout"
-import { Seo } from "../components/SEO"
-import { BaseLayout } from "../layouts/BaseLayout"
-import { trpc } from "../utils/trpc"
-import { NextPageWithLayout } from "./_app"
+import { Seo } from '../components/SEO'
+import { BaseLayout } from '../layouts/BaseLayout'
+import { trpc } from '../utils/trpc'
+import { NextPageWithLayout } from './_app'
 // import { fetchAPI } from "../lib/api"
 
 const Home: NextPageWithLayout = () => {
   // const { data, status } = useSession()
-  const { data: page, error, isFetching } = trpc.useQuery(["page.homepage"])
+  const { data: page, error, isFetching } = trpc.useQuery(['page.homepage'])
   // const { seo, hero,  } = page
   console.log(page, error, isFetching)
 
@@ -19,8 +19,8 @@ const Home: NextPageWithLayout = () => {
 
       <div className="uk-section">
         <article
-          className="prose prose-slate dark:prose-invert"
-          dangerouslySetInnerHTML={{ __html: page?.body ?? "" }}
+          className="prose prose-slate dark:prose-invert mx-auto text-2xl font-semibold"
+          dangerouslySetInnerHTML={{ __html: page?.body ?? '' }}
         />
       </div>
     </>

@@ -16,66 +16,63 @@ import { Seo } from "../../components/SEO"
 import { appRouter } from "../../server/router"
 import { createContext } from "../../server/router/context"
 import { BlogSeo } from "apps/frontend/components/BlogSEO"
-import { NextPageWithLayout } from "../_app"
-import { useRouter } from "next/router"
 
-// export const getStaticProps = async (
-//   context: GetStaticPropsContext<{ post: string }>
-// ) => {
-//   const post = context.params!.post as string
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ post: string }>
+) => {
+  const post = context.params!.post as string
 
-//   const ssg = createSSGHelpers({
-//     router: appRouter,
-//     ctx: await createContext(),
-//     transformer: superjson,
-//   })
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: await createContext(),
+    transformer: superjson,
+  })
 
-//   await ssg.fetchQuery("blog.getBySlug", post)
-//   await ssg.fetchQuery("nav.get", "footer")
-//   await ssg.fetchQuery("nav.get", "socials")
-//   await ssg.fetchQuery("nav.main")
-//   await ssg.fetchQuery("nav.user")
+  await ssg.fetchQuery("blog.getBySlug", post)
+  await ssg.fetchQuery("nav.get", "footer")
+  await ssg.fetchQuery("nav.get", "socials")
+  await ssg.fetchQuery("nav.main")
+  await ssg.fetchQuery("nav.user")
 
-//   // const trpcState = ssg.dehydrate({ dehydrateQueries: true })
+  // const trpcState = ssg.dehydrate({ dehydrateQueries: true })
 
-//   // console.log(trpcState.queries.map((x) => x.state.data))
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       post,
-//     },
-//     revalidate: 60 * 60 * 24 * 7,
-//   }
-// }
+  // console.log(trpcState.queries.map((x) => x.state.data))
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      post,
+    },
+    revalidate: 60 * 60 * 24 * 7,
+  }
+}
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const ctx = await createContext()
-//   const { data: posts } = await ctx.strapi
-//     .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
-//     .select(["slug"])
-//     .get()
+export const getStaticPaths: GetStaticPaths = async () => {
+  const ctx = await createContext()
+  const { data: posts } = await ctx.strapi
+    .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
+    .select(["slug"])
+    .get()
 
-//   return {
-//     paths:
-//       posts?.reduce((acc, { slug }) => {
-//         if (!slug) return acc
-//         acc.push({
-//           params: {
-//             post: slug,
-//           },
-//         })
+  return {
+    paths:
+      posts?.reduce((acc, { slug }) => {
+        if (!slug) return acc
+        acc.push({
+          params: {
+            post: slug,
+          },
+        })
 
-//         return acc
-//       }, [] as { params: { post: string } }[]) ?? [],
-//     // https://nextjs.org/docs/basic-features/data-fetching#fallback-blocking
-//     fallback: "blocking",
-//   }
-// }
+        return acc
+      }, [] as { params: { post: string } }[]) ?? [],
+    // https://nextjs.org/docs/basic-features/data-fetching#fallback-blocking
+    fallback: "blocking",
+  }
+}
 
-const BlogPost: NextPageWithLayout<{ post: string }> = (props) => {
-  // const { post } = props
+const BlogPost = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { post } = props
 
-  const post = useRouter().query.post as string
   const { data } = trpc.useQuery(["blog.getBySlug", post as string])
   const blogPost =
     data?.[0] ?? ({} as GetAttributesValues<"api::blog-post.blog-post">)
@@ -148,17 +145,8 @@ const BlogPost: NextPageWithLayout<{ post: string }> = (props) => {
   )
 }
 
+export default BlogPost
+
 BlogPost.getLayout = (page: React.ReactElement) => (
   <BaseLayout>{page}</BaseLayout>
 )
-
-BlogPost.getInitialProps = async (ctx) => {
-  const { query } = ctx
-  const post = query.post as string
-
-  return {
-    post,
-  }
-}
-
-export default BlogPost

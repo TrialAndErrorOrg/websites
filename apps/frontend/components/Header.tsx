@@ -233,7 +233,7 @@ const SignIn = () => {
 }
 
 const MainNav = ({ headers }: { headers: MenuType }) => (
-  <Popover.Group as="nav" className="hidden space-x-10 md:flex">
+  <Popover.Group as="nav" className="hidden items-center space-x-10 md:flex">
     {headers?.items
       ?.map((header) => {
         if (header.title === "Home") {

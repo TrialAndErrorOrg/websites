@@ -26,10 +26,12 @@ export const BlogPosts = ({
         {posts.map((post) => (
           <div
             key={post.title}
-            className="flex flex-col overflow-hidden rounded-lg shadow-lg"
+            className="flex flex-col overflow-hidden shadow-lg"
           >
             <div className="flex-shrink-0">
               <Image
+                // @ts-expect-error Strapi types media as any, which makes primary not work
+                primary
                 className="h-96 w-full object-cover"
                 src={post.image.url}
                 alt={post.image.altText}
@@ -51,10 +53,9 @@ export const BlogPosts = ({
                   ))}
                 </div>
                 <Link href={`/blog/${post.slug}`} className="group mt-2 block">
-                  <h2 className="cia group-hover:cia-active box-border inline break-words border-none text-2xl font-bold text-slate-900 dark:text-white">
+                  <h2 className="cia group-hover:cia-active box-border inline break-words border-none text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                     {post.title}
                   </h2>
-
                   <p className="mt-3 text-sm font-normal text-slate-400 dark:text-slate-200">
                     {post.excerpt}
                   </p>

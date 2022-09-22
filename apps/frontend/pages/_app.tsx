@@ -14,7 +14,7 @@ import type { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { Session } from "next-auth"
 import { AppRouter } from "../server/router"
-import { Query, QueryClientConfig } from "react-query"
+import { QueryClientConfig } from "react-query"
 // import { strapi } from "../server/db/client"
 
 // modified version - allows for custom pageProps type, falling back to 'any'
@@ -28,6 +28,13 @@ export type NextPageWithLayout<P = Record<string, unknown>> = NextPage<P> & {
 
 type SEO = GetAttributesValues<"api::global.global">
 
+if (process.env.NODE_ENV === "development") {
+  import("@impulse.dev/runtime").then((impulse) =>
+    impulse.run({
+      prettierConfig: require("../../../.prettierrc.json"),
+    })
+  )
+}
 // type AppPropsWithEverything = AppProps<{
 //   global: SEO
 //   session: Session
@@ -177,39 +184,39 @@ const AppWithTRPC = withTRPC<AppRouter>({
           url,
         }),
       ],
-      headers: () => {
-        if (ctx?.req) {
-          // To use SSR properly, you need to forward the client's headers to the server
-          const headers = ctx?.req?.headers
-          // If you're using Node 18, delete the "connection" header
-          delete headers?.connection
-          return {
-            ...headers,
-            // optional - inform server that it's an ssr request
-            "x-ssr": "1",
-          }
-        }
-        return {}
-      },
+      // headers: () => {
+      //   if (ctx?.req) {
+      //     // To use SSR properly, you need to forward the client's headers to the server
+      //     const headers = ctx?.req?.headers
+      //     // If you're using Node 18, delete the "connection" header
+      //     delete headers?.connection
+      //     return {
+      //       ...headers,
+      //       // optional - inform server that it's an ssr request
+      //       "x-ssr": "1",
+      //     }
+      //   }
+      //   return {}
+      // },
       queryClientConfig,
     }
   },
-  ssr: true,
-  responseMeta({ clientErrors }) {
-    if (clientErrors.length) {
-      // propagate http first error from API calls
-      return {
-        status: clientErrors[0].data?.httpStatus ?? 500,
-      }
-    }
-    // cache request for 1 day + revalidate once every second
-    const ONE_DAY_IN_SECONDS = 60 * 60 * 24
-    return {
-      headers: {
-        "cache-control": `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
-      },
-    }
-  },
+  // ssr: ,
+  // responseMeta({ clientErrors }) {
+  //   if (clientErrors.length) {
+  //     // propagate http first error from API calls
+  //     return {
+  //       status: clientErrors[0].data?.httpStatus ?? 500,
+  //     }
+  //   }
+  //   // cache request for 1 day + revalidate once every second
+  //   const ONE_DAY_IN_SECONDS = 60 * 60 * 24
+  //   return {
+  //     headers: {
+  //       "cache-control": `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+  //     },
+  //   }
+  // },
 })(MyApp)
 
 export default AppWithTRPC
