@@ -22,6 +22,7 @@
     "sharp": "^0.30.7",
     "strapi-plugin-comments": "^2.1.8",
     "strapi-plugin-email-designer": "^2.1.1",
+    "strapi-plugin-meilisearch": "^0.7.1",
     "strapi-plugin-menus": "^1.0.2",
     "strapi-plugin-navigation": "^2.2.0",
     "strapi-plugin-notes": "^1.0.1",

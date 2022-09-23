@@ -161,4 +161,10 @@ export default ({ env }) => ({
     enabled: true,
   },
   menus,
+  meilisearch: {
+    config: {
+      host: env('MEILISEARCH_URL'),
+      apiKey: env('MEILISEARCH_API_KEY'),
+    },
+  },
 })
