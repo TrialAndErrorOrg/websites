@@ -11,8 +11,8 @@ export const envSchema = z.object({
   ORCID_CLIENT_ID: z.string(),
   ORCID_CLIENT_SECRET: z.string(),
   NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
-  MEILISEARCH_URL: z.string().url(),
-  MEILISEARCH_API_KEY: z.string(),
+  NEXT_PUBLIC_MEILISEARCH_URL: z.string().url(),
+  NEXT_PUBLIC_MEILISEARCH_API_KEY: z.string(),
   // ORCID_ACCESS_SECRET: z.string(),
   PORT: z.string().optional(),
 })
