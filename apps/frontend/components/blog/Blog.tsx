@@ -33,10 +33,10 @@ export const BlogPosts = ({
                 // @ts-expect-error Strapi types media as any, which makes primary not work
                 primary
                 className="h-96 w-full object-cover"
-                src={post.image.url}
-                alt={post.image.altText}
-                width={post.image.width}
-                height={post.image.height}
+                src={post?.image?.url}
+                alt={post?.image?.altText}
+                width={post?.image?.width}
+                height={post?.image?.height}
               />
             </div>
             <div className="flex flex-1 flex-col justify-between bg-white p-6 dark:bg-blue-500">

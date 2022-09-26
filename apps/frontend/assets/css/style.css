@@ -40,6 +40,27 @@
   .cia-active {
     background-size: 100% 50%;
   }
+
+  .lettrine {
+    @apply float-left mr-2 text-8xl font-bold leading-none;
+  }
+
+  .card-shadow {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -80px 350px -28px inset;
+  }
+  .link-overlay {
+    position: static;
+  }
+  .link-overlay::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    zindex: 0;
+    content: "";
+    height: 100%;
+    width: 100%;
+    cursor: inherit;
+  }
 }
 
 html,

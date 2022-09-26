@@ -8,8 +8,36 @@ import { BellIcon, MenuIcon, MoonIcon, SunIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { GetAttributesValues } from "@strapi/strapi"
 import { useSession } from "next-auth/react"
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  Highlight,
+} from "react-instantsearch-hooks-web"
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
+
 import { trpc } from "../utils/trpc"
 import { useDarkTheme } from "../hooks/useDarkTheme"
+
+// console.log(process.env.NEXT_PUBLIC_MEILISEARCH_URL!)
+// const searchClient = instantMeiliSearch(
+//   process.env.NEXT_PUBLIC_MEILISEARCH_URL!,
+//   process.env.NEXT_PUBLIC_MEILISEARCH_API_KEY!
+// )
+
+// const Hit = ({ hit }: { hit: any }) => (
+//   <div key={hit.id}>
+//     <Highlight attribute="title" hit={hit} />
+//     <Highlight attribute="body" hit={hit} />
+//   </div>
+// )
+
+// const Search = () => (
+//   <InstantSearch indexName="blog-post" searchClient={searchClient}>
+//     <SearchBox />
+//     <Hits hitComponent={Hit} />
+//   </InstantSearch>
+// )
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
@@ -463,6 +491,7 @@ export const Header = () => {
           </div>
         </Popover.Panel>
       </Transition> */}
+      {/* <Search /> */}
     </Popover>
   )
 }

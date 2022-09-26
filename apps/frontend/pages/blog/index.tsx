@@ -6,7 +6,10 @@ import { trpc } from "../../utils/trpc"
 import { NextPageWithLayout } from "../_app"
 import { ssgDefault } from "../../utils/ssgDefault"
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  query,
+}) => {
   // const ssg = createSSGHelpers({
   //   router: appRouter,
   //   ctx: await createContext(),
@@ -17,20 +20,23 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // await ssg.fetchQuery("nav.get", "socials")
   const ssg = await ssgDefault()
 
-  const { sort, order, filter } = params ?? {}
+  const { tag, sort, order, filter } = query ?? {}
   await ssg.fetchQuery("blog.getAll", {
     orderBy: sort as "publishedAt" | "title" | "publishDate" | undefined,
     order: order as "asc" | "desc" | undefined,
-    filter: filter as string,
+    tag: typeof tag === "string" ? [tag] : tag,
+    // filter: filter as string,
   })
   await ssg.fetchQuery("seo.get", "blog-home")
 
+  console.log(params, query)
   return {
     props: {
       trpcState: ssg.dehydrate(),
       sort: (sort as string) ?? null,
       order: (order as string) ?? null,
       filter: (filter as string) ?? null,
+      tag: typeof tag === "string" ? [tag] : tag ?? null,
     },
   }
 }
@@ -42,15 +48,18 @@ const Blog: NextPageWithLayout = (
   //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   //   query: { sort, order, filter },
   // } = useRouter()
-  const { sort, order, filter } = props
+  const { tag, sort, order, filter } = props
   const { data: seo } = trpc.useQuery(["seo.get", "blog-home"])
   const { data: blogPosts } = trpc.useQuery([
     "blog.getAll",
     {
       order: (order as "asc" | "desc") ?? undefined,
       orderBy: (sort as "title" | "publishDate" | undefined) ?? undefined,
+      tag: tag ?? undefined,
     },
   ])
+
+  console.log(blogPosts)
   return (
     <>
       <Seo
