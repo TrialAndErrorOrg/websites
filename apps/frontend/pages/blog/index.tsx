@@ -59,7 +59,6 @@ const Blog: NextPageWithLayout = (
     },
   ])
 
-  console.log(blogPosts)
   return (
     <>
       <Seo
