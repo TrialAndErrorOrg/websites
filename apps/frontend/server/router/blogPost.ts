@@ -34,11 +34,18 @@ export const blogPostRouter = createRouter()
       orderBy: z.enum(orderByEnum).default("publishDate"),
       limit: z.number().min(1).max(100).default(20),
       start: z.number().min(0).default(0),
+      tag: z.array(z.string()).optional(),
     }),
     async resolve({ ctx, input }) {
+      console.log(input?.tag?.[0] ?? "")
       return await ctx.strapi
         .from<BlogPost>("blog-posts")
         .select()
+        .filterDeep(
+          "blog_tags.slug",
+          input.tag ? "in" : "contains",
+          input.tag ?? ""
+        )
         .populate()
         .sortBy(makeSortArray({ order: input.order, orderBy: input.orderBy }))
         .get()
@@ -57,7 +64,7 @@ export const blogPostRouter = createRouter()
         .from<BlogPost>("blog-posts")
         .select()
         .populate()
-        .filterDeep("blog_tags.name", "eq", input.tag)
+        .filterDeep("blog_tags.title", "eq", input.tag)
         .sortBy(makeSortArray({ order: input.order, orderBy: input.orderBy }))
         .get()
     },

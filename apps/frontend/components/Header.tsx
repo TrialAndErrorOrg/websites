@@ -8,8 +8,36 @@ import { BellIcon, MenuIcon, MoonIcon, SunIcon } from "@heroicons/react/outline"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { GetAttributesValues } from "@strapi/strapi"
 import { useSession } from "next-auth/react"
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  Highlight,
+} from "react-instantsearch-hooks-web"
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
+
 import { trpc } from "../utils/trpc"
 import { useDarkTheme } from "../hooks/useDarkTheme"
+
+// console.log(process.env.NEXT_PUBLIC_MEILISEARCH_URL!)
+// const searchClient = instantMeiliSearch(
+//   process.env.NEXT_PUBLIC_MEILISEARCH_URL!,
+//   process.env.NEXT_PUBLIC_MEILISEARCH_API_KEY!
+// )
+
+// const Hit = ({ hit }: { hit: any }) => (
+//   <div key={hit.id}>
+//     <Highlight attribute="title" hit={hit} />
+//     <Highlight attribute="body" hit={hit} />
+//   </div>
+// )
+
+// const Search = () => (
+//   <InstantSearch indexName="blog-post" searchClient={searchClient}>
+//     <SearchBox />
+//     <Hits hitComponent={Hit} />
+//   </InstantSearch>
+// )
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
@@ -157,7 +185,7 @@ const ToggleDarkMode = () => {
 const SignIn = () => {
   const { data: session, status } = useSession()
   const { data: userNavigation } = trpc.useQuery(["nav.user"])
-  const { data: avatar } = trpc.useQuery(["auth.avatar"])
+  // const { data: avatar } = trpc.useQuery(["auth.avatar"])
 
   return session && status === "authenticated" ? (
     <div className="ml-4 flex items-center md:ml-6">
@@ -175,12 +203,13 @@ const SignIn = () => {
           <Menu.Button className="flex max-w-xs items-center rounded-full bg-white p-[2px] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2">
             <span className="sr-only">Open user menu</span>
             <span className="h-8 w-8 overflow-clip rounded-full">
+              {/* {avatar ?
               <Image
                 src={avatar}
                 height="32"
                 width="32"
                 alt="Your profile picture"
-              />
+              /> */}
             </span>
           </Menu.Button>
         </div>
@@ -232,7 +261,7 @@ const SignIn = () => {
 }
 
 const MainNav = ({ headers }: { headers: MenuType }) => (
-  <Popover.Group as="nav" className="hidden space-x-10 md:flex">
+  <Popover.Group as="nav" className="hidden items-center space-x-10 md:flex">
     {headers?.items
       ?.map((header) => {
         if (header.title === "Home") {
@@ -462,6 +491,7 @@ export const Header = () => {
           </div>
         </Popover.Panel>
       </Transition> */}
+      {/* <Search /> */}
     </Popover>
   )
 }
