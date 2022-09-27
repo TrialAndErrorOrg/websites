@@ -9,6 +9,7 @@ export const ssgDefault = async () => {
     ctx: await createContext(),
     transformer: superjson,
   })
+  await ssg.fetchQuery("nav.main")
   await ssg.fetchQuery("nav.get", "footer")
   await ssg.fetchQuery("nav.get", "socials")
 
