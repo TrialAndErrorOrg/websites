@@ -1,4 +1,5 @@
 import { GetAttributesValues } from "@strapi/strapi"
+import { GetStaticProps } from "next"
 import Image from "next/future/image"
 import Link from "next/link"
 
@@ -45,7 +46,7 @@ export const BlogPosts = ({
                   {post.blog_tags?.map(({ slug, title: postTitle }) => (
                     <Link
                       key={slug}
-                      href={`/blog/${slug ?? postTitle}`}
+                      href={`/blog?tag=${slug ?? postTitle}`}
                       className="text-xs font-normal text-slate-400 hover:underline dark:text-slate-200"
                     >
                       #{postTitle}
