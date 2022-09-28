@@ -148,6 +148,14 @@ export default ({ env }) => ({
           field: 'slug',
           references: 'lastName',
         },
+        page: {
+          field: 'slug',
+          references: 'title',
+        },
+        category: {
+          field: 'slug',
+          references: 'title',
+        },
       },
     },
   },

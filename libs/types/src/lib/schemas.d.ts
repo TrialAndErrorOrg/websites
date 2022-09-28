@@ -25,6 +25,7 @@ import {
   RichTextAttribute,
   ComponentAttribute,
   DateAttribute,
+  DynamicZoneAttribute,
   ComponentSchema,
 } from '@strapi/strapi'
 
@@ -1112,7 +1113,6 @@ export interface ApiArticleArticle extends CollectionTypeSchema {
         }
       }>
     slug: UIDAttribute<'api::article.article', 'title'> & RequiredAttribute
-    category: RelationAttribute<'api::article.article', 'manyToOne', 'api::category.category'>
     image: MediaAttribute &
       SetPluginOptions<{
         i18n: {
@@ -1275,6 +1275,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
       'api::team-member.team-member'
     >
     academic: ComponentAttribute<'shared.academic'>
+    category: RelationAttribute<'api::blog-post.blog-post', 'manyToOne', 'api::category.category'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -1292,21 +1293,40 @@ export interface ApiCategoryCategory extends CollectionTypeSchema {
     pluralName: 'categories'
     displayName: 'Category'
     name: 'category'
+    description: ''
   }
   options: {
     increments: true
     timestamps: true
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
   }
   attributes: {
-    name: StringAttribute & RequiredAttribute
-    slug: UIDAttribute<'api::category.category', 'name'> & RequiredAttribute
-    articles: RelationAttribute<'api::category.category', 'oneToMany', 'api::article.article'>
+    title: StringAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    slug: UIDAttribute & RequiredAttribute
+    blog_posts: RelationAttribute<'api::category.category', 'oneToMany', 'api::blog-post.blog-post'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::category.category', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::category.category', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    localizations: RelationAttribute<
+      'api::category.category',
+      'oneToMany',
+      'api::category.category'
+    >
+    locale: StringAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -1808,6 +1828,66 @@ export interface ApiOpenPositionsPageOpenPositionsPage extends SingleTypeSchema 
   }
 }
 
+export interface ApiPagePage extends CollectionTypeSchema {
+  info: {
+    singularName: 'page'
+    pluralName: 'pages'
+    displayName: 'Page'
+    description: ''
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    title: StringAttribute &
+      RequiredAttribute &
+      UniqueAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    block: DynamicZoneAttribute<['components.text-block']> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    seo: ComponentAttribute<'shared.seo'> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    image: MediaAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    slug: StringAttribute &
+      UniqueAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    publishedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'api::page.page', 'oneToOne', 'admin::user'> & PrivateAttribute
+    updatedBy: RelationAttribute<'api::page.page', 'oneToOne', 'admin::user'> & PrivateAttribute
+    localizations: RelationAttribute<'api::page.page', 'oneToMany', 'api::page.page'>
+    locale: StringAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
 export interface ApiPositionPosition extends CollectionTypeSchema {
   info: {
     singularName: 'position'
@@ -2052,6 +2132,17 @@ export interface ComponentsCta extends ComponentSchema {
   }
 }
 
+export interface ComponentsTextBlock extends ComponentSchema {
+  info: {
+    displayName: 'text-block'
+    icon: 'text-height'
+    description: ''
+  }
+  attributes: {
+    body: RichTextAttribute
+  }
+}
+
 export interface CotePositionOrEditor extends ComponentSchema {
   info: {
     displayName: 'position-or-editor'
@@ -2183,6 +2274,7 @@ declare global {
       'api::legal-page.legal-page': ApiLegalPageLegalPage
       'api::open-position.open-position': ApiOpenPositionOpenPosition
       'api::open-positions-page.open-positions-page': ApiOpenPositionsPageOpenPositionsPage
+      'api::page.page': ApiPagePage
       'api::position.position': ApiPositionPosition
       'api::tag.tag': ApiTagTag
       'api::team-member.team-member': ApiTeamMemberTeamMember
@@ -2191,6 +2283,7 @@ declare global {
       'api::writer.writer': ApiWriterWriter
       'choices.author-or-team-member': ChoicesAuthorOrTeamMember
       'components.cta': ComponentsCta
+      'components.text-block': ComponentsTextBlock
       'cote.position-or-editor': CotePositionOrEditor
       'sections.hero': SectionsHero
       'shared.academic': SharedAcademic

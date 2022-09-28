@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { GetAttributesValues } from "@strapi/strapi"
+import { z } from "zod"
 import { createRouter } from "./context"
 
 type FilteredStrapiApiStrings<
@@ -21,6 +22,8 @@ type Page<
   P extends FilteredStrapiApiStrings = FilteredStrapiApiStrings
 > = P extends `${string}${T}` ? GetAttributesValues<P> : never
 
+type PlainPage = GetAttributesValues<"api::page.page">
+
 const populateHero = {
   path: "hero",
   children: "*",
@@ -29,6 +32,21 @@ const populateSeo = { path: "seo", children: "*" } as const
 const populate = [populateHero, populateSeo]
 
 export const pageRouter = createRouter()
+  .query("get", {
+    input: z.string(),
+    async resolve({ input, ctx }) {
+      return (
+        (
+          await ctx.strapi
+            .from<PlainPage>("pages")
+            .select()
+            .equalTo("slug", input)
+            .populate()
+            .get()
+        )?.data?.[0] ?? ({} as PlainPage)
+      )
+    },
+  })
   .query("homepage", {
     async resolve({ ctx }) {
       const res = await ctx.strapi

@@ -74,6 +74,12 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.academic"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "blog_posts"
     }
   }
 }
