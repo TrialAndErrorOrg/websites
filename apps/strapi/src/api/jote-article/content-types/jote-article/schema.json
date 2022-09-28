@@ -27,11 +27,6 @@
     "accepted": {
       "type": "datetime"
     },
-    "jote_authors": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::jote-author.jote-author"
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -52,11 +47,20 @@
       "required": true,
       "unique": true
     },
-    "references": {
-      "type": "json"
-    },
-    "updateId": {
+    "url": {
       "type": "string"
+    },
+    "guid": {
+      "type": "uid",
+      "required": true
+    },
+    "pdf": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
     }
   }
 }

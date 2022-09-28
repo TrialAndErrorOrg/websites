@@ -1519,11 +1519,6 @@ export interface ApiJoteArticleJoteArticle extends CollectionTypeSchema {
     published: DateTimeAttribute
     submitted: DateTimeAttribute
     accepted: DateTimeAttribute
-    jote_authors: RelationAttribute<
-      'api::jote-article.jote-article',
-      'oneToMany',
-      'api::jote-author.jote-author'
-    >
     image: MediaAttribute
     jote_article_category: RelationAttribute<
       'api::jote-article.jote-article',
@@ -1531,8 +1526,9 @@ export interface ApiJoteArticleJoteArticle extends CollectionTypeSchema {
       'api::jote-article-category.jote-article-category'
     >
     doi: StringAttribute & RequiredAttribute & UniqueAttribute
-    references: JSONAttribute
-    updateId: StringAttribute
+    url: StringAttribute
+    guid: UIDAttribute & RequiredAttribute
+    pdf: MediaAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -1555,7 +1551,7 @@ export interface ApiJoteArticleCategoryJoteArticleCategory extends CollectionTyp
     draftAndPublish: true
   }
   attributes: {
-    name: StringAttribute & RequiredAttribute & UniqueAttribute
+    title: StringAttribute & RequiredAttribute & UniqueAttribute
     invited: BooleanAttribute
     doiPrefix: StringAttribute &
       RequiredAttribute &
@@ -1563,6 +1559,8 @@ export interface ApiJoteArticleCategoryJoteArticleCategory extends CollectionTyp
       SetMinMaxLength<{
         maxLength: 5
       }>
+    slug: UIDAttribute<'api::jote-article-category.jote-article-category', 'title'> &
+      RequiredAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
