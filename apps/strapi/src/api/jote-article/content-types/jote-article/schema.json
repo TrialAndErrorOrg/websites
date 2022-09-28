@@ -54,14 +54,6 @@
       "type": "uid",
       "required": true
     },
-    "pdf": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "files"
-      ]
-    },
     "references": {
       "type": "json"
     },
