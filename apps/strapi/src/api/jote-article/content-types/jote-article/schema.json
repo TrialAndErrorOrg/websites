@@ -61,6 +61,15 @@
       "allowedTypes": [
         "files"
       ]
+    },
+    "references": {
+      "type": "json"
+    },
+    "authors": {
+      "type": "json"
+    },
+    "keywords": {
+      "type": "json"
     }
   }
 }
