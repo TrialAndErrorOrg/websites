@@ -13,7 +13,7 @@ jobs:
   changes:
     runs-on: 'ubuntu-latest'
     outputs:
-      ts: ${{ steps.filter.outputs.strapi }}
+      strapi: ${{ steps.filter.outputs.strapi }}
     steps:
       - uses: actions/checkout@v2
       - name: '[check if build necessary]'
@@ -29,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.strapi == 'true' }}
-
     strategy:
       matrix:
         node-version: [16.x]
