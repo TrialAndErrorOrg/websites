@@ -1957,6 +1957,13 @@
   dependencies:
     tslib "^2.4.0"
 
+"@graphql-tools/utils@^8.10.0":
+  version "8.12.0"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.12.0.tgz#243bc4f5fc2edbc9e8fd1038189e57d837cbe31f"
+  integrity sha512-TeO+MJWGXjUTS52qfK4R8HiPoF/R7X+qmgtOYd8DTH0l6b+5Y/tlg5aGeUJefqImRq7nvi93Ms40k/Uz4D5CWw==
+  dependencies:
+    tslib "^2.4.0"
+
 "@hypnosphi/create-react-context@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@hypnosphi/create-react-context/-/create-react-context-0.3.1.tgz#f8bfebdc7665f5d426cba3753e0e9c7d3154d7c6"
@@ -2964,6 +2971,28 @@
     pluralize "^8.0.0"
     subscriptions-transport-ws "0.9.19"
 
+"@strapi/plugin-graphql@^4.3.6":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@strapi/plugin-graphql/-/plugin-graphql-4.4.0.tgz#02ba2bf2f47e38eb950856a6e0e189b6d3aa4c10"
+  integrity sha512-oHqcUCRG/cXIzjOVr0JYXZiOHC9Hv8AGiK+ilUt1gBWo+bU2khHpXcycdU98FxbJMGywACuXNNkKqcvbpZ9pGw==
+  dependencies:
+    "@graphql-tools/schema" "8.1.2"
+    "@graphql-tools/utils" "^8.10.0"
+    "@strapi/utils" "4.4.0"
+    apollo-server-core "3.1.2"
+    apollo-server-koa "3.10.0"
+    glob "^7.1.7"
+    graphql "^15.5.1"
+    graphql-depth-limit "^1.1.0"
+    graphql-playground-middleware-koa "^1.6.21"
+    graphql-scalars "1.17.0"
+    graphql-upload "^13.0.0"
+    koa-compose "^4.1.0"
+    lodash "4.17.21"
+    nexus "1.2.0"
+    pluralize "^8.0.0"
+    subscriptions-transport-ws "0.9.19"
+
 "@strapi/plugin-i18n@^4.3.6":
   version "4.3.8"
   resolved "https://registry.yarnpkg.com/@strapi/plugin-i18n/-/plugin-i18n-4.3.8.tgz#d6f86b528884f7834ba0e8210fcf39ce33bf8acd"
@@ -3254,6 +3283,17 @@
   version "4.3.8"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.3.8.tgz#10212a2deba66be85aabc3214f9ed5eb945cfed5"
   integrity sha512-Ckgd3B+gOLRXyuAt2hFiXQQ7nay5UtsqAcy8On25gvsidz+5LK70k+afXG9A02Hg6pNeNU3goU/Ah3gpRho7fg==
+  dependencies:
+    "@sindresorhus/slugify" "1.1.0"
+    date-fns "2.29.2"
+    http-errors "1.8.1"
+    lodash "4.17.21"
+    yup "0.32.9"
+
+"@strapi/utils@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.4.0.tgz#9f207c637897d1bc8bc58d890e77a05f84821113"
+  integrity sha512-YtA0vG500mCPeYzBe5q7sOAC4XNZu7VBMGV8YeP0XKDH6M/EydEv8xGVDrujS8/186cePQ6r/hpNiV1gkuztgw==
   dependencies:
     "@sindresorhus/slugify" "1.1.0"
     date-fns "2.29.2"

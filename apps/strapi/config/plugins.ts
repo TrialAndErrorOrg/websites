@@ -175,4 +175,7 @@ export default ({ env }) => ({
       apiKey: env('MEILISEARCH_API_KEY'),
     },
   },
+  graphql: {
+    playgroundAlways: true,
+  },
 })
