@@ -54,7 +54,6 @@ export const pageRouter = createRouter()
         .select()
         .populateDeep(populate)
         .get()
-      console.log(res)
       return (
         (Array.isArray(res?.data) ? res?.data?.[0] : res?.data) ??
         ({} as Page<"homepage">)
