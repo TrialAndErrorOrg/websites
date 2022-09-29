@@ -8,8 +8,8 @@ import { NextPageWithLayout } from "./_app"
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const ssg = await ssgDefault()
 
-  const { page } = params
-  await ssg.fetchQuery("page.get", page)
+  const { page } = params ?? {}
+  await ssg.fetchQuery("page.get", page as string)
 
   return {
     props: {
