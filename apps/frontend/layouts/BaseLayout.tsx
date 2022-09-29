@@ -5,7 +5,8 @@ import { Header } from "../components/Header"
 export const BaseLayout = ({ children }: { children: React.ReactElement }) => (
   <>
     <Header />
-    <main className="min-h-full dark:bg-blue-600 dark:text-slate-200">
+    <main className="min-h-full dark:text-slate-200">
+      <div className="light-gradient fixed top-0 -z-50 h-[100vh] w-[100vw]" />
       {children}
     </main>
     <Footer />

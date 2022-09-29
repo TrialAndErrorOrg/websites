@@ -6,6 +6,49 @@
 :root {
   --orange: #ffa500;
 }
+.light-gradient {
+  background: linear-gradient(44deg, #f9fa19, #ed45fa);
+  background-size: 400% 400%;
+
+  -webkit-animation: LightGradient 11s ease infinite;
+  -moz-animation: LightGradient 11s ease infinite;
+  animation: LightGradient 11s ease infinite;
+}
+
+@-webkit-keyframes LightGradient {
+  0% {
+    background-position: 0% 20%;
+  }
+  50% {
+    background-position: 100% 81%;
+  }
+  100% {
+    background-position: 0% 20%;
+  }
+}
+@-moz-keyframes LightGradient {
+  0% {
+    background-position: 0% 20%;
+  }
+  50% {
+    background-position: 100% 81%;
+  }
+  100% {
+    background-position: 0% 20%;
+  }
+}
+@keyframes LightGradient {
+  0% {
+    background-position: 0% 20%;
+  }
+  50% {
+    background-position: 100% 81%;
+  }
+  100% {
+    background-position: 0% 20%;
+  }
+}
+
 @layer base {
   h1 {
     font-family: "Overpass", sans-serif;
