@@ -1,9 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "paths": {
-      "~/": ["src/*"]
-    },
     // Enable top-level await, and other modern ESM features
     "target": "ESNext",
     "module": "ESNext",
@@ -25,5 +22,17 @@
     "importsNotUsedAsValues": "error",
     // Add Vite's client types
     "types": ["astro/client"]
-  }
+  },
+  "include": [
+    "**/*.astro",
+    "**/*.ts",
+    "**/*.d.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "**/[*].tsx",
+    "**/[...*].tsx",
+    "jest.config.js",
+    "../../libs/types/src/lib/schemas.d.ts"
+  ],
+  "exclude": ["node_modules", "out", "dist"]
 }

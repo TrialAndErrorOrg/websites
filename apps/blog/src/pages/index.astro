@@ -12,22 +12,81 @@ import HighlightedPosts from '../components/blog/HighlightedPosts.astro'
 import FAQs from '../components/widgets/FAQs.astro'
 import Stats from '../components/widgets/Stats.astro'
 import CallToAction from '../components/widgets/CallToAction.astro'
+import { getPosts } from '../utils/blog.js'
+import PostList from '../components/blog/PostList.astro'
+import Container from '../components/atoms/Container.astro'
+import Picture from '../components/core/Picture.astro'
 
 const meta = {
-	title: SITE.title,
-	description: SITE.description,
-	canonical: getCanonical(getHomePermalink()),
+  title: SITE.title,
+  description: SITE.description,
+  canonical: getCanonical(getHomePermalink()),
 }
+
+const posts = (await getPosts()) ?? []
 ---
 
 <Layout {meta}>
-	<Hero />
-	<Features />
-	<Steps />
-	<Features2 />
-	<Features3 />
-	<HighlightedPosts />
-	<FAQs />
-	<Stats />
-	<CallToAction />
+  <div class="grid grid-cols-12 cols">
+    <Container class="col-start-3 col-span-8">
+      <h1 class="text-8xl font-black tracking-tight leading-none">
+        <span class="text-6xl">A Blog of</span><br />Trial & Error.
+      </h1>
+      <div class="grid md:grid-cols-12 gap-10">
+        <div class="col-span-7">
+          <Picture
+            src={posts?.[0]?.image.url}
+            alt={posts[0]?.image.alt}
+            widths={[900]}
+            class="object-cover"
+          />
+          <div class="w-full">
+            <h2>{posts?.[0]?.title}</h2>
+            <p>{posts?.[0]?.excerpt}</p>
+          </div>
+        </div>
+        <div class="grid md: grid-cols-1 col-span-5">
+          {
+            posts.slice(1, 4).map((post) => (
+              <div class="flex">
+                <Picture
+                  aspectRatio={'16:9'}
+                  widths={[900]}
+                  class="object-cover"
+                  src={post.image.url}
+                  alt={post.image.alt}
+                />
+
+                <div>
+                  <h2>{post.title}</h2>
+                  <p>{post.excerpt}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+    <Container class="col-span-8 col-start-3">
+      <div class="grid gap-10 lg:gap-10 md:grid-cols-2">
+        {
+          posts
+            .slice(0, 2)
+            .map((post) => <PostList post={post} aspect="landscape" preloadImage={true} />)
+        }
+      </div>
+      <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+        {posts.slice(2).map((post) => <PostList post={post} aspect="square" />)}
+      </div>
+    </Container>
+    <!-- <Hero />
+    <Features />
+    <Steps />
+    <Features2 />
+    <Features3 />
+    <HighlightedPosts />
+    <FAQs />
+    <Stats />
+    <CallToAction /> -->
+  </div>
 </Layout>

@@ -3,7 +3,11 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 const { join } = require('path')
 
+/**
+ * @type {import('tailwindcss').Config}
+ */
 module.exports = {
+	presets: [require('../../tailwind-workspace-preset.js')],
 	content: [
 		join(__dirname, 'src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}'),
 
@@ -16,7 +20,7 @@ module.exports = {
 				secondary: colors.pink,
 			},
 			fontFamily: {
-				sans: ["'InterVariable'", ...defaultTheme.fontFamily.sans],
+				sans: ["'Open Sans'", ...defaultTheme.fontFamily.sans],
 			},
 		},
 	},

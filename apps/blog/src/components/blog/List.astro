@@ -1,12 +1,13 @@
 ---
 import Item from '../../components/blog/ListItem.astro'
+import type { BlogPost } from '../../utils/types'
 
 const { posts } = Astro.props
 ---
 
 <ul>
 	{
-		posts.map((post) => (
+		posts.map((post: BlogPost) => (
 			<li class="mb-10 md:mb-16">
 				<Item post={post} />
 			</li>

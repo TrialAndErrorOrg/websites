@@ -7,15 +7,22 @@ import SinglePost from '../../components/blog/SinglePost.astro'
 import { getCanonical, getPermalink, cleanSlug, POST_BASE } from '../../utils/permalinks'
 import { fetchPosts } from '../../utils/posts'
 import { findImage } from '../../utils/images'
+import { getPosts } from '../../utils/blog.js'
+import type { BlogPost } from '../../utils/types.js'
+
+interface Props {
+	post: BlogPost
+}
 
 export async function getStaticPaths() {
 	if (BLOG?.disabled || BLOG?.post?.disabled) return []
 
-	const posts = await fetchPosts()
+	// const posts = await fetchPosts()
+	const posts = (await getPosts()) ?? []
 
 	return posts.map((post) => ({
 		params: {
-			slug: cleanSlug(post.slug),
+			slug: cleanSlug(post.slug ?? '/'),
 			blog: POST_BASE || undefined,
 		},
 		props: { post },
@@ -26,14 +33,14 @@ const { post } = Astro.props
 
 const meta = {
 	title: `${post.title} — ${SITE.name}`,
-	description: post.description,
+	description: post?.seo?.metaDescription ?? post.excerpt,
 	canonical: post.canonical || getCanonical(getPermalink(post.slug, 'post')),
-	image: await findImage(post.image),
+	image: post.image.url, //await findImage(post.image),
 	ogTitle: post.title,
 	ogType: 'article',
 }
 ---
 
-<Layout {meta}>
+<Layout meta={meta}>
 	<SinglePost post={{ ...post, image: meta.image }} />
 </Layout>

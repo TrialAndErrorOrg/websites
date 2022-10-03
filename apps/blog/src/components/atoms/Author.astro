@@ -1,0 +1,31 @@
+---
+import { cx } from '../../utils/cx'
+import type { Author } from '../../utils/types'
+import Picture from '../core/Picture.astro'
+
+interface Props {
+  author: Author
+  class?: string
+}
+
+const { author, class: className } = Astro.props
+---
+
+<div class={cx('grid grid-cols-4 grid-rows-3', className)}>
+  {
+    author.image?.url ? (
+      <Picture
+        src={author?.image?.url}
+        alt={author?.image?.alt ?? author?.lastName}
+        aspectRatio={1}
+        class="col-span-1 row-span-3 h-14 w-14 rounded-full object-cover"
+      />
+    ) : (
+      <div class="col-span-1 row-span-3 flex h-14 w-14 items-center justify-center self-center justify-self-center rounded-full bg-orange-500 text-xl font-black capitalize text-white">
+        {author.lastName?.[0] ?? author?.firstName?.[0]}
+      </div>
+    )
+  }
+  <a class="row-span-1 col-span-3 font-bold text-2xl">{author.firstName} {author.lastName}</a>
+  <p class="row-span-2 col-span-3">{author.bio}</p>
+</div>

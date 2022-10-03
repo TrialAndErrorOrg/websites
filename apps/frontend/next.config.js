@@ -1,8 +1,8 @@
 const withNx = require("@nrwl/next/plugins/with-nx")
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-})
+// const withBundleAnalyzer = require("@next/bundle-analyzer")({
+//   enabled: process.env.ANALYZE === "true",
+// })
 
 const withPlugins = require("next-compose-plugins")
 /**
@@ -12,23 +12,18 @@ const nextConfig = {
   /* config options here */
   swcMinify: true,
   experimental: {
-    nftTracing: true,
-    topLevelAwait: true,
-    images: {
-      allowFutureImage: true,
-    },
     newNextLinkBehavior: true,
   },
   experiments: {
     topLevelAwait: true,
   },
   staticPageGenerationTimeout: 120,
-  webpack(config, { dev }) {
-    if (dev) {
-      config.devtool = "cheap-module-source-map"
-    }
-    return config
-  },
+  // webpack(config, { dev }) {
+  //   if (dev) {
+  //     config.devtool = "cheap-module-source-map"
+  //   }
+  //   return config
+  // },
   images: {
     domains: [
       "avatars.githubusercontent.com",
@@ -39,4 +34,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withPlugins([[withNx], [withBundleAnalyzer]], nextConfig)
+module.exports = nextConfig

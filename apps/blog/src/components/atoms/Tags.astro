@@ -1,5 +1,10 @@
 ---
-import { getPermalink } from '../../utils/permalinks'
+import type { BlogTag } from '../../utils/types'
+
+interface Props {
+	tags: BlogTag[]
+	className?: string
+}
 
 const { tags, class: className = 'text-sm' } = Astro.props
 ---
@@ -9,7 +14,7 @@ const { tags, class: className = 'text-sm' } = Astro.props
 		<ul class={className}>
 			{tags.map((tag) => (
 				<li class="mr-2 mb-2 inline-block bg-gray-100 py-0.5 px-2 dark:bg-slate-700">
-					<a href={getPermalink(tag, 'tag')}>{tag}</a>
+					<a href={`/${tag.slug}`}>{tag.title}</a>
 				</li>
 			))}
 		</ul>

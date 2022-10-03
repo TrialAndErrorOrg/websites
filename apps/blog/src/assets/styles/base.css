@@ -4,7 +4,7 @@
 
 @layer components {
 	.btn {
-		@apply inline-flex items-center justify-center rounded border border-transparent font-medium text-center text-base leading-snug transition py-3 px-6 shadow-lg ease-in duration-200 focus:ring-blue-500 focus:ring-offset-blue-200 focus:ring-2 focus:ring-offset-2;
+		@apply inline-flex items-center justify-center rounded border border-transparent py-3 px-6 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
 	}
 }
 
@@ -15,14 +15,33 @@
 [astro-icon].icon-bold > * {
 	stroke-width: 2;
 }
-
 [data-aw-toggle-menu] path {
 	@apply transition;
 }
 [data-aw-toggle-menu].expanded g > path:first-child {
-	@apply -rotate-45 translate-y-[15px] translate-x-[-3px];
+	@apply translate-y-[15px] translate-x-[-3px] -rotate-45;
 }
 
 [data-aw-toggle-menu].expanded g > path:last-child {
-	@apply rotate-45 translate-y-[-8px] translate-x-[14px];
+	@apply translate-y-[-8px] translate-x-[14px] rotate-45;
+}
+
+p,
+div,
+a {
+	@apply font-sans;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-overpass {
+	font-family: 'Overpass', sans-serif;
+}
+
+.lettrine {
+	@apply float-left mr-2 text-8xl font-bold leading-none;
 }

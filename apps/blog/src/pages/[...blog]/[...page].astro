@@ -7,11 +7,13 @@ import Pagination from '../../components/atoms/Pagination.astro'
 
 import { fetchPosts } from '../../utils/posts'
 import { getCanonical, getPermalink, BLOG_BASE } from '../../utils/permalinks'
+import { getPosts } from '../../utils/blog.js'
+import type { GetStaticPaths } from 'astro'
 
-export async function getStaticPaths({ paginate }) {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 	if (BLOG?.disabled || BLOG?.blog?.disabled) return []
 
-	const posts = await fetchPosts()
+	const posts = await getPosts()
 
 	return paginate(posts, {
 		params: { blog: BLOG_BASE || undefined },

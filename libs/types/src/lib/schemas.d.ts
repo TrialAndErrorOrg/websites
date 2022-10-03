@@ -1525,10 +1525,12 @@ export interface ApiJoteArticleJoteArticle extends CollectionTypeSchema {
       'oneToOne',
       'api::jote-article-category.jote-article-category'
     >
-    doi: StringAttribute & RequiredAttribute & UniqueAttribute
+    doi: StringAttribute & UniqueAttribute
     url: StringAttribute
     guid: UIDAttribute & RequiredAttribute
-    pdf: MediaAttribute
+    references: JSONAttribute
+    authors: JSONAttribute
+    keywords: JSONAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute

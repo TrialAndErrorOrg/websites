@@ -7,24 +7,24 @@ import Pagination from '../../../components/atoms/Pagination.astro'
 
 import { fetchPosts } from '../../../utils/posts'
 import { getCanonical, getPermalink, cleanSlug, CATEGORY_BASE } from '../../../utils/permalinks'
+import { getPosts } from '../../../utils/blog.js'
+import type { GetStaticPaths } from 'astro'
 
-export async function getStaticPaths({ paginate }) {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 	if (BLOG?.disabled || BLOG?.category?.disabled) return []
 
-	const posts = await fetchPosts()
+	const posts = await getPosts()
 
 	const categories = new Set()
 	posts.map((post) => {
-		typeof post.category === 'string' && categories.add(post.category.toLowerCase())
+		categories.add(post.category?.title?.toLowerCase())
 	})
 
 	return Array.from(categories).map((category) =>
 		paginate(
-			posts.filter(
-				(post) => typeof post.category === 'string' && category === post.category.toLowerCase(),
-			),
+			posts.filter((post) => category === post.category?.title?.toLowerCase()),
 			{
-				params: { category: cleanSlug(category), categories: CATEGORY_BASE || undefined },
+				params: { category: cleanSlug(category ?? ''), categories: CATEGORY_BASE || undefined },
 				pageSize: BLOG.postsPerPage,
 				props: { category },
 			},

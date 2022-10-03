@@ -3,12 +3,14 @@ import Picture from '../../components/core/Picture.astro'
 import PostTags from '../../components/atoms/Tags.astro'
 
 import { getPermalink } from '../../utils/permalinks'
-import { findImage } from '../../utils/images'
 import { getFormattedDate } from '../../utils/utils'
+import type { BlogPost } from '../../utils/types'
+import readingTime from 'reading-time'
 
-const { post } = Astro.props
+const { post } = Astro.props as { post: BlogPost }
 
-const image = await findImage(post.image)
+// const image = await findImage(post.image)
+const image = post.image.url
 ---
 
 <article class="max-w-md mx-auto md:max-w-none grid md:grid-cols-2 gap-6 md:gap-8">
@@ -38,17 +40,31 @@ const image = await findImage(post.image)
 			</h2>
 		</header>
 		<p class="text-md sm:text-lg flex-grow">
-			{post.excerpt || post.description}
+			{post.excerpt}
 		</p>
 		<footer class="mt-4">
 			<div>
 				<span class="text-gray-500 dark:text-slate-400">
-					<time datetime={post.pubDate}>{getFormattedDate(post.pubDate)}</time> ~
-					{Math.ceil(post.readingTime)} min read
+					<time datetime={post.publishDate ?? post.publishedAt}
+						>{getFormattedDate(post.publishDate ?? post.publishedAt)}</time
+					> ~
+					{Math.ceil(readingTime(post.body).minutes)} min read
 				</span>
 			</div>
 			<div class="mt-4">
-				<PostTags tags={post.tags} />
+				<PostTags tags={post.blog_tags ?? []} />
+			</div>
+			<div>
+				{
+					[...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
+						<a
+							class="hover:text-primary-600 text-gray-500 transition duration-200 ease-in dark:text-slate-400"
+							href={getPermalink(author.slug, 'author')}
+						>
+							{author.firstName} {author.lastName}
+						</a>
+					))
+				}
 			</div>
 		</footer>
 	</div>

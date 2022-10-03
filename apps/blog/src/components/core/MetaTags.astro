@@ -1,6 +1,5 @@
 ---
 import { AstroSeo } from '@astrolib/seo'
-import { GoogleAnalytics } from '@astrolib/analytics'
 import { getImage } from '@astrojs/image'
 import { getRelativeUrlByFilePath } from '../../utils/directories'
 
@@ -54,7 +53,7 @@ const image =
 		images: image
 			? [
 					{
-						url: image.toString(),
+						url: image?.toString(),
 						alt: ogTitle,
 					},
 			  ]
@@ -69,15 +68,5 @@ const image =
 />
 
 <Fonts />
-
-<!-- Google Site Verification -->
-{
-	SITE.googleSiteVerificationId && (
-		<meta name="google-site-verification" content={SITE.googleSiteVerificationId} />
-	)
-}
-
-<!-- Google Analytics -->
-{SITE.googleAnalyticsId && <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />}
 
 <ExtraMetaTags />

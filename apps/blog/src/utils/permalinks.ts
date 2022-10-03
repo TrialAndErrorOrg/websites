@@ -2,7 +2,7 @@ import slugify from 'limax'
 
 import { SITE, BLOG } from '../config.mjs'
 
-const trim = (str, ch) => {
+const trim = (str: string, ch: string) => {
 	let start = 0,
 		end = str.length
 	while (start < end && str[start] === ch) ++start
@@ -10,12 +10,12 @@ const trim = (str, ch) => {
 	return start > 0 || end < str.length ? str.substring(start, end) : str
 }
 
-const trimSlash = (s) => trim(trim(s, '/'))
+const trimSlash = (s: string) => trim(trim(s, '/'))
 const createPath = (...params) => '/' + params.filter((el) => !!el).join('/')
 
 const basePathname = trimSlash(SITE.basePathname)
 
-export const cleanSlug = (text) => slugify(trimSlash(text))
+export const cleanSlug = (text: string) => slugify(trimSlash(text))
 
 export const BLOG_BASE = cleanSlug(BLOG?.blog?.pathname)
 export const POST_BASE = cleanSlug(BLOG?.post?.pathname)

@@ -1,19 +1,17 @@
 export const SITE = {
-	name: 'AstroWind',
+	name: 'A Blog of Trial and Error',
 
-	origin: 'https://astrowind.vercel.app',
+	origin: 'https://blog.trialanderror.org',
 	basePathname: '/',
 
-	title: 'AstroWind — Your website with Astro + Tailwind CSS',
-	description: '🚀 AstroWind is a free and ready to start template to make your website using Astro and Tailwind CSS.',
-
-	googleAnalyticsId: false, // or "G-XXXXXXXXXX",
-	googleSiteVerificationId: 'orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M',
-};
+	title: 'A Blog of Trial and Error',
+	description:
+		'🚀 AstroWind is a free and ready to start template to make your website using Astro and Tailwind CSS.',
+}
 
 export const BLOG = {
 	disabled: false,
-	postsPerPage: 4,
+	postsPerPage: 10,
 
 	blog: {
 		disabled: false,
@@ -22,7 +20,7 @@ export const BLOG = {
 
 	post: {
 		disabled: false,
-		pathname: '', // empty for /some-post, value for /pathname/some-post 
+		pathname: '', // empty for /some-post, value for /pathname/some-post
 	},
 
 	category: {
@@ -34,4 +32,4 @@ export const BLOG = {
 		disabled: false,
 		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
 	},
-};
+}
