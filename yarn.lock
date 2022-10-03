@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@algolia/autocomplete-core@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.6.2.tgz#54324a558efc2438559bb3e79fd2f2ae4acef0dd"
+  integrity sha512-YntEdEOck6f7LtCcrT2TjUl2AI+G/HcY7gQWMgM4kuruu9vSxyF05W48IFWANt2gTI7oj0Q5zAZgyVppkQM9LA==
+  dependencies:
+    "@algolia/autocomplete-shared" "1.6.2"
+
+"@algolia/autocomplete-shared@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.6.2.tgz#27ad6d8fa7825c6146933e11eebc5936ca12f569"
+  integrity sha512-Js7N8EgKsRgaclDde70rF07VOdC+Zb6VLXTIWkJnO6+EI9zbXm/mT2StGVcpNuQ+UN8ZF/bVZLjuVBypOk8bUQ==
+
 "@algolia/events@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@algolia/events/-/events-4.0.1.tgz#fd39e7477e7bc703d7f893b556f676c032af3950"
@@ -146,6 +158,14 @@
   integrity sha512-HxEFslvbv+cfOs51q/C7aMVFuW3EAGg0d1xXU/0e/QeScDzfrp5Ra4SOb8mV082SgENVjtVvet4zR84t3at4VQ==
   dependencies:
     prismjs "^1.28.0"
+
+"@astrojs/react@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@astrojs/react/-/react-1.1.4.tgz#1a82a0e07be74ca13c64de9817a5d64729d7de02"
+  integrity sha512-eTIXRjvyrDRkMewL5KrbhkF+zl+KSkCgL7k8/BBMXPTUrtOZZY5N5oZbjFtvjxBSQ/dhMWp9g+SwloDldN5ZDg==
+  dependencies:
+    "@babel/core" ">=7.0.0-0 <8.0.0"
+    "@babel/plugin-transform-react-jsx" "^7.17.12"
 
 "@astrojs/rss@^1.0.0":
   version "1.0.2"
@@ -2764,6 +2784,16 @@
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
+
+"@docsearch/css@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-3.0.0.tgz#fe57b474802ffd706d3246eab25d52fac8aa3698"
+  integrity sha512-1kkV7tkAsiuEd0shunYRByKJe3xQDG2q7wYg24SOw1nV9/2lwEd4WrUYRJC/ukGTl2/kHeFxsaUvtiOy0y6fFA==
+
+"@docsearch/css@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-3.2.1.tgz#c05d7818b0e43b42f9efa2d82a11c36606b37b27"
+  integrity sha512-gaP6TxxwQC+K8D6TRx5WULUWKrcbzECOPA2KCVMuI+6C7dNiGUk5yXXzVhc5sld79XKYLnO9DRTI4mjXDYkh+g==
 
 "@emmetio/abbreviation@^2.2.3":
   version "2.2.3"
@@ -6871,6 +6901,14 @@
     lodash.castarray "^4.4.0"
     lodash.isplainobject "^4.0.6"
     lodash.merge "^4.6.2"
+
+"@tefkah/chair-flight-docsearch-react@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@tefkah/chair-flight-docsearch-react/-/chair-flight-docsearch-react-3.0.5.tgz#23803b41c56311f84a7603a2e3df3f7a2a2968f1"
+  integrity sha512-9eHcV8GECncqrWPtRC9fZBd90rJqvfGf119StKrxsLy2f/x7tDBANgUaJpj+d6NA/mQdxNMq02mUH4LfuxSq/A==
+  dependencies:
+    "@algolia/autocomplete-core" "1.6.2"
+    "@docsearch/css" "3.0.0"
 
 "@testing-library/dom@^8.5.0":
   version "8.13.0"
@@ -21981,7 +22019,7 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-fast-compare@^3.1.1, react-fast-compare@^3.2.0:
+react-fast-compare@^3.0.0, react-fast-compare@^3.1.1, react-fast-compare@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
@@ -22016,6 +22054,28 @@ react-inspector@^5.1.0:
     "@babel/runtime" "^7.0.0"
     is-dom "^1.0.0"
     prop-types "^15.0.0"
+
+react-instantsearch-core@6.35.0:
+  version "6.35.0"
+  resolved "https://registry.yarnpkg.com/react-instantsearch-core/-/react-instantsearch-core-6.35.0.tgz#a0eb3910218aafaa5164479babad985f9f0ab832"
+  integrity sha512-ccMMbDmXNNqeS1olOx8mCMkVamoSG5S4HlXsqTLb3iHbluuinE8UE7LQGcG0N4UKWW4MkDJ0iB4rYQ1bd1pa3g==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    algoliasearch-helper "^3.11.1"
+    prop-types "^15.6.2"
+    react-fast-compare "^3.0.0"
+
+react-instantsearch-dom@^6.35.0:
+  version "6.35.0"
+  resolved "https://registry.yarnpkg.com/react-instantsearch-dom/-/react-instantsearch-dom-6.35.0.tgz#a3ab5ea80c637b81b6e043f6ca1bdb352b7c5c5a"
+  integrity sha512-RYtcL0QkIS86VWfTFP7KpxY73g36dLlo++Ijn63N+jpqSQaDMV1JibM7Rg8mTxsvZSTNkO6P46gg2XZ4WxQtvw==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    algoliasearch-helper "^3.11.1"
+    classnames "^2.2.5"
+    prop-types "^15.6.2"
+    react-fast-compare "^3.0.0"
+    react-instantsearch-core "6.35.0"
 
 react-instantsearch-hooks-web@^6.33.0:
   version "6.33.0"
@@ -22484,7 +22544,7 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
+regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7, regenerator-runtime@^0.13.9:
   version "0.13.9"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
   integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==

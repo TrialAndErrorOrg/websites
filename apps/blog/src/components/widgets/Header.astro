@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon'
 import Logo from '../atoms/Logo.astro'
 import ToggleTheme from '../core/ToggleTheme.astro'
 import ToggleMenu from '../core/ToggleMenu.astro'
+import { DocSearch } from '../core/DocSearch.jsx'
 
 // import { getPermalink, getBlogPermalink, getHomePermalink } from '../../utils/permalinks'
 import { getMain } from '../../utils/menu'
@@ -82,5 +83,8 @@ const main = await getMain()
         </div>
       </div>
     </nav>
+    <div class="col-start-11 col-span-2">
+      <DocSearch client:load />
+    </div>
   </div>
 </header>
