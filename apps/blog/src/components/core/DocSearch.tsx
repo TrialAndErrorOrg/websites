@@ -14,7 +14,7 @@ const searchClient = instantMeiliSearch(
   'https://app-meilisearchcote-prod-001.azurewebsites.net',
   'aa45f3a7-48d5-4a41-bf8a-503a0cbc6ad7'
 )
-interface MeiliSearchBlogPostResult {
+export interface MeiliSearchBlogPostResult {
   id: string
   title: string
   excerpt: string
@@ -311,7 +311,7 @@ export const toDocSearchHit = ({
     (hit) =>
       ({
         _objectID: hit.id.toString(),
-        title: hit.title,
+        title: 'toitel',
         url: hit.slug,
         objectID: hit.id.toString(),
         type: 'content',
@@ -323,9 +323,9 @@ export const toDocSearchHit = ({
           content: {
             value:
               hit._snippetResult.title.value
-                .match(highlightRegExp)
-                ?.join('')
-                .replace(highlightRegExp, '$1<em>$2</em>$3') ?? '',
+                .replace(/__\//g, '</')
+                .replace(/ais-highlight__/g, 'em>')
+                .replace(/__/g, '<') ?? '',
             matchLevel: 'partial',
             matchedWords: hit._snippetResult.title.value.match(highlightRegExp),
           },

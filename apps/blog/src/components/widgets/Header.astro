@@ -9,6 +9,7 @@ import { DocSearch } from '../core/DocSearch.jsx'
 import { getMain } from '../../utils/menu'
 import type { Menu } from '../../utils/types'
 import type { GetAttributesValues } from '@strapi/strapi'
+import { Search } from '../core/Search'
 type Menuu = GetAttributesValues<'api::blog-post.blog-post'>
 
 const main = await getMain()
@@ -36,32 +37,32 @@ const main = await getMain()
       <ul
         class="flex flex-col pt-8 md:pt-0 md:flex-row md:self-center collapse w-full md:w-auto collapsed text-xl md:text-base"
       >
-        <li>
+        <!-- <li>
           <a
             class="font-medium hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
             href="#">Pages</a
           >
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <a
             class="font-medium hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
             href={'/resources'}
             >Resources
           </a>
-        </li>
+        </li> -->
         <li>
           <a
             class="font-medium hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
             href={'/blog'}>Blog</a
           >
         </li>
-        <li class="md:hidden">
+        <!-- <li class="md:hidden">
           <a
             class="font-bold hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
             href="https://github.com/onwidget/astrowind"
             >Github
           </a>
-        </li>
+        </li> -->
       </ul>
       <div class="md:self-center flex items-center mb-4 md:mb-0 ml-2">
         <div class="hidden items-center md:flex">
@@ -83,8 +84,8 @@ const main = await getMain()
         </div>
       </div>
     </nav>
-    <div class="col-start-11 col-span-2">
-      <DocSearch client:load />
+    <div class="col-start-11 col-span-2 justify-center flex items-center">
+      <Search client:load />
     </div>
   </div>
 </header>
