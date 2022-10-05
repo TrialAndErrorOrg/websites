@@ -5,47 +5,52 @@ import Layout from '../../../layouts/BlogLayout.astro'
 import BlogList from '../../../components/blog/List.astro'
 import Pagination from '../../../components/atoms/Pagination.astro'
 
-import { fetchPosts } from '../../../utils/posts'
 import { getCanonical, getPermalink, cleanSlug, TAG_BASE } from '../../../utils/permalinks'
+import type { GetStaticPaths } from 'astro'
+import { getPosts } from '../../../utils/blog.js'
 
-export async function getStaticPaths({ paginate }) {
-	if (BLOG?.disabled || BLOG?.tag?.disabled) return []
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  if (BLOG?.disabled || BLOG?.tag?.disabled) return []
 
-	const posts = await fetchPosts()
+  const posts = await getPosts()
 
-	const tags = new Set()
-	posts.map((post) => {
-		Array.isArray(post.tags) && post.tags.map((tag) => tags.add(tag.toLowerCase()))
-	})
+  const tags = Object.fromEntries(
+    posts.flatMap((post) => post.blog_tags).map((tag) => [tag?.title, tag?.slug])
+  )
 
-	return Array.from(tags).map((tag) =>
-		paginate(
-			posts.filter((post) => Array.isArray(post.tags) && post.tags.includes(tag)),
-			{
-				params: { tag: cleanSlug(tag), tags: TAG_BASE || undefined },
-				pageSize: BLOG.postsPerPage,
-				props: { tag },
-			},
-		),
-	)
+  console.log(tags)
+  return Object.entries(tags).map(([tag, slug]) => {
+    console.log(typeof (cleanSlug(slug) || cleanSlug(tag) || ''))
+
+    return paginate(
+      posts.filter((post) => post?.blog_tags?.find((bt) => bt.title === tag)),
+      {
+        params: { tag: slug || tag || '', tags: TAG_BASE || 'tag' },
+        pageSize: BLOG.postsPerPage,
+        tag,
+        props: { tag: tag },
+      }
+    )
+  })
 }
 
 const { page, tag } = Astro.props
+console.log(tag)
 
 const currentPage = page.currentPage ?? 1
 
 const meta = {
-	title: `Posts by tag '${tag}' ${currentPage > 1 ? `— Page ${currentPage} ` : ''}— ${SITE.name}`,
-	description: SITE.description,
-	canonical: getCanonical(getPermalink(page.url.current)),
-	noindex: true,
+  title: `Posts by tag '${tag}' ${currentPage > 1 ? `— Page ${currentPage} ` : ''}— ${SITE.name}`,
+  description: SITE.description,
+  canonical: getCanonical(getPermalink(page.url.current)),
+  noindex: true,
 }
 ---
 
 <Layout meta={meta}>
-	<Fragment slot="title">
-		Tag: {tag}
-	</Fragment>
-	<BlogList posts={page.data} />
-	<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+  <Fragment slot="title">
+    Tag: {tag}
+  </Fragment>
+  <BlogList posts={page.data} />
+  <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
 </Layout>

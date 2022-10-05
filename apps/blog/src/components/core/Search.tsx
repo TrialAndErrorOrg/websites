@@ -6,14 +6,12 @@ import {
   Highlight,
   useInstantSearch,
 } from 'react-instantsearch-hooks-web'
-import { Fragment, useCallback, useMemo, useState } from 'react'
-import { Combobox, Dialog, Portal, Transition } from '@headlessui/react'
-import { SearchIcon } from '@heroicons/react/solid'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
+import { Fragment, useState } from 'react'
+import { Combobox, Dialog, Transition } from '@headlessui/react'
+import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
+import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
 import { cx } from '../../utils/cx'
 import { instantMeiliSearch, MeiliSearchResponse } from '@meilisearch/instant-meilisearch'
-import type { SearchResults } from 'algoliasearch-helper'
-import { format } from 'date-fns'
 // import { getHighlightedParts } from 'instantsearch.js/es/lib/utils'
 
 const searchClient = instantMeiliSearch(

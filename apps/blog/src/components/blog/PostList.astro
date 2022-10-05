@@ -1,14 +1,14 @@
 ---
 import { cx } from '../../utils/cx'
 import { parseISO, format } from 'date-fns'
-import { PhotographIcon } from '@heroicons/react/outline'
+import PhotographIcon from '@heroicons/react/outline/PhotographIcon.js'
 import Picture from '../core/Picture.astro'
 import type { BlogPost } from '../../utils/types'
 
 interface Props {
-	post: BlogPost
-	aspect: any
-	preloadImage?: boolean
+  post: BlogPost
+  aspect: any
+  preloadImage?: boolean
 }
 
 const { post, aspect, preloadImage } = Astro.props
@@ -17,75 +17,75 @@ const { post, aspect, preloadImage } = Astro.props
 ---
 
 <div>
-	<div class="cursor-pointer group">
-		<div
-			class={cx(
-				'relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800   hover:scale-105',
-				aspect === 'landscape' ? 'aspect-video' : 'aspect-square',
-			)}
-		>
-			<a href={`/post/${post.slug}`}>
-				{
-					post.image ? (
-						<Picture
-							src={post.image.url}
-							alt={post.image.alt || 'Thumbnail'}
-							class="object-contain transition-all"
-							widths={[400, 900]}
-							sizes="(max-width: 900px) 400px, 900px"
-							aspect-ratio={aspect === 'landscape' ? '16:9' : '1:1'}
-						/>
-					) : (
-						<span class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 text-gray-200">
-							<PhotographIcon />
-						</span>
-					)
-				}
-			</a>
-		</div>
-	</div>
-	<a href={`/${post.category.slug}`}> {post.category.title}</a>
-	<h2 class="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
-		<a href={`/post/${post.slug}`}>
-			<span
-				class="bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
-			>
-				{post.title}
-			</span>
-		</a>
-	</h2>
+  <div class="cursor-pointer group">
+    <div
+      class={cx(
+        'relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800   hover:scale-105',
+        aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
+      )}
+    >
+      <a href={`/post/${post.slug}`}>
+        {
+          post.image ? (
+            <Picture
+              src={post.image.url}
+              alt={post.image.alt || 'Thumbnail'}
+              class="object-contain transition-all"
+              widths={[400, 900]}
+              sizes="(max-width: 900px) 400px, 900px"
+              aspect-ratio={aspect === 'landscape' ? '16:9' : '1:1'}
+            />
+          ) : (
+            <span class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 text-gray-200">
+              <PhotographIcon />
+            </span>
+          )
+        }
+      </a>
+    </div>
+  </div>
+  <a href={`/${post.category.slug}`}> {post.category.title}</a>
+  <h2 class="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
+    <a href={`/post/${post.slug}`}>
+      <span
+        class="bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+      >
+        {post.title}
+      </span>
+    </a>
+  </h2>
 
-	<div class="hidden">
-		{
-			post.excerpt && (
-				<p class="line-clamp-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
-					<a href={`/post/${post.slug}`}>{post.excerpt}</a>
-				</p>
-			)
-		}
-	</div>
+  <div class="hidden">
+    {
+      post.excerpt && (
+        <p class="line-clamp-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <a href={`/post/${post.slug}`}>{post.excerpt}</a>
+        </p>
+      )
+    }
+  </div>
 
-	<div class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
-		<div class="flex items-center gap-3">
-			{
-				[...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
-					<div class="relative h-5 w-5 flex-shrink-0">
-						{author.image?.url && (
-							<Picture
-								src={author.image.url}
-								alt={author?.lastName ?? author?.firstName}
-								class="w-full rounded-full object-cover"
-							/>
-						)}
+  <div class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
+    <div class="flex items-center gap-3">
+      {
+        [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
+          <div class="relative h-5 w-5 flex-shrink-0">
+            {author.image?.url && (
+              <Picture
+                src={author.image.url}
+                alt={author?.lastName ?? author?.firstName}
+                class="w-full rounded-full object-cover"
+              />
+            )}
 
-						<span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
-					</div>
-				))
-			}
-		</div>
-		<span class="text-xs text-gray-300 dark:text-gray-600"> &bull;</span>
-		<time class="text-sm" date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}>
-			{format(parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt), 'MMMM dd, yyyy')}
-		</time>
-	</div>
+            <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
+          </div>
+        ))
+      }
+    </div>
+    <span class="text-xs text-gray-300 dark:text-gray-600"> &bull;</span>
+    <time class="text-sm" date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}>
+      {format(parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt), 'MMMM dd, yyyy')}
+    </time>
+  </div>
 </div>

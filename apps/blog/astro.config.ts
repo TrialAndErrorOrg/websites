@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config'
 import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
 import image from '@astrojs/image'
-import partytown from '@astrojs/partytown'
+// import partytown from '@astrojs/partytown'
 import react from '@astrojs/react'
 
 import { SITE } from './src/config.mjs'

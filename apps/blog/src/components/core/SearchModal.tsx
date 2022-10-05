@@ -16,8 +16,8 @@
 */
 import { Fragment, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
-import { SearchIcon } from '@heroicons/react/solid'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
+import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
+import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
 import { cx } from '../../utils/cx'
 
 const items = [

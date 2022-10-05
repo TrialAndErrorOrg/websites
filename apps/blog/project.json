@@ -4,9 +4,12 @@
   "sourceRoot": "apps/blog/src",
   "targets": {
     "build": {
-      "outputs": ["dist/apps/blog"],
+      "outputs": ["../../dist/apps/blog"],
       "executor": "@nxtensions/astro:build",
-      "options": {}
+      "options": {
+        "config": "astro.config.ts",
+        "deleteOutputPath": true
+      }
     },
     "dev": {
       "executor": "@nxtensions/astro:dev",
