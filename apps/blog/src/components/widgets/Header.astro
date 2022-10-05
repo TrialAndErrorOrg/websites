@@ -3,14 +3,11 @@ import { Icon } from 'astro-icon'
 import Logo from '../atoms/Logo.astro'
 import ToggleTheme from '../core/ToggleTheme.astro'
 import ToggleMenu from '../core/ToggleMenu.astro'
-import { DocSearch } from '../core/DocSearch.jsx'
 
 // import { getPermalink, getBlogPermalink, getHomePermalink } from '../../utils/permalinks'
 import { getMain } from '../../utils/menu'
-import type { Menu } from '../../utils/types'
 import type { GetAttributesValues } from '@strapi/strapi'
 import { Search } from '../core/Search'
-type Menuu = GetAttributesValues<'api::blog-post.blog-post'>
 
 const main = await getMain()
 ---
@@ -30,7 +27,7 @@ const main = await getMain()
     </div>
 
     <nav
-      class="col-end-9 items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200 h-screen md:h-auto"
+      class="col-end-10 items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200 h-screen md:h-auto"
       aria-label="Main navigation"
       id="menu"
     >

@@ -6,7 +6,7 @@ import {
   Highlight,
   useInstantSearch,
 } from 'react-instantsearch-hooks-web'
-import { Fragment, useState } from 'react'
+import { Fragment, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
 import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
@@ -60,96 +60,64 @@ function Hit({ hit }) {
   )
 }
 
-export const SearchBad = () => {
-  const [focus, setFocus] = React.useState(false)
-  return !focus ? (
-    <button onClick={() => setFocus(true)}>Search</button>
-  ) : (
-    <InstantSearch searchClient={searchClient} indexName="blog-post">
-      <SearchBox searchAsYouType={true} placeholder="Search"></SearchBox>
-      <Hits hitComponent={Hit} />
-      {/* <Autocomplete /> */}
-    </InstantSearch>
-  )
-}
-
-import { useConnector } from 'react-instantsearch-hooks-web'
-import connectAutocomplete from 'instantsearch.js/es/connectors/autocomplete/connectAutocomplete'
-
-import type {
-  AutocompleteConnectorParams,
-  AutocompleteWidgetDescription,
-} from 'instantsearch.js/es/connectors/autocomplete/connectAutocomplete'
-
-export type UseAutocompleteProps = AutocompleteConnectorParams
-
-export function useAutocomplete(props?: UseAutocompleteProps) {
-  return useConnector<AutocompleteConnectorParams, AutocompleteWidgetDescription>(
-    connectAutocomplete,
-    props
-  )
-}
-
-export function Autocomplete(props: UseAutocompleteProps) {
-  const { indices, currentRefinement, refine } = useAutocomplete(props)
-
-  return <>{/* Your JSX */}</>
-}
+// export const SearchBad = () => {
+//   const [focus, setFocus] = React.useState(false)
+//   return !focus ? (
+//     <button onClick={() => setFocus(true)}>Search</button>
+//   ) : (
+//     <InstantSearch searchClient={searchClient} indexName="blog-post">
+//       <SearchBox searchAsYouType={true} placeholder="Search"></SearchBox>
+//       <Hits hitComponent={Hit} />
+//       {/* <Autocomplete /> */}
+//     </InstantSearch>
+//   )
+// }
 
 import { useSearchBox } from 'react-instantsearch-hooks-web'
 import type { SearchBoxConnectorParams } from 'instantsearch.js/es/connectors/search-box/connectSearchBox'
-import React from 'react'
-import { RefinementList } from 'react-instantsearch-hooks-web/dist/es/ui/RefinementList'
-import type { MeiliSearchBlogPostResult } from './DocSearch'
+import type { MeiliSearchBlogPostResult } from '../../utils/types'
 import { ControlKeyIcon } from '../atoms/ControlKeyIcon'
 
-export function CustomSearchBox(props: SearchBoxConnectorParams) {
-  const { query, refine, clear, isSearchStalled } = useSearchBox(props)
-
-  return <div>{query}</div>
-}
-
-/*
-  This example requires Tailwind CSS v3.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-
-const items = [
-  {
-    id: 1,
-    name: 'Sliders',
-    description: 'A collection of sliders for selecting a range of values.',
-    url: '#',
-    imageUrl: 'https://tailwindui.com/img/component-images/icon-sliders.png',
-  },
-  // More items...
-]
 function isAppleDevice() {
   return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
 }
 
 export function Search() {
-  const [open, setOpen] = useState(false)
   const apple = typeof navigator !== 'undefined' && isAppleDevice()
+  const searchButtonRef = useRef<HTMLButtonElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const onOpen = useCallback(() => {
+    setIsOpen(true)
+  }, [setIsOpen])
+
+  const onClose = useCallback(() => {
+    setIsOpen(false)
+  }, [setIsOpen])
+
+  const onInput = useCallback(
+    (event: KeyboardEvent) => {
+      setIsOpen(true)
+    },
+    [setIsOpen]
+  )
+
+  useSearchKeyboardEvents({
+    isOpen,
+    onOpen,
+    onClose,
+    onInput,
+    searchButtonRef,
+  })
+
   return (
     <>
       <button
-        className="mx-2 flex min-w-[6rem] items-center justify-between rounded-full bg-slate-100 p-2 text-slate-800 dark:bg-slate-700 dark:text-white"
-        onClick={() => setOpen(true)}
+        ref={searchButtonRef}
+        className="mx-2 flex min-w-[8rem] items-center justify-between rounded-full bg-slate-100 p-2 text-slate-800 dark:bg-slate-700 dark:text-white"
+        onClick={onOpen}
       >
-        <SearchIcon className="h-5 w-5" />
+        <SearchIcon className="h-5 w-5 font-bold text-slate-400" />
         {/* <ControlKeyIcon /> */}
         <span className="flex items-center justify-between gap-1">
           <span className="key">{apple ? '⌘' : <ControlKeyIcon />} </span>
@@ -157,7 +125,7 @@ export function Search() {
         </span>
       </button>
       <InstantSearch searchClient={searchClient} indexName="blog-post">
-        <SearchModal open={open} setOpen={setOpen} search={searchClient.search} />
+        <SearchModal isOpen={isOpen} setIsOpen={setIsOpen} />
       </InstantSearch>
     </>
   )
@@ -165,13 +133,11 @@ export function Search() {
 const queryHook = (query: string) => searchClient.search(query)
 
 export function SearchModal({
-  open,
-  setOpen,
-  search,
+  isOpen,
+  setIsOpen,
 }: {
-  open: boolean
-  setOpen: (open: boolean) => void
-  search: (params: any) => Promise<any>
+  isOpen: boolean
+  setIsOpen: (open: boolean) => void
 }) {
   const [query, schmetQuery] = useState('')
 
@@ -190,9 +156,8 @@ export function SearchModal({
   //   queryHook: () => search(query),
   // })
 
-  const { results: res, uiState, use } = useInstantSearch()
+  const { results: res } = useInstantSearch()
   const results = res as unknown as MeiliSearchResponse<MeiliSearchBlogPostResult>
-  console.log(results)
 
   // const filteredItems =
   //   query === ''
@@ -202,11 +167,12 @@ export function SearchModal({
   //       })
 
   return (
-    <Transition.Root show={open} as={Fragment} afterLeave={() => setQuery('')}>
+    <Transition.Root show={isOpen} as={Fragment} afterLeave={() => setQuery('')}>
       <Dialog
         as="div"
+        id="search-modal"
         className="fixed inset-0 top-20 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
-        onClose={setOpen}
+        onClose={setIsOpen}
       >
         <Transition.Child
           as={Fragment}
@@ -432,4 +398,74 @@ export function SearchModal({
       </Dialog>
     </Transition.Root>
   )
+}
+
+export interface UseSearchKeyboardEventsProps {
+  isOpen: boolean
+  onOpen: () => void
+  onClose: () => void
+  onInput?: (event: KeyboardEvent) => void
+  searchButtonRef?: RefObject<HTMLButtonElement>
+}
+
+function isEditingContent(event: KeyboardEvent): boolean {
+  const element = event.target as HTMLElement
+  const tagName = element.tagName
+
+  return (
+    element.isContentEditable ||
+    tagName === 'INPUT' ||
+    tagName === 'SELECT' ||
+    tagName === 'TEXTAREA'
+  )
+}
+
+export function useSearchKeyboardEvents({
+  isOpen,
+  onOpen,
+  onClose,
+  onInput,
+  searchButtonRef,
+}: UseSearchKeyboardEventsProps) {
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      function open() {
+        // We check that no other DocSearch modal is showing before opening
+        // another one.
+        // if (!document.body.classList.contains('DocSearch--active')) {
+        onOpen()
+        // }
+      }
+      if (
+        (event.keyCode === 27 && isOpen) ||
+        // The `Cmd+K` shortcut both opens and closes the modal.
+        (event.key === 'k' && (event.metaKey || event.ctrlKey)) ||
+        // The `/` shortcut opens but doesn't close the modal because it's
+        // a character.
+        (!isEditingContent(event) && event.key === '/' && !isOpen)
+      ) {
+        event.preventDefault()
+
+        if (isOpen) {
+          onClose()
+          // } else if (!document.body.classList.contains('DocSearch--active')) {
+          //   open();
+        } else {
+          open()
+        }
+      }
+
+      if (searchButtonRef && searchButtonRef.current === document.activeElement && onInput) {
+        if (/[a-zA-Z0-9]/.test(String.fromCharCode(event.keyCode))) {
+          onInput(event)
+        }
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isOpen, onOpen, onClose, onInput, searchButtonRef])
 }
