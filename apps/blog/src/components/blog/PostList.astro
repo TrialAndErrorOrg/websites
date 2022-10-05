@@ -16,39 +16,47 @@ const { post, aspect, preloadImage } = Astro.props
 // const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
 ---
 
-<div>
-  <div class="cursor-pointer group">
-    <div
-      class={cx(
-        'relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800   hover:scale-105',
-        aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
-      )}
-    >
-      <a href={`/post/${post.slug}`}>
-        {
-          post.image ? (
-            <Picture
-              src={post.image.url}
-              alt={post.image.alt || 'Thumbnail'}
-              class="object-contain transition-all"
-              widths={[400, 900]}
-              sizes="(max-width: 900px) 400px, 900px"
-              aspect-ratio={aspect === 'landscape' ? '16:9' : '1:1'}
-            />
-          ) : (
-            <span class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 text-gray-200">
-              <PhotographIcon />
-            </span>
-          )
-        }
-      </a>
-    </div>
+<!-- <div> -->
+<div class="cursor-pointer group">
+  <div
+    class={cx(
+      'group-hover:backdrop-blur-sm relative overflow-hidden transition-all mb-2 bg-gray-100 rounded-md dark:bg-gray-800   group-hover:scale-[102%]',
+      aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
+    )}
+  >
+    <a href={`/post/${post.slug}`} class="relative">
+      <p class="text-white z-10 hidden absolute bottom-0 group-hover:flex">{post.excerpt}</p>
+      {
+        post.image ? (
+          <Picture
+            src={post.image.url}
+            alt={post.image.alt || 'Thumbnail'}
+            class="object-contain transition-all"
+            widths={[400, 900]}
+            sizes="(max-width: 900px) 400px, 900px"
+            aspect-ratio={aspect === 'landscape' ? '16:9' : '1:1'}
+          />
+        ) : (
+          <span class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 text-gray-200">
+            <PhotographIcon />
+          </span>
+        )
+      }
+    </a>
   </div>
-  <a href={`/${post.category.slug}`}> {post.category.title}</a>
-  <h2 class="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
+  <!-- </div> -->
+  <a
+    href={`/${post.category.slug}`}
+    class="font-bold bg-gradient-to-br from-green-500 to-pink-400 bg-clip-text text-transparent text-xl"
+  >
+    {post.category.title}</a
+  >
+  <h2
+    class="mt-2 text-lg font-bold leading-tight tracking-normal text-brand-primary dark:text-white"
+  >
     <a href={`/post/${post.slug}`}>
       <span
-        class="bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+        class="bg-gradient-to-r font-bold from-orange-100 to-orange-400 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
       >
         {post.title}
       </span>
