@@ -81,11 +81,21 @@ import { ControlKeyIcon } from '../atoms/ControlKeyIcon'
 function isAppleDevice() {
   return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
 }
+const ACTION_KEY_DEFAULT = 'Ctrl' as const
+const ACTION_KEY_APPLE = '⌘' as const
 
 export function Search() {
   const apple = typeof navigator !== 'undefined' && isAppleDevice()
   const searchButtonRef = useRef<HTMLButtonElement>(null)
   const [isOpen, setIsOpen] = useState(false)
+
+  const [key, setKey] = useState<typeof ACTION_KEY_APPLE | typeof ACTION_KEY_DEFAULT | null>(null)
+
+  useEffect(() => {
+    if (typeof navigator !== 'undefined') {
+      isAppleDevice() ? setKey(ACTION_KEY_APPLE) : setKey(ACTION_KEY_DEFAULT)
+    }
+  }, [])
 
   const onOpen = useCallback(() => {
     setIsOpen(true)
@@ -114,14 +124,18 @@ export function Search() {
     <>
       <button
         ref={searchButtonRef}
-        className="mx-2 flex min-w-[8rem] items-center justify-between rounded-full bg-slate-100 p-2 text-slate-800 dark:bg-slate-700 dark:text-white"
+        className="mx-2 flex items-center justify-between rounded-full p-2 text-slate-800 dark:text-white md:min-w-[8rem] md:bg-slate-100 md:dark:bg-slate-700"
         onClick={onOpen}
       >
         <SearchIcon className="h-5 w-5 font-bold text-slate-400" />
         {/* <ControlKeyIcon /> */}
-        <span className="flex items-center justify-between gap-1">
-          <span className="key">{apple ? '⌘' : <ControlKeyIcon />} </span>
-          <span className="key">K</span>
+        <span className="hidden items-center justify-between gap-1 md:flex">
+          {key !== null && (
+            <>
+              <kbd className="key">{key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}</kbd>
+              <kbd className="key">K</kbd>
+            </>
+          )}
         </span>
       </button>
       <InstantSearch searchClient={searchClient} indexName="blog-post">

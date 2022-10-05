@@ -6,7 +6,6 @@ import ToggleMenu from '../core/ToggleMenu.astro'
 
 // import { getPermalink, getBlogPermalink, getHomePermalink } from '../../utils/permalinks'
 import { getMain } from '../../utils/menu'
-import type { GetAttributesValues } from '@strapi/strapi'
 import { Search } from '../core/Search'
 
 const main = await getMain()
@@ -15,8 +14,8 @@ const main = await getMain()
 <header
   class="sticky top-0 z-40 flex-none mx-auto w-full bg-white md:bg-white/90 dark:bg-slate-900 dark:md:bg-slate-900/90 md:backdrop-blur-sm border-b dark:border-b-0"
 >
-  <div class="grid grid-cols-12 py-3 w-full md:justify-between">
-    <div class="col-start-3 flex justify-between">
+  <div class="grid grid-cols-4 lg:grid-cols-12 py-3 w-full md:justify-between">
+    <div class="col-start-1 col-span-2 lg:col-span-1 flex justify-between">
       <a class="flex items-center" href={main[0]?.url}>
         <Logo />
       </a>
@@ -27,7 +26,7 @@ const main = await getMain()
     </div>
 
     <nav
-      class="col-end-10 items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200 h-screen md:h-auto"
+      class="lg:col-end-10 items-center w-full md:w-auto hidden md:flex text-gray-600 dark:text-slate-200 h-screen md:h-auto"
       aria-label="Main navigation"
       id="menu"
     >
@@ -81,7 +80,7 @@ const main = await getMain()
         </div>
       </div>
     </nav>
-    <div class="col-start-11 col-span-2 justify-center flex items-center">
+    <div class="md:col-start-11 col-start-4 md:col-span-2 justify-center flex items-center">
       <Search client:load />
     </div>
   </div>

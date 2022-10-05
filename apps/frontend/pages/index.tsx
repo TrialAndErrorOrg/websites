@@ -112,7 +112,9 @@ const Home: NextPageWithLayout = (
                       {post.type === "article" ? (
                         <div>
                           {post.team?.map((author) => (
-                            <span key={author}>{author}</span>
+                            <span key={author.firstName}>
+                              {author.lastName}
+                            </span>
                           ))}
                         </div>
                       ) : (
