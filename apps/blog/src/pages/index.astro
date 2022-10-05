@@ -35,7 +35,7 @@ const posts = (await getPosts()) ?? []
       >
         <span class="lg:text-6xl">A Blog of</span><br />Trial & Error.
       </h1>
-      <div class="my-10 grid md:grid-cols-12 gap-10">
+      <a href={`/${posts?.[0]?.slug}`} class="my-10 group grid md:grid-cols-12 gap-10">
         <div class="col-span-7">
           <Picture
             src={posts?.[0]?.image.url}
@@ -49,17 +49,17 @@ const posts = (await getPosts()) ?? []
           <h2>{posts?.[0]?.title}</h2>
           <p>{posts?.[0]?.excerpt}</p>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-span-8 col-start-3">
-      <div class="grid gap-10 lg:gap-10 md:grid-cols-2">
+      <div class="grid gap-5 lg:gap-10 md:grid-cols-2">
         {
           posts
             .slice(1, 3)
             .map((post) => <PostList post={post} aspect="landscape" preloadImage={true} />)
         }
       </div>
-      <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+      <div class="grid gap-4 mt-10 lg:gap-4 md:grid-cols-2 xl:grid-cols-3">
         {posts.slice(3).map((post) => <PostList post={post} aspect="square" />)}
       </div>
     </div>
