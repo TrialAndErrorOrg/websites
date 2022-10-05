@@ -25,7 +25,11 @@ const { post, aspect, preloadImage } = Astro.props
     )}
   >
     <a href={`/post/${post.slug}`} class="relative">
-      <p class="text-white z-10 hidden absolute bottom-0 group-hover:flex">{post.excerpt}</p>
+      <p
+        class="text-white p-2 text-sm backdrop-saturate-50 backdrop-brightness-75 transition-all opacity-0 group-hover:opacity-100 backdrop-blur-sm z-10 absolute bottom-0"
+      >
+        {post.excerpt}
+      </p>
       {
         post.image ? (
           <Picture
@@ -45,12 +49,17 @@ const { post, aspect, preloadImage } = Astro.props
     </a>
   </div>
   <!-- </div> -->
-  <a
-    href={`/${post.category.slug}`}
-    class="font-bold bg-gradient-to-br from-green-500 to-pink-400 bg-clip-text text-transparent text-xl"
-  >
-    {post.category.title}</a
-  >
+  <div class="flex items-baseline justify-between">
+    <a
+      href={`/${post.category.slug}`}
+      class="font-bold bg-gradient-to-br from-orange-700 to-blue-200 via-orange-500 bg-clip-text text-transparent"
+    >
+      {post.category.title}</a
+    >
+    <time class="text-sm" date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}>
+      {format(parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt), 'MMMM dd, yyyy')}
+    </time>
+  </div>
   <h2
     class="mt-2 text-lg font-bold leading-tight tracking-normal text-brand-primary dark:text-white"
   >
@@ -74,26 +83,20 @@ const { post, aspect, preloadImage } = Astro.props
   </div>
 
   <div class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
-    <div class="flex items-center gap-3">
-      {
-        [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
-          <div class="relative h-5 w-5 flex-shrink-0">
-            {author.image?.url && (
-              <Picture
-                src={author.image.url}
-                alt={author?.lastName ?? author?.firstName}
-                class="w-full rounded-full object-cover"
-              />
-            )}
+    {
+      [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
+        <div class="relative flex-shrink-0">
+          {author.image?.url && (
+            <Picture
+              src={author.image.url}
+              alt={author?.lastName ?? author?.firstName}
+              class="h-5 w-5 rounded-full object-cover"
+            />
+          )}
 
-            <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
-          </div>
-        ))
-      }
-    </div>
-    <span class="text-xs text-gray-300 dark:text-gray-600"> &bull;</span>
-    <time class="text-sm" date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}>
-      {format(parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt), 'MMMM dd, yyyy')}
-    </time>
+          <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
+        </div>
+      ))
+    }
   </div>
 </div>
