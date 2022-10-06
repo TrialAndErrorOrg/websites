@@ -11,35 +11,34 @@ import { getPosts } from '../../utils/blog.js'
 import type { GetStaticPaths } from 'astro'
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-	if (BLOG?.disabled || BLOG?.blog?.disabled) return []
+  if (BLOG?.disabled || BLOG?.blog?.disabled) return []
 
-	const posts = await getPosts()
+  const posts = await getPosts()
 
-	return paginate(posts, {
-		params: { blog: BLOG_BASE || undefined },
-		pageSize: BLOG.postsPerPage,
-	})
+  return paginate(posts, {
+    params: { blog: BLOG_BASE || undefined },
+    pageSize: BLOG.postsPerPage,
+  })
 }
 
 const { page } = Astro.props
 const currentPage = page.currentPage ?? 1
 
 const meta = {
-	title: `Blog ${currentPage > 1 ? `— Page ${currentPage} ` : ''}— ${SITE.name}`,
-	description: SITE.description,
-	canonical: getCanonical(getPermalink(page.url.current)),
-	ogType: 'blog',
-	noindex: currentPage > 1,
+  title: `Blog ${currentPage > 1 ? `— Page ${currentPage} ` : ''}— ${SITE.name}`,
+  description: SITE.description,
+  canonical: getCanonical(getPermalink(page.url.current)),
+  ogType: 'blog',
+  noindex: currentPage > 1,
 }
 ---
 
 <Layout {meta}>
-	<Fragment slot="title">
-		News and step-by-step guides about
-		<span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-secondary-500"
-			>AstroWind</span
-		>
-	</Fragment>
-	<BlogList posts={page.data} />
-	<Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+  <Fragment slot="title">
+    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-orange-500"
+      >Trial & Error</span
+    >
+  </Fragment>
+  <BlogList posts={page.data} />
+  <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
 </Layout>

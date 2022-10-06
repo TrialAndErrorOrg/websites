@@ -34,7 +34,9 @@ export default defineConfig({
       },
     }),
     sitemap(),
-    image(),
+    image({
+      serviceEntryPoint: '@astrojs/image/sharp'
+    }),
     react(),
 
     /* Disable this integration if you don't use Google Analytics (or other external script). */

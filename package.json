@@ -41,6 +41,7 @@
     "react-instantsearch-hooks-web": "^6.33.0",
     "react-query": "3",
     "regenerator-runtime": "^0.13.9",
+    "sharp": "^0.31.1",
     "storybook-addon-swc": "^1.1.7",
     "superjson": "^1.10.0",
     "ts-transformer-enumerate": "^0.5.2",

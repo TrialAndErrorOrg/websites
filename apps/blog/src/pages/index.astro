@@ -2,7 +2,7 @@
 import { SITE } from '../config.mjs'
 import { getCanonical, getHomePermalink } from '../utils/permalinks'
 import Layout from '../layouts/PageLayout.astro'
-import 'regenerator-runtime/runtime'
+import { Image } from '@astrojs/image/components'
 
 import Hero from '../components/widgets/Hero.astro'
 import Features from '../components/widgets/Features.astro'
@@ -37,12 +37,21 @@ const posts = (await getPosts()) ?? []
       </h1>
       <a href={`/${posts?.[0]?.slug}`} class="my-10 group grid md:grid-cols-12 gap-10">
         <div class="col-span-7">
-          <Picture
+          <!-- <Picture
             src={posts?.[0]?.image.url}
             alt={posts[0]?.image.alt}
             loading="eager"
-            widths={[900]}
+             widths={[900]}
             class="object-cover"
+          /> -->
+          <Image
+            alt={(posts[0]?.image.alt as string) ?? ''}
+            src={posts?.[0]?.image.url as string}
+            loading="eager"
+            width={posts?.[0]?.image.width as number}
+            format="webp"
+            height={posts?.[0]?.image.height as number}
+            fit="cover"
           />
         </div>
         <div class="prose w-full col-span-5">

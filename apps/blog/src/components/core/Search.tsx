@@ -1,17 +1,13 @@
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Snippet,
-  Highlight,
-  useInstantSearch,
-} from 'react-instantsearch-hooks-web'
+import { InstantSearch, useInstantSearch } from 'react-instantsearch-hooks-web'
 import { Fragment, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
 import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
 import { cx } from '../../utils/cx'
 import { instantMeiliSearch, MeiliSearchResponse } from '@meilisearch/instant-meilisearch'
+import { useSearchBox } from 'react-instantsearch-hooks-web'
+import type { MeiliSearchBlogPostResult } from '../../utils/types'
+import { ControlKeyIcon } from '../atoms/ControlKeyIcon'
 // import { getHighlightedParts } from 'instantsearch.js/es/lib/utils'
 
 const searchClient = instantMeiliSearch(
@@ -48,35 +44,6 @@ const cleanHTML = (html: string) => {
     .replace(/<\/?[^>]+(>|$)/g, '')
     .replace(/&nbsp;/g, ' ')
 }
-
-function Hit({ hit }) {
-  return (
-    <div>
-      <h1>
-        <Highlight attribute="title" hit={hit} />
-      </h1>
-      <Snippet key={hit} hit={hit} attribute="body" className="truncate" />
-    </div>
-  )
-}
-
-// export const SearchBad = () => {
-//   const [focus, setFocus] = React.useState(false)
-//   return !focus ? (
-//     <button onClick={() => setFocus(true)}>Search</button>
-//   ) : (
-//     <InstantSearch searchClient={searchClient} indexName="blog-post">
-//       <SearchBox searchAsYouType={true} placeholder="Search"></SearchBox>
-//       <Hits hitComponent={Hit} />
-//       {/* <Autocomplete /> */}
-//     </InstantSearch>
-//   )
-// }
-
-import { useSearchBox } from 'react-instantsearch-hooks-web'
-import type { SearchBoxConnectorParams } from 'instantsearch.js/es/connectors/search-box/connectSearchBox'
-import type { MeiliSearchBlogPostResult } from '../../utils/types'
-import { ControlKeyIcon } from '../atoms/ControlKeyIcon'
 
 function isAppleDevice() {
   return /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
@@ -139,12 +106,11 @@ export function Search() {
         </span>
       </button>
       <InstantSearch searchClient={searchClient} indexName="blog-post">
-        <SearchModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        {isOpen && <SearchModal isOpen={isOpen} setIsOpen={setIsOpen} />}
       </InstantSearch>
     </>
   )
 }
-const queryHook = (query: string) => searchClient.search(query)
 
 export function SearchModal({
   isOpen,
@@ -161,10 +127,15 @@ export function SearchModal({
     // queryHook,
   })
 
-  const setQuery = (q: string) => {
-    schmetQuery(q)
-    refine(q)
-  }
+  const setQuery = useCallback(
+    (q: string) => {
+      schmetQuery(q)
+      if (isOpen) {
+        refine(q)
+      }
+    },
+    [schmetQuery, refine, isOpen]
+  )
   // const [open, setOpen] = useState(true)
   // const { query: q } = useSearchBox({
   //   queryHook: () => search(query),
@@ -280,7 +251,10 @@ export function SearchModal({
                                       {getHighlightedParts(item._highlightResult.title.value).map(
                                         (part) => {
                                           return part.isHighlighted ? (
-                                            <mark className="bg-orange-500 text-white">
+                                            <mark
+                                              key={part.value}
+                                              className="bg-orange-500 text-white"
+                                            >
                                               {part.value}
                                             </mark>
                                           ) : (
@@ -292,7 +266,10 @@ export function SearchModal({
                                     </p>
                                     <div className={'flex flex-wrap gap-3 gap-y-0 text-xs'}>
                                       {item._highlightResult.blog_tags.map((tag) => (
-                                        <span className="text-xs text-slate-400">
+                                        <span
+                                          key={tag.slug.value}
+                                          className="text-xs text-slate-400"
+                                        >
                                           #
                                           {getHighlightedParts(tag.title.value).map((part) =>
                                             part.isHighlighted ? (
@@ -329,7 +306,9 @@ export function SearchModal({
                             {getHighlightedParts(activeOption._highlightResult.title.value).map(
                               (part) => {
                                 return part.isHighlighted ? (
-                                  <mark className="bg-orange-500 text-white">{part.value}</mark>
+                                  <mark key={part.value} className="bg-orange-500 text-white">
+                                    {part.value}
+                                  </mark>
                                 ) : (
                                   part.value
                                 )
@@ -340,7 +319,9 @@ export function SearchModal({
                             {getHighlightedParts(activeOption._highlightResult.excerpt.value).map(
                               (part) => {
                                 return part.isHighlighted ? (
-                                  <mark className="bg-orange-500 text-white">{part.value}</mark>
+                                  <mark key={part.value} className="bg-orange-500 text-white">
+                                    {part.value}
+                                  </mark>
                                 ) : (
                                   part.value
                                 )
@@ -374,7 +355,9 @@ export function SearchModal({
                               q
                             ).map((part) =>
                               part.isHighlighted ? (
-                                <mark className="bg-orange-500 text-white">{part.value}</mark>
+                                <mark key={part.value} className="bg-orange-500 text-white">
+                                  {part.value}
+                                </mark>
                               ) : (
                                 part.value
                               )
