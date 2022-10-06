@@ -31,7 +31,7 @@ const posts = (await getPosts()) ?? []
   <div class="px-5 md:px-0 py-10 grid md:grid-cols-12 cols">
     <div class="col-start-3 col-span-8">
       <h1
-        class="lg:text-8xl w-full text-center md:text-left text-4xl font-black tracking-tight leading-none"
+        class="lg:text-8xl w-full text-center dark:text-white md:text-left text-4xl font-black tracking-tight leading-none"
       >
         <span class="lg:text-6xl">A Blog of</span><br />Trial & Error.
       </h1>
@@ -54,7 +54,7 @@ const posts = (await getPosts()) ?? []
             fit="cover"
           />
         </div>
-        <div class="prose w-full col-span-5">
+        <div class="prose dark:prose-invert w-full col-span-5">
           <h2>{posts?.[0]?.title}</h2>
           <p>{posts?.[0]?.excerpt}</p>
         </div>

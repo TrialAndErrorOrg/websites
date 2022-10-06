@@ -1985,6 +1985,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'manyToMany',
       'api::blog-post.blog-post'
     >
+    Summary: RichTextAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &

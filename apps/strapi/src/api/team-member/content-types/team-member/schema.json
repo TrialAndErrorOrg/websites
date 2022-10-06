@@ -107,6 +107,9 @@
       "relation": "manyToMany",
       "target": "api::blog-post.blog-post",
       "mappedBy": "team_members"
+    },
+    "Summary": {
+      "type": "richtext"
     }
   }
 }
