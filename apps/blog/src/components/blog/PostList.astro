@@ -25,7 +25,7 @@ const { post, aspect, preloadImage } = Astro.props
       aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
     )}
   >
-    <a href={`/post/${post.slug}`} class="relative">
+    <a href={`/${post.slug}`} class="relative">
       <p
         class="text-white p-2 text-sm backdrop-saturate-50 backdrop-brightness-75 transition-all opacity-0 group-hover:opacity-100 backdrop-blur-sm z-10 absolute bottom-0"
       >
@@ -60,7 +60,7 @@ const { post, aspect, preloadImage } = Astro.props
   <!-- </div> -->
   <div class="flex items-baseline justify-between">
     <a
-      href={`/${post.category.slug}`}
+      href={`/category/${post.category.slug}`}
       class="font-bold bg-gradient-to-br from-orange-700 to-blue-200 via-orange-500 bg-clip-text text-transparent"
     >
       {post.category.title}</a
@@ -72,7 +72,7 @@ const { post, aspect, preloadImage } = Astro.props
   <h2
     class="mt-2 text-lg font-bold leading-tight tracking-normal text-brand-primary dark:text-white"
   >
-    <a href={`/post/${post.slug}`}>
+    <a href={`/${post.slug}`}>
       <span
         class="bg-gradient-to-r font-bold from-orange-100 to-orange-400 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
       >
@@ -85,7 +85,7 @@ const { post, aspect, preloadImage } = Astro.props
     {
       post.excerpt && (
         <p class="line-clamp-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
-          <a href={`/post/${post.slug}`}>{post.excerpt}</a>
+          <a href={`/${post.slug}`}>{post.excerpt}</a>
         </p>
       )
     }
