@@ -21,6 +21,18 @@
     // Error when a value import is only used as a type
     "importsNotUsedAsValues": "error",
     // Add Vite's client types
-    "types": ["astro/client"]
-  }
+    "types": ["@astrojs/image/client"]
+  },
+  "include": [
+    "**/*.astro",
+    "**/*.ts",
+    "**/*.d.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "**/[*].tsx",
+    "**/[...*].tsx",
+    "jest.config.js",
+    "../../libs/types/src/lib/schemas.d.ts"
+  ],
+  "exclude": ["node_modules", "out", "dist"]
 }

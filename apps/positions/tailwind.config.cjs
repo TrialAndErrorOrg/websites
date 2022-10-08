@@ -1,14 +1,54 @@
 const { createGlobPatternsForDependencies } = require('@nxtensions/astro/tailwind')
+const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 const { join } = require('path')
 
-/** @type {import('tailwindcss').Config} */
+/**
+ * @type {import('tailwindcss').Config}
+ */
 module.exports = {
-  content: [
-    join(__dirname, 'src/**/!(*.stories|*.spec).{astro,html,js,jsx,md,svelte,ts,tsx,vue}'),
-    ...createGlobPatternsForDependencies(__dirname),
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+	presets: [require('../../tailwind-workspace-preset.js')],
+	content: [
+		join(__dirname, 'src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}'),
+
+		...createGlobPatternsForDependencies(__dirname),
+	],
+	theme: {
+		extend: {
+			colors: {
+				primary: colors.blue,
+				secondary: colors.pink,
+			},
+			fontFamily: {
+				sans: ["'Open Sans'", ...defaultTheme.fontFamily.sans],
+			},
+		},
+	},
+	plugins: [require('@tailwindcss/typography')],
+	darkMode: 'class',
 }
+
+/* 
+
+  Alternative tailwind.config.js
+  
+  NOTE: Add this fonts to <head>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap" rel="stylesheet" />
+*/
+
+// module.exports = {
+//   content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
+//   theme: {
+//     extend: {
+//       colors: {
+//         primary: colors.cyan,
+//         secondary: colors.lime,
+//       },
+//       fontFamily: {
+//         sans: ["'Nunito'", ...defaultTheme.fontFamily.sans],
+//       },
+//     },
+//   },
+//   plugins: [require("@tailwindcss/typography")],
+//   darkMode: "class",
+// };

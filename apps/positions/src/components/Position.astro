@@ -1,0 +1,24 @@
+---
+import type { OpenPosition } from '../utils/types'
+
+interface Props {
+  position: OpenPosition
+}
+
+const { position } = Astro.props
+---
+
+<article class="prose prose-lg prose-slate dark:prose-invert">
+  <h1>{position.title}</h1>
+  <p>{position.body}</p>
+
+  <h2>Requirements</h2>
+  <p set:html={position.requirements}></p>
+
+  <h2>How to apply</h2>
+
+  <p>
+    Send an email to <a href={`mailto:${position.moreInfoMail}`}>{position.moreInfoMail}</a> with your
+    resume and a cover letter.
+  </p>
+</article>
