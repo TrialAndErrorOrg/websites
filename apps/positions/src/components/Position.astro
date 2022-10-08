@@ -1,4 +1,5 @@
 ---
+import { Image } from '@astrojs/image/components'
 import type { OpenPosition } from '../utils/types'
 
 interface Props {
@@ -9,7 +10,15 @@ const { position } = Astro.props
 ---
 
 <article class="prose prose-lg prose-slate dark:prose-invert">
+  <Image
+    src={position.image.url}
+    alt={position.image.alt}
+    width={1000}
+    aspectRatio="16:9"
+    fit="cover"
+  />
   <h1>{position.title}</h1>
+
   <p>{position.body}</p>
 
   <h2>Requirements</h2>
