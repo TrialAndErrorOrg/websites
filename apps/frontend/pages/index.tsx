@@ -76,7 +76,7 @@ const Home: NextPageWithLayout = (
                   />
                 ) : (
                   <div
-                    className="absolute flex h-full w-full items-center justify-center bg-orange-500 bg-gradient-to-br from-orange-500 via-orange-400 to-sky-600 object-cover text-8xl font-bold capitalize transition-all group-hover:from-sky-500"
+                    className="absolute flex h-full w-full items-center justify-center bg-orange-500 object-cover text-8xl font-bold capitalize transition-all group-hover:from-sky-500"
                     style={
                       {
                         // background: `linear-gradient(to left, var(--orange), transparent),

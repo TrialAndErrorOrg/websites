@@ -14,6 +14,15 @@ The rest is just a bunch of packages that are used by the two main applications.
 
 ## Development
 
+### Environment variables
+
+The following environment variables are required for the frontend:
+
+- `NEXT_PUBLIC_STRAPI_URL` - the URL of the Strapi backend
+-
+
+### Running
+
 To start, you need to have the strapi instance running.
 
 ```bash
@@ -34,8 +43,10 @@ which will open up the website at http://localhost:4200
 Or you can start the blog.
 
 ```bash
-nx serve blog
+nx dev blog
 ```
+
+which will open up the blog at http://localhost:3000
 
 TODO: Figure out a way to seed the database with some initial data without having to manually create it in the admin panel or using the production database.
 

@@ -3248,6 +3248,11 @@
   resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-1.0.6.tgz#35dd26987228b39ef2316db3b1245c42eb19e324"
   integrity sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ==
 
+"@hookform/resolvers@^2.9.8":
+  version "2.9.8"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.8.tgz#9af51d15602f3c6e3249714712d8275564e65b72"
+  integrity sha512-iVVjH0USq+1TqDdGkWe2M1x7Wn5OFPgVRo7CbWFsXTqqXqCaZtZcnzJu+UhljCWbthFWxWGXKLGYUDPZ04oVvQ==
+
 "@hookun/parse-animation-shorthand@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@hookun/parse-animation-shorthand/-/parse-animation-shorthand-0.1.4.tgz#1a5b888588d875a9006a0fb81050ce93bc2aa3dc"
@@ -22033,6 +22038,11 @@ react-helmet@^6.1.0:
     prop-types "^15.7.2"
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
+
+react-hook-form@^7.37.0:
+  version "7.37.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.37.0.tgz#4d1738f092d3d8a3ade34ee892d97350b1032b19"
+  integrity sha512-6NFTxsnw+EXSpNNvLr5nFMjPdYKRryQcelTHg7zwBB6vAzfPIcZq4AExP4heVlwdzntepQgwiOQW4z7Mr99Lsg==
 
 react-icons@^4.4.0:
   version "4.4.0"
