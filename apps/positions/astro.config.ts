@@ -25,7 +25,8 @@ export default defineConfig({
   site: SITE.origin,
   base: SITE.basePathname,
 
-  output: 'static',
+  // output: 'static',
+  output: 'server',
 
   integrations: [
     tailwind({

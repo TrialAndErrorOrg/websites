@@ -14,7 +14,7 @@ export type BlogPost = GetAttributesValues<'api::blog-post.blog-post'>
 export type BlogAuthor = GetReturnType<ApiBlogAuthorBlogAuthor>
 export type BlogHome = GetReturnType<ApiBlogHomeBlogHome>
 export type BlogTag = GetAttributesValues<'api::tag.tag'>
-export type OpenPosition = GetAttributesValues<'api::open-position.open-position'>
+export type OpenPosition = GetAttributesValues<'api::open-position.open-position'> & { id: string }
 export type OpenPositionsPage = GetAttributesValues<'api::open-positions-page.open-positions-page'>
 export type Author =
   | GetAttributesValues<'api::blog-author.blog-author'>

@@ -1,0 +1,40 @@
+---
+import { SITE } from '../../config'
+import Layout from '../../layouts/Layout.astro'
+import Position from '../../components/Position.astro'
+
+import { getCanonical, getPermalink } from '../../utils/permalinks'
+import { getPosition } from '../../utils/positions'
+import type { OpenPosition } from '../../utils/types'
+
+interface Props {
+  position: OpenPosition
+}
+
+// export async function getStaticPaths() {
+//   const positions = (await getPositions()) ?? []
+
+//   return positions.map((position) => ({
+//     params: {
+//       slug: cleanSlug(position.slug ?? '/'),
+//       blog: POST_BASE || undefined,
+//     },
+//     props: { position },
+//   }))
+// }
+
+const position = await getPosition(Astro.params.slug)
+
+const meta = {
+  title: `${position.title} — ${SITE.name}`,
+  description: position?.seo?.metaDescription ?? position.excerpt,
+  canonical: getCanonical(getPermalink(position.slug, 'post')),
+  image: position.image.url, //await findImage(post.image),
+  ogTitle: position.title,
+  ogType: 'article',
+}
+---
+
+<Layout meta={meta}>
+  <Position position={{ ...position }} />
+</Layout>

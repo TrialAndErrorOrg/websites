@@ -1,30 +1,35 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import Layout from '../../layouts/Layout.astro'
+
+import type { OpenPosition } from '../../utils/types'
+
+interface Props {
+  position: OpenPosition
+}
+
+// export async function getStaticPaths() {
+//   // const posts = await fetchPosts()
+//   const positions = (await getPositions()) ?? []
+
+//   return positions.map((position) => ({
+//     params: {
+//       slug: cleanSlug(position.slug ?? '/'),
+//       blog: POST_BASE || undefined,
+//     },
+//     props: { position },
+//   }))
+// }
+
+const { position } = Astro.props
 ---
 
 <Layout>
   <div class="mx-10">
-    <!--
-  This example requires Tailwind CSS v2.0+
-
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
     <form class="space-y-8 divide-y divide-gray-200">
       <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
         <div>
           <div>
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Profile</h3>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">{position.title}</h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
               This information will be displayed publicly so be careful what you share.
             </p>
@@ -34,11 +39,8 @@ import Layout from '../layouts/Layout.astro'
             <div
               class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
             >
-              <label
-                for="username"
-                class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-              >
-                Username
+              <label for="name" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Name
               </label>
               <div class="mt-1 sm:mt-0 sm:col-span-2">
                 <div class="max-w-lg flex rounded-md shadow-sm">
@@ -49,9 +51,9 @@ import Layout from '../layouts/Layout.astro'
                   </span>
                   <input
                     type="text"
-                    name="username"
-                    id="username"
-                    autocomplete="username"
+                    name="name"
+                    id="name"
+                    autocomplete="name"
                     class="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                   />
                 </div>
