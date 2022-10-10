@@ -4,7 +4,8 @@
   "info": {
     "singularName": "open-position",
     "pluralName": "open-positions",
-    "displayName": "Open Position"
+    "displayName": "Open Position",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -24,7 +25,7 @@
       "type": "string",
       "required": true
     },
-    "body": {
+    "description": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -63,7 +64,7 @@
       "default": false,
       "required": true
     },
-    "requirements": {
+    "needToHave": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -81,17 +82,17 @@
       "default": "info@trialanderror.org"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images"
       ],
-      "type": "media",
-      "multiple": false,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "required": true
+      }
     },
     "slug": {
       "pluginOptions": {
@@ -120,6 +121,29 @@
         }
       },
       "type": "string"
+    },
+    "applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::application.application",
+      "mappedBy": "open_position"
+    },
+    "niceToHave": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "richtext",
+      "required": true
+    },
+    "whatYoullDo": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "richtext"
     }
   }
 }

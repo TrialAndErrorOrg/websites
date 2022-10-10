@@ -4,10 +4,11 @@
   "info": {
     "singularName": "application",
     "pluralName": "applications",
-    "displayName": "Application"
+    "displayName": "Application",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -15,10 +16,10 @@
       "type": "richtext",
       "required": true
     },
-    "position": {
+    "open_position": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::position.position",
+      "target": "api::open-position.open-position",
       "inversedBy": "applications"
     },
     "users_permissions_user": {
@@ -32,17 +33,17 @@
       "required": true
     },
     "documents": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "files",
         "videos",
         "audios",
         "images"
-      ],
-      "type": "media",
-      "multiple": true,
-      "required": false
+      ]
     },
-    "contact": {
+    "email": {
       "type": "email",
       "required": true
     },
@@ -56,6 +57,10 @@
         "rejected"
       ],
       "default": "draft",
+      "required": true
+    },
+    "name": {
+      "type": "string",
       "required": true
     }
   }
