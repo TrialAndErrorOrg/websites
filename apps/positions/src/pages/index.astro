@@ -19,7 +19,7 @@ const meta = {
   <main>
     {
       positions?.length ? (
-        positions.map((position) => <Card href={`/${position.slug}`} {...position} />)
+        positions.map((position) => <Card href={`/position/${position.slug}`} {...position} />)
       ) : (
         <p>No positions available at this time.</p>
       )

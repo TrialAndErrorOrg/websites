@@ -1039,31 +1039,31 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
     singularName: 'application'
     pluralName: 'applications'
     displayName: 'Application'
+    description: ''
   }
   options: {
-    draftAndPublish: true
+    draftAndPublish: false
   }
   attributes: {
-    motivation: RichTextAttribute & RequiredAttribute
-    position: RelationAttribute<
+    motivation: RichTextAttribute
+    open_position: RelationAttribute<
       'api::application.application',
       'manyToOne',
-      'api::position.position'
+      'api::open-position.open-position'
     >
     users_permissions_user: RelationAttribute<
       'api::application.application',
       'manyToOne',
       'plugin::users-permissions.user'
     >
-    experience: RichTextAttribute & RequiredAttribute
+    experience: RichTextAttribute
     documents: MediaAttribute
-    contact: EmailAttribute & RequiredAttribute
+    email: EmailAttribute & RequiredAttribute
     state: EnumerationAttribute<['submitted', 'responded', 'draft', 'accepted', 'rejected']> &
-      RequiredAttribute &
-      DefaultTo<'draft'>
+      DefaultTo<'submitted'>
+    name: StringAttribute & RequiredAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
@@ -1666,6 +1666,7 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
     singularName: 'open-position'
     pluralName: 'open-positions'
     displayName: 'Open Position'
+    description: ''
   }
   options: {
     draftAndPublish: true
@@ -1683,7 +1684,7 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
           localized: true
         }
       }>
-    body: RichTextAttribute &
+    description: RichTextAttribute &
       RequiredAttribute &
       SetPluginOptions<{
         i18n: {
@@ -1710,7 +1711,7 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
         }
       }> &
       DefaultTo<false>
-    requirements: RichTextAttribute &
+    needToHave: RichTextAttribute &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1746,6 +1747,24 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
       }> &
       DefaultTo<1>
     applyUrl: StringAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    applications: RelationAttribute<
+      'api::open-position.open-position',
+      'oneToMany',
+      'api::application.application'
+    >
+    niceToHave: RichTextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    whatYoullDo: RichTextAttribute &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1903,11 +1922,6 @@ export interface ApiPositionPosition extends CollectionTypeSchema {
     description: RichTextAttribute
     email: EmailAttribute
     department: StringAttribute
-    applications: RelationAttribute<
-      'api::position.position',
-      'oneToMany',
-      'api::application.application'
-    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::position.position', 'oneToOne', 'admin::user'> &

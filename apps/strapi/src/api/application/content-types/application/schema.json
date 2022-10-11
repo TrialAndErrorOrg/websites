@@ -14,7 +14,7 @@
   "attributes": {
     "motivation": {
       "type": "richtext",
-      "required": true
+      "required": false
     },
     "open_position": {
       "type": "relation",
@@ -30,7 +30,7 @@
     },
     "experience": {
       "type": "richtext",
-      "required": true
+      "required": false
     },
     "documents": {
       "type": "media",
@@ -56,8 +56,8 @@
         "accepted",
         "rejected"
       ],
-      "default": "draft",
-      "required": true
+      "default": "submitted",
+      "required": false
     },
     "name": {
       "type": "string",

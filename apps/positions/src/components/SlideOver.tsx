@@ -6,11 +6,24 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { cx } from '../utils/cx'
 
+const MAX_FILE_SIZE = 10000000
+const ACCEPTED_FILE_TYPES = [
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/pdf',
+]
+
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
-  contact: z.string().email(),
+  email: z.string().email(),
   motivation: z.string(),
-  cv: z.any(),
+  documents: z
+    .any()
+    .refine((files) => files?.length >= 1, 'Image is required.')
+    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
+      '.jpg, .jpeg, .png and .webp files are accepted.'
+    ),
 })
 
 export default function SlideOver({ position }: { position: OpenPosition }) {
@@ -19,10 +32,14 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
   })
   console.log(errors)
+
+  const files = watch('documents')
+  console.log(files)
 
   return (
     <>
@@ -45,14 +62,39 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
               >
                 <div className="pointer-events-auto w-screen max-w-xl">
                   <form
-                    onSubmit={handleSubmit(async (data) => {
-                      console.log(data)
-                      const dat = await fetch('/api/form', {
-                        method: 'POST',
-                        body: JSON.stringify(data),
-                      })
-                      return dat
-                    })}
+                    onSubmit={handleSubmit(
+                      ({ documents, ...data }) => {
+                        console.log({ data })
+                        const formData = new FormData()
+                        data['open_position'] = position.id
+                        for (let i = 0; i < documents.length; i++) {
+                          formData.append(`files.documents`, documents[i], documents[i].name)
+                        }
+                        formData.append('data', JSON.stringify(data))
+
+                        fetch('/api/form', {
+                          method: 'POST',
+                          body: formData,
+                        })
+                          .then((res) => res.json())
+                          .then((res) => {
+                            console.log(res)
+                            setOpen(false)
+                          })
+                      }
+
+                      // const dat = fetch('/api/form', {
+                      //   method: 'POST',
+                      //   headers: {
+                      //     'Content-Type': 'form-data',
+                      //   },
+                      //   body: new FormData(data),
+                      // })
+                      //   .then((res) => res.json())
+                      //   .then((res) => console.log(res))
+                      // return dat
+                      // }
+                    )}
                     className="flex h-full flex-col space-y-8 divide-y divide-gray-200 overflow-y-scroll bg-white p-8 shadow-xl"
                   >
                     <div className="space-y-8 divide-y divide-gray-200">
@@ -90,19 +132,19 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
 
                           <div className="sm:col-span-4">
                             <label
-                              htmlFor="contact"
+                              htmlFor="email"
                               className="block text-sm font-medium text-gray-700 required:text-red-500"
                             >
                               Email address
                             </label>
                             <div className="mt-1">
                               <input
-                                id="contact"
+                                id="email"
                                 type="email"
                                 required
                                 autoComplete="email"
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                                {...register('contact')}
+                                {...register('email')}
                               />
                             </div>
                           </div>
@@ -130,10 +172,10 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                           </div>
                           <div className="sm:col-span-6">
                             <label
-                              htmlFor="files"
+                              htmlFor="documents"
                               className="block text-sm font-medium text-gray-700"
                             >
-                              CV
+                              DOCUMENTS
                             </label>
                             <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                               <div className="space-y-1 text-center">
@@ -153,13 +195,14 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 </svg>
                                 <div className="flex text-sm text-gray-600">
                                   <label
-                                    htmlFor="cv"
+                                    htmlFor="documents"
                                     className="relative cursor-pointer rounded-md bg-white font-medium text-orange-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500 focus-within:ring-offset-2 hover:text-orange-500"
                                   >
                                     <span>Upload a file</span>
                                     <input
-                                      {...register('cv')}
-                                      id="cv"
+                                      {...register('documents')}
+                                      accept={ACCEPTED_FILE_TYPES.join(', ')}
+                                      id="documents"
                                       type="file"
                                       className="sr-only"
                                       multiple
@@ -170,6 +213,10 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 <p className="text-xs text-gray-500">.docx, PDF, up to 10MB</p>
                               </div>
                             </div>
+                            {errors.documents?.message && (
+                              <p className="text-xs text-red-500">{errors.documents?.message}</p>
+                            )}
+                            {JSON.stringify(files)}
                           </div>
                         </div>
                       </div>
