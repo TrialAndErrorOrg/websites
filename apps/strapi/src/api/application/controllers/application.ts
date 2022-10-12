@@ -8,7 +8,7 @@ import { join } from 'path'
 
 export default factories.createCoreController('api::application.application', ({ strapi }) => ({
   async create(ctx) {
-    await super.create(ctx)
+    const standardRes = await super.create(ctx)
     const {
       body,
       // @ts-expect-error this should be defined according to the docs https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#accessing-the-request-context-anywhere
@@ -29,28 +29,39 @@ export default factories.createCoreController('api::application.application', ({
         },
       },
     )
+    console.log({ position })
 
     // send email
-    const res = await strapi.plugins['email-designer'].service('email').sendTemplatedEmail(
-      {
-        to: email,
-        from: 'positions@trialanderror.org',
-        attachments: files,
-      },
-      {
-        templateReferenceId: 'application',
-      },
-      {
-        application: {
-          name,
-          email,
-          motivation,
-          experience,
-          position,
+    try {
+      const res = await strapi.plugins['email-designer'].service('email').sendTemplatedEmail(
+        {
+          to: email,
+          from: 'noreply@trialanderror.org',
+          bcc: ['positions@trialanderror.org', 'jorna@trialanderror.org'],
+          attachments: files.map((file: File) => ({
+            filename: file.name,
+            // @ts-expect-error hmmm yes, but it does work?
+            path: file.path,
+          })),
         },
-      },
-    )
-
-    console.log(res)
+        {
+          templateReferenceId: 1,
+        },
+        {
+          application: {
+            name,
+            email,
+            motivation,
+            experience,
+            position,
+          },
+        },
+      )
+      console.log({ res })
+    } catch (error) {
+      console.error(error)
+      return ctx.badRequest(standardRes, error)
+    }
+    return standardRes
   },
 }))

@@ -36,6 +36,29 @@ export default ({ env }) => ({
   //     },
   //   },
   // },
+
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST', 'smtp-mail.outlook.com'),
+        port: env('SMTP_PORT', 587),
+        secureConnection: false,
+        tls: {
+          ciphers: 'SSLv3',
+        },
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: env('SMTP_FROM'),
+        defaultReplyTo: env('SMTP_FROM'),
+      },
+    },
+  },
+
   'email-designer': {
     enabled: true,
 

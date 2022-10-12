@@ -11,6 +11,7 @@
     "@strapi/plugin-i18n": "^4.3.6",
     "@strapi/plugin-seo": "^1.7.4",
     "@strapi/plugin-users-permissions": "^4.3.6",
+    "@strapi/provider-email-nodemailer": "^4.4.3",
     "@strapi/strapi": "^4.3.6",
     "@webbio/strapi-plugin-scheduler": "^0.1.2",
     "jsonwebtoken": "^8.5.1",
