@@ -1,10 +1,11 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
+// import path from 'path'
+import vercel from '@astrojs/vercel/serverless'
+// import { fileURLToPath } from 'url'
 
 import { defineConfig } from 'astro/config'
 
 import tailwind from '@astrojs/tailwind'
-import sitemap from '@astrojs/sitemap'
+// import sitemap from '@astrojs/sitemap'
 import image from '@astrojs/image'
 // import partytown from '@astrojs/partytown'
 import react from '@astrojs/react'
@@ -12,7 +13,7 @@ import react from '@astrojs/react'
 import { SITE } from './src/config'
 // import * as StrapiTypes from '../../libs/types/src/lib/schemas'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+// const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 declare global {
   // @ts-expect-error i kinda need to
@@ -27,6 +28,7 @@ export default defineConfig({
 
   // output: 'static',
   output: 'server',
+  adapter: vercel(),
 
   integrations: [
     tailwind({
@@ -34,23 +36,17 @@ export default defineConfig({
         applyBaseStyles: false,
       },
     }),
-    sitemap(),
     image({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),
     react(),
-
-    /* Disable this integration if you don't use Google Analytics (or other external script). */
-    // partytown({
-    //   config: { forward: ['dataLayer.push'] },
-    // }),
   ],
 
-  vite: {
-    resolve: {
-      alias: {
-        '~': path.resolve(__dirname, './src'),
-      },
-    },
-  },
+  // vite: {
+  //   resolve: {
+  //     alias: {
+  //       '~': path.resolve(__dirname, './src'),
+  //     },
+  //   },
+  // },
 })
