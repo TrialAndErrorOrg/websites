@@ -43,7 +43,7 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
           <Image
             src={post.image}
             class="mt-4 mb-6  w-full bg-gray-400 dark:bg-slate-700"
-            width={post.image?.width}
+            aspectRatio="21:9"
             height={post.image?.height}
             fit="cover"
             alt={post.image.alt ?? post.seo?.metaDescription ?? post.excerpt}
