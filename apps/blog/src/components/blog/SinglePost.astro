@@ -1,6 +1,6 @@
 ---
 // import Picture from '../../components/core/Picture.astro'
-import { Picture } from '@astrojs/image/components'
+import { Image } from '@astrojs/image/components'
 import PostTags from '../../components/atoms/Tags.astro'
 import Author from '../../components/atoms/Author.astro'
 import { addBigLetterToBody } from '../../utils/addBigLetterToBody'
@@ -40,14 +40,13 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
     <div class="col-start-1 col-span-11">
       {
         post.image && (
-          <Picture
+          <Image
             src={post.image}
             class="mt-4 mb-6  w-full bg-gray-400 dark:bg-slate-700"
-            widths={[400, 1200]}
-            sizes="400px, 1200px"
+            width={post.image?.width}
+            height={post.image?.height}
             fit="cover"
             alt={post.image.alt ?? post.seo?.metaDescription ?? post.excerpt}
-            aspectRatio="21:9"
           />
         )
       }
