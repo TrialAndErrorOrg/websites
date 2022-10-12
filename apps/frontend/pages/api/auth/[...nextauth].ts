@@ -27,7 +27,9 @@ export const authOptions: NextAuthOptions = {
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async session({ session, token, user }) {
+      // @ts-expect-error its finnee
       session.jwt = token.jwt
+      // @ts-expect-error its finnee
       session.id = token.id
       return session
     },
