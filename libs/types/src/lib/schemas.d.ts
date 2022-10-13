@@ -1062,6 +1062,7 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
     state: EnumerationAttribute<['submitted', 'responded', 'draft', 'accepted', 'rejected']> &
       DefaultTo<'submitted'>
     name: StringAttribute & RequiredAttribute
+    start: DateAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
@@ -1765,6 +1766,12 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
         }
       }>
     whatYoullDo: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    seo: ComponentAttribute<'shared.seo'> &
       SetPluginOptions<{
         i18n: {
           localized: true

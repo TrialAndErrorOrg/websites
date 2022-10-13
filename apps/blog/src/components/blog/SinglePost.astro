@@ -39,13 +39,15 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
     </div>
     <div class="col-start-1 col-span-11">
       {
-        post.image && (
+        (post.image.width || post.image.height) && (
           <Image
-            src={post.image}
+            src={post.image.url}
             class="mt-4 mb-6  w-full bg-gray-400 dark:bg-slate-700"
-            aspectRatio="21:9"
             height={post.image?.height}
+            width={post.image?.width}
+            format="webp"
             fit="cover"
+            aspectRatio="21:9"
             alt={post.image.alt ?? post.seo?.metaDescription ?? post.excerpt}
           />
         )

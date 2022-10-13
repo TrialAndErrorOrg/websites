@@ -16,7 +16,34 @@ export type GetReturnType<T extends CollectionTypeSchema | SingleTypeSchema> = {
   [key in keyof T['attributes']]-?: GetAttributeValue<T['attributes'][key]>
 }
 
-export type BlogPost = GetAttributesValues<'api::blog-post.blog-post'>
+export type BlogPost = Omit<GetAttributesValues<'api::blog-post.blog-post'>, 'image'> & {
+  image: {
+    id: number
+    name: string
+    alternativeText: string
+    caption: string
+    width: number
+    height: number
+    formats: Formats
+    hash: string
+    ext: string
+    mime: string
+    size: number
+    url: string
+    previewUrl?: any
+    provider: string
+    provider_metadata?: any
+    createdAt: string
+    updatedAt: string
+    alt?: string
+  }
+}
+
+interface Formats {
+  small: Function[]
+  medium: Function[]
+  thumbnail: Function[]
+}
 export type BlogAuthor = GetReturnType<ApiBlogAuthorBlogAuthor>
 export type BlogHome = GetReturnType<ApiBlogHomeBlogHome>
 export type BlogTag = GetAttributesValues<'api::tag.tag'>
