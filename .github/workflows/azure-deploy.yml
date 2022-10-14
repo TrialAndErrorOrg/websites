@@ -22,6 +22,7 @@ jobs:
         with:
           filters: |
             strapi:
+              - '.github/workflows/azure-deploy.yml'
               - '**/apps/strapi/**/*'
   build:
     env:
@@ -39,7 +40,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
+          cache-dependency-path: ${{ env.working-directory }}/apps/strapi/yarn.lock
 
       # - name: Get yarn cache directory path
       #   id: yarn-cache-dir-path
