@@ -4,7 +4,7 @@ import type { OpenPosition } from '../utils/types'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { XIcon } from '@heroicons/react/outline'
+import { ArrowRightIcon, XIcon } from '@heroicons/react/outline'
 import { cx } from '../utils/cx'
 
 const MAX_FILE_SIZE = 10000000
@@ -20,14 +20,15 @@ const doc = z
     (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
     '.docx and pdf files are accepted.'
   )
+  .optional()
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email(),
-  motivationText: z.string(),
+  motivationText: z.string().optional(),
   motivationFile: doc,
-  cvText: z.string(),
+  cvText: z.string().optional(),
   cvFile: doc,
-  additionalText: z.string(),
+  additionalText: z.string().optional(),
   additionalFile: doc,
 })
 
@@ -38,6 +39,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
     handleSubmit,
     formState: { errors },
     setValue,
+
     watch,
   } = useForm({
     resolver: zodResolver(schema),
@@ -51,14 +53,20 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
 
   return (
     <>
-      <button className="btn" onClick={() => setOpen(true)}>
-        Apply Now
+      <button
+        className={`md:static ${
+          open ? 'hidden' : 'flex'
+        } z-10 right-10 bottom-10 fixed bg-orange-500 gap-1 items-center justify-between text-white font-bold hover:scale-105 active:scale-95 transition-all hover:bg-orange-600 active:bg-orange-900 rounded-lg px-4 py-3 shadow-lg`}
+        onClick={() => setOpen(true)}
+      >
+        Apply
+        <ArrowRightIcon className="w-5" />
       </button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setOpen}>
           <div className="absolute inset-0 overflow-hidden">
             <Dialog.Overlay className="absolute inset-0" />
-            <div className="pointer-events-none fixed inset-0 left-0 flex max-w-full pr-10 sm:pr-16">
+            <div className="pointer-events-none fixed inset-0 left-0 flex max-w-full md:pr-10 sm:pr-16">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -71,13 +79,56 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                 <div className="pointer-events-auto w-screen max-w-xl">
                   <form
                     onSubmit={handleSubmit(
-                      ({ documents, ...data }) => {
+                      ({
+                        documents,
+                        cvFile,
+                        additionalFile,
+                        additionalText,
+                        cvText,
+                        motivationText,
+                        motivationFile,
+                        ...data
+                      }) => {
                         console.log({ data })
                         const formData = new FormData()
                         data['open_position'] = position.id
-                        for (let i = 0; i < documents.length; i++) {
+
+                        if (cvFile?.[0]) {
+                          formData.append('files.documents', cvFile[0], cvFile[0].name)
+                        }
+
+                        if (motivationFile?.[0]) {
+                          formData.append(
+                            'files.documents',
+                            motivationFile[0],
+                            motivationFile[0].name
+                          )
+                        }
+
+                        if (additionalFile?.[0]) {
+                          formData.append(
+                            'files.documents',
+                            additionalFile[0],
+                            additionalFile[0].name
+                          )
+                        }
+
+                        for (let i = 0; i < documents?.length; i++) {
                           formData.append(`files.documents`, documents[i], documents[i].name)
                         }
+
+                        if (motivationText?.length) {
+                          data['motivation'] = motivationText
+                        }
+
+                        if (cvText?.length) {
+                          data['cv'] = cvText
+                        }
+
+                        if (additionalText?.length) {
+                          data['additional'] = additionalText
+                        }
+
                         formData.append('data', JSON.stringify(data))
 
                         fetch(`${process.env.NEXT_PUBLIC_STRAPI_ENDPOINT}/applications`, {
@@ -121,11 +172,13 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                   >
                     <div className="space-y-8 divide-y divide-gray-200">
                       <div>
-                        <div>
+                        <div className="flex items-top justify-between w-full">
                           <h3 className="text-xl font-bold leading-6 text-gray-900">
                             {position.title}
                           </h3>
-                          <p className="mt-1 text-sm text-gray-500"></p>
+                          <button onClick={() => setOpen(false)}>
+                            <XIcon className="w-5 h-5" />
+                          </button>
                         </div>
 
                         <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -334,7 +387,6 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 {errors.documents?.message as string}
                               </p>
                             )}
-                            {JSON.stringify(files)}
                           </div>
                         </div>
                       </div>

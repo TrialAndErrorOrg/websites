@@ -1008,9 +1008,8 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
       DefaultTo<'submitted'>
     name: StringAttribute & RequiredAttribute
     start: DateAttribute
-    motivation: DynamicZoneAttribute<['components.rich-text', 'components.document']> &
-      RequiredAttribute
-    cv: DynamicZoneAttribute<['components.rich-text', 'components.document']> & RequiredAttribute
+    motivation: RichTextAttribute
+    cv: RichTextAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &

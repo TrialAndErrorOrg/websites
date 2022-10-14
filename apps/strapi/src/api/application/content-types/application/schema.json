@@ -63,20 +63,10 @@
       "type": "date"
     },
     "motivation": {
-      "type": "dynamiczone",
-      "components": [
-        "components.rich-text",
-        "components.document"
-      ],
-      "required": true
+      "type": "richtext"
     },
     "cv": {
-      "type": "dynamiczone",
-      "components": [
-        "components.rich-text",
-        "components.document"
-      ],
-      "required": true
+      "type": "richtext"
     }
   }
 }
