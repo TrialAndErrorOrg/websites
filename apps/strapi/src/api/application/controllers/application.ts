@@ -15,7 +15,7 @@ export default factories.createCoreController('api::application.application', ({
       files: { 'files.documents': documents },
     } = ctx.request
     console.log({ body, documents })
-    const { name, email, motivation, experience, open_position } = JSON.parse(body.data)
+    const { name, email, additional, motivation, cv, open_position } = JSON.parse(body.data)
 
     const files = Array.isArray(documents) ? documents : [documents]
     // strapi.service('api::application.application').
@@ -52,8 +52,9 @@ export default factories.createCoreController('api::application.application', ({
             name,
             email,
             motivation,
-            experience,
+            cv,
             position,
+            additional,
           },
         },
       )

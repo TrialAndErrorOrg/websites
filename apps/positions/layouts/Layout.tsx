@@ -9,7 +9,7 @@ export function Layout({ meta, children }: { meta: MetaProps; children: React.Re
       <Head>
         <MetaTags {...meta} />
       </Head>
-      <nav className=" backdrop-blur-sm justify-between flex w-screen bg-white/90  items-center h-20 py-2 px-10 sticky z-10 top-0">
+      <nav className="backdrop-blur-sm justify-between flex w-full bg-white/90 items-center h-16 md:h-20 py-2 px-2  md:px-10 md:sticky z-10 top-0">
         <Link className="flex items-end" href="/">
           <span className="h-12 w-12">
             <Logo />
@@ -19,7 +19,7 @@ export function Layout({ meta, children }: { meta: MetaProps; children: React.Re
             Positions
           </span>
         </Link>
-        <div className="text-xl font-semibold flex items-center gap-6 text-gray-500">
+        <div className="md:text-xl gap-2 font-semibold flex items-center md:gap-6 text-gray-500">
           <Link className="hover:text-slate-800 transition-colors" href="/">
             home
           </Link>
@@ -31,7 +31,7 @@ export function Layout({ meta, children }: { meta: MetaProps; children: React.Re
           </Link>
           <a href="https://github.com/journaloftrialanderror/centeroftrialanderror.com">
             <svg
-              className="h-8 w-8 hover:text-slate-800 transition-colors"
+              className="md:h-8 md:w-8 w-6 h-6 hover:text-slate-800 transition-colors"
               viewBox="0 0 256 250"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"

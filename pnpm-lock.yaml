@@ -1,10 +1,5 @@
 lockfileVersion: 5.4
 
-patchedDependencies:
-  '@astrojs/vercel@2.2.0':
-    hash: yiqy27n34wg3waw5ip5kw2s6tm
-    path: patches/@astrojs__vercel@2.2.0.patch
-
 specifiers:
   '@astrojs/image': ^0.10.0
   '@astrojs/netlify': ^1.1.0
@@ -152,7 +147,7 @@ specifiers:
 dependencies:
   '@astrojs/netlify': 1.2.0
   '@astrojs/react': 1.2.0_biqbaboplfbrettd7655fr4n2y
-  '@astrojs/vercel': 2.2.0_yiqy27n34wg3waw5ip5kw2s6tm
+  '@astrojs/vercel': 2.2.0
   '@docsearch/css': 3.2.1
   '@headlessui/react': 1.7.3_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 1.0.6_react@18.2.0
@@ -522,7 +517,7 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/vercel/2.2.0_yiqy27n34wg3waw5ip5kw2s6tm:
+  /@astrojs/vercel/2.2.0:
     resolution: {integrity: sha512-gqi4ij3RwInj9/O90HKMc82Fo08Gd1TjfbrSAlHzf8Ywno+4Br36vMuuvdgD6Rn6l7EuP2BYiR9zlG2yh2D0tA==}
     dependencies:
       '@astrojs/webapi': 1.1.0
@@ -531,7 +526,6 @@ packages:
       - encoding
       - supports-color
     dev: false
-    patched: true
 
   /@astrojs/webapi/1.1.0:
     resolution: {integrity: sha512-yLSksFKv9kRbI3WWPuRvbBjS+J5ZNmZHacJ6Io8XQleKIHHHcw7RoNcrLK0s+9iwVPhqMYIzja6HJuvnO93oFw==}

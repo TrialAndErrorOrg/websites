@@ -786,100 +786,6 @@ export interface PluginSchedulerScheduler extends CollectionTypeSchema {
   }
 }
 
-export interface PluginCommentsComment extends CollectionTypeSchema {
-  info: {
-    tableName: 'plugin-comments-comments'
-    singularName: 'comment'
-    pluralName: 'comments'
-    displayName: 'Comment'
-    description: 'Comment content type'
-    kind: 'collectionType'
-  }
-  options: {
-    draftAndPublish: false
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    content: TextAttribute & RequiredAttribute
-    blocked: BooleanAttribute & DefaultTo<false>
-    blockedThread: BooleanAttribute & DefaultTo<false>
-    blockReason: StringAttribute
-    authorUser: RelationAttribute<
-      'plugin::comments.comment',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >
-    authorId: StringAttribute
-    authorName: StringAttribute
-    authorEmail: EmailAttribute
-    authorAvatar: StringAttribute
-    removed: BooleanAttribute
-    approvalStatus: StringAttribute
-    related: StringAttribute
-    reports: RelationAttribute<
-      'plugin::comments.comment',
-      'oneToMany',
-      'plugin::comments.comment-report'
-    >
-    threadOf: RelationAttribute<'plugin::comments.comment', 'oneToOne', 'plugin::comments.comment'>
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::comments.comment', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::comments.comment', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginCommentsCommentReport extends CollectionTypeSchema {
-  info: {
-    tableName: 'plugin-comments-reports'
-    singularName: 'comment-report'
-    pluralName: 'comment-reports'
-    displayName: 'Reports'
-    description: 'Reports content type'
-    kind: 'collectionType'
-  }
-  options: {
-    draftAndPublish: false
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    content: TextAttribute
-    reason: EnumerationAttribute<['BAD_LANGUAGE', 'DISCRIMINATION', 'OTHER']> &
-      RequiredAttribute &
-      DefaultTo<'OTHER'>
-    resolved: BooleanAttribute & DefaultTo<false>
-    related: RelationAttribute<
-      'plugin::comments.comment-report',
-      'manyToOne',
-      'plugin::comments.comment'
-    >
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::comments.comment-report', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::comments.comment-report', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
 export interface PluginStrapiStripeStrapiStripeProduct extends CollectionTypeSchema {
   info: {
     tableName: 'StrapiStripeProduct'
@@ -1085,7 +991,6 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
     draftAndPublish: false
   }
   attributes: {
-    motivation: RichTextAttribute
     open_position: RelationAttribute<
       'api::application.application',
       'manyToOne',
@@ -1096,13 +1001,15 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >
-    experience: RichTextAttribute
+    additional: RichTextAttribute
     documents: MediaAttribute
     email: EmailAttribute & RequiredAttribute
     state: EnumerationAttribute<['submitted', 'responded', 'draft', 'accepted', 'rejected']> &
       DefaultTo<'submitted'>
     name: StringAttribute & RequiredAttribute
     start: DateAttribute
+    motivation: RichTextAttribute
+    cv: RichTextAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
@@ -1732,7 +1639,7 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
           localized: true
         }
       }>
-    type: EnumerationAttribute<['internship', 'volunteer']> &
+    type: EnumerationAttribute<['internship', 'volunteer', 'part-time', 'full-time']> &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1816,6 +1723,24 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
         i18n: {
           localized: true
         }
+      }>
+    location: EnumerationAttribute<['remote', 'Utrecht']> &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      DefaultTo<'remote'>
+    summary: TextAttribute &
+      RequiredAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      SetMinMaxLength<{
+        maxLength: 300
       }>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
@@ -2194,6 +2119,26 @@ export interface ComponentsCta extends ComponentSchema {
   }
 }
 
+export interface ComponentsDocument extends ComponentSchema {
+  info: {
+    displayName: 'Document'
+    icon: 'file'
+  }
+  attributes: {
+    file: MediaAttribute
+  }
+}
+
+export interface ComponentsRichText extends ComponentSchema {
+  info: {
+    displayName: 'Rich Text'
+    icon: 'text-height'
+  }
+  attributes: {
+    body: RichTextAttribute & RequiredAttribute
+  }
+}
+
 export interface ComponentsTextBlock extends ComponentSchema {
   info: {
     displayName: 'text-block'
@@ -2314,8 +2259,6 @@ declare global {
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
       'plugin::scheduler.scheduler': PluginSchedulerScheduler
-      'plugin::comments.comment': PluginCommentsComment
-      'plugin::comments.comment-report': PluginCommentsCommentReport
       'plugin::strapi-stripe.strapi-stripe-product': PluginStrapiStripeStrapiStripeProduct
       'plugin::strapi-stripe.strapi-stripe-payment': PluginStrapiStripeStrapiStripePayment
       'api::about-page.about-page': ApiAboutPageAboutPage
@@ -2346,6 +2289,8 @@ declare global {
       'api::writer.writer': ApiWriterWriter
       'choices.author-or-team-member': ChoicesAuthorOrTeamMember
       'components.cta': ComponentsCta
+      'components.document': ComponentsDocument
+      'components.rich-text': ComponentsRichText
       'components.text-block': ComponentsTextBlock
       'cote.position-or-editor': CotePositionOrEditor
       'sections.hero': SectionsHero

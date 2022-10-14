@@ -163,10 +163,5 @@
   },
   "packageManager": "yarn@1.22.1",
   "repository": "https://github.com/thomasfkjorna/thesis-visualization",
-  "author": "Thomas F. K. Jorna <hello@tefkah.com>",
-  "pnpm": {
-    "patchedDependencies": {
-      "@astrojs/vercel@2.2.0": "patches/@astrojs__vercel@2.2.0.patch"
-    }
-  }
+  "author": "Thomas F. K. Jorna <hello@tefkah.com>"
 }
