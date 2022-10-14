@@ -1,6 +1,7 @@
 import SlideOver from './SlideOver'
 import type { OpenPosition } from '../utils/types'
 import Image from 'next/future/image'
+import jestConfig from '../jest.config'
 
 interface Props {
   position: OpenPosition
