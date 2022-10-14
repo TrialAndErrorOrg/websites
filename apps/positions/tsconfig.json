@@ -32,7 +32,8 @@
     "**/[*].tsx",
     "**/[...*].tsx",
     "jest.config.js",
-    "../../libs/types/src/lib/schemas.d.ts"
+    "../../libs/types/src/lib/schemas.d.ts",
+    "astro.config.mjs"
   ],
   "exclude": ["node_modules", "out", "dist"]
 }

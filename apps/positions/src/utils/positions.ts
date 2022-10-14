@@ -10,7 +10,6 @@ export const getPositions = async (props?: { page?: number; pageSize?: number })
     .sortBy([{ field: 'publishedAt', order: 'desc' }])
     // .paginate(props?.page ?? 1, props?.pageSize ?? 10)
     .get()
-
   return posts?.data ?? []
 }
 
