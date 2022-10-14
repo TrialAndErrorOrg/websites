@@ -81,3 +81,17 @@ h6,
   top: -1px;
   width: 20px;
 }
+
+.link-overlay {
+  position: static;
+}
+.link-overlay::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  zindex: 0;
+  content: '';
+  height: 100%;
+  width: 100%;
+  cursor: inherit;
+}

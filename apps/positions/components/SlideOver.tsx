@@ -4,6 +4,7 @@ import type { OpenPosition } from '../utils/types'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { XIcon } from '@heroicons/react/outline'
 import { cx } from '../utils/cx'
 
 const MAX_FILE_SIZE = 10000000
@@ -12,18 +13,22 @@ const ACCEPTED_FILE_TYPES = [
   'application/pdf',
 ]
 
+const doc = z
+  .any()
+  .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+  .refine(
+    (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
+    '.docx and pdf files are accepted.'
+  )
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email(),
-  motivation: z.string(),
-  documents: z
-    .any()
-    .refine((files) => files?.length >= 1, 'Document is required.')
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-    .refine(
-      (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
-      '.docx and pdf files are accepted.'
-    ),
+  motivationText: z.string(),
+  motivationFile: doc,
+  cvText: z.string(),
+  cvFile: doc,
+  additionalText: z.string(),
+  additionalFile: doc,
 })
 
 export default function SlideOver({ position }: { position: OpenPosition }) {
@@ -32,6 +37,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     watch,
   } = useForm({
     resolver: zodResolver(schema),
@@ -39,7 +45,9 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
   console.log(errors)
 
   const files = watch('documents')
-  console.log(files)
+  const [motivationText, motivationFile] = watch(['motivationText', 'motivationFile'])
+  const [cvText, cvFile] = watch(['cvText', 'cvFile'])
+  // console.log(motivation, typeof motivation)
 
   return (
     <>
@@ -127,6 +135,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                               className="block text-sm font-medium text-gray-700"
                             >
                               Name
+                              <span className="text-red-500 ml-1">*</span>
                             </label>
                             <div className="mt-1 flex rounded-md shadow-sm">
                               <input
@@ -134,7 +143,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 id="name"
                                 autoComplete="name"
                                 required
-                                className={`block w-full min-w-0 flex-1 rounded-md border-gray-300  sm:text-sm ${
+                                className={`form-input block w-full min-w-0 flex-1 rounded-md border-gray-300  sm:text-sm ${
                                   errors.name?.message
                                     ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                                     : 'focus:border-orange-500 focus:ring-orange-500'
@@ -150,6 +159,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                               className="block text-sm font-medium text-gray-700 required:text-red-500"
                             >
                               Email address
+                              <span className="text-red-500 ml-1">*</span>
                             </label>
                             <div className="mt-1">
                               <input
@@ -160,29 +170,121 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                                 {...register('email')}
                               />
+
+                              <p className="mt-2 text-xs text-gray-500">
+                                We just need your email address to send you the confirmation email
+                                and to send you the job offer if you are selected.
+                              </p>
                             </div>
                           </div>
 
                           <div className="sm:col-span-6">
                             <label
-                              htmlFor="motivation"
+                              htmlFor="motivationText"
                               className="block text-sm font-medium text-gray-700"
                             >
                               Motivation
+                              <span className="text-red-500 ml-1">*</span>
                             </label>
-                            <div className="mt-1">
-                              <textarea
-                                id="motivation"
-                                required
-                                rows={3}
-                                className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                                defaultValue={''}
-                                {...register('motivation')}
+                            {!motivationFile || motivationFile?.length < 1 ? (
+                              <div className="mt-1">
+                                <textarea
+                                  id="motivationText"
+                                  required={!motivationFile || motivationFile?.length < 1}
+                                  rows={3}
+                                  className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                                  defaultValue={''}
+                                  {...register('motivationText')}
+                                />
+                                <p className="mt-2 text-sm text-gray-500">
+                                  Write a few sentences about yourself.
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="text-sm rounded-full mt-1 bg-slate-100 px-4 py-2 flex justify-between items-center text-slate-500">
+                                <span className="truncate max-w-[80%]">
+                                  {motivationFile[0]?.name}
+                                </span>
+                                <button
+                                  onClick={() => setValue('motivationFile', null)}
+                                  className="font-bold"
+                                  aria-label="Remove motivation file"
+                                >
+                                  x
+                                </button>
+                              </div>
+                            )}
+                            <label htmlFor="motivationFile">
+                              <span
+                                className={`text-orange-500 underline text-sm ${
+                                  motivationFile?.[0] ? 'sr-only' : ''
+                                }`}
+                              >
+                                Or upload a file (.docx or .pdf)
+                              </span>
+                              <input
+                                type="file"
+                                accept={ACCEPTED_FILE_TYPES.join(', ')}
+                                id="motivationFile"
+                                className="sr-only"
+                                {...register('motivationFile')}
                               />
-                            </div>
-                            <p className="mt-2 text-sm text-gray-500">
-                              Write a few sentences about yourself.
-                            </p>
+                            </label>
+                          </div>
+                          <div className="sm:col-span-6">
+                            <label
+                              htmlFor="cvText"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              CV/Relevant Experience
+                              <span className="text-red-500 ml-1">*</span>
+                            </label>
+                            {!cvFile || cvFile?.length < 1 ? (
+                              <div className="mt-1">
+                                <textarea
+                                  id="cvText"
+                                  required={!cvFile || cvFile?.length < 1}
+                                  rows={3}
+                                  className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                                  defaultValue={''}
+                                  {...register('cvText')}
+                                />
+                                <p className="mt-2 text-sm text-gray-500">
+                                  Tell us about previous experience you have, specifically in
+                                  relation to the "Need to have's" and "Nice to have's" listed
+                                  above. This doesn't have to be a full CV, just a few sentences
+                                  will do, but if you have a CV you can upload it below. A link to a
+                                  CV is also great!
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="text-sm rounded-full mt-1 bg-slate-100 px-4 py-2 flex justify-between items-center text-slate-500">
+                                <span className="truncate max-w-[80%]">{cvFile[0]?.name}</span>
+                                <button
+                                  onClick={() => setValue('cvFile', null)}
+                                  className="font-bold"
+                                  aria-label="Remove CV file"
+                                >
+                                  x
+                                </button>
+                              </div>
+                            )}
+                            <label htmlFor="cvFile">
+                              <span
+                                className={`text-orange-500 underline text-sm ${
+                                  cvFile?.[0] ? 'sr-only' : ''
+                                }`}
+                              >
+                                Or Upload a file (.docx or .pdf)
+                              </span>
+                              <input
+                                type="file"
+                                accept={ACCEPTED_FILE_TYPES.join(', ')}
+                                id="cvFile"
+                                className="sr-only"
+                                {...register('cvFile')}
+                              />
+                            </label>
                           </div>
                           <div className="sm:col-span-6">
                             <label

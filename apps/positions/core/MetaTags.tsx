@@ -32,8 +32,8 @@ export interface MetaProps {
   title?: string
   description?: string
   image?: string
-  ogTitle: string
-  ogType: string
+  ogTitle?: string
+  ogType?: string
   canonical: string
   noindex?: boolean
   nofollow?: boolean
