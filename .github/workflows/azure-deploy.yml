@@ -40,8 +40,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-          cache-dependency-path: ${{ env.working-directory }}/apps/strapi/yarn.lock
+          # TODO: Fix yarn cache
+          # cache: 'yarn'
+          # cache-dependency-path: ${{ env.working-directory }}/apps/strapi/yarn.lock
 
       # - name: Get yarn cache directory path
       #   id: yarn-cache-dir-path
