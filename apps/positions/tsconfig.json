@@ -1,30 +1,24 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    // Enable top-level await, and other modern ESM features
-    "target": "ESNext",
-    "module": "ESNext",
-    // Enable node-style module resolution, for things like npm package imports
-    "moduleResolution": "node",
-    // Enable JSON imports
-    "resolveJsonModule": true,
-    // Enable stricter transpilation for better output
-    "isolatedModules": true,
-    // Astro directly run TypeScript code, no transpilation needed
+    "jsx": "preserve",
+    "allowJs": true,
+    // "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    // Report an error when importing a file using a casing different from the casing on disk
-    "forceConsistentCasingInFileNames": true,
-    // Properly support importing CJS modules in ESM
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    // Enable strict mode
+    "isolatedModules": true,
+    "incremental": true,
+    "types": ["jest", "node"],
     "strict": true,
-    // Error when a value import is only used as a type
-    "importsNotUsedAsValues": "error",
-    // Add Vite's client types
-    "types": ["astro/client"]
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "plugins": [
+      { "transform": "ts-transformer-keys/transformer" },
+      { "transform": "ts-transformer-enumerate/transformer" }
+    ]
   },
   "include": [
-    "**/*.astro",
     "**/*.ts",
     "**/*.d.ts",
     "**/*.tsx",
@@ -32,8 +26,7 @@
     "**/[*].tsx",
     "**/[...*].tsx",
     "jest.config.js",
-    "../../libs/types/src/lib/schemas.d.ts",
-    "astro.config.mjs"
+    "../../libs/types/src/lib/schemas.d.ts"
   ],
-  "exclude": ["node_modules", "out", "dist"]
+  "exclude": ["node_modules", "**/katexSlatePlugin.tsx", "out", "dist"]
 }

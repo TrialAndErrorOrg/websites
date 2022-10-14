@@ -8,6 +8,8 @@
     "orcid-client": "libs/orcid-client",
     "positions": "apps/positions",
     "positions-e2e": "apps/positions-e2e",
+    "old-positions": "apps/old-positions",
+    "old-positions-e2e": "apps/old-positions-e2e",
     "scripts": "libs/scripts",
     "strapi": "apps/strapi",
     "strapi-client": "libs/strapi-client",

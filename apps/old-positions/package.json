@@ -1,6 +1,6 @@
 {
-  "name": "@jote/positions",
-  "description": "Positions",
+  "name": "@jote/old-positions",
+  "description": "old-positions",
   "version": "0.3.5",
   "private": true,
   "scripts": {
@@ -16,5 +16,6 @@
   "devDependencies": {},
   "engines": {
     "node": "^14.15.0 || >=16.0.0"
-  }
+  },
+  "dependencies": {}
 }
