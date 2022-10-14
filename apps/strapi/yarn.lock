@@ -3265,7 +3265,7 @@
     prettier "2.7.1"
     typescript "4.6.2"
 
-"@strapi/utils@4.3.2", "@strapi/utils@^4.3.0":
+"@strapi/utils@4.3.2":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.3.2.tgz#df4ae10bff89d3fd13495a3bde10da16f6fd4597"
   integrity sha512-7MsXcGFSbKsKUFiegzy1kL6PHTAWyJ0kxfT4xAywkXMN7GOkA3x9ld0Ds4+a3MBohA2ZOiVj7Nil3IF7tQwdpQ==
@@ -3309,10 +3309,10 @@
     lodash "4.17.21"
     yup "0.32.9"
 
-"@strapi/utils@^4.2.3":
-  version "4.3.9"
-  resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.3.9.tgz#21bff4ad63a133e3e8c1bfb50f393f3a83b58e3d"
-  integrity sha512-EcvLprbMO7tMKJLvDZ4on9GlIkwP8aMVjs2o7oXa4xK1ngSUTIri8C1mvjGsgGcdoLBzqgR1/L+u04OXKBmdvQ==
+"@strapi/utils@^4.2.3", "@strapi/utils@^4.3.0", "@strapi/utils@^4.3.8":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.4.3.tgz#6947eda897a936d31b3879fabe1163e13f8c1d04"
+  integrity sha512-EsyNrC4F95KC+tRNN+IBQrOVJIoKmbNxE2El6FBeO1TeKpppYFI4AWzAbj/txcaIOlhvlAY7J9zTRGms72GgHA==
   dependencies:
     "@sindresorhus/slugify" "1.1.0"
     date-fns "2.29.2"
@@ -12308,13 +12308,13 @@ strapi-plugin-menus@^1.0.2:
     react-select "^5.2.2"
     styled-components "^5.3.3"
 
-strapi-plugin-navigation@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/strapi-plugin-navigation/-/strapi-plugin-navigation-2.2.0.tgz#48244e46db86288467f327c6995dba2594c0c983"
-  integrity sha512-dOPtlbglZRUuStuM75Rn8LIU7ksgFmPOvVIkUXax+Kg/9vKMSd/HoMVED91jUU63lhHEnqQ2TK1izE2KIuRCNg==
+strapi-plugin-navigation@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-navigation/-/strapi-plugin-navigation-2.2.2.tgz#0975e330caf751bb1c30794d069e416dbd6f2c60"
+  integrity sha512-I3J6DBKVj375Ye50VOFG5PjVatav5V5VPD2cElEVWptVxlG50+EOKMN/Yj0EKER56WNYx2RCWiNj2sGR7cmppQ==
   dependencies:
     "@sindresorhus/slugify" "1.1.0"
-    "@strapi/utils" "^4.3.0"
+    "@strapi/utils" "^4.3.8"
     lodash "^4.17.11"
     pluralize "^8.0.0"
     react "^16.9.0"
