@@ -45,7 +45,7 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
                 >
                   <div className="sm:w-80 w-screen overflow-clip">
                     <Image
-                      className="object-cover h-64 group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                      className="object-cover h-40 sm:h-64 group-hover:scale-105 transition-transform duration-300 ease-in-out"
                       priority={idx < 1}
                       src={position.image.url}
                       height={position.image.height}
