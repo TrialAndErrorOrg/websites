@@ -67,6 +67,8 @@ export const authOptions: NextAuthOptions = {
         },
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+      // @ts-expect-error its finnee
       async authorize(credentials, _req) {
         const user = { id: 1, name: credentials?.name ?? "J Smith" }
         return user

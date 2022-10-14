@@ -7,6 +7,7 @@ export const orcidRouter = createRouter().query("me", {
     // if (!ctx.req) return {}
     console.log("anything")
     const { orcid, session } = ctx
+    // @ts-expect-error its finnee
     const id = session?.orcid as string
 
     // const token = await getToken({ req: ctx.req })
