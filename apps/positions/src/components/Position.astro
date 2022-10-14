@@ -1,5 +1,4 @@
 ---
-import { Image } from '@astrojs/image/components'
 import SlideOver from './SlideOver'
 import type { OpenPosition } from '../utils/types'
 
@@ -13,11 +12,11 @@ const { position } = Astro.props
 <div class="relative bg-white">
   <div class="lg:absolute lg:inset-0">
     <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/2">
-      <Image
+      <img
         class="h-56 w-full object-cover lg:absolute lg:h-full"
         src={position.image.url}
         height={position.image.height}
-        aspectRatio="16:9"
+        width={position.image.width}
         alt=""
       />
     </div>

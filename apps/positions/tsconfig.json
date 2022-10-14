@@ -21,7 +21,7 @@
     // Error when a value import is only used as a type
     "importsNotUsedAsValues": "error",
     // Add Vite's client types
-    "types": ["@astrojs/image/client"]
+    "types": ["astro/client"]
   },
   "include": [
     "**/*.astro",

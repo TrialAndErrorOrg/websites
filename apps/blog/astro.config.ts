@@ -35,7 +35,7 @@ export default defineConfig({
     }),
     sitemap(),
     image({
-      serviceEntryPoint: '@astrojs/image/sharp'
+      serviceEntryPoint: '@astrojs/image/sharp',
     }),
     react(),
 

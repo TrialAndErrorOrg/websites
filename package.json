@@ -32,6 +32,7 @@
     "@trpc/server": "^9.27.4",
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
+    "image-size": "^1.0.2",
     "mime": "^3.0.0",
     "next": "12.3.1",
     "next-auth": "^4.12.2",
@@ -156,5 +157,10 @@
   },
   "packageManager": "yarn@1.22.1",
   "repository": "https://github.com/thomasfkjorna/thesis-visualization",
-  "author": "Thomas F. K. Jorna <hello@tefkah.com>"
+  "author": "Thomas F. K. Jorna <hello@tefkah.com>",
+  "pnpm": {
+    "patchedDependencies": {
+      "@astrojs/vercel@2.2.0": "patches/@astrojs__vercel@2.2.0.patch"
+    }
+  }
 }

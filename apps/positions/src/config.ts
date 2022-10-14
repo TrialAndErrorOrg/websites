@@ -4,9 +4,9 @@ export const SITE = {
   origin: 'https://positions.trialanderror.org',
   basePathname: '/',
 
-  title: 'A Blog of Trial and Error',
+  title: 'Open Positions @ Center of Trial and Error',
   description:
-    '🚀 AstroWind is a free and ready to start template to make your website using Astro and Tailwind CSS.',
+    'Center of Trial and Error is a non-profit organization that aims to provide a platform for the exchange of ideas and experiences in the field of trial and error. We are looking for people who are interested in joining our team and contributing to our mission.',
 }
 
 export const BLOG = {

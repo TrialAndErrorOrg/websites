@@ -1,24 +1,21 @@
 ---
 import { AstroSeo } from '@astrolib/seo'
-import { getImage } from '@astrojs/image'
 import { getRelativeUrlByFilePath } from '../utils/directories'
-
-import defaultImageSrc from '../assets/images/default.png'
 
 import { SITE } from '../config'
 import Fonts from './Fonts.astro'
 import ExtraMetaTags from './ExtraMetaTags.astro'
 
-const { src: defaultImage } = await getImage({
-  src: defaultImageSrc,
-  width: 1200,
-  height: 628,
-})
+// const { src: defaultImage } = await getImage({
+//   src: defaultImageSrc,
+//   width: 1200,
+//   height: 628,
+// })
 
 const {
   title = SITE.name,
   description = '',
-  image: _image = defaultImage,
+  // image: _image = defaultImage,
 
   canonical,
   noindex = false,
@@ -28,12 +25,12 @@ const {
   ogType = 'website',
 } = Astro.props
 
-const image =
-  typeof _image === 'string'
-    ? new URL(_image, Astro.site)
-    : _image && typeof _image['src'] !== 'undefined'
-    ? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
-    : null
+const image = "https://cote.azureedge.net/cote-strapi-uploads/undefined/assets/large_BUFFERTE_logo_blue_back_4096_88ab80fa53.png"
+  // typeof _image === 'string'
+  //   ? new URL(_image, Astro.site)
+  //   : _image && typeof _image['src'] !== 'undefined'
+  //   ? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
+  //   : null
 ---
 
 <meta charset="UTF-8" />
