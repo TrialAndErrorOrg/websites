@@ -36,6 +36,9 @@ export default ({ env }) => ({
   //     },
   //   },
   // },
+  comments: {
+    enabled: false,
+  },
 
   email: {
     config: {
@@ -137,7 +140,7 @@ export default ({ env }) => ({
     enabled: true,
   },
   plausible: {
-    enabled: true,
+    enabled: false,
     config: {
       sharedLink: 'https://plausible.io/share/trialanderror.org?auth=sl01pbHu02aH7rz2qb0VG',
     },

@@ -1,0 +1,20 @@
+diff --git a/node_modules/@astrojs/vercel/dist/lib/nft.js b/node_modules/@astrojs/vercel/dist/lib/nft.js
+index 380de75..71a602b 100644
+--- a/node_modules/@astrojs/vercel/dist/lib/nft.js
++++ b/node_modules/@astrojs/vercel/dist/lib/nft.js
+@@ -14,6 +14,15 @@ async function copyDependenciesToFunction(entry, outDir) {
+   if (result.fileList.size === 0)
+     throw new Error("[@astrojs/vercel] No files found");
+   for (const error of result.warnings) {
++     // handle cases where `main` is not a script file, such as @mapbox/node-pre-gyp
++		 if (error.message.startsWith('Failed to parse')) {
++      const [, file] = /Failed to parse (.+)/.exec(error.message);
++			console.warn(
++        `[@astrojs/vercel] The file "${file}" couldn't be parsed. This may not be a problem, but it's worth checking.`
++      );
++
++			continue;
++		}
+     if (error.message.startsWith("Failed to resolve dependency")) {
+       const [, module, file] = /Cannot find module '(.+?)' loaded from (.+)/.exec(error.message);
+       if (module === "@astrojs/")

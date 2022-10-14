@@ -214,7 +214,9 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                               </div>
                             </div>
                             {errors.documents?.message && (
-                              <p className="text-xs text-red-500">{errors.documents?.message}</p>
+                              <p className="text-xs text-red-500">
+                                {errors.documents?.message as string}
+                              </p>
                             )}
                             {JSON.stringify(files)}
                           </div>

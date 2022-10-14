@@ -146,6 +146,17 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "name": "filters",
+          "in": "query",
+          "description": "Filters to apply",
+          "deprecated": false,
+          "required": false,
+          "schema": {
+            "type": "object"
+          },
+          "style": "deepObject"
         }
       ],
       "operationId": "get/upload/files"
@@ -226,7 +237,7 @@
           "deprecated": false,
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "number"
           }
         }
       ],
@@ -307,7 +318,7 @@
           "deprecated": false,
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "number"
           }
         }
       ],

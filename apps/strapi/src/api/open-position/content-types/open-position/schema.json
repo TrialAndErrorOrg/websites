@@ -43,7 +43,9 @@
       "type": "enumeration",
       "enum": [
         "internship",
-        "volunteer"
+        "volunteer",
+        "part-time",
+        "full-time"
       ]
     },
     "startDate": {
@@ -154,6 +156,30 @@
         }
       },
       "component": "shared.seo"
+    },
+    "location": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "remote",
+        "Utrecht"
+      ],
+      "default": "remote",
+      "required": true
+    },
+    "summary": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true,
+      "maxLength": 300
     }
   }
 }

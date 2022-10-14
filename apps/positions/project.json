@@ -1,32 +1,62 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "positions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/positions",
   "projectType": "application",
-  "sourceRoot": "apps/positions/src",
   "targets": {
     "build": {
-      "outputs": ["dist/apps/positions"],
-      "executor": "@nxtensions/astro:build",
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "config": "astro.config.ts"
+        "root": "apps/positions",
+        "outputPath": "dist/apps/positions"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/positions"
+        },
+        "production": {}
       }
     },
-    "dev": {
-      "executor": "@nxtensions/astro:dev",
-      "options": {}
-    },
-    "preview": {
-      "dependsOn": [
-        {
-          "target": "build",
-          "projects": "self"
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "positions:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "positions:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "positions:build:production",
+          "dev": false
         }
-      ],
-      "executor": "@nxtensions/astro:preview",
-      "options": {}
+      }
     },
-    "check": {
-      "executor": "@nxtensions/astro:check"
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "positions:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/positions"],
+      "options": {
+        "jestConfig": "apps/positions/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/positions/**/*.{ts,tsx,js,jsx}"]
+      }
     }
   },
   "tags": []
