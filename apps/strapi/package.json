@@ -69,6 +69,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "ts-to-zod": "^1.12.0"
+    "ts-to-zod": "^1.13.1"
   }
 }
