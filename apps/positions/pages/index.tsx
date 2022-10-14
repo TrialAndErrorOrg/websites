@@ -27,8 +27,8 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
   return (
     <Layout meta={meta}>
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <main className="flex flex-col gap-14 items-center justify-center w-full flex-1 px-20 text-center">
-          <div className="flex md:flex-row items-center gap-5 md:gap-20">
+        <main className="flex flex-col gap-4 items-center justify-center w-full flex-1 px-20 text-center">
+          <div className="flex md:flex-row items-center mt-5 gap-5 md:gap-20">
             <span className="hidden md:flex self-center fill-black h-20 w-20 dark:fill-white font-overpass ml-2 text-xl leading-none font-black text-gray-900 whitespace-nowrap dark:text-white">
               <Logo />
             </span>
@@ -38,11 +38,15 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
 
           <div className="flex flex-col gap-10 my-10">
             {positions?.length ? (
-              positions.map((position) => (
-                <div key={position.id} className="relative group flex overflow-hidden ">
-                  <div className="w-80 overflow-clip">
+              positions.map((position, idx) => (
+                <div
+                  key={position.id}
+                  className="relative group flex flex-col sm:flex-row overflow-hidden "
+                >
+                  <div className="sm:w-80 w-screen overflow-clip">
                     <Image
                       className="object-cover h-64 group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                      priority={idx < 1}
                       src={position.image.url}
                       height={position.image.height}
                       width={position.image.width}
@@ -52,7 +56,7 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
 
                   <Link
                     href={`/position/${position.slug}`}
-                    className=" justify-between flex-1 bg-white width-full p-6 flex flex-col items-start  link-overlay"
+                    className=" justify-between gap-4 flex-1 bg-white width-full p-6 flex flex-col items-start  link-overlay"
                   >
                     <div className="flex-1 flex flex-col items-start">
                       <p className="text-sm font-medium text-orange-600 uppercase">
@@ -63,7 +67,7 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
                       </p>
                       <p className="mt-3 text-base text-gray-500 text-left">{position.summary}</p>
                     </div>
-                    <div className=" group-hover:underline flex items-center p-2 font-bold rounded-lg  text-orange-500 justify-between w-full">
+                    <div className=" group-hover:underline flex items-center font-bold rounded-lg  text-orange-500 justify-between w-full">
                       <p className="text-base font-bold">Learn more</p>
                       <div className="flex-shrink-0">
                         <svg
