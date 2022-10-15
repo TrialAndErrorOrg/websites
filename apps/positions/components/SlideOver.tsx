@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { ArrowRightIcon, XIcon } from '@heroicons/react/outline'
 import { cx } from '../utils/cx'
+import { Modal } from './Modal'
 
 const MAX_FILE_SIZE = 10000000
 const ACCEPTED_FILE_TYPES = [
@@ -15,12 +16,12 @@ const ACCEPTED_FILE_TYPES = [
 
 const doc = z
   .any()
-  .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-  .refine(
-    (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
-    '.docx and pdf files are accepted.'
-  )
   .optional()
+  .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE || !files?.[0], `Max file size is 5MB.`)
+  .refine(
+    (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type) || !files?.[0],
+    'only .docx and pdf files are accepted.'
+  )
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email(),
@@ -34,19 +35,19 @@ const schema = z.object({
 
 export default function SlideOver({ position }: { position: OpenPosition }) {
   const [open, setOpen] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-
     watch,
   } = useForm({
     resolver: zodResolver(schema),
   })
   console.log(errors)
 
-  const files = watch('documents')
+  // const files = watch('documents')
   const [motivationText, motivationFile] = watch(['motivationText', 'motivationFile'])
   const [cvText, cvFile] = watch(['cvText', 'cvFile'])
   // console.log(motivation, typeof motivation)
@@ -62,11 +63,11 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
         Apply
         <ArrowRightIcon className="w-5" />
       </button>
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={setOpen}>
-          <div className="absolute inset-0 overflow-hidden">
+      <Transition.Root show={open && !submitted} as={Fragment}>
+        <Dialog as="div" className="fixed overflow-hidden" onClose={setOpen}>
+          <div className="absolute overflow-scroll">
             <Dialog.Overlay className="absolute inset-0" />
-            <div className="pointer-events-none fixed inset-0 left-0 flex max-w-full md:pr-10 sm:pr-16">
+            <div className="pointer-events-none h-screen fixed inset-0 left-0 flex max-w-full md:pr-10 sm:pr-16">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -146,8 +147,10 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                             if (res.status === 200) {
                               console.log('Success!')
                               console.log(res.json)
-                              setOpen(false)
+                              setSubmitted(true)
+                              // setOpen(false)
                             } else {
+                              setSubmitted(true)
                               console.log('Error!')
                               console.log(res.json)
                             }
@@ -170,7 +173,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                     )}
                     className="flex h-full flex-col space-y-8 divide-y divide-gray-200 overflow-y-scroll bg-white p-8 shadow-xl"
                   >
-                    <div className="space-y-8 divide-y divide-gray-200">
+                    <div className="space-y-8 mt-20 divide-y divide-gray-200">
                       <div>
                         <div className="flex items-top justify-between w-full">
                           <h3 className="text-xl font-bold leading-6 text-gray-900">
@@ -416,6 +419,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
           </div>
         </Dialog>
       </Transition.Root>
+      {submitted && <Modal open={submitted} setOpen={setSubmitted} />}
     </>
   )
 }
