@@ -15,14 +15,22 @@ interface Props {
 const { post, aspect, preloadImage } = Astro.props
 
 // const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
+const categoryColorMap = {
+	interview: 'bg-rose-500',
+	'behind the scenes': 'bg-emerald-400 ',
+	'opinion': 'bg-orange-100',
+}
 ---
 
 <!-- <div> -->
-<div class="cursor-pointer group">
+<div class="overflow-clip cursor-pointer group card bg-white">
+	<div class={`w-full  items-center p-4 flex justify-center ${categoryColorMap[post.category.title?.toLowerCase()]} text-black text-2xl border-b-4 border-black font-black`}>
+		{post.category.title}
+	</div>
   <div
     class={cx(
-      'group-hover:backdrop-blur-sm relative overflow-hidden transition-all mb-2 bg-gray-100 rounded-md dark:bg-gray-800   group-hover:scale-[102%]',
-      aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
+      'group-hover:backdrop-blur-sm relative overflow-hidden transition-all mb-2 bg-gray-100  dark:bg-gray-800   group-hover:scale-[102%]',
+      aspect === 'landscape' ? 'aspect-video' : 'aspect-video'
     )}
   >
     <a href={`/${post.slug}`} class="relative">
@@ -32,7 +40,7 @@ const { post, aspect, preloadImage } = Astro.props
         {post.excerpt}
       </p>
       {
-        post.image ? (
+        post.image && false ? (
           // <Picture
           //   src={post.image.url}
           //   alt={post.image.alt || 'Thumbnail'}
@@ -46,7 +54,7 @@ const { post, aspect, preloadImage } = Astro.props
             alt={post.image.alt || 'Thumbnail'}
             class="object-cover transition-all"
             height={post.image.height}
-            aspectRatio={aspect === 'landscape' ? '16:9' : '1:1'}
+            aspectRatio={aspect === 'landscape' ? '16:9' : '16:9'}
             fit="cover"
           />
         ) : (
@@ -58,13 +66,14 @@ const { post, aspect, preloadImage } = Astro.props
     </a>
   </div>
   <!-- </div> -->
-  <div class="flex items-baseline justify-between">
-    <a
+	<div class="p-4">
+  <div class="flex items-baseline justify-between ">
+    <!-- <a
       href={`/category/${post.category.slug}`}
       class="font-bold bg-gradient-to-br from-orange-700 to-blue-200 via-orange-500 bg-clip-text text-transparent"
     >
       {post.category.title}</a
-    >
+    > -->
     <time
       class="text-sm text-slate-500 dark:text-slate-300yyyyyyyyyy"
       date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}
@@ -76,9 +85,10 @@ const { post, aspect, preloadImage } = Astro.props
     class="mt-2 text-lg font-bold leading-tight tracking-normal text-brand-primary dark:text-white"
   >
     <a href={`/${post.slug}`}>
-      <span
+      <!-- <span
         class="bg-gradient-to-r font-bold from-orange-100 to-orange-400 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
-      >
+      > -->
+			<span>
         {post.title}
       </span>
     </a>
@@ -111,4 +121,5 @@ const { post, aspect, preloadImage } = Astro.props
       ))
     }
   </div>
+</div>
 </div>

@@ -91,12 +91,14 @@ export function Search() {
     <>
       <button
         ref={searchButtonRef}
-        className="group mx-2 flex items-center justify-between rounded-full p-2 text-slate-800 transition-all hover:ring-2 hover:ring-inset hover:ring-orange-50 dark:text-white md:min-w-[8rem] md:bg-slate-100 md:dark:bg-slate-800"
+        className="group mx-2 h-full flex border-l-2 w-full border-black bg-white text-black hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 hover:-translate-y-1 items-center rounded-none justify-between  transition-all dark:text-white md:min-w-[8rem] md:dark:bg-slate-800"
         onClick={onOpen}
       >
-        <SearchIcon className="h-5 w-5 font-bold text-slate-400 transition-colors group-hover:text-orange-50" />
+        <span className="h-full w-10 flex items-center justify-center text-white bg-black">
+          <SearchIcon className="w-5" />
+        </span>
         {/* <ControlKeyIcon /> */}
-        <span className="hidden items-center justify-between gap-1 md:flex">
+        <span className="hidden  mr-5 items-center justify-between gap-1 md:flex">
           {key !== null && (
             <>
               <kbd className="key">{key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}</kbd>
@@ -182,25 +184,25 @@ export function SearchModal({
         >
           <Combobox
             as="div"
-            className="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
+            className="mx-auto max-w-3xl transform divide-y divide-black overflow-hidden rounded-xl bg-white  ring-1 ring-black shadow-[8px_8px_0_#000] text-black border-[3px] border-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
             onChange={(item: MeiliSearchBlogPostResult) => (window.location = `/${item.slug}`)}
           >
             {({ activeOption }) => (
               <>
                 <div className="relative">
                   <SearchIcon
-                    className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
+                    className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-black"
                     aria-hidden="true"
                   />
                   <Combobox.Input
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:ring-0 dark:text-slate-50"
+                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-sm text-black placeholder-black focus:ring-0 dark:text-slate-50"
                     placeholder="Search..."
                     onChange={(event) => setQuery(event.target.value)}
                   />
                 </div>
 
                 {results?.hits?.length > 0 && (
-                  <div className="flex divide-x divide-gray-100 dark:divide-slate-600">
+                  <div className="flex divide-x divide-black dark:divide-slate-600">
                     <div
                       className={cx(
                         'max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto p-4 px-6',
@@ -208,14 +210,14 @@ export function SearchModal({
                       )}
                     >
                       {query === '' && (
-                        <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500 dark:text-slate-300">
+                        <h2 className="mt-2 mb-4 text-xs font-semibold text-black dark:text-slate-300">
                           Recent searches
                         </h2>
                       )}
                       <Combobox.Options
                         static
                         hold
-                        className="-mx2 text-sm text-gray-700 dark:text-slate-200"
+                        className="-mx2 text-sm text-black dark:text-slate-200"
                       >
                         {results?.hits?.map((item) => {
                           return (
@@ -226,8 +228,9 @@ export function SearchModal({
                               href={`/${item.slug}`}
                               className={({ active }) =>
                                 cx(
-                                  'flex cursor-default select-none rounded-xl p-2',
-                                  active && 'bg-gray-100 dark:bg-blue-300'
+                                  'flex cursor-default select-none rounded-lg p-2 transition-[shadow_translate_border-color] ease-out',
+                                  active &&
+                                    'border-black cursor-pointer -translate-x-1 -translate-y-1 shadow-[4px_4px_0_#000] ring-2 ring-black dark:bg-blue-300'
                                 )
                               }
                             >
@@ -301,7 +304,7 @@ export function SearchModal({
                     </div>
 
                     {activeOption && (
-                      <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto dark:divide-slate-600 sm:flex">
+                      <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-black overflow-y-auto dark:divide-slate-600 sm:flex">
                         <div className="flex-none p-6 text-center">
                           <img
                             src={activeOption.image.url}
@@ -310,7 +313,7 @@ export function SearchModal({
                             width={activeOption.image.width}
                             className="mx-auto h-16 w-16 rounded-full object-cover"
                           />
-                          <h2 className="mt-3 font-semibold text-gray-900 dark:text-slate-50">
+                          <h2 className="mt-3 font-semibold text-black dark:text-slate-50">
                             {getHighlightedParts(activeOption._highlightResult.title.value).map(
                               (part) => {
                                 return part.isHighlighted ? (
@@ -337,7 +340,7 @@ export function SearchModal({
                             )}
                           </p>
                           <time
-                            className="text-xs text-gray-400 dark:text-slate-300"
+                            className="text-xs text-black dark:text-slate-300"
                             dateTime={
                               activeOption.publishDate ??
                               activeOption.publishedAt ??
@@ -390,12 +393,12 @@ export function SearchModal({
                     <ExclamationCircleIcon
                       type="outline"
                       name="exclamation-circle"
-                      className="mx-auto h-6 w-6 text-gray-400 dark:text-slate-300"
+                      className="mx-auto h-6 w-6 text-black dark:text-slate-300"
                     />
-                    <p className="mt-4 font-semibold text-gray-900 dark:text-slate-50">
+                    <p className="mt-4 font-semibold text-black dark:text-slate-50">
                       No results found
                     </p>
-                    <p className="mt-2 text-gray-500 dark:text-slate-400">
+                    <p className="mt-2 text-black dark:text-slate-400">
                       No components found for this search term. Please try again.
                     </p>
                   </div>

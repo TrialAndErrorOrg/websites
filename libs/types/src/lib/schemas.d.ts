@@ -1010,6 +1010,7 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
     start: DateAttribute
     motivation: RichTextAttribute
     cv: RichTextAttribute
+    url: UIDAttribute & RequiredAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
@@ -1742,6 +1743,23 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
       SetMinMaxLength<{
         maxLength: 300
       }>
+    twitterPost: StringAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    linkedinPost: StringAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    futureCoworkers: RelationAttribute<
+      'api::open-position.open-position',
+      'manyToMany',
+      'api::team-member.team-member'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
@@ -1972,6 +1990,11 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'api::blog-post.blog-post'
     >
     Summary: RichTextAttribute
+    relatedOpenPositions: RelationAttribute<
+      'api::team-member.team-member',
+      'manyToMany',
+      'api::open-position.open-position'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &

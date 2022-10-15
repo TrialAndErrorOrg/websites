@@ -1,4 +1,5 @@
 import Image from "next/future/image"
+import Link from "next/link"
 import { FaGithub, FaLinkedin, FaOrcid, FaTwitter } from "react-icons/fa"
 import { trpc } from "../../utils/trpc"
 
@@ -24,9 +25,11 @@ export const TeamList = () => {
                 people.map(
                   ({
                     firstName,
+                    slug,
                     position,
                     pronouns,
                     show_pronouns,
+                    Summary,
                     lastName,
                     bio,
                     image,
@@ -35,8 +38,8 @@ export const TeamList = () => {
                     orcid,
                     linkedin,
                   }) => (
-                    <li key={lastName} className="sm:py-8">
-                      <div className="space-y-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-6 sm:space-y-0">
+                    <li key={lastName} className="sm:py-8 group">
+                      <div className="relative space-y-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-6 sm:space-y-0">
                         <div className="aspect-w-2 aspect-h-3 sm:aspect-w-3 sm:aspect-h-4 ">
                           <Image
                             className={`rounded-lg bg-blue-500 fill-orange-500 ${
@@ -61,9 +64,14 @@ export const TeamList = () => {
                           <div className="flex h-full flex-col space-y-4">
                             <div className="space-y-1 text-lg font-medium leading-6">
                               <div className="flex items-end justify-between">
-                                <h2 className="text-3xl">{`${firstName} ${
-                                  lastName ?? ""
-                                }`}</h2>
+                                <Link
+                                  className="link-overlay cia group-hover:cia"
+                                  href={`/team/${slug}`}
+                                >
+                                  <h2 className="text-3xl">{`${firstName} ${
+                                    lastName ?? ""
+                                  }`}</h2>
+                                </Link>
                                 {show_pronouns && (
                                   <span className="text-md text-slate-500 dark:text-slate-400">
                                     {pronouns}
@@ -75,7 +83,9 @@ export const TeamList = () => {
                             <div className="flex-grow text-lg">
                               <div
                                 className="text-gray-500"
-                                dangerouslySetInnerHTML={{ __html: bio ?? "" }}
+                                dangerouslySetInnerHTML={{
+                                  __html: Summary ?? "",
+                                }}
                               />
                             </div>
                             <div className="flex">

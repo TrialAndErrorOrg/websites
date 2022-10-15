@@ -6,15 +6,20 @@ interface Props {
   className?: string
 }
 
-const { tags, class: className = 'text-sm' } = Astro.props
+const { tags, class: className = 'flex gap-1 text-sm' } = Astro.props
 ---
 
 {
   tags && Array.isArray(tags) && (
     <ul class={className}>
       {tags.map((tag) => (
-        <li class="mr-2 mb-2 inline-block bg-gray-100 py-0.5 px-2 text-xs dark:bg-slate-700">
-          <a href={`/${tag.slug}`}>{tag.title}</a>
+        <li>
+          <a
+            class="mr-2 mb-2 inline-block button py-0.5 px-2 text-xs dark:bg-slate-700"
+            href={`/${tag.slug}`}
+          >
+            {tag.title}
+          </a>
         </li>
       ))}
     </ul>
