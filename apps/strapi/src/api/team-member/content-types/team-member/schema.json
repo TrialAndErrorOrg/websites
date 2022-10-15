@@ -110,6 +110,12 @@
     },
     "Summary": {
       "type": "richtext"
+    },
+    "relatedOpenPositions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::open-position.open-position",
+      "inversedBy": "futureCoworkers"
     }
   }
 }

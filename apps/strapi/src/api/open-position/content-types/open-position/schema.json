@@ -180,6 +180,30 @@
       "type": "text",
       "required": true,
       "maxLength": 300
+    },
+    "twitterPost": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "regex": "https://twitter.com/*"
+    },
+    "linkedinPost": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "regex": "https://linkedin.com/*"
+    },
+    "futureCoworkers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::team-member.team-member",
+      "inversedBy": "relatedOpenPositions"
     }
   }
 }

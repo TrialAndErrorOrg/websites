@@ -21,3 +21,5 @@ export type Author =
   | GetAttributesValues<'api::team-member.team-member'>
 
 export type Menu = GetAttributesValues<'plugin::menus.menu'>
+
+export type Application = GetAttributesValues<'api::application.application'> & { id: string }

@@ -67,6 +67,10 @@
     },
     "cv": {
       "type": "richtext"
+    },
+    "url": {
+      "type": "uid",
+      "required": true
     }
   }
 }

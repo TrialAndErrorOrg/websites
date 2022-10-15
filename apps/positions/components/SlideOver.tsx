@@ -39,7 +39,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
     watch,
   } = useForm({
@@ -129,6 +129,10 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                         if (additionalText?.length) {
                           data['additional'] = additionalText
                         }
+
+                        // unique url for the application, so we can send it to the user
+                        // so they can edit their application
+                        data['url'] = Math.random().toString(36).substring(2, 15)
 
                         formData.append('data', JSON.stringify(data))
 

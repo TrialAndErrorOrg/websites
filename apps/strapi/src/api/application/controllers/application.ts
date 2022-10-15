@@ -15,7 +15,7 @@ export default factories.createCoreController('api::application.application', ({
       files: { 'files.documents': documents },
     } = ctx.request
     console.log({ body, documents })
-    const { name, email, additional, motivation, cv, open_position } = JSON.parse(body.data)
+    const { name, email, additional, url, motivation, cv, open_position } = JSON.parse(body.data)
 
     const files = Array.isArray(documents) ? documents : [documents]
     // strapi.service('api::application.application').
@@ -38,11 +38,13 @@ export default factories.createCoreController('api::application.application', ({
           to: email,
           from: 'noreply@trialanderror.org',
           bcc: ['positions@trialanderror.org', 'jorna@trialanderror.org'],
-          attachments: files.map((file: File) => ({
-            filename: file.name,
-            // @ts-expect-error hmmm yes, but it does work?
-            path: file.path,
-          })),
+          attachments: files.length
+            ? files?.map((file: File) => ({
+                filename: file?.name,
+                // @ts-expect-error hmmm yes, but it does work?
+                path: file?.path,
+              }))
+            : [],
         },
         {
           templateReferenceId: 1,
@@ -55,6 +57,7 @@ export default factories.createCoreController('api::application.application', ({
             cv,
             position,
             additional,
+            url,
           },
         },
       )
