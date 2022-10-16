@@ -6,7 +6,7 @@ interface Props {
   className?: string
 }
 
-const { tags, class: className = 'flex gap-1 text-sm' } = Astro.props
+const { tags, class: className = 'flex flex-wrap gap-x-1 text-sm' } = Astro.props
 ---
 
 {
@@ -16,7 +16,7 @@ const { tags, class: className = 'flex gap-1 text-sm' } = Astro.props
         <li>
           <a
             class="mr-2 mb-2 inline-block button py-0.5 px-2 text-xs dark:bg-slate-700"
-            href={`/${tag.slug}`}
+            href={`/tag/${tag.slug}`}
           >
             {tag.title}
           </a>

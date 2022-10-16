@@ -31,26 +31,29 @@ const posts = (await getPosts()) ?? []
   <div class="px-5 md:px-0 py-10 grid md:grid-cols-12 cols">
     <div class="col-start-3 col-span-8">
       <h1
-        class="bg-gradient-to-r from-slate-500 to-orange-600 bg-clip-text strokeme text-white lg:text-8xl w-full text-center dark:text-white md:text-left text-4xl font-black tracking-tight leading-none"
+        class="bg-gradient-to-r from-slate-500 to-orange-600 bg-clip-text text-black lg:text-8xl w-full text-center dark:text-white md:text-left text-4xl font-black tracking-tight leading-none"
       >
         <span class="lg:text-6xl">A Blog of</span><br />Trial & Error.
       </h1>
-      <a href={`/${posts?.[0]?.slug}`} class="card  my-10 group grid md:grid-cols-12 gap-10">
-        <div class="h-full col-span-7">
+      <a
+        href={`/${posts?.[0]?.slug}`}
+        class="card bg-white my-10 group grid md:grid-cols-12 gap-10"
+      >
+        <div class="h-full col-span-6 bg-white">
           <Image
             alt={(posts[0]?.image.alt as string) ?? ''}
             src={posts?.[0]?.image.url as string}
             loading="eager"
             width={posts?.[0]?.image.width as number}
             format="webp"
-						aspectRatio="1"
+            aspectRatio="1"
             fit="cover"
-						class="h-full"
+            class="h-full"
           />
         </div>
-        <div class="prose dark:prose-invert w-full col-span-5 p-4">
-          <h2>{posts?.[0]?.title}</h2>
-          <p>{posts?.[0]?.excerpt}</p>
+        <div class="w-full col-span-6 p-4">
+          <h2 class="font-medium text-xl">{posts?.[0]?.title}</h2>
+          <p class="font-medium">{posts?.[0]?.excerpt}</p>
         </div>
       </a>
     </div>

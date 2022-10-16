@@ -1,0 +1,38 @@
+---
+import { Image } from '@astrojs/image/components'
+import type { Author } from '../../utils/types'
+
+interface Props {
+  authors: Author[]
+}
+
+const { authors } = Astro.props
+---
+
+<div class="flex gap-[-10px] relative">
+  {
+    authors.map((author, idx) => (
+      <span
+        class={`border-[3px] bg-white border-black relative rounded-full`}
+        style={{
+          // '--size': '40px',
+          'margin-left': `-${idx * 8}px`,
+          'z-index': `${idx + 1}`,
+        }}
+      >
+        {author?.image?.url ? (
+          <Image
+            src={author.image.url}
+            height={20}
+            width={20}
+            alt={author.image.alt ?? `${author.firstName} ${author.lastName}`}
+          />
+        ) : (
+          <div class="text-black w-5 h-5 uppercase font-bold flex items-center justify-center">
+            {author?.lastName?.charAt(0)}
+          </div>
+        )}
+      </span>
+    ))
+  }
+</div>

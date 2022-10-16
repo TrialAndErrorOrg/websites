@@ -5,6 +5,7 @@ import PhotographIcon from '@heroicons/react/outline/PhotographIcon.js'
 import Picture from '../core/Picture.astro'
 import { Image } from '@astrojs/image/components'
 import type { BlogPost } from '../../utils/types'
+import AuthorList from '../atoms/AuthorList.astro'
 
 interface Props {
   post: BlogPost
@@ -16,17 +17,21 @@ const { post, aspect, preloadImage } = Astro.props
 
 // const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
 const categoryColorMap = {
-	interview: 'bg-rose-500',
-	'behind the scenes': 'bg-emerald-400 ',
-	'opinion': 'bg-orange-100',
+  interview: 'bg-rose-500',
+  'behind the scenes': 'bg-emerald-400 ',
+  opinion: 'bg-orange-100',
 }
 ---
 
 <!-- <div> -->
 <div class="overflow-clip cursor-pointer group card bg-white">
-	<div class={`w-full  items-center p-4 flex justify-center ${categoryColorMap[post.category.title?.toLowerCase()]} text-black text-2xl border-b-4 border-black font-black`}>
-		{post.category.title}
-	</div>
+  <div
+    class={`w-full  items-center p-4 flex justify-center ${
+      categoryColorMap[post.category.title?.toLowerCase()]
+    } text-black text-2xl border-b-[3px] border-black font-black`}
+  >
+    {post.category.title}
+  </div>
   <div
     class={cx(
       'group-hover:backdrop-blur-sm relative overflow-hidden transition-all mb-2 bg-gray-100  dark:bg-gray-800   group-hover:scale-[102%]',
@@ -66,60 +71,68 @@ const categoryColorMap = {
     </a>
   </div>
   <!-- </div> -->
-	<div class="p-4">
-  <div class="flex items-baseline justify-between ">
-    <!-- <a
+  <div class="p-4">
+    <div class="flex items-baseline justify-between">
+      <!-- <a
       href={`/category/${post.category.slug}`}
       class="font-bold bg-gradient-to-br from-orange-700 to-blue-200 via-orange-500 bg-clip-text text-transparent"
     >
       {post.category.title}</a
     > -->
-    <time
-      class="text-sm text-slate-500 dark:text-slate-300yyyyyyyyyy"
-      date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}
+      <time
+        class="text-sm text-slate-500 dark:text-slate-300yyyyyyyyyy"
+        date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}
+      >
+        {
+          format(
+            parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt),
+            'MMMM dd, yyyy'
+          )
+        }
+      </time>
+    </div>
+    <h2
+      class="mt-2 text-lg font-bold leading-tight tracking-normal text-brand-primary dark:text-white"
     >
-      {format(parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt), 'MMMM dd, yyyy')}
-    </time>
-  </div>
-  <h2
-    class="mt-2 text-lg font-bold leading-tight tracking-normal text-brand-primary dark:text-white"
-  >
-    <a href={`/${post.slug}`}>
-      <!-- <span
+      <a href={`/${post.slug}`}>
+        <!-- <span
         class="bg-gradient-to-r font-bold from-orange-100 to-orange-400 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
       > -->
-			<span>
-        {post.title}
-      </span>
-    </a>
-  </h2>
+        <span>
+          {post.title}
+        </span>
+      </a>
+    </h2>
 
-  <div class="hidden">
-    {
-      post.excerpt && (
-        <p class="line-clamp-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
-          <a href={`/${post.slug}`}>{post.excerpt}</a>
-        </p>
-      )
-    }
+    <div class="hidden">
+      {
+        post.excerpt && (
+          <p class="line-clamp-3 mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <a href={`/${post.slug}`}>{post.excerpt}</a>
+          </p>
+        )
+      }
+    </div>
+
+    <div class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
+      {
+        (
+          // [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
+          //   <div class="relative flex-shrink-0">
+          //     {author.image?.url && (
+          //       <Picture
+          //         src={author.image.url}
+          //         alt={author?.lastName ?? author?.firstName}
+          //         class="h-5 w-5 rounded-full object-cover"
+          //       />
+          //     )}
+
+          //     <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
+          //   </div>
+          // ))
+          <AuthorList authors={[...(post.blog_authors ?? []), ...(post.team_members ?? [])]} />
+        )
+      }
+    </div>
   </div>
-
-  <div class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
-    {
-      [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
-        <div class="relative flex-shrink-0">
-          {author.image?.url && (
-            <Picture
-              src={author.image.url}
-              alt={author?.lastName ?? author?.firstName}
-              class="h-5 w-5 rounded-full object-cover"
-            />
-          )}
-
-          <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
-        </div>
-      ))
-    }
-  </div>
-</div>
 </div>

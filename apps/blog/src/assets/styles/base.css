@@ -84,7 +84,7 @@ h6,
 }
 
 .card {
-  @apply relative border-[3px] hover:shadow-[0px_8px_0_#000] border-black hover:-translate-y-2 transition-all rounded-3xl overflow-clip active:translate-y-2 active:translate-x-0 active:shadow-[0px_0px_0_#000];
+  @apply relative border-[3px] hover:shadow-[8px_8px_0_#000] border-black hover:-translate-x-2 hover:-translate-y-2 transition-all rounded-3xl overflow-clip active:translate-y-2 active:translate-x-0 active:shadow-[0px_0px_0_#000];
 }
 
 .strokeme {
@@ -96,5 +96,5 @@ h6,
 }
 
 .button-sleek {
-  @apply border-2 border-transparent text-black rounded-full px-2 hover:border-black transition-[bg-color_box-shadow_translate_border-color] hover:bg-white bg-none hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 hover:-translate-y-1;
+  @apply border-2 border-transparent text-black rounded-full py-1 px-2 hover:border-black transition-[bg-color_box-shadow_translate_border-color] hover:bg-white bg-none hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 hover:-translate-y-1;
 }
