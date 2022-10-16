@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { authors } = Astro.props
+console.log(authors.map((author) => author?.image?.height))
 ---
 
 <div class="flex gap-[-10px] relative">
@@ -20,11 +21,11 @@ const { authors } = Astro.props
           'z-index': `${idx + 1}`,
         }}
       >
-        {author?.image?.url ? (
+        {author?.image?.url && false ? (
           <Image
             src={author.image.url}
-            height={20}
-            width={20}
+            height="20"
+            width="20"
             alt={author.image.alt ?? `${author.firstName} ${author.lastName}`}
           />
         ) : (

@@ -44,11 +44,12 @@ const posts = (await getPosts()) ?? []
             alt={(posts[0]?.image.alt as string) ?? ''}
             src={posts?.[0]?.image.url as string}
             loading="eager"
-            width={posts?.[0]?.image.width as number}
+            width={posts?.[0]?.image?.formats?.medium?.width ?? (posts?.[0]?.image.width as number)}
+            height={posts?.[0]?.image?.formats?.medium?.height ??
+              (posts?.[0]?.image?.height as number)}
             format="webp"
-            aspectRatio="1"
             fit="cover"
-            class="h-full"
+            class="h-full border-r-[3px] border-black"
           />
         </div>
         <div class="w-full col-span-6 p-4">

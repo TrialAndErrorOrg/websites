@@ -9,11 +9,12 @@ interface Props {
 }
 
 const { author, class: className } = Astro.props
+console.log(author.image?.height)
 ---
 
 <div class={cx('grid grid-cols-4 grid-rows-3', className)}>
   {
-    author.image?.url ? (
+    author.image?.url && false ? (
       <Image
         src={author?.image?.url}
         alt={author?.image?.alt ?? author?.lastName}
