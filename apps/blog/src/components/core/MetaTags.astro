@@ -8,63 +8,79 @@ import defaultImageSrc from '../../assets/images/default.png'
 import { SITE } from '../../config.mjs'
 import Fonts from '../atoms/Fonts.astro'
 import ExtraMetaTags from '../atoms/ExtraMetaTags.astro'
+import { getAcademicMetaTags } from './getAcademicTags'
+import type { BlogPost } from '../../utils/types'
 
 const { src: defaultImage } = await getImage({
-	src: defaultImageSrc,
-	width: 1200,
-	height: 628,
+  src: defaultImageSrc,
+  width: 1200,
+  height: 628,
 })
 
+interface Props {
+  title: string
+  description: string
+  image?: string
+  canonical?: string
+  noindex?: boolean
+  nofollow?: boolean
+  ogType?: string
+  ogTitle?: string
+  post?: BlogPost
+}
+
 const {
-	title = SITE.name,
-	description = '',
-	image: _image = defaultImage,
+  title = SITE.name,
+  description = '',
+  image: _image = defaultImage,
 
-	canonical,
-	noindex = false,
-	nofollow = false,
+  canonical,
+  noindex = false,
+  nofollow = false,
 
-	ogTitle = title,
-	ogType = 'website',
+  ogTitle = title,
+  ogType = 'website',
+  post = null,
 } = Astro.props
 
 const image =
-	typeof _image === 'string'
-		? new URL(_image, Astro.site)
-		: _image && typeof _image['src'] !== 'undefined'
-		? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
-		: null
+  typeof _image === 'string'
+    ? new URL(_image, Astro.site)
+    : _image && typeof _image['src'] !== 'undefined'
+    ? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
+    : null
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <AstroSeo
-	title={title}
-	description={description}
-	canonical={canonical}
-	noindex={noindex}
-	nofollow={nofollow}
-	openGraph={{
-		url: canonical,
-		title: ogTitle,
-		description: description,
-		type: ogType,
-		images: image
-			? [
-					{
-						url: image?.toString(),
-						alt: ogTitle,
-					},
-			  ]
-			: undefined,
-		// site_name: 'SiteName',
-	}}
-	twitter={{
-		// handle: '@handle',
-		// site: '@site',
-		cardType: image ? 'summary_large_image' : undefined,
-	}}
+  title={title}
+  description={description}
+  canonical={canonical}
+  noindex={noindex}
+  nofollow={nofollow}
+  openGraph={{
+    url: canonical,
+    title: ogTitle,
+    description: description,
+    type: ogType,
+    images: image
+      ? [
+          {
+            url: image?.toString(),
+            alt: ogTitle,
+          },
+        ]
+      : undefined,
+    site_name: 'A Blog of Trial &amp; Error',
+  }}
+  twitter={{
+    handle: '@jtrialerror',
+    site: 'https://journal.trialanderror.org',
+    cardType: image ? 'summary_large_image' : undefined,
+  }}
+  additionalMetaTags={post ? getAcademicMetaTags(post) : []}
 />
 
 <Fonts />
