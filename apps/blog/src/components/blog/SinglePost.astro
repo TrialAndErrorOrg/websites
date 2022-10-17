@@ -32,7 +32,7 @@ console.log(prev, next)
       post.image?.width && post.image?.height && (
         <Image
           src={post.image.formats?.large?.url ?? post.image.url}
-          class="mb-6 w-full border-b  border-black bg-gray-400 dark:bg-slate-700"
+          class="absolute -top-1/2 mb-6 w-full border-b  border-black bg-gray-400 dark:bg-slate-700"
           height={post.image?.formats?.large?.height ?? post.image.height}
           width={post.image?.formats?.large?.width ?? post.image.width}
           format="webp"
