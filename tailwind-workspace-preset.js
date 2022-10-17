@@ -1,5 +1,6 @@
 // @ts-check
 
+const colors = require('tailwindcss/colors')
 /**
  * @type {import('tailwindcss').Config}
  **/
@@ -8,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        azure: colors?.blue ?? {},
         orange: {
           50: '#ffe13e',
           100: '#ffd734',

@@ -21,8 +21,8 @@ const {
   post,
   aspect,
   preloadImage,
-  class: className = 'cursor-pointer flex-col flex group card',
   wide,
+  class: className = wide ? 'card flex group' : 'flex-col flex group card',
 } = Astro.props
 
 // const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
@@ -42,7 +42,7 @@ const darkCategoryColorMap = {
 <div class={className}>
   <div
     class={cx(
-      'relative border-black dark:border-white overflow-hidden transition-all bg-gray-100  dark:bg-gray-800',
+      'border-black dark:border-white overflow-hidden transition-all bg-gray-100  dark:bg-gray-800',
       aspect === 'landscape' ? 'aspect-video' : 'aspect-video',
       'relative',
       wide ? 'border-r-2 w-full' : 'border-b-2'
@@ -77,18 +77,18 @@ const darkCategoryColorMap = {
     <a
       class={`py-1 px-4 ${categoryColorMap[post.category.title?.toLowerCase()]} ${
         darkCategoryColorMap[post.category.title?.toLowerCase()]
-      } text-black !font-medium absolute rounded-full z-1 top-4 right-4 button overflow-clip dark:border-white !border-2 text-lg md:text-xl border-black dark:text-white `}
-      href={`/${post?.category?.title}`}
+      } text-black !font-medium absolute rounded-full z-10 top-4 right-4 button overflow-clip dark:border-white !border-2 text-lg md:text-xl border-black dark:text-white `}
+      href={`/category/${post?.category?.title?.toLowerCase()}`}
     >
       {post.category.title}
     </a>
     <Tags
       tags={post.blog_tags ?? []}
-      class="flex max-w-[80%] justify-end absolute bottom-1 right-4 flex-wrap gap-x-1 text-sm"
+      class="flex max-w-[80%] justify-end absolute bottom-1 z-10 right-4 flex-wrap gap-x-1 text-sm"
     />
   </div>
   <!-- </div> -->
-  <div class="p-6 flex-grow flex gap-2 md:gap-8 flex-col rounded-lg relative">
+  <div class="p-6 flex-grow flex gap-2 md:gap-6 flex-col rounded-lg">
     <div class="flex items-baseline justify-between">
       <!-- <a
       href={`/category/${post.category.slug}`}
@@ -109,7 +109,7 @@ const darkCategoryColorMap = {
       </time>
     </div>
     <h2
-      class="relative text-xl md:text-4xl font-bold leading-tight tracking-tighter text-brand-primary dark:text-white"
+      class="text-xl md:text-3xl font-bold leading-tight tracking-tighter text-brand-primary dark:text-white"
     >
       <!-- <span
         class="bg-gradient-to-r font-bold from-orange-100 to-orange-400 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
@@ -148,11 +148,13 @@ const darkCategoryColorMap = {
           <AuthorList authors={[...(post.blog_authors ?? []), ...(post.team_members ?? [])]} />
         )
       }
-      <a
-        href={`/${post.slug}`}
-        class="flex items-center gap-2 h-max link-overlay button px-3 !border-2 !bg-orange-500 w-max text-lg py-1 font-medium text-black text-brand-primary dark:text-brand-primary"
-      >
-        Read <FaArrowRight />
+      <a href={`/${post.slug}`} class="link-overlay">
+        <span
+          class="flex relative z-10 items-center ml-auto gap-2 h-min w-max button px-3 !border-2 !bg-orange-500 text-lg py-1 font-medium text-black text-brand-primary dark:text-brand-primary"
+        >
+          Read
+          <FaArrowRight />
+        </span>
       </a>
     </div>
   </div>
