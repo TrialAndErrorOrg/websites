@@ -61,7 +61,7 @@ h6,
 }
 
 .lettrine {
-  @apply float-left mr-2 mt-2 px-2 text-8xl font-bold bg-white border-2 border-black leading-none;
+  @apply float-left mr-2 mt-2 border-2 border-black bg-white px-2 text-6xl font-bold leading-none text-black dark:border-white dark:bg-blue-800 dark:text-white md:text-8xl;
 }
 
 .key {
@@ -84,17 +84,57 @@ h6,
 }
 
 .card {
-  @apply relative border-[3px] hover:shadow-[8px_8px_0_#000] border-black hover:-translate-x-2 hover:-translate-y-2 transition-all rounded-3xl overflow-clip active:translate-y-2 active:translate-x-0 active:shadow-[0px_0px_0_#000];
+  @apply relative overflow-clip rounded-xl border-2 border-black   bg-white text-black transition-all ease-in-out hover:-translate-x-2  hover:translate-y-0 hover:shadow-thick-3   active:translate-y-2 active:translate-x-0 active:shadow-[0px_0px_0_#000] dark:border-white dark:bg-blue-600 dark:text-white dark:hover:shadow-thick-3-white;
+  /* hover:before:translate-x-2 hover:after:translate-y-2 */
 }
+
+/* .card::before,
+.card::after {
+  content: ' ';
+  @apply absolute -z-10 h-[11px] w-[11px] rotate-45 bg-black transition-transform;
+}
+.card::before {
+  @apply right-0 top-0;
+}
+.card::after {
+  @apply left-0 bottom-0;
+} */
 
 .strokeme {
   -webkit-text-stroke: 8px black;
 }
 
 .button {
-  @apply border-[1px] hover:cursor-pointer text-black transition-all bg-white rounded-full hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 border-black hover:-translate-y-1;
+  @apply rounded-full border-[1px] border-black bg-white text-black transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer hover:shadow-thick-2 dark:border-white dark:bg-blue-900 dark:text-white dark:hover:shadow-thick-2-white;
 }
 
 .button-sleek {
-  @apply border-2 border-transparent text-black rounded-full py-1 px-2 hover:border-black transition-[bg-color_box-shadow_translate_border-color] hover:bg-white bg-none hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 hover:-translate-y-1;
+  @apply rounded-full border-2 border-transparent bg-none py-1 px-2 text-black transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white hover:shadow-thick-2 dark:text-white dark:hover:border-white dark:hover:bg-blue-900  dark:hover:shadow-thick-2-white;
+}
+
+.link-overlay {
+  position: static;
+}
+.link-overlay::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  zindex: 0;
+  content: '';
+  height: 100%;
+  width: 100%;
+  cursor: inherit;
+}
+
+.cia {
+  padding-bottom: 0.2%;
+  transition: background-size 0.6s ease-out;
+  background: linear-gradient(var(--orange), var(--orange)) no-repeat left 123%/0 50%;
+}
+.cia:hover {
+  background-size: 100% 50%;
+}
+
+.cia-active {
+  background-size: 100% 50%;
 }

@@ -1,0 +1,159 @@
+---
+import { cx } from '../../utils/cx'
+import { parseISO, format } from 'date-fns'
+import PhotographIcon from '@heroicons/react/outline/PhotographIcon.js'
+import Picture from '../core/Picture.astro'
+import { Image } from '@astrojs/image/components'
+import type { BlogPost } from '../../utils/types'
+import AuthorList from '../atoms/AuthorList.astro'
+import Tags from '../atoms/Tags.astro'
+import { FaArrowRight } from 'react-icons/fa'
+
+interface Props {
+  post: BlogPost
+  aspect?: any
+  preloadImage?: boolean
+  class?: string
+  wide?: boolean
+}
+
+const {
+  post,
+  aspect,
+  preloadImage,
+  class: className = 'cursor-pointer flex-col flex group card',
+  wide,
+} = Astro.props
+
+// const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
+const categoryColorMap = {
+  interview: '!bg-rose-500',
+  'behind the scenes': '!bg-emerald-400 ',
+  opinion: '!bg-orange-100',
+}
+const darkCategoryColorMap = {
+  interview: 'dark:!bg-rose-800',
+  'behind the scenes': 'dark:!bg-emerald-700 ',
+  opinion: 'dark:!bg-orange-800',
+}
+---
+
+<!-- <div> -->
+<div class={className}>
+  <div
+    class={cx(
+      'relative border-black dark:border-white overflow-hidden transition-all bg-gray-100  dark:bg-gray-800',
+      aspect === 'landscape' ? 'aspect-video' : 'aspect-video',
+      'relative',
+      wide ? 'border-r-2 w-full' : 'border-b-2'
+    )}
+  >
+    <!-- <p
+      class="text-white p-2 text-sm backdrop-saturate-50 backdrop-brightness-75 transition-all opacity-0 group-hover:opacity-100 backdrop-blur-sm z-10 absolute bottom-0"
+    >
+      {post.excerpt}
+    </p> -->
+    {
+      post.image ? (
+        <Image
+          src={post.image?.formats?.small?.url ?? post.image.url}
+          alt={post.image.alt || 'Thumbnail'}
+          class={`${wide ? 'h-full' : 'h-72 w-full'} object-cover transition-all`}
+          height={
+            (wide
+              ? post.image?.formats?.large?.height ?? post.image?.formats?.medium?.height
+              : post.image?.formats?.small?.height) ?? post.image.height
+          }
+          aspectRatio={aspect === 'landscape' ? '16:9' : '16:9'}
+          fit="cover"
+        />
+      ) : (
+        <span class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 text-gray-200">
+          <PhotographIcon />
+        </span>
+      )
+    }
+
+    <a
+      class={`py-1 px-4 ${categoryColorMap[post.category.title?.toLowerCase()]} ${
+        darkCategoryColorMap[post.category.title?.toLowerCase()]
+      } text-black !font-medium absolute rounded-full z-1 top-4 right-4 button overflow-clip dark:border-white !border-2 text-lg md:text-xl border-black dark:text-white `}
+      href={`/${post?.category?.title}`}
+    >
+      {post.category.title}
+    </a>
+    <Tags
+      tags={post.blog_tags ?? []}
+      class="flex justify-end absolute bottom-1 right-4 flex-wrap gap-x-1 text-sm"
+    />
+  </div>
+  <!-- </div> -->
+  <div class="p-6 flex-grow flex gap-2 md:gap-8 flex-col rounded-lg relative">
+    <div class="flex items-baseline justify-between">
+      <!-- <a
+      href={`/category/${post.category.slug}`}
+      class="font-bold bg-gradient-to-br from-orange-700 to-blue-200 via-orange-500 bg-clip-text text-transparent"
+    >
+      {post.category.title}</a
+    > -->
+      <time
+        class="text-sm text-black dark:text-slate-300"
+        date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}
+      >
+        {
+          format(
+            parseISO(post?.publishDate ?? post?.publishedAt ?? post.createdAt),
+            'MMMM dd, yyyy'
+          )
+        }
+      </time>
+    </div>
+    <h2
+      class="relative text-xl md:text-4xl font-bold leading-tight tracking-tighter text-brand-primary dark:text-white"
+    >
+      <!-- <span
+        class="bg-gradient-to-r font-bold from-orange-100 to-orange-400 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+      > -->
+      {post.title}
+    </h2>
+
+    <div>
+      {
+        post.excerpt && (
+          <p class="line-clamp-3 my-2 font-medium leading-relaxed text-black dark:text-white">
+            <a href={`/${post.slug}`}>{post.excerpt}</a>
+          </p>
+        )
+      }
+    </div>
+
+    <div
+      class="flex justify-self-end md:items-center md:flex-row md:justify-between flex-col justify-end mt-auto gap-y-4"
+    >
+      {
+        (
+          // [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
+          //   <div class="relative flex-shrink-0">
+          //     {author.image?.url && (
+          //       <Picture
+          //         src={author.image.url}
+          //         alt={author?.lastName ?? author?.firstName}
+          //         class="h-5 w-5 rounded-full object-cover"
+          //       />
+          //     )}
+
+          //     <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
+          //   </div>
+          // ))
+          <AuthorList authors={[...(post.blog_authors ?? []), ...(post.team_members ?? [])]} />
+        )
+      }
+      <a
+        href={`/${post.slug}`}
+        class="flex items-center gap-2 h-max link-overlay button px-3 !border-2 !bg-orange-500 w-max text-lg py-1 font-medium text-black text-brand-primary dark:text-brand-primary"
+      >
+        Read <FaArrowRight />
+      </a>
+    </div>
+  </div>
+</div>

@@ -91,14 +91,14 @@ export function Search() {
     <>
       <button
         ref={searchButtonRef}
-        className="group mx-2 h-full flex border-l-2 w-full border-black bg-white text-black hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 hover:-translate-y-1 items-center rounded-none justify-between  transition-all dark:text-white md:min-w-[8rem] md:dark:bg-slate-800"
+        className="group mx-2 flex h-full w-full items-center justify-between rounded-none border-l-2 border-black bg-white text-black transition-all hover:-translate-x-1 hover:-translate-y-1  hover:shadow-[4px_4px_0_#000] dark:text-white md:min-w-[8rem] md:dark:bg-slate-800"
         onClick={onOpen}
       >
-        <span className="h-full w-10 flex items-center justify-center text-white bg-black">
+        <span className="flex h-full w-10 items-center justify-center bg-black text-white">
           <SearchIcon className="w-5" />
         </span>
         {/* <ControlKeyIcon /> */}
-        <span className="hidden  mr-5 items-center justify-between gap-1 md:flex">
+        <span className="mr-5  hidden items-center justify-between gap-1 md:flex">
           {key !== null && (
             <>
               <kbd className="key">{key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}</kbd>
@@ -184,7 +184,7 @@ export function SearchModal({
         >
           <Combobox
             as="div"
-            className="mx-auto max-w-3xl transform divide-y divide-black overflow-hidden rounded-xl bg-white  ring-1 ring-black shadow-[8px_8px_0_#000] text-black border-[3px] border-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
+            className="mx-auto max-w-3xl transform divide-y divide-black overflow-hidden rounded-xl border-[3px]  border-black bg-white text-black shadow-[8px_8px_0_#000] ring-1 ring-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
             onChange={(item: MeiliSearchBlogPostResult) => (window.location = `/${item.slug}`)}
           >
             {({ activeOption }) => (
@@ -230,7 +230,7 @@ export function SearchModal({
                                 cx(
                                   'flex cursor-default select-none rounded-lg p-2 transition-[shadow_translate_border-color] ease-out',
                                   active &&
-                                    'border-black cursor-pointer -translate-x-1 -translate-y-1 shadow-[4px_4px_0_#000] ring-2 ring-black dark:bg-blue-300'
+                                    '-translate-x-1 -translate-y-1 cursor-pointer border-black shadow-[4px_4px_0_#000] ring-2 ring-black dark:bg-blue-300'
                                 )
                               }
                             >
@@ -238,16 +238,22 @@ export function SearchModal({
                                 <>
                                   <div
                                     className={cx(
-                                      'flex h-10 w-10 flex-none items-center justify-center rounded-full',
+                                      'flex h-10 w-10 flex-none items-center justify-center overflow-clip rounded-full',
                                       active
                                         ? 'bg-gray-700 dark:bg-slate-100'
                                         : 'bg-gray-500 dark:bg-slate-500'
                                     )}
                                   >
                                     <img
-                                      src={item.image.url}
+                                      src={item.image?.formats?.thumbnail.url ?? item.image?.url}
                                       alt=""
-                                      className="h-8 w-8 rounded-full"
+                                      height={
+                                        item.image?.formats?.thumbnail.height ?? item.image?.height
+                                      }
+                                      width={
+                                        item.image?.formats?.thumbnail.width ?? item.image?.width
+                                      }
+                                      className="h-8 w-8 object-cover"
                                     />
                                   </div>
                                   <div className="ml-4 flex-auto">

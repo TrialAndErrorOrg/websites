@@ -14,7 +14,7 @@ import FAQs from '../components/widgets/FAQs.astro'
 import Stats from '../components/widgets/Stats.astro'
 import CallToAction from '../components/widgets/CallToAction.astro'
 import { getPosts } from '../utils/blog.js'
-import PostList from '../components/blog/PostList.astro'
+import PostCard from '../components/blog/PostCard.astro'
 import Container from '../components/atoms/Container.astro'
 import Picture from '../components/core/Picture.astro'
 
@@ -29,15 +29,15 @@ const posts = (await getPosts()) ?? []
 
 <Layout {meta}>
   <div class="px-5 md:px-0 py-10 grid md:grid-cols-12 cols">
-    <div class="col-start-3 col-span-8">
+    <div class="col-start-2 col-span-10">
       <h1
         class="bg-gradient-to-r from-slate-500 to-orange-600 bg-clip-text text-black lg:text-8xl w-full text-center dark:text-white md:text-left text-4xl font-black tracking-tight leading-none"
       >
         <span class="lg:text-6xl">A Blog of</span><br />Trial & Error.
       </h1>
-      <a
+      <!-- <a
         href={`/${posts?.[0]?.slug}`}
-        class="card bg-white my-10 group grid md:grid-cols-12 gap-10"
+        class="card bg-white my-10 group md:grid grid-cols-12 gap-10"
       >
         <div class="h-full col-span-6 bg-white">
           <Image
@@ -49,25 +49,27 @@ const posts = (await getPosts()) ?? []
               (posts?.[0]?.image?.height as number)}
             format="webp"
             fit="cover"
-            class="h-full border-r-[3px] border-black"
+            class="h-full border-r-2 border-black"
           />
         </div>
         <div class="w-full col-span-6 p-4">
           <h2 class="font-medium text-xl">{posts?.[0]?.title}</h2>
           <p class="font-medium">{posts?.[0]?.excerpt}</p>
         </div>
-      </a>
+      </a> -->
+      <PostCard post={posts[0]} class="card flex group my-10" wide />
     </div>
-    <div class="col-span-8 col-start-3">
+
+    <div class="col-span-10 col-start-2">
       <div class="grid gap-5 lg:gap-10 md:grid-cols-2">
         {
           posts
             .slice(1, 3)
-            .map((post) => <PostList post={post} aspect="landscape" preloadImage={true} />)
+            .map((post) => <PostCard post={post} aspect="landscape" preloadImage={true} />)
         }
       </div>
-      <div class="grid gap-4 mt-10 lg:gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {posts.slice(3).map((post) => <PostList post={post} aspect="square" />)}
+      <div class="grid gap-10 mt-10 md:grid-cols-2">
+        {posts.slice(3).map((post) => <PostCard post={post} aspect="square" />)}
       </div>
     </div>
   </div>
