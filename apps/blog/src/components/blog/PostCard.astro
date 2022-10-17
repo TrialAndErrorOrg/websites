@@ -7,7 +7,7 @@ import { Image } from '@astrojs/image/components'
 import type { BlogPost } from '../../utils/types'
 import AuthorList from '../atoms/AuthorList.astro'
 import Tags from '../atoms/Tags.astro'
-import { FaArrowRight } from 'react-icons/fa'
+import { FaArrowRight } from 'react-icons/fa/index'
 
 interface Props {
   post: BlogPost
@@ -84,7 +84,7 @@ const darkCategoryColorMap = {
     </a>
     <Tags
       tags={post.blog_tags ?? []}
-      class="flex justify-end absolute bottom-1 right-4 flex-wrap gap-x-1 text-sm"
+      class="flex max-w-[80%] justify-end absolute bottom-1 right-4 flex-wrap gap-x-1 text-sm"
     />
   </div>
   <!-- </div> -->
