@@ -75,7 +75,7 @@ export function Application(props: Props) {
                   role="list"
                   className="border border-gray-200 rounded-md divide-y divide-gray-200"
                 >
-                  {application.documents?.map((document) => (
+                  {application.documents?.map((document: any) => (
                     <li
                       className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
                       key={document.id}

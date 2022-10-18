@@ -5,7 +5,7 @@ import { Position } from '../../components/Position'
 import { cleanSlug, getCanonical, getPermalink, POST_BASE } from '../../utils/permalinks'
 import { getPosition, getPositions } from '../../utils/positions'
 import type { OpenPosition } from '../../utils/types'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 
 interface Props {
   position: OpenPosition
@@ -23,7 +23,7 @@ interface Props {
 //   }))
 // }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const slug = params?.slug as string
   const position = await getPosition(slug)
 
@@ -34,19 +34,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const positions = (await getPositions()) ?? []
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const positions = (await getPositions()) ?? []
 
-  return {
-    paths: positions.map((position) => ({
-      params: {
-        slug: cleanSlug(position.slug ?? '/'),
-        blog: POST_BASE || undefined,
-      },
-    })),
-    fallback: false,
-  }
-}
+//   return {
+//     paths: positions.map((position) => ({
+//       params: {
+//         slug: cleanSlug(position.slug ?? '/'),
+//         blog: POST_BASE || undefined,
+//       },
+//     })),
+//     fallback: false,
+//   }
+// }
 
 export default function PositionPage({ position }: { position: OpenPosition }) {
   const meta = {
