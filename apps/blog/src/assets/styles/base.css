@@ -141,3 +141,7 @@ h6,
 .cia-active {
   background-size: 100% 50%;
 }
+
+.sleek-underline {
+  @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full;
+}

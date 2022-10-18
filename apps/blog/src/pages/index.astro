@@ -101,7 +101,7 @@ const posts = (await getPosts()) ?? []
           <p class="font-medium">{posts?.[0]?.excerpt}</p>
         </div>
       </a> -->
-      <PostCard post={posts[0]} class="card grid md:flex group my-10" wide />
+      <PostCard post={posts[0]} class="card grid md:flex group my-10" preloadImage wide />
     </div>
 
     <div class="col-span-10 col-start-2">

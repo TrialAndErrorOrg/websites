@@ -9,43 +9,47 @@ interface Props {
   post: BlogPost
   prev?: BlogPost
   next?: BlogPost
+  latest: BlogPost[]
 }
 
 import { getFormattedDate } from '../../utils/utils'
 import type { BlogPost } from '../../utils/types'
 import readingTime from 'reading-time'
 import { Fragment } from 'react'
+import PostCard from './PostCard.astro'
 
-const { post, prev, next } = Astro.props
-const filteredBody = post.body.replace(/<\!--.*?-->/g, '').replace(/<p>&nbsp;<\/p>/g, '')
+const { post, prev, next, latest } = Astro.props
+const filteredBody = post.body
+  .replace(/<\!--.*?-->/g, '')
+  .replace(/<p>&nbsp;<\/p>/g, '')
+  .replace(/&nbsp;/g, '')
 const bod = addBigLetterToBody(filteredBody)
 
 const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
-console.log(prev, next)
 ---
 
 <section class="mx-auto relative">
-  <div
-    class="w-screen fixed top-12 -z-1 h-[45vh] md:h-[65vh] overflow-clip border-b-2 border-black mb-10"
-  >
-    {
-      post.image?.width && post.image?.height && (
-        <Image
-          src={post.image.formats?.large?.url ?? post.image.url}
-          class="w-full border-b  border-black bg-gray-400 dark:bg-slate-700"
-          height={post.image?.formats?.large?.height ?? post.image.height}
-          width={post.image?.formats?.large?.width ?? post.image.width}
-          format="webp"
-          fit="cover"
-          loading="eager"
-          aspectRatio="21:9"
-          alt={post.image.alt ?? post.seo?.metaDescription ?? ''}
-        />
-      )
-    }
-  </div>
+  <!-- <div
+    class="w-screen relative stick inset-0 dark:bg-blue-500 bg-white md:h-[65vh] overflow-clip border-b-2 border-black mb-10"
+  > -->
+  {
+    post.image?.width && post.image?.height && (
+      <Image
+        src={post.image.formats?.large?.url ?? post.image.url}
+        class="sticky top-12 max-h-[45vh] w-full border-b border-black object-cover dark:bg-slate-700 md:max-h-[60vh]"
+        height={post.image?.formats?.large?.height ?? post.image.height}
+        width={post.image?.formats?.large?.width ?? post.image.width}
+        format="webp"
+        fit="cover"
+        loading="eager"
+        aspectRatio="21:9"
+        alt={post.image.alt ?? post.seo?.metaDescription ?? ''}
+      />
+    )
+  }
+  <!-- </div> -->
   <article
-    class="dark:bg-blue-500 grid grid-cols-12 w-full py-10 border-t-2 border-black dark:border-white mt-[40vh] md:mt-[60vh] bg-cream relative"
+    class="dark:bg-blue-500 grid grid-cols-12 w-full py-10 border-t-2 border-black dark:border-white bg-cream relative"
   >
     <p class="col-span-8 col-start-2 md:col-start-3 max-w-3xl">
       <time datetime={post.publishDate ?? post.publishedAt}
@@ -59,7 +63,9 @@ console.log(prev, next)
         {post.title}
       </h1>
     </header>
-    <div class="col-start-2 md:col-start-3 col-span-5 container mx-auto max-w-3xl my-4 md:mt-8">
+    <div
+      class="col-start-2 md:col-start-3 col-span-10 md:col-span-5 container mx-auto max-w-3xl my-4 md:mt-8"
+    >
       <PostTags tags={post.blog_tags ?? []} />
     </div>
 
@@ -127,16 +133,19 @@ console.log(prev, next)
       </a>
     </div>
     <div
-      class="col-start-2 md:col-start-3 col-end-10 max-w-3xl prose md:prose-lg dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-a:text-primary-600 md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 prose-a:text-orange-500 prose-img:rounded-md prose-img:shadow-lg my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal"
+      class="col-start-2 md:col-start-3 md:col-end-10 col-end-12 max-w-3xl prose md:prose-lg dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-a:text-primary-600 md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 prose-a:text-orange-500 prose-img:rounded-md prose-img:shadow-lg my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal"
     >
       <div class="first-of-type:prose-p:mt-0" set:html={bod}></div>
       <hr class="border-black" />
     </div>
-    <div class="grid md:grid-cols-2 gap-3 col-span-7 col-start-3">
+    <div class="grid md:grid-cols-2 gap-3 md:col-span-7 col-start-2 col-span-10 md:col-start-3">
       {authors.map((author) => <Author class="" author={author} />)}
     </div>
+
     <!-- prev and next article -->
-    <div class="col-span-7 col-start-3 grid grid-cols-2 mt-10 text-lg font-medium gap-4">
+    <div
+      class="md:col-span-7 col-span-10 col-start-2 md:col-start-3 grid grid-cols-2 mt-10 text-lg font-medium gap-4"
+    >
       {
         prev && (
           <div class="group relative flex items-baseline gap-2 px-4 font-medium text-black dark:text-white">
@@ -158,5 +167,26 @@ console.log(prev, next)
         )
       }
     </div>
+    {
+      (
+        <div class="col-span-10 col-start-2 md:col-span-7 md:col-start-3">
+          <h2 class="my-10 text-4xl font-bold">
+            {post.related?.length ? 'Related Posts' : 'Latest Posts'}
+          </h2>
+          <div class="grid gap-6 text-lg font-medium">
+            {(post.related?.length ? post.related : latest)
+              ?.sort(
+                (a, b) =>
+                  (new Date(a.publishDate ?? a.publishedAt) -
+                    new Date(b.publishDate ?? b.publishedAt)) *
+                  -1
+              )
+              .map((post) => (
+                <PostCard post={post} wide />
+              ))}
+          </div>
+        </div>
+      )
+    }
   </article>
 </section>

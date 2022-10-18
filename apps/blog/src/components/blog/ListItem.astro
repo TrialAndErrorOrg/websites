@@ -12,7 +12,6 @@ const { post } = Astro.props as { post: BlogPost }
 
 // const image = await findImage(post.image)
 const image = post.image
-console.dir(image, { depth: null })
 ---
 
 <article class="max-w-md mx-auto md:max-w-none grid md:grid-cols-2 gap-6 md:gap-8">

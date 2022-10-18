@@ -2,6 +2,7 @@ import { InstantSearch, useInstantSearch } from 'react-instantsearch-hooks-web'
 import { Fragment, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
+import { FaArrowRight } from 'react-icons/fa/index'
 import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
 import { cx } from '../../utils/cx'
 import { instantMeiliSearch, MeiliSearchResponse } from '@meilisearch/instant-meilisearch'
@@ -90,15 +91,16 @@ export function Search() {
   return (
     <>
       <button
+        aria-label="Search posts"
         ref={searchButtonRef}
-        className="group mx-2 flex h-full w-full items-center justify-between rounded-none border-l-2 border-black bg-white text-black transition-all hover:-translate-x-1 hover:-translate-y-1  hover:shadow-[4px_4px_0_#000] dark:text-white md:min-w-[8rem] md:dark:bg-slate-800"
+        className="group flex h-full w-full items-center justify-between rounded-none border-l-2 border-black bg-white text-black transition-all hover:-translate-x-1 hover:-translate-y-1  hover:shadow-[4px_4px_0_#000] dark:text-white md:min-w-[8rem] md:dark:bg-slate-800"
         onClick={onOpen}
       >
-        <span className="flex h-full w-10 items-center justify-center bg-black text-white">
+        <span className="flex h-full w-12 items-center justify-center bg-black text-white">
           <SearchIcon className="w-5" />
         </span>
         {/* <ControlKeyIcon /> */}
-        <span className="mr-5  hidden items-center justify-between gap-1 md:flex">
+        <span className="hidden items-center justify-between gap-0 md:flex">
           {key !== null && (
             <>
               <kbd className="key">{key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}</kbd>
@@ -313,10 +315,18 @@ export function SearchModal({
                       <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-black overflow-y-auto dark:divide-slate-600 sm:flex">
                         <div className="flex-none p-6 text-center">
                           <img
-                            src={activeOption.image.url}
+                            src={
+                              activeOption.image?.formats?.thumbnail.url ?? activeOption.image?.url
+                            }
                             alt=""
-                            height={activeOption.image.height}
-                            width={activeOption.image.width}
+                            height={
+                              activeOption.image?.formats?.thumbnail?.height ??
+                              activeOption.image.height
+                            }
+                            width={
+                              activeOption.image?.formats?.thumbnail?.width ??
+                              activeOption.image.width
+                            }
                             className="mx-auto h-16 w-16 rounded-full object-cover"
                           />
                           <h2 className="mt-3 font-semibold text-black dark:text-slate-50">
@@ -384,9 +394,10 @@ export function SearchModal({
                           </p>
                           <a
                             href={`/${activeOption.slug}`}
-                            className="mt-6 w-full rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                            className="button  mx-auto mt-6 flex w-max items-center justify-center rounded-md !border-2 !bg-orange-600 py-2 px-4 text-sm font-bold text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                           >
                             Read
+                            <FaArrowRight className="ml-2" />
                           </a>
                         </div>
                       </div>

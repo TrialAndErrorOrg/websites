@@ -22,7 +22,7 @@ const {
   aspect,
   preloadImage,
   wide,
-  class: className = wide ? 'card flex group' : 'flex-col flex group card',
+  class: className = wide ? 'card grid md:flex group' : 'flex-col flex group card',
 } = Astro.props
 
 // const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
@@ -59,6 +59,7 @@ const darkCategoryColorMap = {
           src={post.image?.formats?.small?.url ?? post.image.url}
           alt={post.image.alt || 'Thumbnail'}
           class={`${wide ? 'h-full' : 'h-72 w-full'} object-cover transition-all`}
+          loading={preloadImage ? 'eager' : 'lazy'}
           height={
             (wide
               ? post.image?.formats?.large?.height ?? post.image?.formats?.medium?.height
@@ -84,11 +85,13 @@ const darkCategoryColorMap = {
     </a>
     <Tags
       tags={post.blog_tags ?? []}
-      class="flex max-w-[80%] justify-end absolute bottom-1 z-10 right-4 flex-wrap gap-x-1 text-sm"
+      class="flex max-w-[80%] justify-end absolute bottom-3 z-10 right-4 flex-wrap gap-x-1 text-sm"
     />
   </div>
   <!-- </div> -->
-  <div class="p-6 flex-grow flex gap-2 md:gap-6 flex-col rounded-lg">
+  <div
+    class={cx('flex-grow flex gap-2 md:gap-6 flex-col rounded-lg', wide ? 'pt-6 pb-4 px-6' : 'p-6')}
+  >
     <div class="flex items-baseline justify-between">
       <!-- <a
       href={`/category/${post.category.slug}`}

@@ -12,59 +12,66 @@ interface Props {
 const { author, class: className } = Astro.props
 ---
 
-<div class={cx('card grid-cols-4 grid-rows-3 grid bg-white w-full p-4', className)}>
+<div
+  class={cx('card grid-cols-4  grid bg-white w-full gap-x-4 md:gap-x-0 p-4 md:p-2 py-4', className)}
+>
   {
-    author.image?.url && false ? (
+    author.image?.url ? (
       <Image
-        src={author?.image?.url}
+        src={author?.image?.formats?.thumbnail?.url || author?.image?.url}
         alt={author?.image?.alt ?? author?.lastName}
-        height={author?.image?.height}
-        aspectRatio="1"
-        class="col-span-1 row-span-3 h-14 w-14 rounded-full border-2 border-black object-cover"
+        height={author?.image?.formats?.thumbnail?.height || author?.image?.height}
+        width={author?.image?.formats?.thumbnail?.width || author?.image?.width}
+        class="col-span-1 row-span-2 h-16 w-16 rounded-full border-2 border-black object-cover"
       />
     ) : (
-      <div class="col-span-1 row-span-3 flex h-14 w-14 items-center justify-center self-center justify-self-center rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black">
+      <div class="col-span-1 row-span-2 flex h-16 w-16 items-center justify-center self-center justify-self-center rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black">
         {author.lastName?.[0] ?? author?.firstName?.[0]}
       </div>
     )
   }
-  <a class="row-span-1 col-span-3 font-bold text-2xl">{author.firstName} {author.lastName}</a>
-  <p class="row-span-2 col-span-3">{author.summary}</p>
-  <div class="flex gap-1 flex-wrap">
-    {
-      author.orcid && (
-        <a
-          href={`https://orcid.org/${author.orcid}`}
-          class="button flex items-center gap-1 text-black"
-        >
-          <FaOrcid />
-          <span class="sr-only">ORCID</span>
-        </a>
-      )
-    }
-    {
-      author.twitter && (
-        <a href={`https://twitter.com/${author.twitter}`} class="button flex items-center gap-1">
-          <FaTwitter />
-          <span class="sr-only">Twitter</span>
-        </a>
-      )
-    }
-    {
-      author.github && (
-        <a href={`https://github.com/${author.github}`} class="button flex items-center gap-1">
-          <FaGithub />
-          <span class="sr-only">Github</span>
-        </a>
-      )
-    }
-    {
-      author.personalWebsite && (
-        <a href={author.personalWebsite} class="button flex items-center gap-1">
-          <FaLink />
-          <span class="sr-only">Website</span>
-        </a>
-      )
-    }
-  </div>
+  <a class="row-span-1 col-span-3 font-bold text-xl md:text-2xl"
+    >{author.firstName} {author.lastName}</a
+  >
+  {author.position && <div class="col-span-3 row-span-1">{author.position}</div>}
+  {author.summary && <p class="col-span-3 row-span-2">{author.summary}</p>}
+  {
+    author.orcid ||
+      author.twitter ||
+      author.github ||
+      (author.personalWebsite && (
+        <div class="row-span-1 flex flex-wrap gap-1">
+          {author.orcid && (
+            <a
+              href={`https://orcid.org/${author.orcid}`}
+              class="button flex items-center gap-1 text-black"
+            >
+              <FaOrcid />
+              <span class="sr-only">ORCID</span>
+            </a>
+          )}
+          {author.twitter && (
+            <a
+              href={`https://twitter.com/${author.twitter}`}
+              class="button flex items-center gap-1"
+            >
+              <FaTwitter />
+              <span class="sr-only">Twitter</span>
+            </a>
+          )}
+          {author.github && (
+            <a href={`https://github.com/${author.github}`} class="button flex items-center gap-1">
+              <FaGithub />
+              <span class="sr-only">Github</span>
+            </a>
+          )}
+          {author.personalWebsite && (
+            <a href={author.personalWebsite} class="button flex items-center gap-1">
+              <FaLink />
+              <span class="sr-only">Website</span>
+            </a>
+          )}
+        </div>
+      ))
+  }
 </div>
