@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa/index'
 import { getMenu } from '../../utils/menu'
 
-const footer = (await getMenu('footer')) ?? []
+const footer = (await getMenu('footer-blog')) ?? []
 
 const socials = (await getMenu('socials')) ?? []
 ---
@@ -46,7 +46,7 @@ const socials = (await getMenu('socials')) ?? []
                         <li>
                           <a
                             href={item.url ?? '/'}
-                            class="text-base text-white hover:text-gray-900 dark:text-slate-100 dark:hover:text-white"
+                            class="sleek-underline text-base text-white dark:text-slate-100 dark:hover:text-white"
                           >
                             {item.title}
                           </a>

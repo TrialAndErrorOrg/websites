@@ -20,6 +20,7 @@ import PostCard from './PostCard.astro'
 import { FaOrcid } from 'react-icons/fa/index'
 import GithubSlugger from 'github-slugger'
 import { Section, TableOfContents } from '../core/TableOfContents'
+import License from '../widgets/License.astro'
 
 const { post, prev, next, latest } = Astro.props
 const slugger = new GithubSlugger()
@@ -192,6 +193,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
     >
       <div class="first-of-type:prose-p:mt-0" set:html={bod}></div>
       <hr class="border-black border" />
+      <License />
     </div>
     <!-- Table of contents Element -->
 
