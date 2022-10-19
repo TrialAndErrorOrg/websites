@@ -11,36 +11,45 @@ import { getPosts } from '../../utils/blog.js'
 import type { BlogPost } from '../../utils/types.js'
 
 interface Props {
-	post: BlogPost
+  post: BlogPost
+  prev?: BlogPost
+  next?: BlogPost
+  latest: BlogPost[]
 }
 
 export async function getStaticPaths() {
-	if (BLOG?.disabled || BLOG?.post?.disabled) return []
+  if (BLOG?.disabled || BLOG?.post?.disabled) return []
 
-	// const posts = await fetchPosts()
-	const posts = (await getPosts()) ?? []
+  // const posts = await fetchPosts()
+  const posts = (await getPosts()) ?? []
 
-	return posts.map((post) => ({
-		params: {
-			slug: cleanSlug(post.slug ?? '/'),
-			blog: POST_BASE || undefined,
-		},
-		props: { post },
-	}))
+  return posts.map((post, idx) => ({
+    params: {
+      slug: cleanSlug(post.slug ?? '/'),
+      blog: POST_BASE || undefined,
+    },
+    props: {
+      post,
+      ...(idx > 0 && { prev: posts[idx - 1] }),
+      ...(idx < posts.length - 1 && { next: posts[idx + 1] }),
+      latest: posts.filter((latest) => latest.id !== post.id).slice(0, 4),
+    },
+  }))
 }
 
-const { post } = Astro.props
+const { post, prev, next, latest } = Astro.props
 
 const meta = {
-	title: `${post.title} — ${SITE.name}`,
-	description: post?.seo?.metaDescription ?? post.excerpt,
-	canonical: post.canonical || getCanonical(getPermalink(post.slug, 'post')),
-	image: post.image.url, //await findImage(post.image),
-	ogTitle: post.title,
-	ogType: 'article',
+  title: `${post.title} — ${SITE.name}`,
+  description: post?.seo?.metaDescription ?? post.excerpt,
+  canonical: post.canonical || getCanonical(getPermalink(post.slug, 'post')),
+  image: post?.image?.formats?.thumbnail?.url ?? post.image.url, //await findImage(post.image),
+  ogTitle: post.title,
+  ogType: 'article',
+  post,
 }
 ---
 
 <Layout meta={meta}>
-	<SinglePost post={{ ...post, image: post.image }} />
+  <SinglePost latest={latest} prev={prev} next={next} post={{ ...post, image: post.image }} />
 </Layout>

@@ -3,18 +3,23 @@ import type { BlogTag } from '../../utils/types'
 
 interface Props {
   tags: BlogTag[]
-  className?: string
+  class?: string
 }
 
-const { tags, class: className = 'text-sm' } = Astro.props
+const { tags, class: className = 'flex flex-wrap gap-x-1 text-sm' } = Astro.props
 ---
 
 {
   tags && Array.isArray(tags) && (
     <ul class={className}>
       {tags.map((tag) => (
-        <li class="mr-2 mb-2 inline-block bg-gray-100 py-0.5 px-2 text-xs dark:bg-slate-700">
-          <a href={`/${tag.slug}`}>{tag.title}</a>
+        <li>
+          <a
+            class="button mb-2 flex items-center py-1 px-2 text-xs font-medium  leading-none "
+            href={`/tag/${tag.slug}`}
+          >
+            {tag.title}
+          </a>
         </li>
       ))}
     </ul>

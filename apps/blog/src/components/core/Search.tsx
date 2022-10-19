@@ -2,6 +2,7 @@ import { InstantSearch, useInstantSearch } from 'react-instantsearch-hooks-web'
 import { Fragment, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
+import { FaArrowRight } from 'react-icons/fa/index'
 import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
 import { cx } from '../../utils/cx'
 import { instantMeiliSearch, MeiliSearchResponse } from '@meilisearch/instant-meilisearch'
@@ -90,13 +91,16 @@ export function Search() {
   return (
     <>
       <button
+        aria-label="Search posts"
         ref={searchButtonRef}
-        className="group mx-2 flex items-center justify-between rounded-full p-2 text-slate-800 transition-all hover:ring-2 hover:ring-inset hover:ring-orange-50 dark:text-white md:min-w-[8rem] md:bg-slate-100 md:dark:bg-slate-800"
+        className="group flex h-full w-full items-center justify-between rounded-none border-black bg-white  text-black transition-colors hover:bg-orange-500 dark:text-white md:dark:bg-slate-800"
         onClick={onOpen}
       >
-        <SearchIcon className="h-5 w-5 font-bold text-slate-400 transition-colors group-hover:text-orange-50" />
+        <span className="flex h-full w-12 items-center justify-center border-l-2 border-r-2 border-black bg-black text-white transition-colors group-hover:border-r-orange-500 group-hover:bg-orange-500 group-hover:text-black">
+          <SearchIcon className="w-5" />
+        </span>
         {/* <ControlKeyIcon /> */}
-        <span className="hidden items-center justify-between gap-1 md:flex">
+        <span className="hidden items-center justify-between gap-0 md:flex">
           {key !== null && (
             <>
               <kbd className="key">{key === ACTION_KEY_DEFAULT ? <ControlKeyIcon /> : key}</kbd>
@@ -156,7 +160,7 @@ export function SearchModal({
       <Dialog
         as="div"
         id="search-modal"
-        className="fixed inset-0 top-20 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
+        className="fixed inset-0 top-20 z-[100] overflow-y-auto p-4 sm:p-6 md:p-20"
         onClose={setIsOpen}
       >
         <Transition.Child
@@ -182,25 +186,25 @@ export function SearchModal({
         >
           <Combobox
             as="div"
-            className="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
+            className="mx-auto max-w-3xl transform divide-y-2 divide-black overflow-hidden  border-2  border-black bg-white text-black shadow-[8px_8px_0_#000] ring-1 ring-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
             onChange={(item: MeiliSearchBlogPostResult) => (window.location = `/${item.slug}`)}
           >
             {({ activeOption }) => (
               <>
                 <div className="relative">
                   <SearchIcon
-                    className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
+                    className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-black"
                     aria-hidden="true"
                   />
                   <Combobox.Input
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:ring-0 dark:text-slate-50"
+                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-sm text-black placeholder-black focus:ring-0 dark:text-slate-50"
                     placeholder="Search..."
                     onChange={(event) => setQuery(event.target.value)}
                   />
                 </div>
 
                 {results?.hits?.length > 0 && (
-                  <div className="flex divide-x divide-gray-100 dark:divide-slate-600">
+                  <div className="flex divide-x-2 divide-black dark:divide-slate-600">
                     <div
                       className={cx(
                         'max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto p-4 px-6',
@@ -208,14 +212,14 @@ export function SearchModal({
                       )}
                     >
                       {query === '' && (
-                        <h2 className="mt-2 mb-4 text-xs font-semibold text-gray-500 dark:text-slate-300">
+                        <h2 className="mt-2 mb-4 text-xs font-semibold text-black dark:text-slate-300">
                           Recent searches
                         </h2>
                       )}
                       <Combobox.Options
                         static
                         hold
-                        className="-mx2 text-sm text-gray-700 dark:text-slate-200"
+                        className="-mx2 text-sm text-black dark:text-slate-200"
                       >
                         {results?.hits?.map((item) => {
                           return (
@@ -226,8 +230,9 @@ export function SearchModal({
                               href={`/${item.slug}`}
                               className={({ active }) =>
                                 cx(
-                                  'flex cursor-default select-none rounded-xl p-2',
-                                  active && 'bg-gray-100 dark:bg-blue-300'
+                                  'flex cursor-default select-none  p-2 transition-[shadow_translate_border-color] ease-out',
+                                  active &&
+                                    '-translate-x-1 -translate-y-1 cursor-pointer border-black shadow-[4px_4px_0_#000] ring-2 ring-black dark:bg-blue-300'
                                 )
                               }
                             >
@@ -235,16 +240,22 @@ export function SearchModal({
                                 <>
                                   <div
                                     className={cx(
-                                      'flex h-10 w-10 flex-none items-center justify-center rounded-full',
+                                      'flex h-10 w-10 flex-none items-center justify-center overflow-clip rounded-full',
                                       active
                                         ? 'bg-gray-700 dark:bg-slate-100'
                                         : 'bg-gray-500 dark:bg-slate-500'
                                     )}
                                   >
                                     <img
-                                      src={item.image.url}
+                                      src={item.image?.formats?.thumbnail.url ?? item.image?.url}
                                       alt=""
-                                      className="h-8 w-8 rounded-full"
+                                      height={
+                                        item.image?.formats?.thumbnail.height ?? item.image?.height
+                                      }
+                                      width={
+                                        item.image?.formats?.thumbnail.width ?? item.image?.width
+                                      }
+                                      className="h-8 w-8 object-cover"
                                     />
                                   </div>
                                   <div className="ml-4 flex-auto">
@@ -272,13 +283,12 @@ export function SearchModal({
                                       )}
                                       {/* {item.title} */}
                                     </p>
-                                    <div className={'flex flex-wrap gap-3 gap-y-0 text-xs'}>
+                                    <div className={'flex flex-wrap gap-1 text-xs'}>
                                       {item._highlightResult.blog_tags.map((tag) => (
                                         <span
                                           key={tag.slug.value}
-                                          className="text-xs text-slate-400"
+                                          className="rounded-full border border-black px-2 text-xs text-black"
                                         >
-                                          #
                                           {getHighlightedParts(tag.title.value).map((part) =>
                                             part.isHighlighted ? (
                                               <mark className="bg-orange-500 text-white">
@@ -301,16 +311,24 @@ export function SearchModal({
                     </div>
 
                     {activeOption && (
-                      <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto dark:divide-slate-600 sm:flex">
+                      <div className="hidden h-96 w-1/2 flex-none flex-col divide-y-2 divide-black overflow-y-auto dark:divide-slate-600 sm:flex">
                         <div className="flex-none p-6 text-center">
                           <img
-                            src={activeOption.image.url}
+                            src={
+                              activeOption.image?.formats?.thumbnail.url ?? activeOption.image?.url
+                            }
                             alt=""
-                            height={activeOption.image.height}
-                            width={activeOption.image.width}
+                            height={
+                              activeOption.image?.formats?.thumbnail?.height ??
+                              activeOption.image.height
+                            }
+                            width={
+                              activeOption.image?.formats?.thumbnail?.width ??
+                              activeOption.image.width
+                            }
                             className="mx-auto h-16 w-16 rounded-full object-cover"
                           />
-                          <h2 className="mt-3 font-semibold text-gray-900 dark:text-slate-50">
+                          <h2 className="mt-3 font-semibold text-black dark:text-slate-50">
                             {getHighlightedParts(activeOption._highlightResult.title.value).map(
                               (part) => {
                                 return part.isHighlighted ? (
@@ -337,7 +355,7 @@ export function SearchModal({
                             )}
                           </p>
                           <time
-                            className="text-xs text-gray-400 dark:text-slate-300"
+                            className="text-xs text-black dark:text-slate-300"
                             dateTime={
                               activeOption.publishDate ??
                               activeOption.publishedAt ??
@@ -375,9 +393,10 @@ export function SearchModal({
                           </p>
                           <a
                             href={`/${activeOption.slug}`}
-                            className="mt-6 w-full rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                            className="button  mx-auto mt-6 flex w-max items-center justify-center rounded-md !border-2 !bg-orange-600 py-2 px-4 text-sm font-bold text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                           >
                             Read
+                            <FaArrowRight className="ml-2" />
                           </a>
                         </div>
                       </div>
@@ -390,12 +409,12 @@ export function SearchModal({
                     <ExclamationCircleIcon
                       type="outline"
                       name="exclamation-circle"
-                      className="mx-auto h-6 w-6 text-gray-400 dark:text-slate-300"
+                      className="mx-auto h-6 w-6 text-black dark:text-slate-300"
                     />
-                    <p className="mt-4 font-semibold text-gray-900 dark:text-slate-50">
+                    <p className="mt-4 font-semibold text-black dark:text-slate-50">
                       No results found
                     </p>
-                    <p className="mt-2 text-gray-500 dark:text-slate-400">
+                    <p className="mt-2 text-black dark:text-slate-400">
                       No components found for this search term. Please try again.
                     </p>
                   </div>

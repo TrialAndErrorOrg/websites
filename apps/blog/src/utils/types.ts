@@ -39,11 +39,11 @@ export type BlogPost = Omit<GetAttributesValues<'api::blog-post.blog-post'>, 'im
   }
 }
 
-interface Formats {
-  small: Function[]
-  medium: Function[]
-  thumbnail: Function[]
-}
+// interface Formats {
+//   small: Function[]
+//   medium: Function[]
+//   thumbnail: Function[]
+// }
 export type BlogAuthor = GetReturnType<ApiBlogAuthorBlogAuthor>
 export type BlogHome = GetReturnType<ApiBlogHomeBlogHome>
 export type BlogTag = GetAttributesValues<'api::tag.tag'>
@@ -362,6 +362,8 @@ interface Image {
 
 interface Formats {
   small: Small
+  medium?: Small
+  large?: Small
   thumbnail: Small
 }
 

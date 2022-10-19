@@ -1,5 +1,6 @@
 // @ts-check
 
+const colors = require('tailwindcss/colors')
 /**
  * @type {import('tailwindcss').Config}
  **/
@@ -8,19 +9,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        azure: colors?.blue ?? {},
         orange: {
-          50: '#ffe13e',
-          100: '#ffd734',
-          200: '#ffcd2a',
-          300: '#ffc320',
-          400: '#ffb916',
-          500: '#ffaf0c',
-          600: '#f5a502',
-          700: '#eb9b00',
-          800: '#e19100',
-          900: '#d78700',
+          50: '#ffdc32',
+          100: '#ffd228',
+          200: '#ffc81e',
+          300: '#ffbe14',
+          400: '#ffb40a',
+          500: '#feaa00',
+          600: '#f4a000',
+          700: '#ea9600',
+          800: '#e08c00',
+          900: '#d68200',
         },
         blue: {
+          50: '#324f8f',
+          100: '#284585',
+          200: '#1e3b7b',
+          300: '#143171',
+          400: '#0a2767',
+          500: '#001d5d',
+          600: '#001353',
+          700: '#000949',
+          800: '#00003f',
+          900: '#000035',
+        },
+        bluer: {
           50: '#325874',
           100: '#284e6a',
           200: '#1e4460',
@@ -42,5 +56,6 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
+    require('tailwindcss-scoped-groups'),
   ],
 }

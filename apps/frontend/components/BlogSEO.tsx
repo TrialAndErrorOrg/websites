@@ -31,7 +31,11 @@ export const BlogSeo = ({
     <meta key="t4" name="twitter:image:alt" content={titleWithContext} />,
     <meta key="t5" name="citation_title" content={title} />,
     <meta key="t6" name="dc.title" content={title} />,
-    <meta key="sn1" name="og:site_name" content="A Blog of Trial &amp Error" />,
+    <meta
+      key="sn1"
+      name="og:site_name"
+      content="A Blog of Trial &amp; Error"
+    />,
     <meta
       key="sn2"
       name="citation_journal_title"

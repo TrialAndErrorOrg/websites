@@ -3,14 +3,10 @@
 @tailwind utilities;
 :root {
   /* key */
-  --docsearch-key-gradient: linear-gradient(
-    -225deg,
-    rgb(213, 219, 228) 0%,
-    rgb(248, 248, 248) 100%
-  );
-  --docsearch-key-shadow: inset 0 -2px 0 0 rgb(205, 205, 230), inset 0 0 1px 1px #fff,
-    0 1px 2px 1px rgba(30, 35, 90, 0.4);
-  --docsearch-muted-color: rgb(127, 132, 151);
+  --docsearch-key-gradient: linear-gradient(-225deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+  --docsearch-key-shadow: inset 0 -2px 0 0 rgb(0, 0, 0), inset 0 0 1px 1px #000,
+    0 1px 2px 1px rgba(0, 0, 0, 1);
+  --docsearch-muted-color: rgb(0, 0, 0);
 }
 
 html.dark:root {
@@ -23,6 +19,10 @@ html.dark:root {
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center rounded border border-transparent py-3 px-6 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
+  }
+
+  .button {
+    @apply transition-all border-2 text-bold text-black hover:shadow-[4px_4px_0_#000] hover:-translate-x-1 hover:-translate-y-1;
   }
 }
 

@@ -203,7 +203,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::team-member.team-member",
-      "inversedBy": "relatedOpenPositions"
+      "mappedBy": "relatedOpenPositions"
     }
   }
 }

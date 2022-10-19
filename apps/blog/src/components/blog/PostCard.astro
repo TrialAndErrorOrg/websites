@@ -1,0 +1,167 @@
+---
+import { cx } from '../../utils/cx'
+import { parseISO, format } from 'date-fns'
+import PhotographIcon from '@heroicons/react/outline/PhotographIcon.js'
+import Picture from '../core/Picture.astro'
+import { Image } from '@astrojs/image/components'
+import type { BlogPost } from '../../utils/types'
+import AuthorList from '../atoms/AuthorList.astro'
+import Tags from '../atoms/Tags.astro'
+import { FaArrowRight } from 'react-icons/fa/index'
+
+interface Props {
+  post: BlogPost
+  aspect?: any
+  preloadImage?: boolean
+  class?: string
+  wide?: boolean
+}
+
+const {
+  post,
+  aspect,
+  preloadImage,
+  wide,
+  class: className = wide ? 'card grid md:flex group' : 'flex-col flex group card',
+} = Astro.props
+
+// const AuthorimageProps = post?.author?.image ? GetImage(post.author.image) : null
+const categoryColorMap = {
+  interview: '!bg-orange-500',
+  'behind the scenes': '!bg-white',
+  opinion: '!bg-blue-500 !text-white',
+}
+const darkCategoryColorMap = {
+  interview: 'dark:!bg-rose-800',
+  'behind the scenes': 'dark:!bg-emerald-700 ',
+  opinion: 'dark:!bg-orange-800',
+}
+---
+
+<!-- <div> -->
+<div class={className}>
+  <div
+    class={cx(
+      'border-black dark:border-white overflow-hidden transition-all bg-gray-100  dark:bg-gray-800',
+      aspect === 'landscape' ? 'aspect-video' : 'aspect-video',
+      'relative',
+      wide ? 'border-r-2 w-full' : 'border-b-2'
+    )}
+  >
+    <!-- <p
+      class="text-white p-2 text-sm backdrop-saturate-50 backdrop-brightness-75 transition-all opacity-0 group-hover:opacity-100 backdrop-blur-sm z-10 absolute bottom-0"
+    >
+      {post.excerpt}
+    </p> -->
+    {
+      post.image ? (
+        <Image
+          src={post.image?.formats?.small?.url ?? post.image.url}
+          alt={post.image.alt || 'Thumbnail'}
+          class={`${wide ? 'h-full w-full' : 'h-72 w-full'} object-cover transition-all`}
+          loading={preloadImage ? 'eager' : 'lazy'}
+          height={
+            (wide
+              ? post.image?.formats?.large?.height ?? post.image?.formats?.medium?.height
+              : post.image?.formats?.small?.height) ?? post.image.height
+          }
+          aspectRatio={aspect === 'landscape' ? '16:9' : '16:9'}
+          fit="cover"
+        />
+      ) : (
+        <span class="absolute top-1/2 left-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 text-gray-200">
+          <PhotographIcon />
+        </span>
+      )
+    }
+
+    <!-- <a
+      class={`py-1 px-4 ${
+        false ? '!bg-orange-500' : categoryColorMap[post.category.title?.toLowerCase()]
+      } ${
+        darkCategoryColorMap[post.category.title?.toLowerCase()]
+      } text-black !font-semibold absolute z-10 top-4 right-4 button hover:!border-r-2 overflow-clip dark:border-white  !border-2 !border-r-2  text-lg md:text-xl border-black dark:text-white `}
+      href={`/category/${post?.category?.title?.toLowerCase()}`}
+    >
+      {post.category?.title}
+    </a> -->
+    <Tags
+      tags={post.blog_tags ?? []}
+      class="flex max-w-[80%] justify-end absolute bottom-3 z-10 right-4 flex-wrap gap-x-1 text-sm"
+    />
+  </div>
+  <!-- </div> -->
+  <div
+    class={cx(
+      'bg-white dark:bg-slate-700 flex-grow flex gap-2 md:gap-6 flex-col ',
+      wide ? 'pt-6 pb-4 p-6' : 'p-6'
+    )}
+  >
+    <div class="flex items-center justify-between">
+      <time
+        class="text-sm text-black font-medium dark:text-slate-300"
+        date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}
+      >
+        {
+          format(
+            parseISO(
+              post?.publishDate ?? post?.publishedAt ?? post.createdAt ?? new Date().toISOString()
+            ),
+            'MMMM dd, yyyy'
+          )
+        }
+      </time>
+      <a
+        href={`/category/${post.category?.slug}`}
+        class="px-4 relative z-10 !border-2 !bg-orange-500 text-lg -mr-6 py-1 button !border-r-0 hover:!border-r-2 font-semibold !rounded-none"
+      >
+        {post.category?.title}</a
+      >
+    </div>
+    <h2
+      class="text-xl md:text-3xl font-semibold font-sans leading-tight tracking-tighter text-brand-primary dark:text-white"
+    >
+      {post.title}
+    </h2>
+
+    <div class="flex md:items-center md:flex-row md:justify-between flex-col justify-end gap-y-4">
+      {
+        (
+          // [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
+          //   <div class="relative flex-shrink-0">
+          //     {author.image?.url && (
+          //       <Picture
+          //         src={author.image.url}
+          //         alt={author?.lastName ?? author?.firstName}
+          //         class="h-5 w-5 rounded-full object-cover"
+          //       />
+          //     )}
+
+          //     <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
+          //   </div>
+          // ))
+          <AuthorList authors={[...(post.blog_authors ?? []), ...(post.team_members ?? [])]} />
+        )
+      }
+    </div>
+
+    <div>
+      {
+        post.excerpt && (
+          <p class="line-clamp-4 max-w-[50ch] font-medium leading-relaxed text-black dark:text-white">
+            <a href={`/${post.slug}`}>{post.excerpt}</a>
+          </p>
+        )
+      }
+    </div>
+
+    <a href={`/${post.slug}`} class="link-overlay mt-auto">
+      <span
+        class="sleek-underline dark:text-white flex relative z-10 items-center ml-auto gap-2 h-min w-max text-xl py-1 font-medium text-black text-brand-primary dark:text-brand-primary"
+      >
+        Read
+        <FaArrowRight />
+      </span>
+    </a>
+  </div>
+</div>

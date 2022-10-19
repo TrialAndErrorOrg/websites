@@ -1,0 +1,46 @@
+---
+import { FaCreativeCommons, FaCreativeCommonsBy } from 'react-icons/fa/index'
+import { getFirstAuthorLink } from '../../utils/getFirstAuthorLink'
+import type { BlogPost } from '../../utils/types'
+
+interface Props {
+  post: BlogPost
+}
+const { post } = Astro.props
+---
+
+<div class="bg-white">
+  <div class="p-6 max-w-sm flex flex-col gap-4 bg-white">
+    <h2 class="my-2 text-lg">License</h2>
+    <span class="license">
+      <a
+        rel="license"
+        class="flex gap-2 text-lg text-black dark:text-white"
+        href="http://creativecommons.org/licenses/by/4.0/"
+      >
+        <FaCreativeCommons />
+        <FaCreativeCommonsBy />
+      </a>
+    </span><span
+      xmlns:dct="http://purl.org/dc/terms/"
+      href="http://purl.org/dc/dcmitype/Text"
+      property="dct:title"
+      rel="dct:type">{post.title}</span
+    > by
+    {
+      [...(post.team_members || []), ...(post.blog_authors ?? [])].map((author) => (
+        <a
+          xmlns:cc="http://creativecommons.org/ns#"
+          property="cc:attributionName"
+          rel="cc:attributionURL"
+          href={getFirstAuthorLink(author)}
+        >
+          {author.firstName} {author.lastName}
+        </a>
+      ))
+    }
+    is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/"
+      >Creative Commons Attribution 4.0 International License</a
+    >.
+  </div>
+</div>

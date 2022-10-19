@@ -14,7 +14,7 @@ import FAQs from '../components/widgets/FAQs.astro'
 import Stats from '../components/widgets/Stats.astro'
 import CallToAction from '../components/widgets/CallToAction.astro'
 import { getPosts } from '../utils/blog.js'
-import PostList from '../components/blog/PostList.astro'
+import PostCard from '../components/blog/PostCard.astro'
 import Container from '../components/atoms/Container.astro'
 import Picture from '../components/core/Picture.astro'
 
@@ -29,40 +29,84 @@ const posts = (await getPosts()) ?? []
 
 <Layout {meta}>
   <div class="px-5 md:px-0 py-10 grid md:grid-cols-12 cols">
-    <div class="col-start-3 col-span-8">
+    <div class="flex justify-center col-start-2 col-span-11 pt-20 pb-10">
       <h1
-        class="lg:text-8xl w-full text-center dark:text-white md:text-left text-4xl font-black tracking-tight leading-none"
+        class="relative -ml-24 inline-flex text-black lg:text-6xl w-min text-center mr-0 group md:text-left text-4xl font-semibold tracking-tighter leading-none"
       >
-        <span class="lg:text-6xl">A Blog of</span><br />Trial & Error.
+        <a
+          href="https://trialanderror.org"
+          class="flex flex-col !absolute -top-12 pl-24 font-overpass hover:translate-x-72 sleek-underline text-black transform-gpu will-change-transform transition-all ease-out z-20 duration-300"
+        >
+          <span
+            class="bg-orange-500 w-max border-4 lg:border-4 lg:border-b-0 z-20 border-b-0 relative p-2 pt-6 md:px-8 md:pr-14 pb-0 lg:pb-0 border-black"
+          >
+            Center of
+          </span>
+          <span
+            class="bg-orange-500 w-max border-4 border-black lg:border-4 lg:-mt-1 -mt-1 p-2 md:px-4 lg:px-8 relative"
+          >
+            Trial & Error.
+          </span>
+        </a>
+        <a
+          href="https://journal.trialanderror.org"
+          class="!absolute -top-6 pl-12 flex flex-col sleek-underline font-overpass hover:translate-x-64 z-30 transition-all ease-out duration-300 text-white transform-gpu will-change-transform"
+        >
+          <span
+            class="bg-blue-500 w-max border-4 lg:border-4 lg:border-b-0 z-30 border-b-0 relative p-2 lg:pt-6 md:px-4 lg:px-8 pb-0 lg:pb-0 border-black"
+          >
+            Journal of
+          </span>
+          <span
+            class="bg-blue-500 w-max border-4 border-black lg:border-4 lg:-mt-1 -mt-1 p-2 md:px-4 lg:px-8 relative"
+          >
+            Trial & Error.
+          </span>
+        </a>
+
+        <span class="flex flex-col relative z-40 group bg-none pointer-events-none">
+          <span
+            class="bg-white w-max border-4 transition-all lg:border-4 lg:border-b-0 pointer-events-auto border-b-0 z-40 relative p-2 lg:pt-6 md:px-8 md:pr-12 pb-0 lg:pb-0 border-black rounded-b-none"
+          >
+            A Blog of
+          </span>
+          <span
+            class="bg-white w-max border-4 border-black lg:border-4 lg:-mt-1 -mt-1 p-2 md:px-4 pointer-events-auto lg:px-8 relative rounded-tl-none"
+          >
+            Trial & Error.
+          </span>
+        </span>
       </h1>
-      <a href={`/${posts?.[0]?.slug}`} class="my-10 group grid md:grid-cols-12 gap-10">
-        <div class="col-span-7">
+    </div>
+    <div class="col-start-2 col-span-10">
+      <!-- <a
+        href={`/${posts?.[0]?.slug}`}
+        class="card bg-white my-10 group md:grid grid-cols-12 gap-10"
+      >
+        <div class="h-full col-span-6 bg-white">
           <Image
             alt={(posts[0]?.image.alt as string) ?? ''}
             src={posts?.[0]?.image.url as string}
             loading="eager"
-            width={posts?.[0]?.image.width as number}
+            width={posts?.[0]?.image?.formats?.medium?.width ?? (posts?.[0]?.image.width as number)}
+            height={posts?.[0]?.image?.formats?.medium?.height ??
+              (posts?.[0]?.image?.height as number)}
             format="webp"
-            height={posts?.[0]?.image.height as number}
             fit="cover"
+            class="h-full border-r-2 border-black"
           />
         </div>
-        <div class="prose dark:prose-invert w-full col-span-5">
-          <h2>{posts?.[0]?.title}</h2>
-          <p>{posts?.[0]?.excerpt}</p>
+        <div class="w-full col-span-6 p-4">
+          <h2 class="font-medium text-xl">{posts?.[0]?.title}</h2>
+          <p class="font-medium">{posts?.[0]?.excerpt}</p>
         </div>
-      </a>
+      </a> -->
+      <PostCard post={posts[0]} class="card grid md:flex group my-10" preloadImage wide />
     </div>
-    <div class="col-span-8 col-start-3">
-      <div class="grid gap-5 lg:gap-10 md:grid-cols-2">
-        {
-          posts
-            .slice(1, 3)
-            .map((post) => <PostList post={post} aspect="landscape" preloadImage={true} />)
-        }
-      </div>
-      <div class="grid gap-4 mt-10 lg:gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {posts.slice(3).map((post) => <PostList post={post} aspect="square" />)}
+
+    <div class="col-span-10 col-start-2">
+      <div class="grid gap-4 mt-10 md:grid-cols-2">
+        {posts.slice(1).map((post) => <PostCard post={post} aspect="square" />)}
       </div>
     </div>
   </div>

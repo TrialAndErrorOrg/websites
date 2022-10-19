@@ -8,6 +8,18 @@ import Pagination from '../../../components/atoms/Pagination.astro'
 import { getCanonical, getPermalink, cleanSlug, CATEGORY_BASE } from '../../../utils/permalinks'
 import { getPosts } from '../../../utils/blog.js'
 import type { GetStaticPaths } from 'astro'
+import PostCard from '../../../components/blog/PostCard.astro'
+
+const categoryColorMap = {
+  interview: '!bg-rose-500',
+  'behind the scenes': '!bg-emerald-400 ',
+  opinion: '!bg-orange-100',
+}
+const darkCategoryColorMap = {
+  interview: 'dark:!bg-rose-800',
+  'behind the scenes': 'dark:!bg-emerald-700 ',
+  opinion: 'dark:!bg-orange-800',
+}
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   if (BLOG?.disabled || BLOG?.category?.disabled) return []
@@ -45,8 +57,13 @@ const meta = {
 
 <Layout meta={meta}>
   <Fragment slot="title">
-    Category: {category}
+    <span
+      class={`button text-3xl !border-2 font-medium px-4 py-1 rounded-full ${categoryColorMap[category]} ${darkCategoryColorMap[category]}`}
+      >{category}</span
+    >
   </Fragment>
-  <BlogList posts={page.data} />
+  <div class="max-w-4xl flex-col flex gap-6 mx-auto">
+    {page.data.map((post) => <PostCard wide post={post} />)}
+  </div>
   <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
 </Layout>

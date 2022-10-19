@@ -1,0 +1,98 @@
+---
+import { cx } from '../../utils/cx'
+import { Image } from '@astrojs/image/components'
+import type { Author } from '../../utils/types'
+
+interface Props {
+  authors: Author[]
+}
+
+const { authors } = Astro.props
+---
+
+<div class="flex gap-x-4 items-center relative">
+  <div
+    class={`flex w-full items-center justify-center relative `}
+    style={{
+      height: `${32 + (authors.length - 1) * 6}px`,
+    }}
+  >
+    {
+      authors.map((author, idx) => (
+        <a
+          href={
+            author.slug
+              ? `https://journal.trialanderror.org/team/${author.slug}`
+              : author?.orcid
+              ? `https://orcid.org/${author.orcid}`
+              : author?.twitter
+              ? `https://twitter.com/${author.twitter}`
+              : '#'
+          }
+          class={cx(
+            `group-one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2  ${
+              idx > 1 ? 'hover:translate-x-2' : ''
+            }`,
+            idx === 0 && 'bg-white',
+            idx === 1 && 'bg-orange-500 text-white',
+            idx === 2 && 'bg-blue-500 text-white'
+          )}
+          style={{
+            // '--size': '40px',
+            left: `${idx * 24}px`,
+            top: `${(authors.length - (idx + 1)) * 6}px`,
+            'z-index': `${10 - idx}`,
+          }}
+        >
+          {author?.image?.url && false ? (
+            <Image
+              src={author.image.url}
+              height={author.image?.formats?.thumbnail?.height ?? author.image.height}
+              width={author.image?.formats?.thumbnail?.width ?? author.image.width}
+              fit="cover"
+              format="webp"
+              class="h-full w-full"
+              alt={author.image.alt ?? `${author.firstName} ${author.lastName}`}
+            />
+          ) : (
+            <div
+              class={cx(
+                'relative flex h-full w-full items-center justify-center font-semibold uppercase text-black '
+              )}
+            >
+              {author.lastName?.charAt(0)}
+              <span class="group-one-hover:max-w-xs line-clamp-1 max-w-0 overflow-clip whitespace-nowrap transition-all duration-500">
+                {author.lastName?.slice(1)}
+              </span>
+            </div>
+          )}
+        </a>
+      ))
+    }
+  </div>
+  <!-- <div class="flex flex-wrap items-center gap-x-1 leading-3">
+    {
+      authors.map((author, idx) => (
+        <a
+          href={
+            author.slug
+              ? `https://journal.trialanderror.org/team/${author.slug}`
+              : author?.orcid
+              ? `https://orcid.org/${author.orcid}`
+              : author?.twitter
+              ? `https://twitter.com/${author.twitter}`
+              : '#'
+          }
+          class="text-sm font-medium"
+        >
+          {author.firstName} {author.lastName}
+          {idx === authors.length - 2 && authors.length > 1
+            ? ' &'
+            : idx !== authors.length - 1
+            ? ','
+            : ''}
+        </a>
+      ))
+    }
+  </div> -->
+</div>

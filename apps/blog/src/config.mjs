@@ -1,35 +1,35 @@
 export const SITE = {
-	name: 'A Blog of Trial and Error',
+  name: 'A Blog of Trial and Error',
 
-	origin: 'https://blog.trialanderror.org',
-	basePathname: '/',
+  origin: 'https://blog.trialanderror.org',
+  basePathname: '/',
 
-	title: 'A Blog of Trial and Error',
-	description:
-		'🚀 AstroWind is a free and ready to start template to make your website using Astro and Tailwind CSS.',
+  title: 'A Blog of Trial and Error',
+  description:
+    'A blog exploring failure in academia, open science and what it takes to be an Open Access publisher.',
 }
 
 export const BLOG = {
-	disabled: false,
-	postsPerPage: 10,
+  disabled: false,
+  postsPerPage: 10,
 
-	blog: {
-		disabled: false,
-		pathname: 'blog', // blog main path, you can change this to "articles" (/articles)
-	},
+  blog: {
+    disabled: false,
+    pathname: 'blog', // blog main path, you can change this to "articles" (/articles)
+  },
 
-	post: {
-		disabled: false,
-		pathname: '', // empty for /some-post, value for /pathname/some-post
-	},
+  post: {
+    disabled: false,
+    pathname: '', // empty for /some-post, value for /pathname/some-post
+  },
 
-	category: {
-		disabled: false,
-		pathname: 'category', // set empty to change from /category/some-category to /some-category
-	},
+  category: {
+    disabled: false,
+    pathname: 'category', // set empty to change from /category/some-category to /some-category
+  },
 
-	tag: {
-		disabled: false,
-		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
-	},
+  tag: {
+    disabled: false,
+    pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
+  },
 }

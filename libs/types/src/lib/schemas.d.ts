@@ -1123,6 +1123,9 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     orcid: StringAttribute
     slug: UIDAttribute<'api::blog-author.blog-author', 'lastName'>
     seo: ComponentAttribute<'shared.seo'>
+    summary: TextAttribute
+    personalWebsite: StringAttribute
+    linkedIn: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
