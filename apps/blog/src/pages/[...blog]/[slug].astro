@@ -43,7 +43,7 @@ const meta = {
   title: `${post.title} — ${SITE.name}`,
   description: post?.seo?.metaDescription ?? post.excerpt,
   canonical: post.canonical || getCanonical(getPermalink(post.slug, 'post')),
-  image: post.image.url, //await findImage(post.image),
+  image: post?.image?.formats?.thumbnail?.url ?? post.image.url, //await findImage(post.image),
   ogTitle: post.title,
   ogType: 'article',
   post,
