@@ -193,7 +193,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
     >
       <div class="first-of-type:prose-p:mt-0" set:html={bod}></div>
       <hr class="border-black border" />
-      <License />
+      <License post={post} />
     </div>
     <!-- Table of contents Element -->
 
