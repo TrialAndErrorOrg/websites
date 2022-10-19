@@ -32,7 +32,7 @@ export async function getStaticPaths() {
       post,
       ...(idx > 0 && { prev: posts[idx - 1] }),
       ...(idx < posts.length - 1 && { next: posts[idx + 1] }),
-      latest: posts.slice(0, 4),
+      latest: posts.filter((latest) => latest.id !== post.id).slice(0, 4),
     },
   }))
 }

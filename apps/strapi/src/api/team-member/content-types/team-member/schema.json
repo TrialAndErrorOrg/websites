@@ -108,7 +108,7 @@
       "target": "api::blog-post.blog-post",
       "mappedBy": "team_members"
     },
-    "Summary": {
+    "summary": {
       "type": "richtext"
     },
     "relatedOpenPositions": {

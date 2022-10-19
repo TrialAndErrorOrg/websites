@@ -17,18 +17,64 @@ import type { BlogPost } from '../../utils/types'
 import readingTime from 'reading-time'
 import { Fragment } from 'react'
 import PostCard from './PostCard.astro'
+import { FaOrcid } from 'react-icons/fa'
+import GithubSlugger from 'github-slugger'
+import { Section, TableOfContents } from '../core/TableOfContents'
 
 const { post, prev, next, latest } = Astro.props
+const slugger = new GithubSlugger()
+const headingRegex = /<(h(2|3))(.*?)>(.*?)<\/\1>/gms
+
 const filteredBody = post.body
   .replace(/<\!--.*?-->/g, '')
   .replace(/<p>&nbsp;<\/p>/g, '')
-  .replace(/&nbsp;/g, '')
+  .replace(/&nbsp;/g, ' ')
+  // only one h1
+  .replace(/<\/?h1/g, 'h2')
+  // give h2 and h3 tags ids so the table of contents can link to them
+  .replace(headingRegex, (_, tag, number, properties, content) => {
+    return `<${tag} id="${slugger.slug(content)}"${properties}>${content}</${tag}>`
+  })
+
+slugger.reset()
+
+const getHeadings = (body: string) =>
+  (body?.match(headingRegex)?.map((heading) => {
+    const [, tag, number, properties, content] = heading.match(headingRegex) ?? []
+    return {
+      title: content,
+      children: [] as Section[],
+      slug: slugger.slug(content),
+    }
+  }) ?? []) as Section[]
+
+const getTableOfContents = (body: string) => {
+  const h2s = body.match(/<h2.*?>(.*?)<\/h2>/gms)
+  if (!h2s) return []
+  const sections: Section[] = []
+  h2s.forEach((h2, i) => {
+    const h2Text = h2.replace(/<.*?>/g, '')
+    const h2Id = slugger.slug(h2Text)
+    const nextH2 = h2s[i + 1]
+    const nextH2Index = nextH2 ? body.indexOf(nextH2) : body.length
+    const textBetweenH2s = body.slice(body.indexOf(h2) + h2.length, nextH2Index)
+    sections.push({
+      title: h2Text,
+      slug: h2Id,
+      children: getHeadings(textBetweenH2s),
+    } as Section)
+  })
+  return sections
+}
+
+const tableOfContents = getTableOfContents(filteredBody)
+
 const bod = addBigLetterToBody(filteredBody)
 
-const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
+const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
 ---
 
-<section class="mx-auto relative">
+<section class="mx-auto relative flex flex-col bg-white">
   <!-- <div
     class="w-screen relative stick inset-0 dark:bg-blue-500 bg-white md:h-[65vh] overflow-clip border-b-2 border-black mb-10"
   > -->
@@ -49,7 +95,7 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
   }
   <!-- </div> -->
   <article
-    class="dark:bg-blue-500 grid grid-cols-12 w-full py-10 border-t-2 border-black dark:border-white bg-cream relative"
+    class="dark:bg-blue-500 grid grid-cols-12 w-full py-10 border-t-2 border-black dark:border-white bg-white relative"
   >
     <p class="col-span-8 col-start-2 md:col-start-3 max-w-3xl">
       <time datetime={post.publishDate ?? post.publishedAt}
@@ -73,10 +119,19 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
       By
       {
         authors.map((author, idx) => (
-          <span>
-            <a href={`/${author.slug}`} class="font-bold text-black dark:text-white">
+          <span class="flex items-center gap-1 ">
+            <a
+              href={`/${author.slug}`}
+              class="sleek-underline font-semibold text-black dark:text-white"
+            >
               {author.firstName} {author.lastName}
             </a>
+            {author.orcid && (
+              <a class="button-sleek !p-0 !text-[#a6ce39]" href={author.orcid}>
+                <FaOrcid />
+                <span class="sr-only">OrcID</span>
+              </a>
+            )}
             {idx === authors.length - 1 ? '' : idx === authors.length - 2 ? ' & ' : ', '}
           </span>
         ))
@@ -133,25 +188,38 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
       </a>
     </div>
     <div
-      class="col-start-2 md:col-start-3 md:col-end-10 col-end-12 max-w-3xl prose md:prose-lg dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-a:text-primary-600 md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 prose-a:text-orange-500 prose-img:rounded-md prose-img:shadow-lg my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal"
+      class="prose-a:font-bold col-start-2 md:col-start-3 md:col-end-10 col-end-11 max-w-3xl prose md:prose-lg dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-a:text-primary-600 md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 prose-a:text-orange-500 my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal prose-img:rounded-none prose-img:border-2 prose-img:border-black prose-a:mx-1 prose-blockquote:border-black"
     >
       <div class="first-of-type:prose-p:mt-0" set:html={bod}></div>
-      <hr class="border-black" />
+      <hr class="border-black border" />
     </div>
-    <div class="grid md:grid-cols-2 gap-3 md:col-span-7 col-start-2 col-span-10 md:col-start-3">
+    <!-- Table of contents Element -->
+
+    {
+      tableOfContents.length > 0 && (
+        <div class="sticky top-[3.8125rem] right-[max(0px,calc(50%-45rem))] z-20 col-span-2 col-start-11 hidden h-max overflow-y-auto py-10  lg:block lg:w-64 xl:w-[19.5rem]">
+          <TableOfContents tableOfContents={tableOfContents} client:visible />
+        </div>
+      )
+    }
+
+    <div class="grid gap-3 md:col-span-5 col-start-2 col-span-10 md:col-start-3">
       {authors.map((author) => <Author class="" author={author} />)}
     </div>
-
-    <!-- prev and next article -->
+  </article>
+  <!-- prev and next article -->
+  <div class="grid py-8 grid-cols-12 relative bg-white">
     <div
-      class="md:col-span-7 col-span-10 col-start-2 md:col-start-3 grid grid-cols-2 mt-10 text-lg font-medium gap-4"
+      class={`md:col-span-7 col-span-10 col-start-2 md:col-start-3 grid ${
+        prev && next ? 'grid-cols-2' : 'grid-cols-1'
+      } mt-10 text-lg font-medium gap-4`}
     >
       {
         prev && (
           <div class="group relative flex items-baseline gap-2 px-4 font-medium text-black dark:text-white">
             <span class="group-hover:underline">←</span>
-            <a href={`/${prev.slug}`} class="link-overlay group-hover:underline">
-              {prev.title}
+            <a href={`/${prev.slug}`} class="link-overlay">
+              <span class="group-hover:underline">{prev.title}</span>
             </a>
           </div>
         )
@@ -159,34 +227,34 @@ const authors = [...(post.blog_authors ?? []), ...(post.team_members ?? [])]
       {
         next && (
           <div class="group relative flex items-baseline gap-2 px-4 font-medium text-black dark:text-white">
-            <a href={`/${next.slug}`} class="link-overlay group-hover:underline">
-              {next.title}
+            <a href={`/${next.slug}`} class="link-overlay ">
+              <span class="group-hover:underline">{next.title}</span>
             </a>
             <span class="group-hover:underline">→</span>
           </div>
         )
       }
     </div>
-    {
-      (
-        <div class="col-span-10 col-start-2 md:col-span-7 md:col-start-3">
-          <h2 class="my-10 text-4xl font-bold">
-            {post.related?.length ? 'Related Posts' : 'Latest Posts'}
-          </h2>
-          <div class="grid gap-6 text-lg font-medium">
-            {(post.related?.length ? post.related : latest)
-              ?.sort(
-                (a, b) =>
-                  (new Date(a.publishDate ?? a.publishedAt) -
-                    new Date(b.publishDate ?? b.publishedAt)) *
-                  -1
-              )
-              .map((post) => (
-                <PostCard post={post} wide />
-              ))}
-          </div>
-        </div>
-      )
-    }
-  </article>
+  </div>
+  <div class="grid py-8 bg-white relative grid-cols-12">
+    <h2 class="col-span-10 col-start-2 my-4 md:col-span-7 md:col-start-3 text-4xl font-bold">
+      {post.related?.length ? 'Related Posts' : 'Latest Posts'}
+    </h2>
+    <!-- <div class="text-lg font-medium"> -->
+    <div
+      class="flex flex-col col-span-10 col-start-2 md:col-span-9 md:col-start-3 max-w-5xl mx-auto gap-4"
+    >
+      {
+        (post.related?.length ? post.related : latest)
+          ?.sort(
+            (a, b) =>
+              (new Date(a.publishDate ?? a.publishedAt) -
+                new Date(b.publishDate ?? b.publishedAt)) *
+              -1
+          )
+          .map((post) => <PostCard post={post} wide />)
+      }
+      <!-- </div> -->
+    </div>
+  </div>
 </section>

@@ -14,7 +14,10 @@ const { tags, class: className = 'flex flex-wrap gap-x-1 text-sm' } = Astro.prop
     <ul class={className}>
       {tags.map((tag) => (
         <li>
-          <a class="button shad mb-2 inline-block py-0.5 px-2  text-xs " href={`/tag/${tag.slug}`}>
+          <a
+            class="button mb-2 flex items-center py-1 px-2 text-xs font-medium  leading-none "
+            href={`/tag/${tag.slug}`}
+          >
             {tag.title}
           </a>
         </li>

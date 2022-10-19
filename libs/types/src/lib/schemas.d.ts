@@ -1123,6 +1123,9 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     orcid: StringAttribute
     slug: UIDAttribute<'api::blog-author.blog-author', 'lastName'>
     seo: ComponentAttribute<'shared.seo'>
+    summary: TextAttribute
+    personalWebsite: StringAttribute
+    linkedIn: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
@@ -1989,7 +1992,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'manyToMany',
       'api::blog-post.blog-post'
     >
-    Summary: RichTextAttribute
+    summary: RichTextAttribute
     relatedOpenPositions: RelationAttribute<
       'api::team-member.team-member',
       'manyToMany',

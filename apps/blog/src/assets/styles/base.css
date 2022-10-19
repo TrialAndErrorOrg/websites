@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 :root {
+  --orange: #feaa00;
   /* key */
   --docsearch-key-gradient: linear-gradient(
     -225deg,
@@ -84,32 +85,32 @@ h6,
 }
 
 .card {
-  @apply relative overflow-clip rounded-xl border-2 border-black   bg-white text-black transition-all ease-in-out hover:-translate-x-2  hover:translate-y-0 hover:shadow-thick-3   active:translate-y-2 active:translate-x-0 active:shadow-[0px_0px_0_#000] dark:border-white dark:bg-blue-600 dark:text-white dark:hover:shadow-thick-3-white;
-  /* hover:before:translate-x-2 hover:after:translate-y-2 */
+  @apply relative z-0 rounded-none border-2 border-black bg-white text-black shadow-[0px_0px_0_#000]  transition-all ease-in-out hover:-translate-x-2 hover:-translate-y-2 hover:shadow-thick-3 hover:before:translate-x-2  hover:after:translate-y-2 active:translate-y-2   active:translate-x-0 active:shadow-[0px_0px_0_#000] active:before:translate-x-0 active:before:translate-y-0 active:after:translate-y-0 active:after:translate-x-0 dark:border-white  dark:bg-slate-500 dark:text-white dark:hover:shadow-thick-3-white;
 }
 
-/* .card::before,
+.card::before,
 .card::after {
   content: ' ';
-  @apply absolute -z-10 h-[11px] w-[11px] rotate-45 bg-black transition-transform;
+  z-index: -10;
+  @apply absolute -z-20 flex h-[11.3px] w-[11.3px] rotate-45 bg-black transition-transform ease-in-out dark:bg-white;
 }
 .card::before {
-  @apply right-0 top-0;
+  @apply right-[0.4px] top-[0.4px];
 }
 .card::after {
-  @apply left-0 bottom-0;
-} */
+  @apply left-[0.4px] bottom-[0.4px];
+}
 
 .strokeme {
   -webkit-text-stroke: 8px black;
 }
 
 .button {
-  @apply rounded-full border-[1px] border-black bg-white text-black transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer hover:shadow-thick-2 dark:border-white dark:bg-blue-900 dark:text-white dark:hover:shadow-thick-2-white;
+  @apply rounded-full border-[1px] border-black bg-white text-black shadow-[0_0_0_#000] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer hover:shadow-thick-2 dark:border-white dark:bg-blue-900 dark:text-white dark:hover:shadow-thick-2-white;
 }
 
 .button-sleek {
-  @apply rounded-full border-2 border-transparent bg-none py-1 px-2 text-black transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white hover:shadow-thick-2 dark:text-white dark:hover:border-white dark:hover:bg-blue-900  dark:hover:shadow-thick-2-white;
+  @apply rounded-full border-2 border-transparent bg-none py-1 px-2 text-black shadow-[0_0_0_#000] transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white hover:shadow-thick-2 dark:text-white dark:hover:border-white dark:hover:bg-blue-900  dark:hover:shadow-thick-2-white;
 }
 
 .link-overlay {
@@ -132,7 +133,24 @@ h6,
 .cia {
   padding-bottom: 0.2%;
   /* transition: background-size 0.6s ease-out; */
+  transition: background-size 0.6s ease-out;
   background: linear-gradient(var(--orange), var(--orange)) no-repeat left 123%/0 50%;
+}
+
+.cia-no-hover {
+  padding-bottom: 0.2%;
+  /* transition: background-size 0.6s ease-out; */
+  transition: background-size 0.6s ease-out;
+  background: linear-gradient(var(--orange), var(--orange)) no-repeat left 123%/0 50%;
+}
+.cia-no-hover-full {
+  padding-bottom: 0.2%;
+  /* transition: background-size 0.6s ease-out; */
+  transition: background-size 0.6s ease-out;
+  background: linear-gradient(var(--orange), var(--orange)) no-repeat left 123%/0 100%;
+}
+.cia-full-active {
+  background-size: 100% 100%;
 }
 .cia:hover {
   background-size: 100% 50%;
@@ -143,5 +161,5 @@ h6,
 }
 
 .sleek-underline {
-  @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full;
+  @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full;
 }

@@ -93,10 +93,10 @@ export function Search() {
       <button
         aria-label="Search posts"
         ref={searchButtonRef}
-        className="group flex h-full w-full items-center justify-between rounded-none border-l-2 border-black bg-white text-black transition-all hover:-translate-x-1 hover:-translate-y-1  hover:shadow-[4px_4px_0_#000] dark:text-white md:min-w-[8rem] md:dark:bg-slate-800"
+        className="group flex h-full w-full items-center justify-between rounded-none border-black bg-white  text-black transition-colors hover:bg-orange-500 dark:text-white md:dark:bg-slate-800"
         onClick={onOpen}
       >
-        <span className="flex h-full w-12 items-center justify-center bg-black text-white">
+        <span className="flex h-full w-12 items-center justify-center border-l-2 border-r-2 border-black bg-black text-white transition-colors group-hover:border-r-orange-500 group-hover:bg-orange-500 group-hover:text-black">
           <SearchIcon className="w-5" />
         </span>
         {/* <ControlKeyIcon /> */}
@@ -186,7 +186,7 @@ export function SearchModal({
         >
           <Combobox
             as="div"
-            className="mx-auto max-w-3xl transform divide-y divide-black overflow-hidden rounded-xl border-[3px]  border-black bg-white text-black shadow-[8px_8px_0_#000] ring-1 ring-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
+            className="mx-auto max-w-3xl transform divide-y-2 divide-black overflow-hidden  border-2  border-black bg-white text-black shadow-[8px_8px_0_#000] ring-1 ring-black ring-opacity-5 transition-all dark:divide-slate-600 dark:bg-blue-500 dark:text-white"
             onChange={(item: MeiliSearchBlogPostResult) => (window.location = `/${item.slug}`)}
           >
             {({ activeOption }) => (
@@ -204,7 +204,7 @@ export function SearchModal({
                 </div>
 
                 {results?.hits?.length > 0 && (
-                  <div className="flex divide-x divide-black dark:divide-slate-600">
+                  <div className="flex divide-x-2 divide-black dark:divide-slate-600">
                     <div
                       className={cx(
                         'max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto p-4 px-6',
@@ -230,7 +230,7 @@ export function SearchModal({
                               href={`/${item.slug}`}
                               className={({ active }) =>
                                 cx(
-                                  'flex cursor-default select-none rounded-lg p-2 transition-[shadow_translate_border-color] ease-out',
+                                  'flex cursor-default select-none  p-2 transition-[shadow_translate_border-color] ease-out',
                                   active &&
                                     '-translate-x-1 -translate-y-1 cursor-pointer border-black shadow-[4px_4px_0_#000] ring-2 ring-black dark:bg-blue-300'
                                 )
@@ -283,13 +283,12 @@ export function SearchModal({
                                       )}
                                       {/* {item.title} */}
                                     </p>
-                                    <div className={'flex flex-wrap gap-3 gap-y-0 text-xs'}>
+                                    <div className={'flex flex-wrap gap-1 text-xs'}>
                                       {item._highlightResult.blog_tags.map((tag) => (
                                         <span
                                           key={tag.slug.value}
-                                          className="text-xs text-slate-400"
+                                          className="rounded-full border border-black px-2 text-xs text-black"
                                         >
-                                          #
                                           {getHighlightedParts(tag.title.value).map((part) =>
                                             part.isHighlighted ? (
                                               <mark className="bg-orange-500 text-white">
@@ -312,7 +311,7 @@ export function SearchModal({
                     </div>
 
                     {activeOption && (
-                      <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-black overflow-y-auto dark:divide-slate-600 sm:flex">
+                      <div className="hidden h-96 w-1/2 flex-none flex-col divide-y-2 divide-black overflow-y-auto dark:divide-slate-600 sm:flex">
                         <div className="flex-none p-6 text-center">
                           <img
                             src={

@@ -34,6 +34,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('tailwindcss-scoped-groups', {
+      groups: ['one'],
+    }),
+    require('@tailwindcss/typography'),
+  ],
   darkMode: 'class',
 }

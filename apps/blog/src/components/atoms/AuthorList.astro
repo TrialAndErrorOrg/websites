@@ -1,4 +1,5 @@
 ---
+import { cx } from '../../utils/cx'
 import { Image } from '@astrojs/image/components'
 import type { Author } from '../../utils/types'
 
@@ -9,8 +10,13 @@ interface Props {
 const { authors } = Astro.props
 ---
 
-<div class="flex gap-x-4 items-center max-w-[30ch] relative">
-  <div class="flex items-center relative">
+<div class="flex gap-x-4 items-center relative">
+  <div
+    class={`flex w-full items-center justify-center relative `}
+    style={{
+      height: `${32 + (authors.length - 1) * 6}px`,
+    }}
+  >
     {
       authors.map((author, idx) => (
         <a
@@ -23,11 +29,19 @@ const { authors } = Astro.props
               ? `https://twitter.com/${author.twitter}`
               : '#'
           }
-          class={`button relative h-8 w-8 !border-2 hover:z-50`}
+          class={cx(
+            `group-one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2  ${
+              idx > 1 ? 'hover:translate-x-2' : ''
+            }`,
+            idx === 0 && 'bg-white',
+            idx === 1 && 'bg-orange-500 text-white',
+            idx === 2 && 'bg-blue-500 text-white'
+          )}
           style={{
             // '--size': '40px',
-            'margin-left': `-${idx * 8}px`,
-            'z-index': `${idx + 1}`,
+            left: `${idx * 24}px`,
+            top: `${(authors.length - (idx + 1)) * 6}px`,
+            'z-index': `${10 - idx}`,
           }}
         >
           {author?.image?.url && false ? (
@@ -41,15 +55,22 @@ const { authors } = Astro.props
               alt={author.image.alt ?? `${author.firstName} ${author.lastName}`}
             />
           ) : (
-            <div class="flex h-full w-full items-center justify-center font-black uppercase text-black">
-              {author?.lastName?.charAt(0)}
+            <div
+              class={cx(
+                'relative flex h-full w-full items-center justify-center font-semibold uppercase text-black '
+              )}
+            >
+              {author.lastName?.charAt(0)}
+              <span class="group-one-hover:max-w-xs line-clamp-1 max-w-0 overflow-clip whitespace-nowrap transition-all duration-500">
+                {author.lastName?.slice(1)}
+              </span>
             </div>
           )}
         </a>
       ))
     }
   </div>
-  <div class="flex flex-wrap items-center gap-x-1 leading-3">
+  <!-- <div class="flex flex-wrap items-center gap-x-1 leading-3">
     {
       authors.map((author, idx) => (
         <a
@@ -73,5 +94,5 @@ const { authors } = Astro.props
         </a>
       ))
     }
-  </div>
+  </div> -->
 </div>

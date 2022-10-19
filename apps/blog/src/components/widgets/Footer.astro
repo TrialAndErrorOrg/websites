@@ -18,7 +18,7 @@ const socials = (await getMenu('socials')) ?? []
 ---
 
 <footer
-  class="bg-salmon relative dark:bg-blue-700 border-t-2 border-black"
+  class="bg-black relative text-white dark:bg-blue-700 border-t-2 border-black"
   aria-labelledby="footer-heading"
 >
   <h2 id="footer-heading" class="sr-only">Footer</h2>
@@ -36,7 +36,7 @@ const socials = (await getMenu('socials')) ?? []
             >
               {[footer?.[idx * 2], footer?.[idx * 2 + 1]]?.map((section, ix) => (
                 <div class={ix % 2 ? 'mt-12 md:mt-0' : ''}>
-                  <h3 class="text-sm font-semibold uppercase tracking-wider text-black dark:text-slate-200">
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-white dark:text-slate-200">
                     {section?.url ? <a href={section.url}>{section?.title}</a> : section?.title}
                   </h3>
                   <ul class="mt-4 space-y-4">
@@ -46,7 +46,7 @@ const socials = (await getMenu('socials')) ?? []
                         <li>
                           <a
                             href={item.url ?? '/'}
-                            class="text-base text-black hover:text-gray-900 dark:text-slate-100 dark:hover:text-white"
+                            class="text-base text-white hover:text-gray-900 dark:text-slate-100 dark:hover:text-white"
                           >
                             {item.title}
                           </a>
@@ -93,13 +93,13 @@ const socials = (await getMenu('socials')) ?? []
       </div>-->
     </div>
     <div
-      class="border-t border-black pt-8 lg:flex lg:items-center dark:border-white lg:justify-between xl:mt-0"
+      class="border-t border-white pt-8 lg:flex lg:items-center dark:border-white lg:justify-between xl:mt-0"
     >
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-black dark:text-white">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white dark:text-white">
           Subscribe to our newsletter
         </h3>
-        <p class="mt-2 text-base text-black dark:text-white">
+        <p class="mt-2 text-base text-white dark:text-white">
           The latest news, articles, and resources, sent to your inbox weekly.
         </p>
       </div>
@@ -117,7 +117,7 @@ const socials = (await getMenu('socials')) ?? []
         <div class="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
           <button
             type="submit"
-            class="flex w-full items-center justify-center rounded-xl border-black hover:shadow-thick-1 hover:-translate-x-1 hover:-translate-y-1 transition-all border bg-orange-600 py-2 px-4 text-base font-semibold text-black dark:bg-blue-400 dark:hover:shadow-thick-1-white dark:text-white dark:border-white"
+            class="flex w-full items-center justify-center rounded-xl border-black hover:shadow-thick-1 hover:-translate-x-1 hover:-translate-y-1 transition-all border bg-orange-600 py-2 px-4 text-base font-semibold text-white dark:bg-blue-400 dark:hover:shadow-thick-1-white dark:text-white dark:border-white"
           >
             Subscribe
           </button>
@@ -133,7 +133,7 @@ const socials = (await getMenu('socials')) ?? []
             return (
               <a
                 href={url}
-                class="button-sleek flex h-10 w-10 items-center justify-center text-lg text-black  dark:text-white"
+                class="button-sleek flex h-10 w-10 items-center justify-center text-lg text-white dark:text-white"
               >
                 <span class="sr-only">{title}</span>
                 {title === 'github' ? (
@@ -156,7 +156,7 @@ const socials = (await getMenu('socials')) ?? []
           })
         }
       </div>
-      <p class="mt-8 text-base text-black font-bold dark:text-white md:order-1 md:mt-0">
+      <p class="mt-8 text-base text-white font-bold dark:text-white md:order-1 md:mt-0">
         &copy;{' '}
         {new Date().getFullYear() > 2022 ? `2022-${new Date().getFullYear()}` : 2022}{' '}
         Center of Trial &amp; Error
