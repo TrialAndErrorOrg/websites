@@ -2,93 +2,105 @@ import SlideOver from './SlideOver'
 import type { Application, OpenPosition } from '../utils/types'
 import Image from 'next/future/image'
 import jestConfig from '../jest.config'
+import { PaperClipIcon } from '@heroicons/react/outline'
 
 interface Props {
   application: Application
 }
 
-export function Position(props: Props) {
+export function Application(props: Props) {
   const { application } = props
 
   return (
     <div className="relative bg-white">
-      <div className="lg:absolute lg:inset-0">
-        <div className="lg:absolute lg:inset-y-0 lg:left-0 lg:w-2/5">
-          <Image
-            className="h-56 w-full object-cover lg:absolute lg:h-full"
-            src={application.image.url}
-            height={application.image.height}
-            width={application.image.width}
-            alt=""
-          />
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="px-4 py-5 sm:px-6">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">Applicant Information</h3>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
         </div>
-      </div>
-      <div className="min-h-[100vh] relative pt-12 pb-16 px-4 sm:pt-16 sm:px-6 lg:px-8 lg:max-w-7xl lg:mx-auto lg:grid lg:grid-cols-5">
-        <div className="lg:col-start-3 col-span-3 lg:pl-8">
-          <div className="text-base prose prose-sm md:prose-base flex flex-col gap-4 max-w-prose mx-auto lg:max-w-lg lg:mr-auto lg:ml-0">
-            <h2 className="leading-6 text-orange-600 font-semibold tracking-wide uppercase">
-              {application.type}
-            </h2>
-            <h1 className="mt-2 text-4xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              {application.title}
-            </h1>
-            {application.summary && (
-              <div
-                dangerouslySetInnerHTML={{ __html: application.summary }}
-                className="text-lg text-gray-500"
-              />
+        <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+          <dl className="sm:divide-y sm:divide-gray-200">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Full name</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {application.name}
+              </dd>
+            </div>
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Application for</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {application.open_position?.title}
+              </dd>
+            </div>
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Email address</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {application.email}
+              </dd>
+            </div>
+            {/* <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Salary expectation</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">$120,000</dd>
+            </div> */}
+            {application.motivation && (
+              <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-gray-500">Motivation</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                  {application.motivation}
+                </dd>
+              </div>
+            )}
+            {application.cv && (
+              <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-gray-500">Previous Experience</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                  {application.cv}
+                </dd>
+              </div>
             )}
 
-            {application.description && (
-              <>
-                <h4 className="mt-2 text-2xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-                  Description
-                </h4>
-                <div
-                  dangerouslySetInnerHTML={{ __html: application.description }}
-                  className="text-lg text-gray-500"
-                />
-              </>
-            )}
-            {application.needToHave && (
-              <>
-                <h3 className="text-2xl">Need To Have's</h3>
-                <div
-                  className="prose prose-indigo text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: application.needToHave }}
-                />
-              </>
+            {application.additional && (
+              <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-gray-500">Additional Information</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                  {application.additional}
+                </dd>
+              </div>
             )}
 
-            {application.niceToHave && (
-              <>
-                <h3 className="text-2xl">Nice To Have's</h3>
-                <div
-                  className="prose prose-indigo text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: application.niceToHave }}
-                />
-              </>
-            )}
-
-            {application.whatYoullDo && (
-              <>
-                <h3 className="text-2xl">What You'll Do</h3>
-                <div
-                  className="prose prose-indigo text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: application.whatYoullDo }}
-                />
-              </>
-            )}
-            <p>
-              If you have any questions, please reach out to{' '}
-              <a className="text-orange-500" href={`mailto:${application.moreInfoMail}`}>
-                {application.moreInfoMail}
-              </a>
-            </p>
-          </div>
-          <div className="mt-5">
-            <SlideOver position={application} />
-          </div>
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Attachments</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <ul
+                  role="list"
+                  className="border border-gray-200 rounded-md divide-y divide-gray-200"
+                >
+                  {application.documents?.map((document: any) => (
+                    <li
+                      className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                      key={document.id}
+                    >
+                      <div className="w-0 flex-1 flex items-center">
+                        <PaperClipIcon
+                          className="flex-shrink-0 h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        <span className="ml-2 flex-1 w-0 truncate">{document.name}</span>
+                      </div>
+                      <div className="ml-4 flex-shrink-0">
+                        <a
+                          href={document.url}
+                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                        >
+                          Download
+                        </a>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     </div>

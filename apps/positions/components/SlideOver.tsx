@@ -50,6 +50,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
   // const files = watch('documents')
   const [motivationText, motivationFile] = watch(['motivationText', 'motivationFile'])
   const [cvText, cvFile] = watch(['cvText', 'cvFile'])
+  const url = Math.random().toString(36).substring(2, 15)
   // console.log(motivation, typeof motivation)
 
   return (
@@ -132,7 +133,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
 
                         // unique url for the application, so we can send it to the user
                         // so they can edit their application
-                        data['url'] = Math.random().toString(36).substring(2, 15)
+                        data['url'] = url
 
                         formData.append('data', JSON.stringify(data))
 
@@ -423,7 +424,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
           </div>
         </Dialog>
       </Transition.Root>
-      {submitted && <Modal open={submitted} setOpen={setSubmitted} />}
+      {submitted && <Modal url={url} open={submitted} setOpen={setSubmitted} />}
     </>
   )
 }
