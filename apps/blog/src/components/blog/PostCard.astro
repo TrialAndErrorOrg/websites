@@ -45,7 +45,7 @@ const darkCategoryColorMap = {
       'border-black dark:border-white overflow-hidden transition-all bg-gray-100  dark:bg-gray-800',
       aspect === 'landscape' ? 'aspect-video' : 'aspect-video',
       'relative',
-      wide ? 'border-r-2 w-full' : 'border-b-2'
+      wide ? 'md:border-r-2 border-b-2 w-full' : 'border-b-2'
     )}
   >
     <!-- <p
@@ -79,16 +79,14 @@ const darkCategoryColorMap = {
       )
     }
 
-    <!-- <a
-      class={`py-1 px-4 ${
-        false ? '!bg-orange-500' : categoryColorMap[post.category.title?.toLowerCase()]
-      } ${
-        darkCategoryColorMap[post.category.title?.toLowerCase()]
-      } text-black !font-semibold absolute z-10 top-4 right-4 button hover:!border-r-2 overflow-clip dark:border-white  !border-2 !border-r-2  text-lg md:text-xl border-black dark:text-white `}
+    <!-- // false ? '!bg-orange-500' : categoryColorMap[post.category.title?.toLowerCase()]
+        // darkCategoryColorMap[post.category.title?.toLowerCase()] -->
+    <a
+      class={`py-1 px-4 !bg-orange-500 !rounded-none text-black !font-semibold absolute z-10 top-4 right-0 button hover:!border-r-2 overflow-clip dark:border-white  !border-2 !border-r-0 hover:!border-r-2  text-lg md:text-xl border-black dark:text-white `}
       href={`/category/${post?.category?.title?.toLowerCase()}`}
     >
       {post.category?.title}
-    </a> -->
+    </a>
     <Tags
       tags={post.blog_tags ?? []}
       class="flex max-w-[80%] justify-end absolute bottom-3 z-10 right-4 flex-wrap gap-x-1 text-sm"
@@ -115,12 +113,12 @@ const darkCategoryColorMap = {
           )
         }
       </time>
-      <a
+      <!-- <a
         href={`/category/${post.category?.slug}`}
         class="px-4 relative z-10 !border-2 !bg-orange-500 text-lg -mr-6 py-1 button !border-r-0 hover:!border-r-2 font-semibold !rounded-none"
       >
         {post.category?.title}</a
-      >
+      > -->
     </div>
     <h2
       class="text-xl md:text-3xl font-semibold font-sans leading-tight tracking-tighter text-brand-primary dark:text-white"

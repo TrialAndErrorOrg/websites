@@ -2,7 +2,7 @@
 import { cx } from '../../utils/cx'
 import type { Author } from '../../utils/types'
 import { Image } from '@astrojs/image/components'
-import { FaOrcid, FaTwitter, FaGithub, FaLink } from 'react-icons/fa/index'
+import { FaOrcid, FaTwitter, FaGithub, FaLink, FaLinkedin } from 'react-icons/fa/index'
 
 interface Props {
   author: Author
@@ -14,7 +14,9 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
 ---
 
 <div class={cx(className, 'card ')}>
-  <div class="grid-cols-4 grid z-50 group !bg-white w-full gap-x-4 md:gap-x-0 p-4 md:px-2 py-4">
+  <div
+    class="grid-cols-4 grid z-50 group dark:!bg-slate-700 !bg-white w-full gap-x-4 md:gap-x-0 p-4 md:px-2 py-4"
+  >
     {
       author.image?.url ? (
         <Image
@@ -22,7 +24,7 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
           alt={author?.image?.alt ?? author?.lastName}
           height={author?.image?.formats?.thumbnail?.height || author?.image?.height}
           width={author?.image?.formats?.thumbnail?.width || author?.image?.width}
-          class="col-span-1 row-span-2 h-16 w-16 self-center justify-self-center rounded-full border-2 border-black object-cover md:h-20 md:w-20"
+          class="col-span-1 row-span-2 h-16 w-16 self-center justify-self-center rounded-full border-2 border-black object-cover dark:border-white md:h-20 md:w-20"
         />
       ) : (
         <div class="col-span-1 row-span-2 flex h-16 w-16 items-center justify-center self-center justify-self-center rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black md:h-20 md:w-20">
@@ -44,37 +46,46 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
     }
     {
       firstLink && (
-        <div class="col-span-2 col-start-2 row-span-1 flex flex-wrap gap-1">
+        <div class="z-10 col-span-2 col-start-2 row-span-1 flex h-5 flex-wrap gap-1 leading-none">
           {author.orcid && (
             <a
               href={`https://orcid.org/${author.orcid}`}
-              class="button-sleek flex items-center gap-1 text-black"
+              class="button-sleek flex items-center  text-black"
             >
-              <FaOrcid />
+              <FaOrcid className="h-5 w-5" />
               <span class="sr-only">ORCID</span>
             </a>
           )}
           {author.twitter && (
             <a
               href={`https://twitter.com/${author.twitter}`}
-              class="button-sleek flex items-center gap-1"
+              class="button-sleek z-10 flex items-center"
             >
-              <FaTwitter />
-              <span class="sr-only">Twitter</span>
+              <FaTwitter className="h-5 w-5" />
+              <span class=" sr-only absolute">Twitter</span>
             </a>
           )}
           {author.github && (
             <a
               href={`https://github.com/${author.github}`}
-              class="button-sleek flex items-center gap-1"
+              class="button-sleek z-10 flex items-center gap-1"
             >
-              <FaGithub />
+              <FaGithub className="h-5 w-5" />
               <span class="sr-only">Github</span>
             </a>
           )}
+          {author.linkedIn && (
+            <a
+              href={`https://github.com/${author.linkedIn}`}
+              class="button-sleek z-10 flex items-center gap-1"
+            >
+              <FaLinkedin className="h-5 w-5" />
+              <span class="sr-only">LinkedIn</span>
+            </a>
+          )}
           {author.personalWebsite && (
-            <a href={author.personalWebsite} class="button-sleek flex items-center gap-1">
-              <FaLink />
+            <a href={author.personalWebsite} class="button-sleek z-10 flex items-center gap-1">
+              <FaLink className="h-5 w-5" />
               <span class="sr-only">Website</span>
             </a>
           )}

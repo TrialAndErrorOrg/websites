@@ -116,6 +116,10 @@
       "relation": "manyToMany",
       "target": "api::open-position.open-position",
       "inversedBy": "futureCoworkers"
+    },
+    "color": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color"
     }
   }
 }

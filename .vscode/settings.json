@@ -1,7 +1,7 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
 
-  "tailwindCSS.experimental.configFile": "/apps/frontend/tailwind.config.js",
+  "tailwindCSS.experimental.configFile": "apps/blog/tailwind.config.cjs",
   "exportall.config.folderListener": ["/libs/types/src/lib/github", "/libs/types/src/lib"],
   "appService.defaultWebAppToDeploy": "/subscriptions/3d4dfc68-39d1-4d8e-81d5-b59ee8d8cd36/microsoft.web/sites/subscriptions/3d4dfc68-39d1-4d8e-81d5-b59ee8d8cd36/resourceGroups/centeroftrialanderror.com/providers/Microsoft.Web/sites/cote-strapi",
   "appService.deploySubpath": "apps/strapi"

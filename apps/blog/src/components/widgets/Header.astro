@@ -12,7 +12,7 @@ const main = await getMain()
 ---
 
 <header
-  class="sticky top-0 z-50 flex-none md:h-16 md:border-b-2 overflow-clip border-black dark:border-white bg-white mx-auto w-full text-black dark:text-white dark:bg-blue-500"
+  class="sticky top-0 z-50 flex-none md:h-14 md:border-b-2 overflow-clip border-black dark:border-white bg-white mx-auto w-full text-black dark:text-white dark:bg-slate-700"
 >
   <div
     class="flex flex-col items-center h-full justify-between md:flex-row grid-cols-4 lg:grid-cols-12 py-0 w-full md:justify-between"
@@ -21,11 +21,11 @@ const main = await getMain()
       class="md:border-b-0 h-full border-b-2 dark:border-white border-black col-start-1 col-span-2 w-full lg:col-span-1 flex justify-between"
     >
       <a
-        class="w-20 p-4 bg-black flex h-full hover:bg-orange-500 transition-colors border-b-0 !rounded-none justify-center dark:bg-blue-500 dark:border-white dark:border-r-0 dark:!border-r-white !border-r-2 !border-r-black items-center"
+        class="w-16 md:w-20 md:p-4 p-2 bg-black flex h-full hover:bg-orange-500 transition-colors border-b-0 !rounded-none justify-center dark:border-white dark:border-r-0 dark:!border-r-white !border-r-2 !border-r-black items-center"
         href={main[0]?.url}
       >
         <span class="sr-only">Home</span>
-        <span class="h-14 w-14">
+        <span class="h-8 w-8 md:h-14 md:w-14">
           <Logo />
         </span>
       </a>

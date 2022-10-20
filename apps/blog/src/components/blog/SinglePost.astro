@@ -4,6 +4,7 @@ import { Image } from '@astrojs/image/components'
 import PostTags from '../../components/atoms/Tags.astro'
 import Author from '../../components/atoms/Author.astro'
 import { addBigLetterToBody } from '../../utils/addBigLetterToBody'
+import { cx } from '../../utils/cx'
 
 interface Props {
   post: BlogPost
@@ -73,9 +74,14 @@ const tableOfContents = getTableOfContents(filteredBody)
 const bod = addBigLetterToBody(filteredBody)
 
 const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
+
+const sleekUnderline =
+  'prose-a:relative prose-a:after:absolute prose-a:after:bottom-0 prose-a:after:left-0 prose-a:after:flex prose-a:after:h-[2px] prose-a:after:w-0 prose-a:after:bg-black prose-a:after:transition-all prose-a:after:duration-200 hover:prose-a:after:w-full prose-a:no-underline prose-a:text-black dark:prose-a:text-white dark:prose-a:after:!w-0 dark:prose-a:after:bg-white'
+
+// const proseAnchorSleekUnderline = sleekUnderline.map((c) => `prose-a:${c}`).join(' ')
 ---
 
-<section class="mx-auto relative flex flex-col bg-white">
+<section class="mx-auto relative flex flex-col dark:bg-slate-700 bg-white">
   <!-- <div
     class="w-screen relative stick inset-0 dark:bg-blue-500 bg-white md:h-[65vh] overflow-clip border-b-2 border-black mb-10"
   > -->
@@ -96,7 +102,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
   }
   <!-- </div> -->
   <article
-    class="dark:bg-blue-500 grid grid-cols-12 w-full py-10 border-t-2 border-black dark:border-white bg-white relative"
+    class="dark:bg-slate-700 grid grid-cols-12 w-full py-10 border-t-2 border-black dark:border-white bg-white relative"
   >
     <p class="col-span-8 col-start-2 md:col-start-3 max-w-3xl">
       <time datetime={post.publishDate ?? post.publishedAt}
@@ -145,7 +151,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
         href={`https://twitter.com/intent/tweet?text=${post.title}&url=https%3A%2F%2Fblog.trialanderror.orgs%2F${post.slug}`}
       >
         <svg
-          class="h-12 w-12 text-black button-sleek dark:text-white"
+          class="h-10 w-10 text-black button-sleek dark:text-white"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -158,7 +164,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
         href={`http://www.facebook.com/sharer.php?u=https%3A%2F%2Fblog.trialanderror.org%2F${post.slug}`}
       >
         <svg
-          class="h-12 w-12 dark:text-white text-black button-sleek"
+          class="h-10 w-10 dark:text-white text-black button-sleek"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -172,7 +178,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
         href={`mailto:?subject=${post.title}&body=https%3A%2F%2Fblog.trialanderror.org%2F${post.slug}`}
       >
         <svg
-          class="h-12 w-12 text-black button-sleek dark:text-white"
+          class="h-10 w-10 text-black button-sleek dark:text-white"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -189,11 +195,13 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
       </a>
     </div>
     <div
-      class="prose-a:font-bold col-start-2 md:col-start-3 md:col-end-10 col-end-11 max-w-3xl prose md:prose-lg dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-a:text-primary-600 md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 prose-a:text-orange-500 my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal prose-img:rounded-none prose-img:border-2 prose-img:border-black prose-a:mx-1 prose-blockquote:border-black"
+      class={cx(
+        sleekUnderline,
+        'relative prose-a:font-semibold col-start-2 md:col-start-3 md:col-end-10 col-end-11 max-w-3xl prose md:prose-lg dark:prose-p:text-gray-50 dark:prose-a:underline dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal prose-img:rounded-none prose-img:border-2 prose-img:border-black-2 xl:prose-base dark:prose-blockquote:border-slate-200  prose-blockquote:border-black'
+      )}
     >
       <div class="first-of-type:prose-p:mt-0" set:html={bod}></div>
-      <hr class="border-black border" />
-      <License post={post} />
+      <hr class="dark:border-white border-black border" />
     </div>
     <!-- Table of contents Element -->
 
@@ -207,10 +215,13 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
 
     <div class="grid gap-3 md:col-span-5 col-start-2 col-span-10 md:col-start-3">
       {authors.map((author) => <Author class="" author={author} />)}
+      <div class="mt-16">
+        <License post={post} />
+      </div>
     </div>
   </article>
   <!-- prev and next article -->
-  <div class="grid py-8 grid-cols-12 relative bg-white">
+  <div class="grid py-8 grid-cols-12 relative dark:bg-slate-700 bg-white">
     <div
       class={`md:col-span-7 col-span-10 col-start-2 md:col-start-3 grid ${
         prev && next ? 'grid-cols-2' : 'grid-cols-1'
@@ -238,7 +249,7 @@ const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
       }
     </div>
   </div>
-  <div class="grid py-8 bg-white relative grid-cols-12">
+  <div class="grid py-8 bg-white relative dark:bg-slate-700 dark:text-gray-50 grid-cols-12">
     <h2 class="col-span-10 col-start-2 my-4 md:col-span-7 md:col-start-3 text-4xl font-bold">
       {post.related?.length ? 'Related Posts' : 'Latest Posts'}
     </h2>

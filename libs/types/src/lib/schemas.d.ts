@@ -280,6 +280,7 @@ export interface PluginUploadFile extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::upload.file', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    placeholder: TextAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
