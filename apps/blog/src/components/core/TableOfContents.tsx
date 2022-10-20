@@ -59,10 +59,10 @@ export const TableOfContents = ({
               <a
                 href={`#${section.slug}`}
                 className={clsx(
-                  'cia-no-hover-full py-1 leading-4',
+                  'cia-no-hover py-1 leading-4',
                   pageHasSubsections ? 'font-medium' : '',
                   isActive(section)
-                    ? 'cia-full-active font-bold text-black dark:bg-none dark:text-white dark:underline'
+                    ? 'cia-full font-bold text-black dark:bg-none dark:text-white dark:underline'
                     : 'hover:font-semibold hover:text-black dark:text-slate-200 dark:hover:text-white'
                 )}
               >
