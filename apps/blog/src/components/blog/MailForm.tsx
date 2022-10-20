@@ -1,7 +1,7 @@
 // <!-- Begin Mailchimp Signup htmlForm -->
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, ExclamationIcon, XIcon } from '@heroicons/react/outline'
+import { CheckIcon, ExclamationIcon, XIcon } from '@heroicons/react/outline/index'
 import { useForm } from 'react-hook-form'
 import { Ring } from '@uiball/loaders'
 import fetchJsonp from 'fetch-jsonp'
