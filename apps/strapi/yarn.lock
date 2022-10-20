@@ -3088,10 +3088,10 @@
     "@strapi/utils" "4.4.3"
     lodash "4.17.21"
 
-"@strapi/plugin-seo@^1.7.5":
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@strapi/plugin-seo/-/plugin-seo-1.7.5.tgz#74a7395c56d40f814ce553d8e902e2cfbe6154f3"
-  integrity sha512-URkmG3kF4Uf4hCqLumS8tZ7cuzwPHbTX7NgMsnQnKVCYW6+oRTmGTCWmaCNObmEtb4V3otHKZQJfrIC+Cmlx0g==
+"@strapi/plugin-seo@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@strapi/plugin-seo/-/plugin-seo-1.7.6.tgz#ecc7193c5f0a98faa916281a511d6ab260d796e3"
+  integrity sha512-Pme39dKxSSUsHlAHvWko+hBx/A2Qs+lFWaNTF1QdcwRGpRUT7Dxz4lvyB5+lFFT06rd1XrRNJY5+C6JRoUt/7Q==
   dependencies:
     eslint-plugin-react-hooks "^4.3.0"
     lodash "^4.17.21"
