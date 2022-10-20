@@ -11,6 +11,8 @@ import {
   FaGithub,
 } from 'react-icons/fa/index'
 import { getMenu } from '../../utils/menu'
+import { MailForm } from '../blog/MailForm'
+import { SignUp } from './SignUp'
 
 const footer = (await getMenu('footer-blog')) ?? []
 
@@ -103,26 +105,7 @@ const socials = (await getMenu('socials')) ?? []
           The latest news, articles, and resources, sent to your inbox weekly.
         </p>
       </div>
-      <form class="mt-4 sm:flex sm:max-w-md lg:mt-0">
-        <label html-for="email-address" class="sr-only"> Email address</label>
-        <input
-          type="email"
-          name="email-address"
-          id="email-address"
-          auto-complete="email"
-          required
-          class="w-full min-w-0 appearance-none rounded-lg border bg-white border-black py-2 px-4 text-base font-semibold text-gray-900 placeholder-gray-700 focus:border-orange-500 focus:placeholder-gray-400 focus:outline-none focus:ring-orange-500 dark:text-white sm:max-w-xs"
-          placeholder="Enter your email"
-        />
-        <div class="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-          <button
-            type="submit"
-            class="flex w-full items-center justify-center rounded-xl border-black hover:shadow-thick-1 hover:-translate-x-1 hover:-translate-y-1 transition-all border bg-orange-600 py-2 px-4 text-base font-semibold text-white"
-          >
-            Subscribe
-          </button>
-        </div>
-      </form>
+      <SignUp client:visible />
     </div>
     <div
       class="mt-8 border-t border-black pt-8 dark:border-white md:flex md:items-center md:justify-between"

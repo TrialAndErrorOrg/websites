@@ -17,6 +17,7 @@ import { getPosts } from '../utils/blog.js'
 import PostCard from '../components/blog/PostCard.astro'
 import Container from '../components/atoms/Container.astro'
 import Picture from '../components/core/Picture.astro'
+import { SignUp } from '../components/widgets/SignUp.jsx'
 
 const meta = {
   title: SITE.title,
@@ -35,10 +36,10 @@ const posts = (await getPosts()) ?? []
       >
         <a
           href="https://trialanderror.org"
-          class="flex flex-col !absolute -top-10 left-20 font-overpass hover:translate-x-72 sleek-underline text-black transform-gpu will-change-transform transition-all ease-out z-20 duration-300"
+          class="flex flex-col !absolute -top-10 left-20 font-overpass hover:translate-x-72 hover-underline text-black transform-gpu will-change-transform transition-all ease-out z-20 duration-500"
         >
           <span
-            class="bg-orange-500 w-max border-4 lg:border-4 lg:border-b-0 z-20 border-b-0 relative p-2 pr-4 md:px-8 md:pr-14 pb-0 lg:pb-0 border-black"
+            class="bg-orange-500 w-max border-4 lg:border-4 lg:border-b-0 z-30 border-b-0 relative p-2 lg:pt-6 pr-4 md:px-4 lg:px-8 pb-0 lg:pb-0 border-black"
           >
             Center of
           </span>
@@ -50,7 +51,7 @@ const posts = (await getPosts()) ?? []
         </a>
         <a
           href="https://journal.trialanderror.org"
-          class="!absolute -top-5 left-10 flex flex-col sleek-underline font-overpass hover:translate-x-64 z-30 transition-all ease-out duration-300 text-white transform-gpu will-change-transform"
+          class="!absolute -top-5 left-10 flex flex-col hover:underline font-overpass hover:translate-x-64 z-30 transition-all ease-out duration-500 text-white transform-gpu will-change-transform"
         >
           <span
             class="bg-blue-500 w-max border-4 lg:border-4 lg:border-b-0 z-30 border-b-0 relative p-2 lg:pt-6 pr-4 md:px-4 lg:px-8 pb-0 lg:pb-0 border-black"
@@ -106,11 +107,40 @@ const posts = (await getPosts()) ?? []
 
     <div class="col-span-10 col-start-2">
       <div class="grid gap-4 mt-10 md:grid-cols-2">
-        {posts.slice(1).map((post) => <PostCard post={post} aspect="square" />)}
+        {posts.slice(1, 7).map((post) => <PostCard post={post} aspect="square" />)}
       </div>
     </div>
-  </div>
-  <!-- <Hero />
+    <div class="col-span-10 col-start-2 flex items-center justify-center my-32">
+      <div class="mx-auto p-10 items-center grid md:grid-cols-3 gap-10 justify-between">
+        <div class="flex flex-col gap-10 md:col-span-2">
+          <h2
+            class="dark:text-white text-6xl xl:text-7xl text-black font-black text-center md:text-left tracking-tighter font-sans"
+          >
+            Subscribe to our<br class="hidden md:block" />
+            <span class="text-orange-500">newsletter!</span>
+          </h2>
+          <SignUp client:visible />
+        </div>
+
+        <p
+          class="md:text-3xl dark:text-white text-2xl mx-auto text-center text-black font-medium tracking-tighter font-sans"
+        >
+          Keep up to date with the Blog,
+          <a href="https://trialanderror.org" class="sleek-underline font-bold">Center</a>, and <br
+          />
+          <a href="https://trialanderror.org" class="sleek-underline font-bold"
+            >Journal of Trial & Error</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <div class="col-span-10 col-start-2">
+      <div class="grid gap-4 mt-10 md:grid-cols-2">
+        {posts.slice(7).map((post) => <PostCard post={post} aspect="square" />)}
+      </div>
+    </div>
+    <!-- <Hero />
     <Features />
     <Steps />
     <Features2 />
@@ -119,4 +149,5 @@ const posts = (await getPosts()) ?? []
     <FAQs />
     <Stats />
     <CallToAction /> -->
+  </div>
 </Layout>

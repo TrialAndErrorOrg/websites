@@ -30,7 +30,7 @@ const main = await getMain()
         </span>
       </a>
       <div class="flex items-center col-start-3 md:hidden">
-        <ToggleTheme class="px-2 py-1 button-sleek" />
+        <!-- <ToggleTheme class="px-2 py-1 button-sleek" /> -->
         <ToggleMenu class="button-sleek px-2 py-1" />
       </div>
     </div>
@@ -41,22 +41,22 @@ const main = await getMain()
       id="menu"
     >
       <ul
-        class="flex flex-col h-full pt-8 md:pt-0 md:px-0 px-4 md:flex-row md:self-center gap-8 md:gap-6 md: collapse w-full md:w-auto collapsed text-lg md:text-xl"
+        class="flex flex-col h-full pt-8 md:pt-0 md:px-0 px-4 md:flex-row md:self-center gap-8 md:gap-4 collapse w-full md:w-auto collapsed text-lg md:text-xl"
       >
         <li>
           <a
-            class="font-medium hover:text-gray-900 dark:hover:text-white flex sleek-underline items-center transition duration-150 ease-in-out"
+            class="hover:text-gray-900 dark:hover:text-white flex sleek-underline items-center transition duration-150 ease-in-out"
             href={'/blog'}>Blog</a
           >
         </li>
         <li>
           <a
-            class="font-medium hover:text-gray-900 sleek-underline dark:hover:text-white flex items-center transition duration-150 ease-in-out"
+            class="hover:text-gray-900 sleek-underline dark:hover:text-white flex items-center transition duration-150 ease-in-out"
             href={'https://journal.trialanderror.org'}>Journal</a
           >
         </li>
 
-        <li class="md:hidden -ml-2">
+        <li class="md:hidden">
           <a
             class="text-black button-sleek focus:outline-none dark:focus:ring-white flex font-medium gap-2 w-full items-center"
             aria-label="RSS Feed"
@@ -66,7 +66,7 @@ const main = await getMain()
             RSS Feed
           </a>
         </li>
-        <li class="md:hidden -ml-2">
+        <li class="md:hidden">
           <a
             href="https://github.com/journaloftrialanderror/centeroftrialanderror.com"
             class="flex font-medium items-center gap-2 focus:outline-none dark:focus:ring-white rounded-lg button-sleek"
@@ -82,10 +82,10 @@ const main = await getMain()
       </ul>
       <div class="md:self-center flex items-center mb-4 mx-2 md:mb-0 ml-2">
         <div class="hidden items-center md:flex">
-          <ToggleTheme
+          <!-- <ToggleTheme
             iconClass="w-6 h-6"
             class="button-sleek inline-flex items-center justify-center focus:ring-black dark:focus:ring-white"
-          />
+          /> -->
           <a
             class="text-black button-sleek focus:outline-none focus:ring-4 focus:ring-black dark:focus:ring-white text-sm inline-flex items-center"
             aria-label="RSS Feed"

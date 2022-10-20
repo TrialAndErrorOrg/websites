@@ -26,6 +26,12 @@ html.dark:root {
     @apply inline-flex items-center justify-center rounded border border-transparent py-3 px-6 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
   }
 }
+@layer base {
+  a,
+  button {
+    @apply focus-visible:!outline-orange-500;
+  }
+}
 
 [astro-icon] > * {
   stroke-width: 1.5;
@@ -106,11 +112,11 @@ h6,
 }
 
 .button {
-  @apply rounded-full border-[1px] border-black bg-white text-black shadow-[0_0_0_#000] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer hover:shadow-thick-2 dark:border-white dark:bg-blue-900 dark:text-white dark:hover:shadow-thick-2-white;
+  @apply rounded-full border-[1px] border-black bg-white text-black shadow-[0_0_0_#000] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer hover:shadow-thick-2 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:border-white dark:bg-blue-900 dark:text-white dark:hover:shadow-thick-2-white;
 }
 
 .button-sleek {
-  @apply rounded-full border-2 border-transparent bg-none p-1 text-black shadow-[0_0_0_#000] transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white hover:shadow-thick-2 dark:text-white dark:hover:border-white dark:hover:bg-blue-900  dark:hover:shadow-thick-2-white;
+  @apply rounded-full border-2 border-transparent bg-none p-1 text-black shadow-[0_0_0_#000] transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white hover:shadow-thick-2 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2  dark:text-white dark:hover:border-white dark:hover:bg-blue-900 dark:hover:shadow-thick-2-white;
 }
 
 .link-overlay {
@@ -161,5 +167,5 @@ h6,
 }
 
 .sleek-underline {
-  @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full;
+  @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full dark:after:bg-white;
 }

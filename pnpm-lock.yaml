@@ -73,6 +73,7 @@ specifiers:
   '@types/react-dom': ^18.0.6
   '@typescript-eslint/eslint-plugin': ~5.32.0
   '@typescript-eslint/parser': ~5.32.0
+  '@uiball/loaders': ^1.2.6
   astro: ^1.5.0
   astro-icon: ^0.7.3
   autoprefixer: ^10.4.8
@@ -99,6 +100,7 @@ specifiers:
   eslint-plugin-react: 7.30.1
   eslint-plugin-react-hooks: 4.6.0
   eslint-plugin-unicorn: ^43.0.2
+  fetch-jsonp: ^1.2.3
   github-slugger: ^1.4.0
   image-size: ^1.0.2
   jest: ^28.1.3
@@ -165,9 +167,11 @@ dependencies:
   '@trpc/next': 9.27.4_l2t6vv6lmp6aralgreey6zoq4a
   '@trpc/react': 9.27.4_2g6rn7sj2da6xgohvi4oglgmnq
   '@trpc/server': 9.27.4
+  '@uiball/loaders': 1.2.6_biqbaboplfbrettd7655fr4n2y
   axios: 0.27.2
   core-js: 3.25.5
   dotenv: 16.0.3
+  fetch-jsonp: 1.2.3
   github-slugger: 1.4.0
   image-size: 1.0.2
   mime: 3.0.0
@@ -10579,6 +10583,16 @@ packages:
       '@ucast/mongo': 2.4.2
     dev: true
 
+  /@uiball/loaders/1.2.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Db3be5pG9ciZa1Rxr6Iwv8bIwVP+g00m3GYQFsu3j7B9T16MpHhnGXLksuNtKlePdP3FCTFGpFrXbJz4GG/OOg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /@vercel/nft/0.22.1:
     resolution: {integrity: sha512-lYYZIoxRurqDOSoVIdBicGnpUIpfyaS5qVjdPq+EfI285WqtZK3NK/dyCkiyBul+X2U2OEhRyeMdXPCHGJbohw==}
     hasBin: true
@@ -16714,6 +16728,10 @@ packages:
     dependencies:
       node-domexception: 1.0.0
       web-streams-polyfill: 3.2.1
+
+  /fetch-jsonp/1.2.3:
+    resolution: {integrity: sha512-C13k1o7R9JTN1wmhKkrW5bU/00LwixXnkufQUR6Rbf4KCS0i8mycQaovt4WVbHnA2NKgi7Ryp9Whpy/CGcij6Q==}
+    dev: false
 
   /fetch-retry/5.0.3:
     resolution: {integrity: sha512-uJQyMrX5IJZkhoEUBQ3EjxkeiZkppBd5jS/fMTJmfZxLSiaQjv2zD0kTvuvkSH89uFvgSlB6ueGpjD3HWN7Bxw==}
