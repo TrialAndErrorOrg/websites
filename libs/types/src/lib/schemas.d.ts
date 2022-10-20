@@ -1992,7 +1992,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'manyToMany',
       'api::blog-post.blog-post'
     >
-    Summary: RichTextAttribute
+    summary: RichTextAttribute
     relatedOpenPositions: RelationAttribute<
       'api::team-member.team-member',
       'manyToMany',
