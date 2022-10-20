@@ -56,14 +56,18 @@ const darkCategoryColorMap = {
     {
       post.image ? (
         <Image
-          src={post.image?.formats?.small?.url ?? post.image.url}
+          src={
+            (wide ? post.image?.formats?.large?.url : post.image?.formats?.medium?.url) ??
+            post.image.url
+          }
           alt={post.image.alt || 'Thumbnail'}
           class={`${wide ? 'h-full w-full' : 'h-72 w-full'} object-cover transition-all`}
           loading={preloadImage ? 'eager' : 'lazy'}
+          format="webp"
           height={
             (wide
               ? post.image?.formats?.large?.height ?? post.image?.formats?.medium?.height
-              : post.image?.formats?.small?.height) ?? post.image.height
+              : post.image?.formats?.medium?.height) ?? post.image.height
           }
           aspectRatio={aspect === 'landscape' ? '16:9' : '16:9'}
           fit="cover"
