@@ -3,6 +3,7 @@ import '../assets/styles/base.css'
 
 import MetaTags from '../components/core/MetaTags.astro'
 import BasicScripts from '../components/core/BasicScripts.astro'
+import Analytics from '../components/core/Analytics.astro'
 
 const { meta = {} } = Astro.props
 ---
@@ -11,6 +12,7 @@ const { meta = {} } = Astro.props
 <html lang="en" class="motion-safe:scroll-smooth 2xl:text-[20px]">
   <head>
     <MetaTags {...meta} />
+    <Analytics />
   </head>
 
   <body
