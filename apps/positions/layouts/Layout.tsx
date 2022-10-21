@@ -8,6 +8,11 @@ export function Layout({ meta, children }: { meta: MetaProps; children: React.Re
     <>
       <Head>
         <MetaTags {...meta} />
+        <script
+          defer
+          data-domain="positions.trialanderror.org"
+          src="https://analytics.trialanderror.org/js/plausible.js"
+        ></script>
       </Head>
       <nav className="backdrop-blur-sm justify-between flex w-full bg-white/90 items-center h-16 md:h-20 py-2 px-2  md:px-10 md:sticky z-10 top-0">
         <Link className="flex items-end" href="/">
