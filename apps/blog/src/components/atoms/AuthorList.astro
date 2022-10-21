@@ -2,6 +2,7 @@
 import { cx } from '../../utils/cx'
 import { Image } from '@astrojs/image/components'
 import type { Author } from '../../utils/types'
+import { getFirstAuthorLink } from '../../utils/getFirstAuthorLink'
 
 interface Props {
   authors: Author[]
@@ -20,17 +21,9 @@ const { authors } = Astro.props
     {
       authors.map((author, idx) => (
         <a
-          href={
-            author.slug
-              ? `https://journal.trialanderror.org/team/${author.slug}`
-              : author?.orcid
-              ? `https://orcid.org/${author.orcid}`
-              : author?.twitter
-              ? `https://twitter.com/${author.twitter}`
-              : '#'
-          }
+          href={getFirstAuthorLink(author)}
           class={cx(
-            `group-one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2 `,
+            `group/one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2 `,
             idx === 0 && 'bg-white',
             idx === 1 && 'bg-orange-500 text-black',
             idx === 2 && 'bg-blue-500 text-white'
@@ -42,28 +35,17 @@ const { authors } = Astro.props
             'z-index': `${10 - idx}`,
           }}
         >
-          {author?.image?.url && false ? (
-            <Image
-              src={author.image.url}
-              height={author.image?.formats?.thumbnail?.height ?? author.image.height}
-              width={author.image?.formats?.thumbnail?.width ?? author.image.width}
-              fit="cover"
-              format="webp"
-              class="h-full w-full"
-              alt={author.image.alt ?? `${author.firstName} ${author.lastName}`}
-            />
-          ) : (
-            <div
-              class={cx(
-                'relative flex h-full w-full items-center justify-center font-semibold uppercase '
-              )}
-            >
-              {author.lastName?.charAt(0)}
-              <span class="group-one-hover:max-w-xs line-clamp-1 max-w-0 overflow-clip whitespace-nowrap transition-all duration-500">
-                {author.lastName?.slice(1)}
-              </span>
-            </div>
-          )}
+          <div
+            class={cx(
+              'relative flex h-full w-full items-center justify-center font-semibold uppercase '
+            )}
+          >
+            {author.lastName?.charAt(0)}
+            <span class="group-hover/one:max-w-xs group-hover/one:block line-clamp-1 hidden max-w-0  overflow-clip whitespace-nowrap transition-all duration-500 md:block">
+              {author.lastName?.slice(1)}
+            </span>
+            <span class="sr-only">{author.lastName}</span>
+          </div>
         </a>
       ))
     }
