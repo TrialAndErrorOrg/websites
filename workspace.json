@@ -15,8 +15,6 @@
     "strapi-client": "libs/strapi-client",
     "types": "libs/types",
     "ui": "libs/ui",
-    "under-construction": "apps/under-construction",
-    "under-construction-e2e": "apps/under-construction-e2e",
     "utils-try-catch": "libs/utils/try-catch",
     "webhooks": "libs/webhooks"
   }
