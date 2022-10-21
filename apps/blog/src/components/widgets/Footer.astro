@@ -25,19 +25,20 @@ const socials = (await getMenu('socials')) ?? []
   <h2 id="footer-heading" class="sr-only">Footer</h2>
 
   <div class="mx-auto md:max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-    <h2 class="mb-5 text-lg italic">A Center of Trial & Error initiative</h2>
+    <!-- <h2 class="mb-5 text-lg font-medium">An initiative by the Center of Trial & Err</h2> -->
     <div class="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
-      <div class="grid grid-cols-2 gap-4 md:gap-8 xl:col-span-4">
+      <div class="grid md:flex flex-wrap grid-cols-2 gap-4 md:gap-8 xl:col-span-4">
         {
+          // TODO: [blog] clean up the footer
           new Array(Math.floor(((footer?.length ?? 0) - 0.1) / 2) + 1).fill(0).map((_, idx) => (
             <div
-              class={`md:grid md:grid-cols-${
+              class={`flex-wrap md:flex md:grid-cols-${
                 Math.floor(((footer?.length ?? 0) - 0.1) / 2) + 1
               } md:gap-8`}
             >
               {[footer?.[idx * 2], footer?.[idx * 2 + 1]]?.map((section, ix) => (
                 <div class={ix % 2 ? 'mt-12 md:mt-0' : ''}>
-                  <h3 class="text-sm font-semibold uppercase tracking-wider text-white dark:text-slate-200">
+                  <h3 class="text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:text-orange-500 dark:text-slate-200">
                     {section?.url ? <a href={section.url}>{section?.title}</a> : section?.title}
                   </h3>
                   <ul class="mt-4 space-y-4">
@@ -139,9 +140,11 @@ const socials = (await getMenu('socials')) ?? []
         }
       </div>
       <p class="mt-8 text-base text-white font-bold dark:text-white md:order-1 md:mt-0">
-        &copy;{' '}
-        {new Date().getFullYear() > 2022 ? `2022-${new Date().getFullYear()}` : 2022}{' '}
-        Center of Trial &amp; Error
+        <a href="https://trialanderror.org" class="hover:text-orange-500 underline">
+          &copy;{' '}
+          {new Date().getFullYear() > 2022 ? `2022-${new Date().getFullYear()}` : 2022}{' '}
+          Center of Trial &amp; Error</a
+        >
       </p>
     </div>
   </div>

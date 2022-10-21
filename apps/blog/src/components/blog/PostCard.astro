@@ -45,7 +45,7 @@ const darkCategoryColorMap = {
       'border-black dark:border-white overflow-hidden transition-all bg-gray-100  dark:bg-gray-800',
       aspect === 'landscape' ? 'aspect-video' : 'aspect-video',
       'relative',
-      wide ? 'md:border-r-2 border-b-2 w-full' : 'border-b-2'
+      wide ? 'md:border-r-2 md:border-b-0 border-b-2 w-full' : 'border-b-2'
     )}
   >
     <!-- <p
@@ -82,10 +82,12 @@ const darkCategoryColorMap = {
     <!-- // false ? '!bg-orange-500' : categoryColorMap[post.category.title?.toLowerCase()]
         // darkCategoryColorMap[post.category.title?.toLowerCase()] -->
     <a
-      class={`py-1 px-4 !bg-orange-500 !rounded-none text-black !font-semibold absolute z-10 top-4 right-0 button hover:!border-r-2 overflow-clip dark:border-white  !border-2 !border-r-0 hover:!border-r-2  text-lg md:text-xl border-black dark:text-white `}
+      class={`py-1 px-4 !bg-orange-500 group/button !rounded-none text-black !font-semibold absolute z-10 top-4 right-0 overflow-clip dark:border-white  !border-2 !border-r-0 text-lg md:text-xl border-black dark:text-white `}
       href={`/category/${post?.category?.title?.toLowerCase()}`}
     >
-      {post.category?.title}
+      <span class="sleek-underline group-hover/button:after:w-full">
+        {post.category?.title}
+      </span>
     </a>
     <Tags
       tags={post.blog_tags ?? []}
@@ -142,7 +144,7 @@ const darkCategoryColorMap = {
           //     <span class="text-sm">{`${author?.firstName} ${author.lastName}`}</span>
           //   </div>
           // ))
-          <AuthorList authors={[...(post.blog_authors ?? []), ...(post.team_members ?? [])]} />
+          <AuthorList authors={[...(post.team_members ?? []), ...(post.blog_authors ?? [])]} />
         )
       }
     </div>

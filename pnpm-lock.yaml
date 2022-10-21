@@ -57,7 +57,7 @@ specifiers:
   '@swc/jest': 0.2.23
   '@tailwindcss/aspect-ratio': ^0.4.0
   '@tailwindcss/forms': ^0.5.3
-  '@tailwindcss/typography': ^0.5.4
+  '@tailwindcss/typography': ^0.5.7
   '@tefkah/chair-flight-docsearch-react': ^3.0.5
   '@testing-library/react': 13.3.0
   '@trpc/client': ^9.27.4
@@ -134,7 +134,7 @@ specifiers:
   subfont: ^6.12.0
   superjson: ^1.10.0
   swagger-axios-codegen: ^0.13.3
-  tailwindcss: ^3.1.7
+  tailwindcss: ^3.2.0
   tailwindcss-scoped-groups: ^2.0.0
   ts-jest: ^28.0.7
   ts-node: 10.9.1
@@ -160,8 +160,8 @@ dependencies:
   '@kmariappan/strapi-client-js': 1.3.0_axios@0.27.2
   '@meilisearch/instant-meilisearch': 0.8.2
   '@swc/helpers': 0.4.12
-  '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.1.8
-  '@tailwindcss/typography': 0.5.7_tailwindcss@3.1.8
+  '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.2.0
+  '@tailwindcss/typography': 0.5.7_tailwindcss@3.2.0
   '@tefkah/chair-flight-docsearch-react': 3.0.5_rj7ozvcq3uehdlnj3cbwzbi5ce
   '@trpc/client': 9.27.4_@trpc+server@9.27.4
   '@trpc/next': 9.27.4_l2t6vv6lmp6aralgreey6zoq4a
@@ -204,7 +204,7 @@ devDependencies:
   '@astrojs/preact': 1.2.0_preact@10.11.1
   '@astrojs/rss': 1.0.2
   '@astrojs/sitemap': 1.0.0
-  '@astrojs/tailwind': 2.1.0_tailwindcss@3.1.8
+  '@astrojs/tailwind': 2.1.0_tailwindcss@3.2.0
   '@astrolib/analytics': 0.2.4_astro@1.5.0
   '@astrolib/seo': 0.2.1_astro@1.5.0
   '@babel/core': 7.18.6
@@ -243,7 +243,7 @@ devDependencies:
   '@swc/cli': 0.1.57_@swc+core@1.3.8
   '@swc/core': 1.3.8
   '@swc/jest': 0.2.23_@swc+core@1.3.8
-  '@tailwindcss/forms': 0.5.3_tailwindcss@3.1.8
+  '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.0
   '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
   '@types/github-slugger': 1.3.0
   '@types/jest': 28.1.6
@@ -290,8 +290,8 @@ devDependencies:
   reading-time: 1.5.0
   subfont: 6.12.1
   swagger-axios-codegen: 0.13.3
-  tailwindcss: 3.1.8_neo3lunb2qpadwxplzw7r2isgm
-  tailwindcss-scoped-groups: 2.0.0_tailwindcss@3.1.8
+  tailwindcss: 3.2.0_neo3lunb2qpadwxplzw7r2isgm
+  tailwindcss-scoped-groups: 2.0.0_tailwindcss@3.2.0
   ts-jest: 28.0.8_y2cmr4bljaipae2sffzg5gevfa
   ts-node: 10.9.1_z2fjtusrmonbudkrwhrowhed34
   tsconfig-paths: 4.1.0
@@ -500,7 +500,7 @@ packages:
       zod: 3.19.1
     dev: true
 
-  /@astrojs/tailwind/2.1.0_tailwindcss@3.1.8:
+  /@astrojs/tailwind/2.1.0_tailwindcss@3.2.0:
     resolution: {integrity: sha512-zfdprApzUJbqCNSJNEYeV7dh0ZGMdPDnROXb11ZBusu3/oVrahfP7nlmJTr05bpUdFURNIn2Z7Jkhn0nsAl8dQ==}
     peerDependencies:
       tailwindcss: ^3.0.24
@@ -508,7 +508,7 @@ packages:
       '@proload/core': 0.3.3
       autoprefixer: 10.4.12_postcss@8.4.18
       postcss: 8.4.18
-      tailwindcss: 3.1.8_neo3lunb2qpadwxplzw7r2isgm
+      tailwindcss: 3.2.0_neo3lunb2qpadwxplzw7r2isgm
     dev: true
 
   /@astrojs/telemetry/1.0.1:
@@ -9661,24 +9661,24 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.1.8:
+  /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.2.0:
     resolution: {integrity: sha512-8QPrypskfBa7QIMuKHg2TA7BqES6vhBrDLOv8Unb6FcFyd3TjKbc6lcmb9UPQHxfl24sXoJ41ux/H7qQQvfaSQ==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.1.8_neo3lunb2qpadwxplzw7r2isgm
+      tailwindcss: 3.2.0_neo3lunb2qpadwxplzw7r2isgm
     dev: false
 
-  /@tailwindcss/forms/0.5.3_tailwindcss@3.1.8:
+  /@tailwindcss/forms/0.5.3_tailwindcss@3.2.0:
     resolution: {integrity: sha512-y5mb86JUoiUgBjY/o6FJSFZSEttfb3Q5gllE4xoKjAAD+vBrnIhE4dViwUuow3va8mpH4s9jyUbUbrRGoRdc2Q==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.1.8_neo3lunb2qpadwxplzw7r2isgm
+      tailwindcss: 3.2.0_neo3lunb2qpadwxplzw7r2isgm
     dev: true
 
-  /@tailwindcss/typography/0.5.7_tailwindcss@3.1.8:
+  /@tailwindcss/typography/0.5.7_tailwindcss@3.2.0:
     resolution: {integrity: sha512-JTTSTrgZfp6Ki4svhPA4mkd9nmQ/j9EfE7SbHJ1cLtthKkpW2OxsFXzSmxbhYbEkfNIyAyhle5p4SYyKRbz/jg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
@@ -9687,8 +9687,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.1.8_neo3lunb2qpadwxplzw7r2isgm
-    dev: false
+      tailwindcss: 3.2.0_neo3lunb2qpadwxplzw7r2isgm
 
   /@tefkah/chair-flight-docsearch-react/3.0.5_rj7ozvcq3uehdlnj3cbwzbi5ce:
     resolution: {integrity: sha512-9eHcV8GECncqrWPtRC9fZBd90rJqvfGf119StKrxsLy2f/x7tDBANgUaJpj+d6NA/mQdxNMq02mUH4LfuxSq/A==}
@@ -24120,8 +24119,8 @@ packages:
       string-hash: 1.1.3
     dev: true
 
-  /postcss-nested/5.0.6_postcss@8.4.18:
-    resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
+  /postcss-nested/6.0.0_postcss@8.4.18:
+    resolution: {integrity: sha512-0DkamqrPcmkBDsLn+vQDIrtkSbNkv5AD/M322ySo9kqFkCIYklym2xEmWkwo+Y3/qZo34tzEPNUw4y7yMCdv5w==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
@@ -27673,16 +27672,16 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /tailwindcss-scoped-groups/2.0.0_tailwindcss@3.1.8:
+  /tailwindcss-scoped-groups/2.0.0_tailwindcss@3.2.0:
     resolution: {integrity: sha512-uE9PJzfjqzsKlZ0dUjG5yPwBmkEZ/qmrXMLjykRs0otolUHAIclbtV49JQGyeYLo8YA7WPMgzKOg2e4snVyHqw==}
     peerDependencies:
       tailwindcss: '>=3'
     dependencies:
-      tailwindcss: 3.1.8_neo3lunb2qpadwxplzw7r2isgm
+      tailwindcss: 3.2.0_neo3lunb2qpadwxplzw7r2isgm
     dev: true
 
-  /tailwindcss/3.1.8_neo3lunb2qpadwxplzw7r2isgm:
-    resolution: {integrity: sha512-YSneUCZSFDYMwk+TGq8qYFdCA3yfBRdBlS7txSq0LUmzyeqRe3a8fBQzbz9M3WS/iFT4BNf/nmw9mEzrnSaC0g==}
+  /tailwindcss/3.2.0_neo3lunb2qpadwxplzw7r2isgm:
+    resolution: {integrity: sha512-ARh/W0uH5UlWIC2nn02V0+5fyF0k6qZliyt4QYic2upOhPUE/Spu1EURNc9txJ3+4j8OEmdigqfDpw4d2tA4vA==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:
@@ -27705,7 +27704,7 @@ packages:
       postcss-import: 14.1.0_postcss@8.4.18
       postcss-js: 4.0.0_postcss@8.4.18
       postcss-load-config: 3.1.4_neo3lunb2qpadwxplzw7r2isgm
-      postcss-nested: 5.0.6_postcss@8.4.18
+      postcss-nested: 6.0.0_postcss@8.4.18
       postcss-selector-parser: 6.0.10
       postcss-value-parser: 4.2.0
       quick-lru: 5.1.1

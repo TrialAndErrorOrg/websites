@@ -30,11 +30,9 @@ const { authors } = Astro.props
               : '#'
           }
           class={cx(
-            `group-one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2  ${
-              idx > 1 ? 'hover:translate-x-2' : ''
-            }`,
+            `group-one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2 `,
             idx === 0 && 'bg-white',
-            idx === 1 && 'bg-orange-500 text-white',
+            idx === 1 && 'bg-orange-500 text-black',
             idx === 2 && 'bg-blue-500 text-white'
           )}
           style={{
@@ -57,7 +55,7 @@ const { authors } = Astro.props
           ) : (
             <div
               class={cx(
-                'relative flex h-full w-full items-center justify-center font-semibold uppercase text-black '
+                'relative flex h-full w-full items-center justify-center font-semibold uppercase '
               )}
             >
               {author.lastName?.charAt(0)}
