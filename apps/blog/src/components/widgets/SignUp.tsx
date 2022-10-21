@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { MailForm } from '../blog/MailForm'
 
-export const SignUp = () => {
+export const SignUp = ({ mailId }: { mailId?: string }) => {
   const [open, setOpen] = useState(false)
 
   const [email, setEmail] = useState('')
+  const id = useId()
 
   return (
     <>
@@ -15,16 +16,15 @@ export const SignUp = () => {
         }}
         className="mt-4 sm:flex sm:max-w-md lg:mt-0"
       >
-        <label html-for="email-address" className="sr-only">
+        <label html-for={mailId ?? id} className="sr-only">
           Email address
         </label>
         <input
           type="email"
           name="email-address"
-          id="email-address"
+          id={mailId ?? id}
           autoComplete="email"
           onChange={(ev) => {
-            console.log(email)
             setEmail(ev.target.value)
           }}
           // required

@@ -119,7 +119,7 @@ const posts = (await getPosts()) ?? []
             Subscribe to our<br class="hidden md:block" />
             <span class="text-orange-500">newsletter!</span>
           </h2>
-          <SignUp client:visible />
+          <SignUp mailId={'email'} client:visible />
         </div>
 
         <p
