@@ -263,8 +263,8 @@ export function SearchModal({
                                       className={cx(
                                         'text-sm font-bold',
                                         active
-                                          ? 'text-gray-900 dark:text-slate-50'
-                                          : 'text-gray-700 dark:text-slate-200'
+                                          ? 'text-black dark:text-slate-50'
+                                          : 'text-gray-800 dark:text-slate-200'
                                       )}
                                     >
                                       {getHighlightedParts(item._highlightResult.title.value).map(
@@ -341,7 +341,7 @@ export function SearchModal({
                               }
                             )}
                           </h2>
-                          <p className="text-sm leading-6 text-gray-500 dark:text-slate-400">
+                          <p className="text-sm leading-6 text-black dark:text-slate-400">
                             {getHighlightedParts(activeOption._highlightResult.excerpt.value).map(
                               (part) => {
                                 return part.isHighlighted ? (
@@ -374,8 +374,8 @@ export function SearchModal({
                             className={cx(
                               'text-sm',
                               activeOption
-                                ? 'text-gray-700 dark:text-slate-200'
-                                : 'text-gray-500 dark:text-slate-400'
+                                ? 'text-black dark:text-slate-200'
+                                : 'text-gray-700 dark:text-slate-400'
                             )}
                           >
                             {getHighlightedParts(

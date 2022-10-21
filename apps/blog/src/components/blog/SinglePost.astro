@@ -5,6 +5,7 @@ import PostTags from '../../components/atoms/Tags.astro'
 import Author from '../../components/atoms/Author.astro'
 import { addBigLetterToBody } from '../../utils/addBigLetterToBody'
 import { cx } from '../../utils/cx'
+import { getFirstAuthorLink } from '../../utils/getFirstAuthorLink'
 
 interface Props {
   post: BlogPost
@@ -16,7 +17,6 @@ interface Props {
 import { getFormattedDate } from '../../utils/utils'
 import type { BlogPost } from '../../utils/types'
 import readingTime from 'reading-time'
-import { Fragment } from 'react'
 import PostCard from './PostCard.astro'
 import { FaOrcid } from 'react-icons/fa/index'
 import GithubSlugger from 'github-slugger'
@@ -129,7 +129,7 @@ const sleekUnderline =
           authors.map((author, idx) => (
             <span class="flex items-center gap-1 ">
               <a
-                href={`/${author.slug}`}
+                href={getFirstAuthorLink(author)}
                 class="sleek-underline font-semibold text-black dark:text-white"
               >
                 {author.firstName} {author.lastName}
