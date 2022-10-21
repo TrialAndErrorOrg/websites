@@ -12,16 +12,16 @@ const main = await getMain()
 ---
 
 <header
-  class="sticky top-0 z-50 flex-none md:h-14 md:border-b-2 overflow-clip border-black dark:border-white bg-white mx-auto w-full text-black dark:text-white dark:bg-slate-700"
+  class="sticky top-0 z-50 flex-none md:h-14 border-b-2 overflow-clip border-black dark:border-white bg-white mx-auto w-full text-black dark:text-white dark:bg-slate-700"
 >
   <div
     class="flex flex-col items-center h-full justify-between md:flex-row grid-cols-4 lg:grid-cols-12 py-0 w-full md:justify-between"
   >
     <div
-      class="md:border-b-0 h-full border-b-2 dark:border-white border-black col-start-1 col-span-2 w-full lg:col-span-1 flex justify-between"
+      class="h-full dark:border-white border-black col-start-1 col-span-2 w-full lg:col-span-1 flex justify-between"
     >
       <a
-        class="w-16 md:w-20 md:p-4 p-2 bg-black flex h-full hover:bg-orange-500 transition-colors border-b-0 !rounded-none justify-center dark:border-white dark:border-r-0 dark:!border-r-white !border-r-2 !border-r-black items-center"
+        class="w-16 md:w-20 md:p-4 p-2 bg-black flex h-full hover:bg-orange-500 transition-colors !rounded-none justify-center dark:border-white dark:border-r-0 dark:!border-r-white !border-r-2 !border-r-black items-center"
         href={main[0]?.url}
       >
         <span class="sr-only">Home</span>
@@ -36,12 +36,12 @@ const main = await getMain()
     </div>
 
     <nav
-      class="lg:col-end-10 items-center md:text-2xl w-full md:w-auto hidden md:flex dark:text-slate-200 h-screen md:h-auto"
+      class="lg:col-end-10 items-center md:text-2xl w-full md:gap-4 md:w-auto hidden md:flex dark:text-slate-200 h-screen md:h-auto"
       aria-label="Main navigation"
       id="menu"
     >
       <ul
-        class="flex flex-col h-full pt-8 md:pt-0 md:px-0 px-4 md:flex-row md:self-center gap-8 md:gap-4 collapse w-full md:w-auto collapsed text-lg md:text-xl"
+        class="flex flex-col h-full pt-8 md:pt-0 md:px-0 px-4 md:flex-row md:self-center gap-8 md:gap-4 w-full md:w-auto collapsed text-lg md:text-xl"
       >
         <li>
           <a
@@ -80,7 +80,7 @@ const main = await getMain()
           <Search client:visible />
         </li>
       </ul>
-      <div class="md:self-center flex items-center mb-4 mx-2 md:mb-0 ml-2">
+      <div class="md:self-center md:mr-4 flex items-center mb-4 mx-2 md:mb-0 ml-2">
         <div class="hidden items-center md:flex">
           <!-- <ToggleTheme
             iconClass="w-6 h-6"
