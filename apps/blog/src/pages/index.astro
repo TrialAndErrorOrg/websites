@@ -29,8 +29,8 @@ const posts = (await getPosts()) ?? []
 ---
 
 <Layout {meta}>
-  <div class="px-5 md:px-0 py-10 grid md:grid-cols-12 cols max-w-[100rem] mx-auto">
-    <div class="flex justify-center col-start-2 col-span-11 pt-20 pb-10">
+  <div class="px-5 md:px-0 py-10 grid grid-cols-12 cols max-w-[100rem] mx-auto">
+    <div class="flex justify-center md:col-start-2 col-span-full md:col-span-11 pt-20 pb-10">
       <h1
         class="relative -ml-24 inline-flex text-black lg:text-6xl w-min text-center mr-0 group md:text-left text-4xl font-semibold tracking-tighter leading-none"
       >
@@ -79,7 +79,7 @@ const posts = (await getPosts()) ?? []
         </span>
       </h1>
     </div>
-    <div class="col-start-2 col-span-10">
+    <div class="md:col-start-2 md:col-span-10 col-span-full">
       <!-- <a
         href={`/${posts?.[0]?.slug}`}
         class="card bg-white my-10 group md:grid grid-cols-12 gap-10"
@@ -105,12 +105,12 @@ const posts = (await getPosts()) ?? []
       <PostCard post={posts[0]} class="card grid md:flex group my-10" preloadImage wide />
     </div>
 
-    <div class="col-span-10 col-start-2">
+    <div class="md:col-span-10 col-span-full md:col-start-2">
       <div class="grid gap-4 mt-10 md:grid-cols-2">
         {posts.slice(1, 7).map((post) => <PostCard post={post} aspect="square" />)}
       </div>
     </div>
-    <div class="col-span-10 col-start-2 flex items-center justify-center my-32">
+    <div class="md:col-span-10 md:col-start-2 col-span-full flex items-center justify-center my-32">
       <div class="mx-auto p-10 items-center grid md:grid-cols-3 gap-10 justify-between">
         <div class="flex flex-col gap-10 md:col-span-2">
           <h2
@@ -135,7 +135,7 @@ const posts = (await getPosts()) ?? []
       </div>
     </div>
 
-    <div class="col-span-10 col-start-2">
+    <div class="md:col-span-10 col-span-full md:col-start-2">
       <div class="grid gap-4 mt-10 md:grid-cols-2">
         {posts.slice(7).map((post) => <PostCard post={post} aspect="square" />)}
       </div>
