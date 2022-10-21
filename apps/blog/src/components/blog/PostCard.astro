@@ -61,7 +61,7 @@ const darkCategoryColorMap = {
             post.image.url
           }
           alt={post.image.alt || 'Thumbnail'}
-          class={`${wide ? 'h-full w-full' : 'h-72 w-full'} object-cover transition-all`}
+          class={`${wide ? 'h-full w-full' : 'h-52 w-full md:h-72'} object-cover transition-all`}
           loading={preloadImage ? 'eager' : 'lazy'}
           format="webp"
           height={
