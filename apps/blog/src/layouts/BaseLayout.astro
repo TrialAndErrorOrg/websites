@@ -12,7 +12,13 @@ const { meta = {} } = Astro.props
 <html lang="en" class="motion-safe:scroll-smooth 2xl:text-[20px]">
   <head>
     <MetaTags {...meta} />
-    <Analytics />
+    <script
+      is:inline
+      defer
+      data-domain="blog.trialanderror.org"
+      src="/stats/js/script"
+      data-api="/stats/api/event"
+    ></script>
   </head>
 
   <body
