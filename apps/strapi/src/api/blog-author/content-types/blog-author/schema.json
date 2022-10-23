@@ -30,7 +30,6 @@
     },
     "bio": {
       "type": "richtext",
-      "maxLength": 300,
       "required": false
     },
     "email": {

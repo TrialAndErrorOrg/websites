@@ -26,6 +26,7 @@ import {
   ComponentAttribute,
   DateAttribute,
   DynamicZoneAttribute,
+  CustomField,
   ComponentSchema,
 } from '@strapi/strapi'
 
@@ -280,7 +281,6 @@ export interface PluginUploadFile extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::upload.file', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    placeholder: TextAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -1999,6 +1999,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'manyToMany',
       'api::open-position.open-position'
     >
+    color: StringAttribute & CustomField<'plugin::color-picker.color'>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
