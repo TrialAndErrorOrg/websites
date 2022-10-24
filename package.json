@@ -91,7 +91,7 @@
     "@nrwl/react": "14.8.2",
     "@nrwl/storybook": "^14.8.2",
     "@nrwl/web": "14.8.2",
-    "@nrwl/workspace": "14.8.2",
+    "@nrwl/workspace": "15.0.1",
     "@nx-extend/strapi": "^3.1.1",
     "@nxtensions/astro": "^3.0.0",
     "@storybook/addon-essentials": "~6.5.9",
