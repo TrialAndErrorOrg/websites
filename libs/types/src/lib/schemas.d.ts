@@ -1104,10 +1104,7 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     firstName: StringAttribute
     lastName: StringAttribute
     image: MediaAttribute
-    bio: RichTextAttribute &
-      SetMinMaxLength<{
-        maxLength: 300
-      }>
+    bio: RichTextAttribute
     email: EmailAttribute
     blog_posts: RelationAttribute<
       'api::blog-author.blog-author',

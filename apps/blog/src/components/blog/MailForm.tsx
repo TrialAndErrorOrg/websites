@@ -45,7 +45,6 @@ export const MailForm = ({
       'group(7)(1)': true,
     },
   })
-  console.log(errors)
 
   const onSubmit = async (data: FormData) => {
     // MailChimp treats ?x=false as ?x=1
@@ -56,7 +55,6 @@ export const MailForm = ({
       return acc
     }, {} as Record<string, string>)
 
-    console.log(nonFalseValues, data)
     const queryString = new URLSearchParams(nonFalseValues).toString()
 
     const encodedURL = replaceEncodedParensWithEncodedBrackets(queryString)
@@ -67,9 +65,7 @@ export const MailForm = ({
       const response = await fetchJsonp(url, {
         jsonpCallback: 'c',
       })
-      console.log(response)
       const res = await response.json()
-      console.log(res)
       if (res.result === 'error') {
         setError('main', { type: 'manual', message: res.msg })
       }

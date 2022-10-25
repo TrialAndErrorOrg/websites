@@ -135,7 +135,6 @@ export const useTableOfContents = (tableOfContents: Section[]) => {
       const getIndexFromId = (id: string) =>
         headingElements.findIndex((heading) => heading.id === id)
 
-      console.log(visibleHeadings)
       // If there is only one visible heading, this is our "active" heading
       if (visibleHeadings.length === 1) {
         setCurrentSection(visibleHeadings[0]?.target?.id)
