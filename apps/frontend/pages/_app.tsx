@@ -13,8 +13,9 @@ import { GetAttributesValues } from "@strapi/strapi"
 import type { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { Session } from "next-auth"
-import { AppRouter } from "../server/router"
 import { QueryClientConfig } from "react-query"
+import { Analytics } from "@vercel/analytics/react"
+import { AppRouter } from "../server/router"
 // import { strapi } from "../server/db/client"
 
 // modified version - allows for custom pageProps type, falling back to 'any'
@@ -80,6 +81,7 @@ const MyApp = ({
       <SessionProvider session={session}>
         {getLayout(<Component {...{ ...pageProps }} />)}
       </SessionProvider>
+      <Analytics />
       {/* </GlobalContext.Provider> */}
     </>
   )
