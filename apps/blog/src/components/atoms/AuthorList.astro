@@ -40,8 +40,11 @@ const { authors } = Astro.props
               'relative flex h-full w-full items-center justify-center font-semibold uppercase '
             )}
           >
-            {author.lastName?.charAt(0)}
-            <span class="group-hover/one:max-w-xs group-hover/one:block line-clamp-1 hidden max-w-0  overflow-clip whitespace-nowrap transition-all duration-500 md:block">
+            <span aria-hidden>{author.lastName?.charAt(0)}</span>
+            <span
+              class="group-hover/one:max-w-xs group-hover/one:block line-clamp-1  hidden max-w-0 overflow-clip whitespace-nowrap transition-all duration-500 md:block"
+              aria-hidden
+            >
               {author.lastName?.slice(1)}
             </span>
             <span class="sr-only">{author.lastName}</span>
