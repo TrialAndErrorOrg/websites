@@ -75,6 +75,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ~5.32.0
   '@typescript-eslint/parser': ~5.32.0
   '@uiball/loaders': ^1.2.6
+  '@vercel/analytics': ^0.1.2
   astro: ^1.5.0
   astro-icon: ^0.7.3
   autoprefixer: ^10.4.8
@@ -170,6 +171,7 @@ dependencies:
   '@trpc/react': 9.27.4_2g6rn7sj2da6xgohvi4oglgmnq
   '@trpc/server': 9.27.4
   '@uiball/loaders': 1.2.6_biqbaboplfbrettd7655fr4n2y
+  '@vercel/analytics': 0.1.2_react@18.2.0
   axios: 0.27.2
   core-js: 3.25.5
   dotenv: 16.0.3
@@ -10599,6 +10601,14 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@vercel/analytics/0.1.2_react@18.2.0:
+    resolution: {integrity: sha512-eV2XRMRQJzPcwAskfNicAwFr5+e/u76JcS2fJooWvaT9xAg/sX0RzkgRxDZXPjnRts2ErvjhoETmbnquAMBY9A==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@vercel/nft/0.22.1:
