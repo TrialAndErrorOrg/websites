@@ -17,21 +17,23 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
   <div
     class="grid-cols-4 grid z-50 group dark:!bg-slate-700 !bg-white w-full gap-x-4 md:gap-x-0 p-4 md:px-2 py-4"
   >
-    {
-      author.image?.url ? (
-        <Image
-          src={author?.image?.formats?.thumbnail?.url || author?.image?.url}
-          alt={author?.image?.alt ?? author?.lastName}
-          height={author?.image?.formats?.thumbnail?.height || author?.image?.height}
-          width={author?.image?.formats?.thumbnail?.width || author?.image?.width}
-          class="col-span-1 row-span-2 h-16 w-16 self-center justify-self-center rounded-full border-2 border-black object-cover dark:border-white md:h-20 md:w-20"
-        />
-      ) : (
-        <div class="col-span-1 row-span-2 flex h-16 w-16 items-center justify-center self-center justify-self-center rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black md:h-20 md:w-20">
-          {author.lastName?.[0] ?? author?.firstName?.[0]}
-        </div>
-      )
-    }
+    <div
+      class="md:col-span-1 col-span-4 md:row-span-2 flex h-20 w-20 items-center justify-center mb-3 md:mb-0 self-center justify-self-center rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black md:h-20 md:w-20"
+    >
+      {
+        author.image?.url ? (
+          <Image
+            src={author?.image?.formats?.thumbnail?.url || author?.image?.url}
+            alt={author?.image?.alt ?? author?.lastName}
+            height={author?.image?.formats?.thumbnail?.height || author?.image?.height}
+            width={author?.image?.formats?.thumbnail?.width || author?.image?.width}
+            class="col-span-1 row-span-2 self-center  justify-self-center rounded-full border-2 border-black object-cover dark:border-white md:h-20 md:w-20"
+          />
+        ) : (
+          <span>{author.lastName?.[0] ?? author?.firstName?.[0]}</span>
+        )
+      }
+    </div>
     <a class="link-overlay row-span-1 col-span-3 font-bold text-xl md:text-2xl" href={firstLink}
       >{author.firstName} {author.lastName}</a
     >
@@ -39,14 +41,15 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
     {
       author.summary && (
         <div
-          class="col-span-3 col-start-2 row-span-2 my-2 pr-8 text-sm"
+          style={{ hyphens: 'auto' }}
+          class="col-span-4 row-span-2 my-2 text-sm md:col-span-3 md:col-start-2 md:pr-8 "
           set:html={author.summary}
         />
       )
     }
     {
       firstLink && (
-        <div class="z-10 col-span-3 col-start-2 row-span-1 flex h-5 flex-wrap gap-1 leading-none">
+        <div class="z-10 col-span-4 row-span-1 -ml-1 mb-3  flex h-5 flex-wrap gap-1 leading-none md:col-span-3 md:col-start-2">
           {author.orcid && (
             <a
               href={`https://orcid.org/${author.orcid}`}

@@ -83,7 +83,7 @@ const darkCategoryColorMap = {
         // darkCategoryColorMap[post.category.title?.toLowerCase()] -->
     <a
       class={`py-1 px-4 !bg-orange-500 group/button !rounded-none text-black !font-semibold absolute z-10 top-4 right-0 overflow-clip dark:border-white  !border-2 !border-r-0 text-lg md:text-xl border-black dark:text-white `}
-      href={`/category/${post?.category?.title?.toLowerCase()}`}
+      href={`/category/${post?.category?.title?.toLowerCase().replace(' ', '-')}`}
     >
       <span class="sleek-underline group-hover/button:after:w-full">
         {post.category?.title}
