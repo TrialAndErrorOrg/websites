@@ -32,7 +32,7 @@ const filteredBody = post.body
   .replace(/<p>&nbsp;<\/p>/g, '')
   .replace(/&nbsp;/g, ' ')
   // only one h1
-  .replace(/<\/?h1/g, 'h2')
+  .replace(/(<\/)?h1/g, '$1h2')
   // give h2 and h3 tags ids so the table of contents can link to them
   .replace(headingRegex, (_, tag, number, properties, content) => {
     return `<${tag} id="${slugger.slug(content)}"${properties}>${content}</${tag}>`
@@ -110,7 +110,7 @@ const sleekUnderline =
           >{getFormattedDate(post.publishDate ?? post.publishedAt)}
         </time> ~ {Math.ceil(readingTime(post.body).minutes)} min read
       </p>
-      <header class="col-span-9 md:col-span-8 col-start-2 md:col-start-3 my-1 md:my-2">
+      <header class="col-span-10 md:col-span-8 col-start-2 md:col-start-3 my-1 md:my-2">
         <h1
           class="max-w-3xl text-3xl text-black dark:text-white md:text-6xl font-bold leading-tighter tracking-tighter font-heading"
         >
