@@ -51,37 +51,25 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
       firstLink && (
         <div class="z-10 col-span-4 row-span-1 -ml-1 mb-3  flex h-5 flex-wrap gap-1 leading-none md:col-span-3 md:col-start-2">
           {author.orcid && (
-            <a
-              href={`https://orcid.org/${author.orcid}`}
-              class="button-sleek flex items-center  text-black"
-            >
+            <a href={author.orcid} class="button-sleek flex items-center  text-black">
               <FaOrcid className="h-5 w-5" />
               <span class="sr-only">ORCID</span>
             </a>
           )}
           {author.twitter && (
-            <a
-              href={`https://twitter.com/${author.twitter}`}
-              class="button-sleek z-10 flex items-center"
-            >
+            <a href={author.twitter} class="button-sleek z-10 flex items-center">
               <FaTwitter className="h-5 w-5" />
               <span class=" sr-only absolute">Twitter</span>
             </a>
           )}
           {author.github && (
-            <a
-              href={`https://github.com/${author.github}`}
-              class="button-sleek z-10 flex items-center gap-1"
-            >
+            <a href={author.github} class="button-sleek z-10 flex items-center gap-1">
               <FaGithub className="h-5 w-5" />
               <span class="sr-only">Github</span>
             </a>
           )}
           {author.linkedIn && (
-            <a
-              href={`https://github.com/${author.linkedIn}`}
-              class="button-sleek z-10 flex items-center gap-1"
-            >
+            <a href={author.linkedIn} class="button-sleek z-10 flex items-center gap-1">
               <FaLinkedin className="h-5 w-5" />
               <span class="sr-only">LinkedIn</span>
             </a>
