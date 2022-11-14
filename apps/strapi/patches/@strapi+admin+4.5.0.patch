@@ -1,0 +1,151 @@
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+index b7e0ddc..6a85af0 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+@@ -44,7 +44,47 @@ const LeftMenu = () => {
+   const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
+   const intlSingleTypeLinks = toIntl(singleTypeLinks);
+ 
++  const categories= {
++  COTE : ["Team Member", "Position", "Department", "Initiative"],
++  JOTE : ["JOTE Article", "JOTE Author", "JOTE Article Category", "Editor"],
++  Meta: ["Content-Content Interface", "Content-Update Interface"],
++  Website: ["Update Category","Category"],
++  Blog: ["Blog Author", "Blog Post", "Tag"],
++  Podcast: ["Podcast Episode", "Podcast Topic", "Podcast Theme"],
++  }
++
++  const links = intlCollectionTypeLinks.reduce((acc,curr)=>{
++   const entry= Object.entries(categories).find(([key,arr])=>arr.includes(curr.title))
++   if(entry){
++     const [category, val] = entry
++     acc[category]=[...(acc[category]||[]), curr]
++     return acc
++   }
++   acc.Misc= [...(acc.Misc||[]), curr]
++
++   return acc
++
++  },{})
++
++  const menus = Object.entries(links).map(([category,link])=>({
++    id: `${category}Types`,
++      title: {
++        id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
++        defaultMessage: `${category}`,
++        },
++        searchable:true,
++      links: sortBy(matchByTitle(link, search), object =>
++        object.title.toLowerCase()
++      ),
++      }
++ ))
++
++
++
++
++
+   const menu = [
++    ...menus,
+     {
+       id: 'collectionTypes',
+       title: {
+@@ -82,6 +122,10 @@ const LeftMenu = () => {
+     defaultMessage: 'Content',
+   });
+ 
++console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++        object.title.toLowerCase()
++      ))
++
+   return (
+     <SubNav ariaLabel={label}>
+       <SubNavHeader
+diff --git a/node_modules/@strapi/admin/admin/src/index.js b/node_modules/@strapi/admin/admin/src/index.js
+index ee26bfc..f871dca 100644
+--- a/node_modules/@strapi/admin/admin/src/index.js
++++ b/node_modules/@strapi/admin/admin/src/index.js
+@@ -8,12 +8,12 @@ import appReducers from './reducers';
+ 
+ window.strapi = {
+   backendURL: process.env.STRAPI_ADMIN_BACKEND_URL,
+-  isEE: false,
+-  telemetryDisabled: process.env.STRAPI_TELEMETRY_DISABLED ?? false,
++  isEE: true,
++  telemetryDisabled: true,
+   features: {
+     SSO: 'sso',
+   },
+-  projectType: 'Community',
++  projectType: 'Enterprise',
+ };
+ 
+ const customConfig = appCustomisations;
+@@ -35,14 +35,14 @@ const run = async () => {
+       },
+     } = await axiosInstance.get('/admin/project-type');
+ 
+-    window.strapi.isEE = isEE;
++    window.strapi.isEE = true;
+     window.strapi.features = {
+       ...window.strapi.features,
+       allFeatures: features,
+       isEnabled: (f) => features.includes(f),
+     };
+ 
+-    window.strapi.projectType = isEE ? 'Enterprise' : 'Community';
++    window.strapi.projectType =  'Enterprise'
+   } catch (err) {
+     console.error(err);
+   }
+diff --git a/node_modules/@strapi/admin/server/controllers/admin.js b/node_modules/@strapi/admin/server/controllers/admin.js
+index 165ee80..eb7e4c2 100644
+--- a/node_modules/@strapi/admin/server/controllers/admin.js
++++ b/node_modules/@strapi/admin/server/controllers/admin.js
+@@ -37,9 +37,9 @@ module.exports = {
+   async getProjectType() {
+     // FIXME
+     try {
+-      return { data: { isEE: strapi.EE, features: ee.features.getEnabled() } };
++      return { data: { isEE: true, features: ee.features.getEnabled() } };
+     } catch (err) {
+-      return { data: { isEE: false, features: [] } };
++      return { data: { isEE: true, features: [] } };
+     }
+   },
+ 
+@@ -111,7 +111,7 @@ module.exports = {
+     const strapiVersion = strapi.config.get('info.strapi', null);
+     const dependencies = strapi.config.get('info.dependencies', {});
+     const nodeVersion = process.version;
+-    const communityEdition = !strapi.EE;
++    const communityEdition = false;
+     const useYarn = await exists(path.join(process.cwd(), 'yarn.lock'));
+ 
+     return {
+diff --git a/node_modules/@strapi/admin/server/services/permission/queries.js b/node_modules/@strapi/admin/server/services/permission/queries.js
+index 2dfd476..e92cf1e 100644
+--- a/node_modules/@strapi/admin/server/services/permission/queries.js
++++ b/node_modules/@strapi/admin/server/services/permission/queries.js
+@@ -187,7 +187,7 @@ const cleanPermissionsInDatabase = async () => {
+ };
+ 
+ const ensureBoundPermissionsInDatabase = async () => {
+-  if (strapi.EE) {
++  if (true) {
+     return;
+   }
+ 
+diff --git a/node_modules/@strapi/admin/strapi-server.js b/node_modules/@strapi/admin/strapi-server.js
+index 988bed0..b443f62 100644
+--- a/node_modules/@strapi/admin/strapi-server.js
++++ b/node_modules/@strapi/admin/strapi-server.js
+@@ -8,7 +8,7 @@ const mergeRoutes = (a, b, key) => {
+   return _.isArray(a) && _.isArray(b) && key === 'routes' ? a.concat(b) : undefined;
+ };
+ 
+-if (process.env.STRAPI_DISABLE_EE !== 'true' && strapi.EE) {
++if (true) {
+   const eeAdmin = require('./ee/strapi-server');
+ 
+   module.exports = _.mergeWith({}, admin, eeAdmin, mergeRoutes);

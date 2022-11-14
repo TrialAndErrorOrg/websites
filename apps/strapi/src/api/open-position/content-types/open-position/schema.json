@@ -204,6 +204,22 @@
       "relation": "manyToMany",
       "target": "api::team-member.team-member",
       "mappedBy": "relatedOpenPositions"
+    },
+    "deadline": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "date"
+    },
+    "timeCommitment": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
     }
   }
 }
