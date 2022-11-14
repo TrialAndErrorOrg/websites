@@ -34,6 +34,12 @@ export function Layout({ meta, children }: { meta: MetaProps; children: React.Re
           >
             journal
           </Link>
+          <Link
+            className="hover:text-slate-800 transition-colors"
+            href="https://blog.trialanderror.org"
+          >
+            blog
+          </Link>
           <a href="https://github.com/journaloftrialanderror/centeroftrialanderror.com">
             <svg
               className="md:h-8 md:w-8 w-6 h-6 hover:text-slate-800 transition-colors"
