@@ -9,7 +9,7 @@
     "@strapi/plugin-color-picker": "^4.4.5",
     "@strapi/plugin-documentation": "^4.4.3",
     "@strapi/plugin-graphql": "^4.4.3",
-    "@strapi/plugin-i18n": "^4.4.3",
+    "@strapi/plugin-i18n": "^4.5.0",
     "@strapi/plugin-seo": "^1.7.5",
     "@strapi/plugin-users-permissions": "^4.4.3",
     "@strapi/provider-email-nodemailer": "^4.4.3",
