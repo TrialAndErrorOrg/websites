@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Logo } from '../core/Logo'
 import { Layout } from '../layouts/Layout'

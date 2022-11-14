@@ -1,4 +1,4 @@
-import Image from "next/future/image"
+import Image from "next/image"
 import Link from "next/link"
 import { FaGithub, FaLinkedin, FaOrcid, FaTwitter } from "react-icons/fa"
 import { trpc } from "../../utils/trpc"

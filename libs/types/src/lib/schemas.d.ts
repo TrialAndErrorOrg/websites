@@ -1761,6 +1761,18 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
       'manyToMany',
       'api::team-member.team-member'
     >
+    deadline: DateAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    timeCommitment: StringAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
