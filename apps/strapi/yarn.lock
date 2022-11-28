@@ -2049,7 +2049,7 @@
     tslib "^2.4.0"
     value-or-promise "1.0.11"
 
-"@graphql-tools/utils@8.10.0", "@graphql-tools/utils@^8.0.0", "@graphql-tools/utils@^8.1.1":
+"@graphql-tools/utils@8.10.0":
   version "8.10.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.10.0.tgz#8e76db7487e19b60cf99fb90c2d6343b2105b331"
   integrity sha512-yI+V373FdXQbYfqdarehn9vRWDZZYuvyQ/xwiv5ez2BbobHrqsexF7qs56plLRaQ8ESYpVAjMQvJWe9s23O0Jg==
@@ -2063,7 +2063,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@graphql-tools/utils@^8.12.0":
+"@graphql-tools/utils@^8.0.0", "@graphql-tools/utils@^8.1.1", "@graphql-tools/utils@^8.12.0":
   version "8.13.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-8.13.1.tgz#b247607e400365c2cd87ff54654d4ad25a7ac491"
   integrity sha512-qIh9yYpdUFmctVqovwMdheVNJqFh+DQNWIhX87FJStfXYnmweBUDATok9fWPleKeFwxnW8IapKmY8m8toJEkAw==
@@ -3107,14 +3107,14 @@
     "@strapi/utils" "4.5.0"
     lodash "4.17.21"
 
-"@strapi/plugin-graphql@^4.4.7", "@strapi/plugin-graphql@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@strapi/plugin-graphql/-/plugin-graphql-4.5.0.tgz#f798d3d890fd46a22c2328ba5d8703c3741c0469"
-  integrity sha512-9A2AMsVxCZdKRqQkGENViPmAey6ST1akgv/1D44f/ykjUilh3rQnD3rlC8PMQLFOKSGUbny+uQeOC0jYlsz4Ng==
+"@strapi/plugin-graphql@^4.4.7", "@strapi/plugin-graphql@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@strapi/plugin-graphql/-/plugin-graphql-4.5.2.tgz#b8f46a7e6b6785a969feaf6104453de03e168101"
+  integrity sha512-Gw8LZD5P8E4/wycInOCjXZGTkbnhO8ztisb3C+bQwFjPMguyj86WRoGHFzTxttCGKo8cBOG1rNBWyGCgttIYHQ==
   dependencies:
     "@graphql-tools/schema" "8.1.2"
     "@graphql-tools/utils" "^8.12.0"
-    "@strapi/utils" "4.5.0"
+    "@strapi/utils" "4.5.2"
     apollo-server-core "3.1.2"
     apollo-server-koa "3.10.0"
     glob "^7.1.7"
@@ -3413,7 +3413,7 @@
     lodash "4.17.21"
     yup "0.32.9"
 
-"@strapi/utils@4.5.0", "@strapi/utils@^4.4.7":
+"@strapi/utils@4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.5.0.tgz#57c264ebaa90b2fb800028fc5b90d2e3acb1cd5a"
   integrity sha512-COG9Qt2g8XDK1uByhkuLOZWUr494RG5FJt44pTY0xh/LnAIZm6tzAyEYFMnx02SnpxIBwS02MeZksx6nvkNiGw==
@@ -3424,10 +3424,10 @@
     lodash "4.17.21"
     yup "0.32.9"
 
-"@strapi/utils@^4.3.8", "@strapi/utils@^4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.4.3.tgz#6947eda897a936d31b3879fabe1163e13f8c1d04"
-  integrity sha512-EsyNrC4F95KC+tRNN+IBQrOVJIoKmbNxE2El6FBeO1TeKpppYFI4AWzAbj/txcaIOlhvlAY7J9zTRGms72GgHA==
+"@strapi/utils@4.5.2", "@strapi/utils@^4.3.8", "@strapi/utils@^4.4.3", "@strapi/utils@^4.4.7":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.5.2.tgz#dca0ae17db94943de6e226e63647e03e32f0f664"
+  integrity sha512-KnaU6zlqUtJbqVCXR/OxRC7BYV5eMZkNcuKPbwQ+MWwuh/nMp5hs023CtArQzyM/rDMIWpv01Tdwg2rcZpcIoA==
   dependencies:
     "@sindresorhus/slugify" "1.1.0"
     date-fns "2.29.2"
