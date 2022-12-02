@@ -6,7 +6,7 @@ export const SITE = {
 
   title: 'A Blog of Trial and Error',
   description:
-    'A blog exploring failure in academia, open science and what it takes to be an Open Access publisher.',
+    'A Blog by the Center of Trial and Error exploring failure in academia, open science and what it takes to be an Open Access publisher.',
 }
 
 export const BLOG = {
