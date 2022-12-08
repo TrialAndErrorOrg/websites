@@ -5,7 +5,7 @@
 //  and typed with typescript
 
 import React, { useState } from 'react'
-import { FaEnvelope } from 'react-icons/fa'
+import { FaEnvelope } from 'react-icons/fa/index'
 
 type Props = {
   email: string
