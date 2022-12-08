@@ -12,6 +12,7 @@ import type { Author, BlogPost } from '@/types'
 import { Image } from '@astrojs/image/components'
 import { FaEnvelope, FaGithub, FaLink, FaLinkedin, FaOrcid, FaTwitter } from 'react-icons/fa/index'
 import { EmailRevealButton } from './EmailRevealButton'
+import type { Meta } from 'apps/blog/src/components/core/MetaTags.astro'
 
 interface Props {
   page: {
@@ -61,12 +62,15 @@ const { page, author } = Astro.props
 
 const currentPage = page.currentPage ?? 1
 
-const meta = {
+const meta: Meta = {
   title: `${author.firstName} ${author.lastName} ${
     currentPage > 1 ? `— Page ${currentPage} ` : ''
   }— ${SITE.name}`,
   description: SITE.description,
   canonical: getCanonical(getPermalink(page.url.current)).toString(),
+  image: `${process.env.OG_URL}/api/og/person?author=${author.slug}${
+    author.azureID ? '' : `&guest=true`
+  }`,
 }
 console.log(author)
 ---

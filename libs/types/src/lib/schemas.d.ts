@@ -2009,6 +2009,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'api::open-position.open-position'
     >
     color: StringAttribute & CustomField<'plugin::color-picker.color'>
+    mastodon: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
