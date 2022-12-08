@@ -17,7 +17,7 @@ const { src: defaultImage } = await getImage({
   height: 628,
 })
 
-interface Props {
+export interface Meta {
   title: string
   description: string
   image?: string
@@ -29,15 +29,15 @@ interface Props {
   post?: BlogPost
 }
 
+interface Props extends Meta {}
+
 const {
   title = SITE.name,
   description = '',
   image = 'https://cote.azureedge.net/cote-strapi-uploads/assets/Twitter_Card_9743a9fcb2.png',
-
   canonical,
   noindex = false,
   nofollow = false,
-
   ogTitle = title,
   ogType = 'website',
   post = null,

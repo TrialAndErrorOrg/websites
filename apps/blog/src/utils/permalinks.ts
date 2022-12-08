@@ -20,6 +20,7 @@ export const cleanSlug = (text: string) => slugify(trimSlash(text))
 export const BLOG_BASE = cleanSlug(BLOG?.blog?.pathname)
 export const POST_BASE = cleanSlug(BLOG?.post?.pathname)
 export const CATEGORY_BASE = cleanSlug(BLOG?.category?.pathname)
+export const AUTHOR_BASE = cleanSlug(BLOG?.author?.pathname)
 export const TAG_BASE = cleanSlug(BLOG?.tag?.pathname)
 
 /** */

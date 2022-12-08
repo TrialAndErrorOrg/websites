@@ -6,7 +6,7 @@ export const SITE = {
 
   title: 'A Blog of Trial and Error',
   description:
-    'A Blog by the Center of Trial and Error exploring failure in academia, open science and what it takes to be an Open Access publisher.',
+    'A blog by the Center of Trial and Error exploring failure in academia, open science and what it takes to be an Open Access publisher.',
 }
 
 export const BLOG = {
@@ -22,6 +22,11 @@ export const BLOG = {
     disabled: false,
     pathname: '', // empty for /some-post, value for /pathname/some-post
   },
+
+	author: {
+		disabled: false,
+		pathname: 'author', // set empty to change from /author/some-author to /some-author
+	},
 
   category: {
     disabled: false,

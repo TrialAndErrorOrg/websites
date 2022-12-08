@@ -34,7 +34,16 @@ export default defineConfig({
         applyBaseStyles: false,
       },
     }),
-    sitemap(),
+    sitemap({
+      serialize: (item) => ({
+        ...item,
+        url: item.url.replace(/\/$/, ''),
+        links: item?.links?.map((link) => ({
+          ...link,
+          url: link.url.replace(/\/$/, ''),
+        })),
+      }),
+    }),
     image({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),

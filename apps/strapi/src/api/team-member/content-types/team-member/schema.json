@@ -120,6 +120,10 @@
     "color": {
       "type": "customField",
       "customField": "plugin::color-picker.color"
+    },
+    "mastodon": {
+      "type": "string",
+      "regex": "https://.*?/@.*"
     }
   }
 }

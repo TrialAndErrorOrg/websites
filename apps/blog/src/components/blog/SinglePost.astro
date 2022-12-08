@@ -129,7 +129,7 @@ const sleekUnderline =
           authors.map((author, idx) => (
             <span class="flex items-center gap-1 ">
               <a
-                href={getFirstAuthorLink(author)}
+                href={`/author/${author.slug}`}
                 class="sleek-underline font-semibold text-black dark:text-white"
               >
                 {author.firstName} {author.lastName}

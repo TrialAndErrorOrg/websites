@@ -21,7 +21,7 @@ const { authors } = Astro.props
     {
       authors.map((author, idx) => (
         <a
-          href={getFirstAuthorLink(author)}
+          href={`/author/${author.slug}`}
           class={cx(
             `group/one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2 `,
             idx === 0 && 'bg-white',

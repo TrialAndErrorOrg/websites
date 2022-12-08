@@ -27,17 +27,22 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
             alt={author?.image?.alt ?? author?.lastName}
             height={author?.image?.formats?.thumbnail?.height || author?.image?.height}
             width={author?.image?.formats?.thumbnail?.width || author?.image?.width}
-            class="col-span-1 row-span-2 self-center  justify-self-center rounded-full border-2 border-black object-cover dark:border-white md:h-20 md:w-20"
+            class="col-span-1 row-span-2 h-20  w-20 self-center justify-self-center rounded-full border-2 border-black object-cover dark:border-white"
           />
         ) : (
           <span>{author.lastName?.[0] ?? author?.firstName?.[0]}</span>
         )
       }
     </div>
-    <a class="link-overlay row-span-1 col-span-3 font-bold text-xl md:text-2xl" href={firstLink}
-      >{author.firstName} {author.lastName}</a
+    <a
+      class="link-overlay row-span-1 col-span-3 font-bold text-xl md:text-2xl"
+      href={`/author/${author.slug}`}>{author.firstName} {author.lastName}</a
     >
-    {author.position && <div class="col-span-3 row-span-1">{author.position}</div>}
+    {
+      'position' in author && author.position && (
+        <div class="col-span-3 row-span-1">{author.position}</div>
+      )
+    }
     {
       author.summary && (
         <div
@@ -68,7 +73,7 @@ const firstLink = author.personalWebsite || author.orcid || author.twitter || au
               <span class="sr-only">Github</span>
             </a>
           )}
-          {author.linkedIn && (
+          {'linkedIn' in author && author.linkedIn && (
             <a href={author.linkedIn} class="button-sleek z-10 flex items-center gap-1">
               <FaLinkedin className="h-5 w-5" />
               <span class="sr-only">LinkedIn</span>
