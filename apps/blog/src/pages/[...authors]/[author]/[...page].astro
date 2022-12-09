@@ -88,13 +88,18 @@ console.log(author)
     }
   </Fragment>
   <div class="flex mb-20 flex-col max-w-4xl mx-auto">
-    <Image
-      src={author.image.url}
-      alt={author.image.alt}
-      width={author.image.width}
-      height={author.image.height}
-      class="rounded-full w-40 h-40 md:w-60 md:h-60 object-cover mx-auto border-2 border-black"
-    />
+    {
+      author.image?.url && (
+        <Image
+          src={author.image?.url}
+          alt={author.image?.alt}
+          width={author.image?.width}
+          height={author.image?.height}
+          class="mx-auto h-40 w-40 rounded-full border-2 border-black object-cover md:h-60 md:w-60"
+        />
+      )
+    }
+
     <div class="flex flex-col justify-center items-center my-6">
       {
         'position' in author && author.position && (
