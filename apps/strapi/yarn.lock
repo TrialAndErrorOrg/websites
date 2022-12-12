@@ -12912,10 +12912,10 @@ strapi-provider-upload-azure-storage@^2.1.0:
   dependencies:
     "@azure/storage-blob" "^10.5.0"
 
-strapi-stripe@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/strapi-stripe/-/strapi-stripe-2.5.1.tgz#1451a158b2bd256614d5af60c990685558627006"
-  integrity sha512-nxvVxjDAMkbVcFtnoqRXfRnbu1OnUCGLC9Fts9N8VqDwuyELqxrTsu+plRxYKpsDHhyWCxvEzw1mtRSj269VWg==
+strapi-stripe@^2.6.3:
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/strapi-stripe/-/strapi-stripe-2.6.3.tgz#a11d7283df30055125c7d5cb257d5c43e48ae9a7"
+  integrity sha512-gDSvFIN9NSjYFpzsw2J/noedIVSNPP/43a94QujGtwKTimdWUIRIWDa27w51OIgSYz5CAotj6gXh4BVVk/yj9A==
   dependencies:
     better-sqlite3 "^7.6.2"
     html-react-parser "^1.4.10"
