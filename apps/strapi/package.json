@@ -13,7 +13,7 @@
     "@strapi/plugin-seo": "^1.7.7",
     "@strapi/plugin-users-permissions": "^4.5.0",
     "@strapi/provider-email-nodemailer": "^4.5.0",
-    "@strapi/strapi": "^4.5.0",
+    "@strapi/strapi": "^4.5.3",
     "@webbio/strapi-plugin-scheduler": "^0.1.2",
     "jsonwebtoken": "^8.5.1",
     "lodash.set": "^4.3.2",
