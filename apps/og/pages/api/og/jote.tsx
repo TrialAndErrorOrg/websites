@@ -90,9 +90,9 @@ export async function generateJoteImage({
             </div>
           </div>
         )}
-        <div tw="flex flex-col flex-1 pt-8 max-w-2xl justify-between">
+        <div tw="flex flex-col flex-1 pt-8 max-w-3xl justify-between">
           <div
-            tw="absolute h-[90%] w-[110%]  left-14 top-16 -z-10"
+            tw="absolute h-[90%] w-[100%]  left-14 top-16 -z-10"
             style={{
               backgroundColor: 'rgb(254 170 0) ',
             }}
@@ -101,11 +101,11 @@ export async function generateJoteImage({
           {title && (
             <span
               tw={`${
-                title.length > 80
+                title.length >= 80
                   ? 'text-5xl leading-[2.8rem]'
-                  : title.length > 60
+                  : title.length >= 60
                   ? 'text-6xl'
-                  : title.length > 40
+                  : title.length >= 40
                   ? 'text-7xl'
                   : 'text-8xl'
               } font-bold   line-through`}
