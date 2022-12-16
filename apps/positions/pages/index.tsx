@@ -18,9 +18,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export default function Index({ positions }: { positions: OpenPosition[] }) {
   const meta = {
-    title: `Open Positions @ Center of Trial and Error`,
-    description: `We are looking for a few good people to join our team.`,
-    canonical: `https://positions.trialanderror.org/`,
+    title: 'Open Positions @ Center of Trial and Error',
+    description: 'We are looking for a few good people to join our team.',
+    canonical: 'https://positions.trialanderror.org/',
     ogType: 'website',
   }
 
@@ -93,7 +93,7 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
                     </Link>
                   </div>
                 ))}
-                <div class="container max-w-md">
+                <div className="container max-w-md">
                   <p className="text-gray-500 text-center">
                     We are always looking for motivated people to join our team! If you don't see a
                     position that fits your skills but would still like to contribute to a fairer,

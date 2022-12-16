@@ -1773,6 +1773,18 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
           localized: true
         }
       }>
+    whatWeOffer: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    finalWords: RichTextAttribute &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
