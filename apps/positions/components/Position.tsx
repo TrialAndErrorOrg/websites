@@ -27,7 +27,7 @@ export function Position(props: Props) {
       </div>
       <div className="min-h-[100vh] relative pt-12 pb-16 px-4 sm:pt-16 sm:px-6 lg:px-8 lg:max-w-7xl lg:mx-auto lg:grid lg:grid-cols-5">
         <div className="lg:col-start-3 col-span-3 lg:pl-8">
-          <div className="text-base prose prose-sm md:prose-base flex flex-col gap-2 max-w-prose mx-auto lg:max-w-lg lg:mr-auto lg:ml-0">
+          <div className="text-base prose prose-sm md:prose-lg flex flex-col gap-2 max-w-prose mx-auto lg:max-w-7xl lg:mr-auto lg:ml-0">
             {/* <h2 className="leading-6 text-orange-600 font-semibold tracking-wide uppercase">
               {position.type}
             </h2> */}

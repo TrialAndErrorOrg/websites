@@ -2,18 +2,69 @@ import { MetaProps, MetaTags } from '../core/MetaTags'
 import Head from 'next/head'
 import Link from 'next/link'
 import { Logo } from '../core/Logo'
+import { DefaultSeo, NextSeo } from 'next-seo'
+import { SITE } from '../config'
 
-export function Layout({ meta, children }: { meta: MetaProps; children: React.ReactNode }) {
+export function Layout({
+  meta: {
+    title = SITE.name,
+    description = '',
+    // image: _image = defaultImage,
+    canonical,
+    noindex = false,
+    nofollow = false,
+    ogTitle = title,
+    ogType = 'website',
+    image,
+  },
+  children,
+}: {
+  meta: MetaProps
+  children: React.ReactNode
+}) {
   return (
     <>
       <Head>
-        <MetaTags {...meta} />
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="shortcut icon" href={`${SITE.basePathname}favicon.ico`} />
+        <link rel="icon" type="image/svg+xml" href={`${SITE.basePathname}favicon.svg`} />
+        <link rel="mask-icon" href={`${SITE.basePathname}favicon.svg`} color="#8D46E7" />
         <script
           defer
           data-domain="positions.trialanderror.org"
           src="https://analytics.trialanderror.org/js/plausible.js"
         />
       </Head>
+
+      <NextSeo
+        title={title}
+        description={description}
+        canonical={canonical}
+        noindex={noindex}
+        nofollow={nofollow}
+        openGraph={{
+          url: canonical,
+          title: ogTitle,
+          description: description,
+          type: ogType,
+          images: image
+            ? [
+                {
+                  url: image?.toString(),
+                  alt: ogTitle,
+                },
+              ]
+            : undefined,
+          // site_name: 'SiteName',
+        }}
+        twitter={{
+          // handle: '@handle',
+          // site: '@site',
+          cardType: image ? 'summary_large_image' : undefined,
+        }}
+      />
       <nav className="backdrop-blur-sm justify-between flex w-full bg-white/90 items-center h-16 md:h-20 py-2 px-2  md:px-10 md:sticky z-10 top-0">
         <Link className="flex items-end" href="/">
           <span className="h-12 w-12">
@@ -56,10 +107,12 @@ export function Layout({ meta, children }: { meta: MetaProps; children: React.Re
         </div>
       </nav>
 
-      <div className="selection:bg-orange-500/60 selection:rounded-sm selection:transition-all  antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-900">
-        {/* <BasicScripts /> */}
-        {children}
-      </div>
+      <main className="app motion-safe:scroll-smooth 2xl:text-[20px]">
+        <div className="selection:bg-orange-500/60 selection:rounded-sm selection:transition-all  antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-900">
+          {/* <BasicScripts /> */}
+          {children}
+        </div>
+      </main>
     </>
   )
 }
