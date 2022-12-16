@@ -3,6 +3,7 @@ import type { OpenPosition } from '../utils/types'
 import Image from 'next/image'
 import { CalendarIcon as FilledCalendarIcon, ClockIcon } from '@heroicons/react/outline/index'
 import { CalendarIcon } from '@heroicons/react/solid/index'
+import { format } from 'date-fns'
 
 interface Props {
   position: OpenPosition
@@ -11,7 +12,6 @@ interface Props {
 export function Position(props: Props) {
   const { position } = props
 
-  console.log(position)
   return (
     <div className="relative bg-white">
       <div className="lg:absolute lg:inset-0">
@@ -36,27 +36,36 @@ export function Position(props: Props) {
             </h1>
             {/* Deadline, earliest start date, time commitment  */}
             <div className="flex my-4 flex-col gap-2">
-              <div className="flex flex-col gap-2">
-                <span className="text-gray-900 flex  gap-2 items-center">
-                  <FilledCalendarIcon className="h-5 w-5  inline-block" />
-                  Deadline
-                </span>
-                <span className="text-gray-500">{position.deadline}</span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-gray-900 flex gap-2 items-center">
-                  <CalendarIcon className="h-5 w-5 inline-block" />
-                  Earliest start date
-                </span>
-                <span className="text-gray-500">{position.startDate}</span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-gray-900 flex gap-2 items-center">
-                  <ClockIcon className="h-5 w-5 inline-block" />
-                  Time commitment (per week)
-                </span>
-                <span className="text-gray-500">{position.timeCommitment}</span>
-              </div>
+              {position.deadline && (
+                <div className="flex flex-col gap-2">
+                  <span className="text-gray-900 flex  gap-2 items-center">
+                    <FilledCalendarIcon className="h-5 w-5  inline-block" />
+                    Deadline
+                  </span>
+                  <span className="text-gray-500">{format(position.deadline, 'MMMM d, yyyy')}</span>
+                </div>
+              )}
+              {position.startDate && (
+                <div className="flex flex-col gap-2">
+                  <span className="text-gray-900 flex gap-2 items-center">
+                    <CalendarIcon className="h-5 w-5 inline-block" />
+                    Earliest start date
+                  </span>
+                  <span className="text-gray-500">
+                    {format(position.startDate, 'MMMM d, yyyy')}
+                  </span>
+                </div>
+              )}
+
+              {position.startDate && (
+                <div className="flex flex-col gap-2">
+                  <span className="text-gray-900 flex gap-2 items-center">
+                    <ClockIcon className="h-5 w-5 inline-block" />
+                    Time commitment (per week)
+                  </span>
+                  <span className="text-gray-500">{position.timeCommitment}</span>
+                </div>
+              )}
             </div>
 
             {position.summary && (
