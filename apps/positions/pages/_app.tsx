@@ -7,7 +7,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to positions!</title>
+        <title>Join the Center of Trial and Error!</title>
       </Head>
       <main className="app motion-safe:scroll-smooth 2xl:text-[20px]">
         <Component {...pageProps} />
