@@ -34,14 +34,14 @@ export default function Index({ positions }: { positions: OpenPosition[] }) {
             </span>
             <h1 className="text-4xl md:text-6xl font-bold">Open Positions</h1>
           </div>
-          <p>
+          <p className="mt-3 text-xl max-w-3xl text-left">
             The Center of Trial and Error is a platform that promotes transparency and the
             principles of Open Science & Scholarship, providing a space for scientists to accurately
             reconstruct their self-image and public image while improving replicability and
-            meta-analytic precision across the sciences. Our ultimate goal is to promote a more
-            inclusive and transparent academic culture, particularly for those who are most affected
-            by the impact-or-perish mentality, such as graduate students, postdocs, and early-career
-            researchers. We invite you to join our team and make a difference with us!
+            meta-analytic precision across the sciences.
+          </p>
+          <p className="mt-3 text-2xl max-w-3xl text-left">
+            We invite you to join our team and make a difference with us!
           </p>
           {/*  List some cards with currently open positions */}
 
