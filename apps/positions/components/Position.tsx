@@ -42,7 +42,9 @@ export function Position(props: Props) {
                     <FilledCalendarIcon className="h-5 w-5  inline-block" />
                     Deadline
                   </span>
-                  <span className="text-gray-500">{format(position.deadline, 'MMMM d, yyyy')}</span>
+                  <span className="text-gray-500">
+                    {format(new Date(position.deadline), 'MMMM d, yyyy')}
+                  </span>
                 </div>
               )}
               {position.startDate && (
@@ -52,7 +54,7 @@ export function Position(props: Props) {
                     Earliest start date
                   </span>
                   <span className="text-gray-500">
-                    {format(position.startDate, 'MMMM d, yyyy')}
+                    {format(new Date(position.startDate), 'MMMM d, yyyy')}
                   </span>
                 </div>
               )}
