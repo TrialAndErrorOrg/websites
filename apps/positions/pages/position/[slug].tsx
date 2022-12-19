@@ -2,26 +2,14 @@ import { SITE } from '../../config'
 import { Layout } from '../../layouts/Layout'
 import { Position } from '../../components/Position'
 
-import { cleanSlug, getCanonical, getPermalink, POST_BASE } from '../../utils/permalinks'
-import { getPosition, getPositions } from '../../utils/positions'
+import { getCanonical, getPermalink } from '../../utils/permalinks'
+import { getPosition } from '../../utils/positions'
 import type { OpenPosition } from '../../utils/types'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetServerSideProps } from 'next'
 
 interface Props {
   position: OpenPosition
 }
-
-// export async function getStaticPaths() {
-//   const positions = (await getPositions()) ?? []
-
-//   return positions.map((position) => ({
-//     params: {
-//       slug: cleanSlug(position.slug ?? '/'),
-//       blog: POST_BASE || undefined,
-//     },
-//     props: { position },
-//   }))
-// }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const slug = params?.slug as string
@@ -34,27 +22,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 }
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const positions = (await getPositions()) ?? []
-
-//   return {
-//     paths: positions.map((position) => ({
-//       params: {
-//         slug: cleanSlug(position.slug ?? '/'),
-//         blog: POST_BASE || undefined,
-//       },
-//     })),
-//     fallback: false,
-//   }
-// }
-
 export default function PositionPage({ position }: { position: OpenPosition }) {
   const meta = {
     title: `${position.title} — ${SITE.name}`,
     description: position?.seo?.metaDescription ?? position.summary,
     canonical: getCanonical(getPermalink(position.slug, 'post')).toString(),
-    image: position.image.url, //await findImage(post.image),
-    ogTitle: position.title,
+    image: `${process.env.OG_URL}/api/og/positions?position=${position.title}&deadline=${position.deadline}`,
+    ogTitle: `${position.title} — ${SITE.name}`,
     ogType: 'article',
   }
 

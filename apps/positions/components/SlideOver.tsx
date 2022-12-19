@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { ArrowRightIcon, XIcon } from '@heroicons/react/outline'
-import { cx } from '../utils/cx'
+import { Ring } from '@uiball/loaders'
 import { Modal } from './Modal'
 
 const MAX_FILE_SIZE = 10000000
@@ -277,7 +277,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                             )}
                             <label htmlFor="motivationFile">
                               <span
-                                className={`text-orange-500 underline text-sm ${
+                                className={`text-orange-500 underline text-sm hover:cursor-pointer ${
                                   motivationFile?.[0] ? 'sr-only' : ''
                                 }`}
                               >
@@ -332,7 +332,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                             )}
                             <label htmlFor="cvFile">
                               <span
-                                className={`text-orange-500 underline text-sm ${
+                                className={`text-orange-500 underline text-sm hover:cursor-pointer ${
                                   cvFile?.[0] ? 'sr-only' : ''
                                 }`}
                               >
@@ -409,12 +409,16 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                         >
                           Cancel
                         </button>
-                        <button
-                          type="submit"
-                          className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-bold text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-                        >
-                          Apply
-                        </button>
+                        {isSubmitting ? (
+                          <Ring size={40} lineWeight={5} speed={2} color="black" />
+                        ) : (
+                          <button
+                            type="submit"
+                            className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-bold text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                          >
+                            Apply
+                          </button>
+                        )}
                       </div>
                     </div>
                   </form>
