@@ -91,7 +91,15 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                         motivationFile,
                         ...data
                       }) => {
-                        console.log({ data })
+                        console.log({
+                          data,
+                          files: {
+                            additionalFile,
+                            motivationFile,
+                            cvFile,
+                            documents,
+                          },
+                        })
                         const formData = new FormData()
                         data['open_position'] = position.id
 
@@ -136,8 +144,11 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                         data['url'] = url
 
                         formData.append('data', JSON.stringify(data))
+                        console.log(formData.get('data'))
+                        console.log(formData.get('files.documents'))
 
-                        fetch(`${process.env.NEXT_PUBLIC_STRAPI_ENDPOINT}/applications`, {
+                        // fetch(`${process.env.NEXT_PUBLIC_STRAPI_ENDPOINT}/applications`, {
+                        fetch(`/api/form`, {
                           method: 'POST',
                           headers: {
                             Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN_APPLICATION}`,

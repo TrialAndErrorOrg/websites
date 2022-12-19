@@ -41,6 +41,7 @@
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
     "fetch-jsonp": "^1.2.3",
+    "form-data": "^4.0.0",
     "github-slugger": "^1.4.0",
     "image-size": "^1.0.2",
     "mime": "^3.0.0",
