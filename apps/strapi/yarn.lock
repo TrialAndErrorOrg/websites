@@ -3221,10 +3221,10 @@
     request "^2.83.0"
     url-join "4.0.1"
 
-"@strapi/provider-email-nodemailer@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@strapi/provider-email-nodemailer/-/provider-email-nodemailer-4.5.0.tgz#078a2373414dfe4f837b73866d5d96a275228f5c"
-  integrity sha512-nwYrQ8oo3bD192oJaCV5wAXPATxa9ir2RhCnYewrvIFzyM/I+Zq8CNaZ0idAgll6Nbxw7rxKw9hKsY3hp+otKw==
+"@strapi/provider-email-nodemailer@^4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@strapi/provider-email-nodemailer/-/provider-email-nodemailer-4.5.4.tgz#fd380b6a6ab7bdcea2238c5d727ff99002a8c354"
+  integrity sha512-i5HiYCEmsyKrBeUox98cuZ9SwaTXmDDlRhq2pogjYkxklu/Hm1H7R67wzIFzJt0upeedvJHVx3vkUJ77ZvuhbA==
   dependencies:
     lodash "4.17.21"
     nodemailer "6.7.7"
