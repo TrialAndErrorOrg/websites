@@ -166,7 +166,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                               setSubmitted(true)
                               // setOpen(false)
                             } else {
-                              setSubmitted(true)
+                              // setSubmitted(true)
                               console.log('Error!')
                               console.log(res.json)
                             }

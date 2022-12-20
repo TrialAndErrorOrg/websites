@@ -59,29 +59,33 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         json: await res.json(),
         status: res.status,
       }))
-      .then((res) => {
-        if (res.status === 200) {
+      .then((result) => {
+        if (result.status === 200) {
           console.log('Success!')
           console.dir(res.json, { depth: null })
+          res.status(200).json({
+            status: 'ok',
+            data,
+          })
           // setOpen(false)
         } else {
           console.log('Error!')
           console.log(res.json)
+
+          res.status(500).json({
+            status: 'error',
+            error: result.json,
+          })
         }
       })
       .catch((error) => {
         console.log(error)
-
         res.status(500).json({
           status: 'error',
           error,
         })
       })
     //return the data back or just do whatever you want with it
-    res.status(200).json({
-      status: 'ok',
-      data,
-    })
   } catch (error) {
     console.log(error)
     res.status(500).json({
