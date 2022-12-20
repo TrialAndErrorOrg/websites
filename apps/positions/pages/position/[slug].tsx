@@ -27,7 +27,9 @@ export default function PositionPage({ position }: { position: OpenPosition }) {
     title: `${position.title} — ${SITE.name}`,
     description: position?.seo?.metaDescription ?? position.summary,
     canonical: getCanonical(getPermalink(position.slug, 'post')).toString(),
-    image: `${process.env.OG_URL}/api/og/positions?position=${position.title}&deadline=${position.deadline}`,
+    image: `${process.env.OG_URL}/api/og/positions?position=${encodeURIComponent(
+      position.title
+    )}&deadline=${position.deadline}`,
     ogTitle: `${position.title} — ${SITE.name}`,
     ogType: 'article',
   }

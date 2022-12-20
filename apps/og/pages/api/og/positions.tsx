@@ -43,56 +43,56 @@ export async function generateJoteImage({
           backgroundColor: 'rgb(254 170 0)',
         }}
       >
-        <div tw="flex flex-col items-center flex-1 w-full  justify-center">
-          {/* <div
+        {/* <div
             tw="absolute h-[100%] w-[100%] left-0 top-0 -z-10"
             style={{
               backgroundColor: 'rgb(254 170 0) ',
             }}
           /> */}
 
-          {position ? (
-            <div tw="flex flex-col items-center">
+        {position ? (
+          <div tw="flex flex-col items-start flex-1 w-full  justify-between h-full">
+            <div tw="flex flex-col">
               <span tw="text-5xl">The Journal of Trial & Error</span>
               <span tw="text-3xl"> is looking for a</span>
-              <span
-                tw={`${
-                  position.length >= 80
-                    ? 'text-5xl leading-[2.8rem]'
-                    : position.length >= 60
-                    ? 'text-6xl'
-                    : position.length >= 40
-                    ? 'text-7xl'
-                    : 'text-8xl'
-                } p-16 m-8 font-bold line-through`}
-                style={{
-                  backgroundColor: 'rgb(254 170 0) ',
-                  fontFamily: 'Overpass',
-                }}
-              >
-                {position}
-              </span>
             </div>
-          ) : (
             <span
-              tw="text-8xl font-bold line-through"
+              tw={`${
+                position.length >= 80
+                  ? 'text-5xl leading-[2.8rem]'
+                  : position.length >= 60
+                  ? 'text-6xl'
+                  : position.length >= 40
+                  ? 'text-7xl'
+                  : 'text-8xl'
+              }  font-bold line-through`}
               style={{
+                backgroundColor: 'rgb(254 170 0) ',
                 fontFamily: 'Overpass',
               }}
             >
-              We're hiring!
+              {position}
             </span>
-          )}
 
-          {deadline && (
-            <div tw="flex flex-col items-center">
-              <span tw="text-4xl font-bold" style={{ fontFamily: 'overpass' }}>
-                Deadline
-              </span>
-              <h2 tw="text-4xl">{format(new Date(deadline), 'MMMM do, yyyy')}</h2>
-            </div>
-          )}
-        </div>
+            {deadline && (
+              <div tw="flex flex-col">
+                <span tw="text-4xl font-bold" style={{ fontFamily: 'overpass' }}>
+                  Deadline
+                </span>
+                <h2 tw="text-4xl">{format(new Date(deadline), 'MMMM do, yyyy')}</h2>
+              </div>
+            )}
+          </div>
+        ) : (
+          <span
+            tw="text-7xl font-bold line-through"
+            style={{
+              fontFamily: 'Overpass',
+            }}
+          >
+            We're hiring!
+          </span>
+        )}
       </div>
     ),
     {
