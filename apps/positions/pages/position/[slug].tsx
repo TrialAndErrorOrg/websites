@@ -15,22 +15,35 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const slug = params?.slug as string
   const position = await getPosition(slug)
 
+  const image = `${process.env.OG_URL}/api/og/positions?position=${encodeURIComponent(
+    position.title
+  )}&deadline=${position.deadline}`
+
   return {
     props: {
       position,
+      image,
     },
   }
 }
 
-export default function PositionPage({ position }: { position: OpenPosition }) {
+export default function PositionPage({
+  position,
+  image,
+}: {
+  position: OpenPosition
+  image?: string
+}) {
   const meta = {
     title: `${position.title} — ${SITE.name}`,
     description: position?.seo?.metaDescription ?? position.summary,
     canonical: getCanonical(getPermalink(position.slug, 'post')).toString(),
     ogTitle: `${position.title} — ${SITE.name}`,
-    image: `${process.env.NEXT_PUBLIC_OG_URL}/api/og/positions?position=${encodeURIComponent(
-      position.title
-    )}&deadline=${position.deadline}`,
+    image:
+      image ??
+      `${process.env.NEXT_PUBLIC_OG_URL}/api/og/positions?position=${encodeURIComponent(
+        position.title
+      )}&deadline=${position.deadline}`,
     ogType: 'article',
   }
 
