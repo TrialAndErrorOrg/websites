@@ -71,6 +71,9 @@
     "url": {
       "type": "uid",
       "required": true
+    },
+    "howDidYouFindThis": {
+      "type": "string"
     }
   }
 }

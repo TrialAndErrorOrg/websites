@@ -50,6 +50,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
   // const files = watch('documents')
   const [motivationText, motivationFile] = watch(['motivationText', 'motivationFile'])
   const [cvText, cvFile] = watch(['cvText', 'cvFile'])
+  const [additionalText, additionalFile] = watch(['cvText', 'cvFile'])
   const url = Math.random().toString(36).substring(2, 15)
   // console.log(motivation, typeof motivation)
 
@@ -82,13 +83,14 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                   <form
                     onSubmit={handleSubmit(
                       ({
-                        documents,
-                        cvFile,
+                        // documents,
                         additionalFile,
                         additionalText,
+                        cvFile,
                         cvText,
                         motivationText,
                         motivationFile,
+                        howDidYouFindThis,
                         ...data
                       }) => {
                         console.log({
@@ -97,7 +99,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                             additionalFile,
                             motivationFile,
                             cvFile,
-                            documents,
+                            // documents,
                           },
                         })
                         const formData = new FormData()
@@ -123,9 +125,9 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                           )
                         }
 
-                        for (let i = 0; i < documents?.length; i++) {
-                          formData.append(`files.documents`, documents[i], documents[i].name)
-                        }
+                        // for (let i = 0; i < documents?.length; i++) {
+                        //   formData.append(`files.documents`, documents[i], documents[i].name)
+                        // }
 
                         if (motivationText?.length) {
                           data['motivation'] = motivationText
@@ -139,20 +141,22 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                           data['additional'] = additionalText
                         }
 
+                        if (howDidYouFindThis?.length) {
+                          data['howDidYouFindThis'] = howDidYouFindThis
+                        }
+
                         // unique url for the application, so we can send it to the user
                         // so they can edit their application
                         data['url'] = url
 
                         formData.append('data', JSON.stringify(data))
-                        console.log(formData.get('data'))
-                        console.log(formData.get('files.documents'))
 
                         // fetch(`${process.env.NEXT_PUBLIC_STRAPI_ENDPOINT}/applications`, {
                         fetch(`/api/form`, {
                           method: 'POST',
-                          headers: {
-                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN_APPLICATION}`,
-                          },
+                          // headers: {
+                          //   Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN_APPLICATION}`,
+                          // },
                           body: formData,
                         })
                           .then(async (res) => ({
@@ -172,7 +176,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                             }
                             console.log(res)
                           })
-                          .catch()
+                          .catch((e) => console.error(e))
                       }
 
                       // const dat = fetch('/api/form', {
@@ -263,13 +267,14 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 <textarea
                                   id="motivationText"
                                   required={!motivationFile || motivationFile?.length < 1}
-                                  rows={3}
+                                  rows={6}
                                   className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                                   defaultValue={''}
                                   {...register('motivationText')}
                                 />
                                 <p className="mt-2 text-sm text-gray-500">
-                                  Write a few sentences about yourself.
+                                  Write a few sentences about yourself and why you want to work for
+                                  the Center/Journal of Trial & Error.
                                 </p>
                               </div>
                             ) : (
@@ -316,7 +321,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 <textarea
                                   id="cvText"
                                   required={!cvFile || cvFile?.length < 1}
-                                  rows={3}
+                                  rows={6}
                                   className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                                   defaultValue={''}
                                   {...register('cvText')}
@@ -360,6 +365,83 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                           </div>
                           <div className="sm:col-span-6">
                             <label
+                              htmlFor="additionalText"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Additional context
+                            </label>
+                            {!additionalFile || additionalFile?.length < 1 ? (
+                              <div className="mt-1">
+                                <textarea
+                                  id="additionalText"
+                                  required={false}
+                                  rows={6}
+                                  className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                                  defaultValue={''}
+                                  {...register('additionalText')}
+                                />
+                                <p className="mt-2 text-sm text-gray-500">
+                                  Anything else you want to share with us?
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="text-sm rounded-full mt-1 bg-slate-100 px-4 py-2 flex justify-between items-center text-slate-500">
+                                <span className="truncate max-w-[80%]">
+                                  {additionalFile[0]?.name}
+                                </span>
+                                <button
+                                  onClick={() => setValue('additionalFile', null)}
+                                  className="font-bold"
+                                  aria-label="Remove additional file"
+                                >
+                                  x
+                                </button>
+                              </div>
+                            )}
+                            <label htmlFor="additionalFile">
+                              <span
+                                className={`text-orange-500 underline text-sm hover:cursor-pointer ${
+                                  additionalFile?.[0] ? 'sr-only' : ''
+                                }`}
+                              >
+                                Or upload a file (.docx or .pdf)
+                              </span>
+                              <input
+                                type="file"
+                                accept={ACCEPTED_FILE_TYPES.join(', ')}
+                                id="additionalFile"
+                                className="sr-only"
+                                {...register('additionalFile')}
+                              />
+                            </label>
+                          </div>
+                          {/* How did you find us section */}
+                          <div className="sm:col-span-6">
+                            <label
+                              htmlFor="howDidYouFindThis"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              How did you find this position?
+                              <span className="text-red-500 ml-1">*</span>
+                            </label>
+                            <div className="mt-1">
+                              <input
+                                type="text"
+                                id="howDidYouFindThis"
+                                required={true}
+                                className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                                defaultValue={''}
+                                {...register('howDidYouFindThis')}
+                              />
+                              <p className="mt-2 text-sm text-gray-500">
+                                How did you find out about this role? (e.g. LinkedIn, Twitter,
+                                Google, colleague told you, etc.)
+                              </p>
+                            </div>
+                          </div>
+
+                          {/*<div className="sm:col-span-6">
+                              <label
                               htmlFor="documents"
                               className="block text-sm font-medium text-gray-700"
                             >
@@ -406,7 +488,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                                 {errors.documents?.message as string}
                               </p>
                             )}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

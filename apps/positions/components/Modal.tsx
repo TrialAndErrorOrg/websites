@@ -51,15 +51,23 @@ export function Modal({
                   <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
                     Application successful!
                   </Dialog.Title>
-                  <div className="mt-2">
+                  <div className="mt-2 flex flex-col gap-2">
                     <p className="text-sm text-gray-500">
                       Thank you so much for applying for this position! You should have received an
                       email with a confirmation, we'll be in touch with you soon!
                     </p>
                     <p className="text-sm text-gray-500">
-                      You should have also received a unique link to your application with which you
-                      can edit your application at any time. Don't share this link with anyone else!
-                      In case you did not receive an email, please check your spam folder.
+                      If you didn't receive a confirmation, check your spam, or send a message to{' '}
+                      <a
+                        className="text-orange-500"
+                        href="mailto:positions@trialanderror.org?subject=Application%20Confirmation%20Email"
+                      >
+                        positions@trialanderror.org
+                      </a>
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      You can view your application using the link you received in the email
+                      confirmation, or by clicking the button below.
                     </p>
                   </div>
                 </div>
@@ -67,9 +75,9 @@ export function Modal({
               <div className="mt-5 sm:mt-6">
                 <Link
                   href={`/application/${url}`}
-                  className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                  className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-600 text-base font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:text-sm"
                 >
-                  View/Edit Application
+                  View Application
                 </Link>
                 {/* <button
                   type="button"
