@@ -75,23 +75,23 @@ export function Layout({
             Positions
           </span>
         </Link>
-        <div className="md:text-xl gap-2 font-semibold flex items-center md:gap-6 text-gray-500">
-          <Link className="hover:text-slate-800 transition-colors" href="/">
+        <div className="md:text-xl gap-2 font-semibold flex items-center md:gap-6 text-black">
+          <Link className="hover:text-slate-800 transition-colors sleek-underline" href="/">
             home
           </Link>
-          <Link
-            className="hover:text-slate-800 transition-colors"
+          <a
+            className="hover:text-slate-800 transition-colors sleek-underline"
             href="https://journal.trialanderror.org"
           >
             journal
-          </Link>
-          <Link
-            className="hover:text-slate-800 transition-colors"
+          </a>
+          <a
+            className="hover:text-slate-800 transition-colors sleek-underline"
             href="https://blog.trialanderror.org"
           >
             blog
-          </Link>
-          <a href="https://github.com/journaloftrialanderror/centeroftrialanderror.com">
+          </a>
+          <a href="https://github.com/TrialAndErrorOrg/websites">
             <svg
               className="md:h-8 md:w-8 w-6 h-6 hover:text-slate-800 transition-colors"
               viewBox="0 0 256 250"

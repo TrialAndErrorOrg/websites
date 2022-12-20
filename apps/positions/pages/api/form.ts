@@ -27,7 +27,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const formData = new FormData()
     const documents = Array.isArray(data?.files?.['files.documents'])
       ? data?.files?.['files.documents']
-      : [data?.files?.['files.documents']]
+      : data?.files?.['files.documents']
+      ? [data?.files?.['files.documents']]
+      : []
     console.log(documents)
     console.log(documents.length)
     formData.append('data', data?.fields?.data)
