@@ -8,6 +8,7 @@ import { join } from 'path'
 
 export default factories.createCoreController('api::application.application', ({ strapi }) => ({
   async create(ctx) {
+    console.log('create application', ctx)
     const standardRes = await super.create(ctx)
     const {
       body,

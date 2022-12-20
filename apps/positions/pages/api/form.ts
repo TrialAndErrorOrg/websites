@@ -69,7 +69,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           console.log(res.json)
         }
       })
-      .catch()
+      .catch((error) => {
+        console.log(error)
+
+        res.status(500).json({
+          status: 'error',
+          error,
+        })
+      })
     //return the data back or just do whatever you want with it
     res.status(200).json({
       status: 'ok',
