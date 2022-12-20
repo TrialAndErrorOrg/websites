@@ -35,7 +35,7 @@ export const getPermalink = (slug = '', type: 'position' | 'application' = 'posi
 
     case 'position':
     default:
-      return createPath(basePathname, _slug)
+      return createPath(basePathname, POSITION_BASE, _slug)
   }
 }
 

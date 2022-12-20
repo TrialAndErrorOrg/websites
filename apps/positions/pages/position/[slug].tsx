@@ -46,6 +46,7 @@ export default function PositionPage({
       )}&deadline=${position.deadline}`,
     ogType: 'article',
   }
+  console.log(meta.canonical)
 
   return (
     <Layout meta={meta}>
