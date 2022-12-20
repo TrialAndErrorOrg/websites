@@ -37,7 +37,7 @@ export default function PositionPage({
   const meta = {
     title: `${position.title} — ${SITE.name}`,
     description: position?.seo?.metaDescription ?? position.summary,
-    canonical: getCanonical(getPermalink(position.slug, 'post')).toString(),
+    canonical: getCanonical(getPermalink(position.slug, 'position')).toString(),
     ogTitle: `${position.title} — ${SITE.name}`,
     image:
       image ??

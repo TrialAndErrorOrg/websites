@@ -9,7 +9,7 @@ export const SITE = {
     'Center of Trial and Error is a non-profit organization that aims to provide a platform for the exchange of ideas and experiences in the field of trial and error. We are looking for people who are interested in joining our team and contributing to our mission.',
 }
 
-export const BLOG = {
+export const PATHS = {
   disabled: false,
   postsPerPage: 10,
 
@@ -23,13 +23,13 @@ export const BLOG = {
     pathname: '', // empty for /some-post, value for /pathname/some-post
   },
 
-  category: {
+  application: {
     disabled: false,
-    pathname: 'category', // set empty to change from /category/some-category to /some-category
+    pathname: 'application', // set empty to change from /category/some-category to /some-category
   },
 
-  tag: {
+  position: {
     disabled: false,
-    pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
+    pathname: 'position', // set empty to change from /tag/some-tag to /some-tag
   },
 }

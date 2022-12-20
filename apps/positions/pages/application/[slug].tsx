@@ -23,10 +23,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 export default function ApplicationPage({ application }: { application: ApplicationType }) {
-  console.log(application)
   const meta = {
     title: `${application.name} — ${SITE.name}`,
-    canonical: getCanonical(getPermalink(application.url, 'post')).toString(),
+    canonical: getCanonical(getPermalink(application.url, 'application')).toString(),
     // image: application.image.url, //await findImage(post.image),
     noindex: true,
     ogTitle: application.name,
