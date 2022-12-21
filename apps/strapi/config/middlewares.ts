@@ -40,7 +40,12 @@ export default [
             'editor.unlayer.com',
             'plausible.io',
           ],
-          'frame-src': ["'self'", 'editor.unlayer.com', 'plausible.io'],
+          'frame-src': [
+            "'self'",
+            'editor.unlayer.com',
+            'plausible.io',
+            'analytics.trialanderror.org',
+          ],
           'script-src-attr': [
             "'self'",
             "'unsafe-inline'",

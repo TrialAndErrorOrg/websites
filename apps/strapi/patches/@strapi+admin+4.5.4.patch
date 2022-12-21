@@ -99,7 +99,7 @@ index ee26bfc..f871dca 100644
      console.error(err);
    }
 diff --git a/node_modules/@strapi/admin/server/controllers/admin.js b/node_modules/@strapi/admin/server/controllers/admin.js
-index 165ee80..eb7e4c2 100644
+index 980e513..169fb70 100644
 --- a/node_modules/@strapi/admin/server/controllers/admin.js
 +++ b/node_modules/@strapi/admin/server/controllers/admin.js
 @@ -37,9 +37,9 @@ module.exports = {
@@ -110,32 +110,19 @@ index 165ee80..eb7e4c2 100644
 +      return { data: { isEE: true, features: ee.features.getEnabled() } };
      } catch (err) {
 -      return { data: { isEE: false, features: [] } };
-+      return { data: { isEE: true, features: [] } };
++      return { data: { isEE: true, features: ['sso'] } };
      }
    },
  
-@@ -111,7 +111,7 @@ module.exports = {
-     const strapiVersion = strapi.config.get('info.strapi', null);
-     const dependencies = strapi.config.get('info.dependencies', {});
-     const nodeVersion = process.version;
--    const communityEdition = !strapi.EE;
-+    const communityEdition = false;
-     const useYarn = await exists(path.join(process.cwd(), 'yarn.lock'));
+@@ -48,7 +48,7 @@ module.exports = {
+     const hasAdmin = await getService('user').exists();
+     const { menuLogo } = await getService('project-settings').getProjectSettings();
+     // set to null if telemetryDisabled flag not avaialble in package.json
+-    const telemetryDisabled = strapi.config.get('packageJsonStrapi.telemetryDisabled', null);
++    const telemetryDisabled = true // strapi.config.get('packageJsonStrapi.telemetryDisabled', null);
  
-     return {
-diff --git a/node_modules/@strapi/admin/server/services/permission/queries.js b/node_modules/@strapi/admin/server/services/permission/queries.js
-index 2dfd476..e92cf1e 100644
---- a/node_modules/@strapi/admin/server/services/permission/queries.js
-+++ b/node_modules/@strapi/admin/server/services/permission/queries.js
-@@ -187,7 +187,7 @@ const cleanPermissionsInDatabase = async () => {
- };
- 
- const ensureBoundPermissionsInDatabase = async () => {
--  if (strapi.EE) {
-+  if (true) {
-     return;
-   }
- 
+     if (telemetryDisabled !== null && telemetryDisabled === true) {
+       uuid = false;
 diff --git a/node_modules/@strapi/admin/strapi-server.js b/node_modules/@strapi/admin/strapi-server.js
 index 988bed0..b443f62 100644
 --- a/node_modules/@strapi/admin/strapi-server.js

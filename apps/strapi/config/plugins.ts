@@ -140,9 +140,10 @@ export default ({ env }) => ({
     enabled: true,
   },
   plausible: {
-    enabled: false,
+    enabled: true,
     config: {
-      sharedLink: 'https://plausible.io/share/trialanderror.org?auth=sl01pbHu02aH7rz2qb0VG',
+      sharedLink:
+        'https://analytics.trialanderror.org/share/blog.trialanderror.org?auth=XFeoDlc0fe0TDF4Q_Hy5j',
     },
   },
   'vercel-deploy': {

@@ -66,7 +66,7 @@
     "ts-transformer-keys": "^0.4.3",
     "tslib": "^2.3.0",
     "wait-on": "^6.0.0",
-    "zod": "^3.20.0"
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@astrojs/image": "^0.12.1",
