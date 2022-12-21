@@ -3,6 +3,7 @@
  */
 
 import { factories } from '@strapi/strapi'
+import { EntityService } from '@strapi/strapi/lib/services/entity-service'
 import { writeFileSync } from 'fs'
 import { join } from 'path'
 
@@ -10,6 +11,7 @@ export default factories.createCoreController('api::application.application', ({
   async create(ctx) {
     console.log('create application', ctx)
     const standardRes = await super.create(ctx)
+
     const {
       body,
       // @ts-expect-error this should be defined according to the docs https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#accessing-the-request-context-anywhere
@@ -20,8 +22,9 @@ export default factories.createCoreController('api::application.application', ({
 
     const files = Array.isArray(documents) ? documents : [documents]
     // strapi.service('api::application.application').
+    const entityService = strapi.entityService as EntityService
 
-    const position = await strapi.entityService.findOne(
+    const position = await entityService.findOne(
       'api::open-position.open-position',
       open_position,
       {
@@ -30,7 +33,8 @@ export default factories.createCoreController('api::application.application', ({
         },
       },
     )
-    console.log({ position })
+
+    console.log(standardRes)
 
     // send email
     try {
@@ -62,11 +66,31 @@ export default factories.createCoreController('api::application.application', ({
           },
         },
       )
+
+      // if (standardRes.data.id) {
+      //   // this is kinda stupid, we do this to
+      //   // 1. get the position title in Notion, annoying to do otherwise because relational fields do not get populated in the webhook
+      //   // 2. update the application to trigger another webhook, as the initial create webhook does not contain the files.
+      //   setTimeout(() => {
+      //     const updatedApplication = entityService.update(
+      //       'api::application.application',
+      //       standardRes.data.id,
+      //       {
+      //         data: {
+      //           position: position.title,
+      //         },
+      //       },
+      //     )
+
+      //     console.log({ position, updatedApplication })
+      //   }, 10000)
+      // }
       console.log({ res })
     } catch (error) {
       console.error(error)
       return ctx.badRequest(standardRes, error)
     }
+
     return standardRes
   },
 }))

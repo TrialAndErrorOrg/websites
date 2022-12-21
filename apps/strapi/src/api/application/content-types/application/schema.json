@@ -24,10 +24,6 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "applications"
     },
-    "additional": {
-      "type": "richtext",
-      "required": false
-    },
     "documents": {
       "type": "media",
       "multiple": true,
@@ -68,11 +64,18 @@
     "cv": {
       "type": "richtext"
     },
+    "additional": {
+      "type": "richtext",
+      "required": false
+    },
     "url": {
       "type": "uid",
       "required": true
     },
     "howDidYouFindThis": {
+      "type": "string"
+    },
+    "position": {
       "type": "string"
     }
   }

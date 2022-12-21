@@ -1002,7 +1002,6 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >
-    additional: RichTextAttribute
     documents: MediaAttribute
     email: EmailAttribute & RequiredAttribute
     state: EnumerationAttribute<['submitted', 'responded', 'draft', 'accepted', 'rejected']> &
@@ -1011,7 +1010,10 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
     start: DateAttribute
     motivation: RichTextAttribute
     cv: RichTextAttribute
+    additional: RichTextAttribute
     url: UIDAttribute & RequiredAttribute
+    howDidYouFindThis: StringAttribute
+    position: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &

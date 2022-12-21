@@ -70,9 +70,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           // setOpen(false)
         } else {
           console.log('Error!')
-          console.log(res.json)
+          console.log(result.json)
 
-          res.status(500).json({
+          res.status(result.status ?? 500).json({
             status: 'error',
             error: result.json,
           })
