@@ -7,7 +7,7 @@ export default ({ env }) => ({
       database: env('DATABASE_NAME', 'strapi'),
       user: env('DATABASE_USERNAME', 'strapi'),
       password: env('DATABASE_PASSWORD', ''),
-      schema: env('DATABASE_SCHEMA', 'public'), // Not required
+      // schema: env('DATABASE_SCHEMA', 'public'), // Not required
       ssl: {
         ca:
           env('NODE_ENV') === 'production'
