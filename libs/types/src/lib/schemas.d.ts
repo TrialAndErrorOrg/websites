@@ -13,13 +13,13 @@ import {
   PasswordAttribute,
   BooleanAttribute,
   EnumerationAttribute,
+  BigIntegerAttribute,
   IntegerAttribute,
   DecimalAttribute,
   SetMinMax,
   TextAttribute,
   UIDAttribute,
   MediaAttribute,
-  BigIntegerAttribute,
   SingleTypeSchema,
   SetPluginOptions,
   RichTextAttribute,
@@ -195,7 +195,7 @@ export interface AdminApiToken extends CollectionTypeSchema {
     lastUsedAt: DateTimeAttribute
     permissions: RelationAttribute<'admin::api-token', 'oneToMany', 'admin::api-token-permission'>
     expiresAt: DateTimeAttribute
-    lifespan: IntegerAttribute
+    lifespan: BigIntegerAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'admin::api-token', 'oneToOne', 'admin::user'> & PrivateAttribute
@@ -400,6 +400,37 @@ export interface PluginEntityNotesNote extends CollectionTypeSchema {
     createdBy: RelationAttribute<'plugin::entity-notes.note', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::entity-notes.note', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
+  }
+}
+
+export interface PluginSlugifySlug extends CollectionTypeSchema {
+  info: {
+    singularName: 'slug'
+    pluralName: 'slugs'
+    displayName: 'slug'
+  }
+  options: {
+    draftAndPublish: false
+    comment: ''
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    slug: TextAttribute
+    count: IntegerAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'plugin::slugify.slug', 'oneToOne', 'admin::user'> &
+      PrivateAttribute
+    updatedBy: RelationAttribute<'plugin::slugify.slug', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -787,11 +818,11 @@ export interface PluginSchedulerScheduler extends CollectionTypeSchema {
   }
 }
 
-export interface PluginStrapiStripeStrapiStripeProduct extends CollectionTypeSchema {
+export interface PluginStrapiStripeSsProduct extends CollectionTypeSchema {
   info: {
-    tableName: 'StrapiStripeProduct'
-    singularName: 'strapi-stripe-product'
-    pluralName: 'strapi-stripe-products'
+    tableName: 'StripeProduct'
+    singularName: 'ss-product'
+    pluralName: 'ss-products'
     displayName: 'Product'
     description: 'Stripe Products'
     kind: 'collectionType'
@@ -813,10 +844,10 @@ export interface PluginStrapiStripeStrapiStripeProduct extends CollectionTypeSch
       SetMinMax<{
         min: 1
       }>
-    slug: UIDAttribute<'plugin::strapi-stripe.strapi-stripe-product', 'title'> &
+    slug: UIDAttribute<'plugin::strapi-stripe.ss-product', 'title'> &
       RequiredAttribute &
       UniqueAttribute
-    description: StringAttribute &
+    description: TextAttribute &
       RequiredAttribute &
       SetMinMax<{
         min: 1
@@ -845,33 +876,25 @@ export interface PluginStrapiStripeStrapiStripeProduct extends CollectionTypeSch
         min: 3
       }>
     stripePayment: RelationAttribute<
-      'plugin::strapi-stripe.strapi-stripe-product',
+      'plugin::strapi-stripe.ss-product',
       'oneToMany',
-      'plugin::strapi-stripe.strapi-stripe-payment'
+      'plugin::strapi-stripe.ss-payment'
     >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'plugin::strapi-stripe.strapi-stripe-product',
-      'oneToOne',
-      'admin::user'
-    > &
+    createdBy: RelationAttribute<'plugin::strapi-stripe.ss-product', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    updatedBy: RelationAttribute<
-      'plugin::strapi-stripe.strapi-stripe-product',
-      'oneToOne',
-      'admin::user'
-    > &
+    updatedBy: RelationAttribute<'plugin::strapi-stripe.ss-product', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
 
-export interface PluginStrapiStripeStrapiStripePayment extends CollectionTypeSchema {
+export interface PluginStrapiStripeSsPayment extends CollectionTypeSchema {
   info: {
-    tableName: 'StrapiStripePayment'
-    singularName: 'strapi-stripe-payment'
-    pluralName: 'strapi-stripe-payments'
+    tableName: 'StripePayment'
+    singularName: 'ss-payment'
+    pluralName: 'ss-payments'
     displayName: 'Payment'
     description: 'Stripe Payment'
     kind: 'collectionType'
@@ -895,7 +918,7 @@ export interface PluginStrapiStripeStrapiStripePayment extends CollectionTypeSch
         maxLength: 250
       }>
     isTxnSuccessful: BooleanAttribute & DefaultTo<false>
-    txnMessage: StringAttribute &
+    txnMessage: TextAttribute &
       SetMinMaxLength<{
         maxLength: 5000
       }>
@@ -907,23 +930,15 @@ export interface PluginStrapiStripeStrapiStripePayment extends CollectionTypeSch
     customerName: StringAttribute & RequiredAttribute
     customerEmail: StringAttribute & RequiredAttribute
     stripeProduct: RelationAttribute<
-      'plugin::strapi-stripe.strapi-stripe-payment',
+      'plugin::strapi-stripe.ss-payment',
       'manyToOne',
-      'plugin::strapi-stripe.strapi-stripe-product'
+      'plugin::strapi-stripe.ss-product'
     >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'plugin::strapi-stripe.strapi-stripe-payment',
-      'oneToOne',
-      'admin::user'
-    > &
+    createdBy: RelationAttribute<'plugin::strapi-stripe.ss-payment', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    updatedBy: RelationAttribute<
-      'plugin::strapi-stripe.strapi-stripe-payment',
-      'oneToOne',
-      'admin::user'
-    > &
+    updatedBy: RelationAttribute<'plugin::strapi-stripe.ss-payment', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -2301,6 +2316,7 @@ declare global {
       'plugin::upload.folder': PluginUploadFolder
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate
       'plugin::entity-notes.note': PluginEntityNotesNote
+      'plugin::slugify.slug': PluginSlugifySlug
       'plugin::publisher.action': PluginPublisherAction
       'plugin::menus.menu': PluginMenusMenu
       'plugin::menus.menu-item': PluginMenusMenuItem
@@ -2311,8 +2327,8 @@ declare global {
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
       'plugin::scheduler.scheduler': PluginSchedulerScheduler
-      'plugin::strapi-stripe.strapi-stripe-product': PluginStrapiStripeStrapiStripeProduct
-      'plugin::strapi-stripe.strapi-stripe-payment': PluginStrapiStripeStrapiStripePayment
+      'plugin::strapi-stripe.ss-product': PluginStrapiStripeSsProduct
+      'plugin::strapi-stripe.ss-payment': PluginStrapiStripeSsPayment
       'api::about-page.about-page': ApiAboutPageAboutPage
       'api::application.application': ApiApplicationApplication
       'api::article.article': ApiArticleArticle
