@@ -9,6 +9,8 @@
     "old-positions": "apps/old-positions",
     "old-positions-e2e": "apps/old-positions-e2e",
     "orcid-client": "libs/orcid-client",
+    "peer-review": "apps/peer-review",
+    "peer-review-e2e": "apps/peer-review-e2e",
     "positions": "apps/positions",
     "positions-e2e": "apps/positions-e2e",
     "scripts": "libs/scripts",
