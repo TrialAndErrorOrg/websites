@@ -97,7 +97,7 @@
     "@nrwl/nx-cloud": "15.0.2",
     "@nrwl/react": "15.3.0",
     "@nrwl/storybook": "^15.3.0",
-    "@nrwl/web": "15.3.0",
+    "@nrwl/web": "15.4.1",
     "@nrwl/workspace": "15.3.0",
     "@nx-extend/strapi": "^3.1.1",
     "@nxtensions/astro": "^3.1.0",
