@@ -33,7 +33,7 @@
     "strapi-plugin-preview-button": "^1.1.0",
     "strapi-plugin-publisher": "^1.1.4",
     "strapi-plugin-rest-cache": "^4.2.5",
-    "strapi-plugin-sitemap": "^2.0.8",
+    "strapi-plugin-sitemap": "^2.0.9",
     "strapi-plugin-slugify": "^2.3.2",
     "strapi-plugin-vercel-deploy": "^1.4.0",
     "strapi-provider-rest-cache-memory": "^4.2.5",
