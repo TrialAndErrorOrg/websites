@@ -8,7 +8,7 @@
     "@strapi-newsletter/strapi": "^0.1.2",
     "@strapi/plugin-color-picker": "^4.5.4",
     "@strapi/plugin-documentation": "^4.5.4",
-    "@strapi/plugin-graphql": "^4.5.4",
+    "@strapi/plugin-graphql": "^4.5.5",
     "@strapi/plugin-i18n": "^4.5.4",
     "@strapi/plugin-seo": "^1.7.7",
     "@strapi/plugin-users-permissions": "^4.5.4",
