@@ -22,6 +22,7 @@ import { FaOrcid } from 'react-icons/fa/index'
 import GithubSlugger from 'github-slugger'
 import { Section, TableOfContents } from '../core/TableOfContents'
 import License from '../widgets/License.astro'
+import { getTweet } from '../core/Tweet/getTweetData'
 
 const { post, prev, next, latest } = Astro.props
 const slugger = new GithubSlugger()
@@ -52,8 +53,13 @@ const getHeadings = (body: string) =>
 
 const getTableOfContents = (body: string) => {
   const h2s = body.match(/<h2.*?>(.*?)<\/h2>/gms)
-  if (!h2s) return []
+
+  if (!h2s) {
+    return []
+  }
+
   const sections: Section[] = []
+
   h2s.forEach((h2, i) => {
     const h2Text = h2.replace(/<.*?>/g, '')
     const h2Id = slugger.slug(h2Text)
@@ -75,13 +81,31 @@ const bod = addBigLetterToBody(filteredBody)
 
 const authors = [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
 
+console.dir(JSON.stringify(bod), { depth: null })
+
 const sleekUnderline =
   'prose-a:relative prose-a:after:absolute prose-a:after:bottom-0 prose-a:after:left-0 prose-a:after:flex prose-a:after:h-[2px] prose-a:after:w-0 prose-a:after:bg-black prose-a:after:transition-all prose-a:after:duration-200 hover:prose-a:after:w-full prose-a:no-underline prose-a:text-black dark:prose-a:text-white dark:prose-a:after:!w-0 dark:prose-a:after:bg-white'
 
+const bodySplitByEmbeddedTweetFigure = bod.split(/<\/?figure.*?>/gms)
+
+const bodySplitByEmbeddedTweet = await Promise.all(
+  bodySplitByEmbeddedTweetFigure.map(async (body) => {
+    const tweet = body.match(/<oembed url="(https?:\/\/twitter\.com\/.*?\/status\/\d+)"><\/oembed>/)
+    console.log({ tweet })
+    if (!tweet) return body
+    const tweetId = tweet[0].match(/https?:\/\/twitter\.com\/.*?\/status\/(\d+)/)?.[1]
+    console.log({ tweetId })
+    if (!tweetId) return body
+    return await getTweet(tweet[1])
+  })
+)
+
+const bodyWithEmbeddedTweets = bodySplitByEmbeddedTweet.join('')
+console.dir(bodySplitByEmbeddedTweet, { depth: null })
 // const proseAnchorSleekUnderline = sleekUnderline.map((c) => `prose-a:${c}`).join(' ')
 ---
 
-<section class="mx-auto relative flex flex-col dark:bg-slate-700 bg-white">
+<section class="relative mx-auto flex flex-col bg-white dark:bg-slate-700">
   <!-- <div
     class="w-screen relative stick inset-0 dark:bg-blue-500 bg-white md:h-[65vh] overflow-clip border-b-2 border-black mb-10"
   > -->
@@ -101,29 +125,29 @@ const sleekUnderline =
     )
   }
   <!-- </div> -->
-  <div class="w-full bg-white relative border-black border-t-2">
+  <div class="relative w-full border-t-2 border-black bg-white">
     <article
-      class="dark:bg-slate-700 max-w-[100rem] mx-auto grid grid-cols-12 w-full py-10 border-black dark:border-white bg-white relative"
+      class="relative mx-auto grid w-full max-w-[100rem] grid-cols-12 border-black bg-white py-10 dark:border-white dark:bg-slate-700"
     >
-      <p class="col-span-8 col-start-2 md:col-start-3 max-w-3xl">
+      <p class="col-span-8 col-start-2 max-w-3xl md:col-start-3">
         <time datetime={post.publishDate ?? post.publishedAt}
           >{getFormattedDate(post.publishDate ?? post.publishedAt)}
         </time> ~ {Math.ceil(readingTime(post.body).minutes)} min read
       </p>
-      <header class="col-span-10 md:col-span-8 col-start-2 md:col-start-3 my-1 md:my-2">
+      <header class="col-span-10 col-start-2 my-1 md:col-span-8 md:col-start-3 md:my-2">
         <h1
-          class="max-w-3xl text-3xl text-black dark:text-white md:text-6xl font-bold leading-tighter tracking-tighter font-heading"
+          class="leading-tighter font-heading max-w-3xl text-3xl font-bold tracking-tighter text-black dark:text-white md:text-6xl"
         >
           {post.title}
         </h1>
       </header>
       <div
-        class="col-start-2 md:col-start-3 col-span-10 md:col-span-5 container mx-auto max-w-3xl my-4 md:mt-8"
+        class="container col-span-10 col-start-2 mx-auto my-4 max-w-3xl md:col-span-5 md:col-start-3 md:mt-8"
       >
         <PostTags tags={post.blog_tags ?? []} />
       </div>
 
-      <p class="col-start-2 md:col-start-3 md:mt-8 text-lg col-span-9 flex flex-wrap gap-x-1">
+      <p class="col-span-9 col-start-2 flex flex-wrap gap-x-1 text-lg md:col-start-3 md:mt-8">
         By
         {
           authors.map((author, idx) => (
@@ -146,13 +170,13 @@ const sleekUnderline =
         }
       </p>
       <div
-        class="md:col-span-1 p-1 items-center my-8 ml-4 md:sticky justify-start col-start-2 col-span-11 md:top-40 md:col-start-1 flex md:flex-col gap-2 md:gap-4 h-4"
+        class="col-span-11 col-start-2 my-8 ml-4 flex h-4 items-center justify-start gap-2 p-1 md:sticky md:top-40 md:col-span-1 md:col-start-1 md:flex-col md:gap-4"
       >
         <a
           href={`https://twitter.com/intent/tweet?text=${post.title}&url=https%3A%2F%2Fblog.trialanderror.orgs%2F${post.slug}`}
         >
           <svg
-            class="h-10 w-10 text-black button-sleek dark:text-white"
+            class="button-sleek h-10 w-10 text-black dark:text-white"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -165,7 +189,7 @@ const sleekUnderline =
           href={`http://www.facebook.com/sharer.php?u=https%3A%2F%2Fblog.trialanderror.org%2F${post.slug}`}
         >
           <svg
-            class="h-10 w-10 dark:text-white text-black button-sleek"
+            class="button-sleek h-10 w-10 text-black dark:text-white"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -179,7 +203,7 @@ const sleekUnderline =
           href={`mailto:?subject=${post.title}&body=https%3A%2F%2Fblog.trialanderror.org%2F${post.slug}`}
         >
           <svg
-            class="h-10 w-10 text-black button-sleek dark:text-white"
+            class="button-sleek h-10 w-10 text-black dark:text-white"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -201,8 +225,8 @@ const sleekUnderline =
           'relative prose-a:font-semibold col-start-2 md:col-start-3 md:col-end-10 col-end-12 max-w-3xl prose md:prose-lg prose-h2:text-3xl prose-h3:text-2xl prose-p:mb-4 dark:prose-p:text-gray-50 dark:prose-a:underline dark:prose-invert prose-headings:mb-2 prose-p:font-medium dark:text-white prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter md:prose-h1:text-6xl md:prose-h2:text-5xl md:prose-h3:text-4xl dark:prose-a:text-orange-400 my-8 prose-ol:font-medium prose-ol:text-black prose-ol:list-decimal prose-img:rounded-none prose-img:border-2 prose-img:border-black-2 xl:prose-base dark:prose-blockquote:border-slate-200  prose-blockquote:border-black'
         )}
       >
-        <div class="first-of-type:prose-p:mt-0" set:html={bod}></div>
-        <hr class="dark:border-white border-black border" />
+        <div class="first-of-type:prose-p:mt-0" set:html={bodyWithEmbeddedTweets} />
+        <hr class="border border-black dark:border-white" />
       </div>
       <!-- Table of contents Element -->
 
@@ -213,7 +237,7 @@ const sleekUnderline =
           </div>
         )
       }
-      <div class="grid gap-3 md:col-span-5 col-start-2 col-span-10 md:col-start-3">
+      <div class="col-span-10 col-start-2 grid gap-3 md:col-span-5 md:col-start-3">
         {authors.map((author) => <Author class="" author={author} />)}
         <div class="mt-16">
           <License post={post} />
@@ -221,7 +245,7 @@ const sleekUnderline =
       </div>
     </article>
     <!-- prev and next article -->
-    <div class="max-w-[100rem] mx-auto grid py-8 grid-cols-12 relative dark:bg-slate-700 bg-white">
+    <div class="relative mx-auto grid max-w-[100rem] grid-cols-12 bg-white py-8 dark:bg-slate-700">
       <div
         class={`md:col-span-7 col-span-10 col-start-2 md:col-start-3 grid ${
           prev && next ? 'grid-cols-2' : 'grid-cols-1'
@@ -250,13 +274,13 @@ const sleekUnderline =
       </div>
     </div>
     <div
-      class="grid max-w-[100rem] mx-auto py-8 bg-white relative dark:bg-slate-700 dark:text-gray-50 grid-cols-12"
+      class="relative mx-auto grid max-w-[100rem] grid-cols-12 bg-white py-8 dark:bg-slate-700 dark:text-gray-50"
     >
-      <h2 class="col-span-10 col-start-2 my-4 md:col-span-7 md:col-start-3 text-4xl font-bold">
+      <h2 class="col-span-10 col-start-2 my-4 text-4xl font-bold md:col-span-7 md:col-start-3">
         {post.related?.length ? 'Related Posts' : 'Latest Posts'}
       </h2>
       <div
-        class="flex flex-col col-span-10 col-start-2 md:col-span-9 md:col-start-3 max-w-5xl gap-4"
+        class="col-span-10 col-start-2 flex max-w-5xl flex-col gap-4 md:col-span-9 md:col-start-3"
       >
         {
           (post.related?.length ? post.related : latest)

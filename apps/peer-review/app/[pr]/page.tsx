@@ -1,3 +1,4 @@
+import { PaperClipIcon } from '@heroicons/react/outline/index'
 interface Reviews {
   reviewRound: ReviewRound
   reviews: Review[]
@@ -156,26 +157,22 @@ interface CoverImage {
 
 const fetchPR = async (submission: string) => {
   const url = `${process.env.OJS_URL}/_reviews/${submission}/reviews?apiToken=${process.env.OJS_TOKEN}`
-  console.log(url)
   const res = await fetch(url)
-  console.log(res)
   return res.json() as Promise<Reviews[]>
 }
 
 const fetchFile = async (file: string) => {
   const url = `${process.env.OJS_URL}/_files/${file}?apiToken=${process.env.OJS_TOKEN}`
-  console.log(url)
   const res = await fetch(url)
-  console.log(res)
   return res.blob()
 }
 
 const fetchSubmission = async (submission: string) => {
   const url = `${process.env.OJS_URL}/submissions/${submission}?apiToken=${process.env.OJS_TOKEN}`
-  console.log(url)
+  console.log({ url })
   const res = await fetch(url)
-  console.log(res)
-  return res.json() as Promise<Submission>
+  console.log({ res })
+  return res.json() as Promise<Item>
 }
 
 export default async function Page(props: { params: { pr: string } }) {
@@ -186,54 +183,125 @@ export default async function Page(props: { params: { pr: string } }) {
   console.log(props)
   const thing = await fetchPR(pr)
   const submission = await fetchSubmission(pr)
-  console.log(thing)
+  console.log('Submission')
+  console.log(submission)
   return (
     <div className="container">
       <main className="w-full max-w-2xl mx-auto">
         {/* Create a nicely styled page to display reviews, with links to download files */}
 
-        <h1 className="text-2xl font-bold">Reviews for {pr}</h1>
+        <h1 className="my-10 text-2xl font-bold flex flex-col">
+          <span className="text-lg font-normal">Reviews for</span>
+          <span> {submission.publications?.[0]?.title?.en_US}</span>
+        </h1>
         <div className="flex flex-col">
           {thing.map((review) => (
-            <div className="flex flex-col">
+            <div className="flex flex-col" key={review.reviewRound.id}>
               <h2 className="text-xl font-bold">Review Round {review.reviewRound.round}</h2>
-              <div className="flex flex-col">
+              <h3 className="text-lg font-bold">{review.reviewRound.statusKey}</h3>
+              <div className="flex flex-col gap-8">
                 {review.reviews.map((review) => (
-                  <div className="flex flex-col">
-                    <h3 className="text-lg font-bold">Review by {review.reviewerFullName}</h3>
-                    <p className="text-sm">Recommendation: {review.recommendationText}</p>
-                    <p className="text-sm">Status: {review.statusKey}</p>
-                    <p className="text-sm">Due: {review.dateDue}</p>
-                    <p className="text-sm">Response Due: {review.dateResponseDue}</p>
-                    <p className="text-sm">Last Modified: {review.lastModified}</p>
-                    <div className="flex flex-col">
-                      {review.reviewerComments.map((comment) => (
-                        <div className="flex flex-col">
-                          <h4 className="text-md font-bold">Comment by {comment.authorName}</h4>
-                          <p className="text-sm">Title: {comment.commentTitle}</p>
-                          <p className="text-sm">Type: {comment.commentType}</p>
-                          <p className="text-sm">Comments: {comment.comments}</p>
-                          <p className="text-sm">Date Posted: {comment.datePosted}</p>
-                          <p className="text-sm">Date Modified: {comment.dateModified}</p>
-                        </div>
-                      ))}
+                  <div
+                    className="bg-white shadow overflow-hidden sm:rounded-lg"
+                    key={review.reviewerId}
+                  >
+                    <div className="px-4 py-5 sm:px-6">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        Review by {review.reviewerFullName}
+                      </h3>
+                      <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                        Personal details and application.
+                      </p>
                     </div>
-                    <div className="flex flex-col">
-                      {review.reviewFiles.map((file) => (
-                        <div className="flex flex-col">
-                          <h4 className="text-md font-bold">File: {file.name.en_US}</h4>
-                          <p className="text-sm">Type: {file.documentType}</p>
-                          <p className="text-sm">Mimetype: {file.mimetype}</p>
-                          <p className="text-sm">Path: {file.path}</p>
-                          <p className="text-sm">URL: {file.url}</p>
-                          <p className="text-sm">Date Created: {file.createdAt}</p>
-                          <p className="text-sm">Date Modified: {file.updatedAt}</p>
-                          <p className="text-sm">Uploader: {file.uploaderUserId}</p>
-                          <p className="text-sm">Viewable: {file.viewable}</p>
-                          <p className="text-sm">Source: {file.source.en_US}</p>
-                          <p className="text-sm">Description: {file.description.en_US}</p>
+                    <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+                      <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">Full name</dt>
+                          <dd className="mt-1 text-sm text-gray-900">{review.reviewerFullName}</dd>
                         </div>
-                      ))}
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">Recommendation</dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            {review.recommendationText}
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">Email address</dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            {review.reviewerComments?.[0]?.authorEmail?.toLowerCase()}
+                          </dd>
+                        </div>
+                        <div className="sm:col-span-1">
+                          <dt className="text-sm font-medium text-gray-500">Salary expectation</dt>
+                          <dd className="mt-1 text-sm text-gray-900">$120,000</dd>
+                        </div>
+                        <div className="sm:col-span-2">
+                          <dt className="text-sm font-medium text-gray-500">Reviewer Comments</dt>
+                          <dd className="mt-1 text-sm text-gray-900">
+                            <div
+                              className="prose"
+                              dangerouslySetInnerHTML={{
+                                __html: review.reviewerComments?.[0]?.comments,
+                              }}
+                            />
+                          </dd>
+                        </div>
+                        {review.reviewFiles.length > 0 && (
+                          <div className="sm:col-span-2">
+                            <dt className="text-sm font-medium text-gray-500">Attachments</dt>
+                            <dd className="mt-1 text-sm text-gray-900">
+                              <ul
+                                role="list"
+                                className="border border-gray-200 rounded-md divide-y divide-gray-200"
+                              >
+                                {review.reviewFiles.map((file) => (
+                                  <li
+                                    key={file._href}
+                                    className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                                  >
+                                    <div className="w-0 flex-1 flex items-center">
+                                      <PaperClipIcon
+                                        className="flex-shrink-0 h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                      />
+                                      <span className="ml-2 flex-1 w-0 truncate">
+                                        {file.name.en_US}
+                                      </span>
+                                    </div>
+                                    <div className="ml-4 flex-shrink-0">
+                                      <a
+                                        href="#"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        Download
+                                      </a>
+                                    </div>
+                                  </li>
+                                  // <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                  //   <div className="w-0 flex-1 flex items-center">
+                                  //     <PaperClipIcon
+                                  //       className="flex-shrink-0 h-5 w-5 text-gray-400"
+                                  //       aria-hidden="true"
+                                  //     />
+                                  //     <span className="ml-2 flex-1 w-0 truncate">
+                                  //       coverletter_back_end_developer.pdf
+                                  //     </span>
+                                  //   </div>
+                                  //   <div className="ml-4 flex-shrink-0">
+                                  //     <a
+                                  //       href="#"
+                                  //       className="font-medium text-indigo-600 hover:text-indigo-500"
+                                  //     >
+                                  //       Download
+                                  //     </a>
+                                  //   </div>
+                                  // </li>
+                                ))}
+                              </ul>
+                            </dd>
+                          </div>
+                        )}
+                      </dl>
                     </div>
                   </div>
                 ))}
