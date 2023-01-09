@@ -8,7 +8,7 @@ export const getSubmissionByDoi = async (doi: string) => {
   return res.json() as Promise<SubmissionItem>
 }
 
-export default async function Page(props: { params: { doi: string } }) {
+async function ActualPage(props: { params: { doi: string } }) {
   const {
     params: { doi },
   } = props
@@ -19,4 +19,8 @@ export default async function Page(props: { params: { doi: string } }) {
   // TODO: Remove this once https://github.com/vercel/next.js/issues/42292 is fixed
   // @ts-expect-error
   return <PRPage params={{ pr: submission.id }} />
+}
+
+export default async function Page() {
+  return <div>Test</div>
 }
