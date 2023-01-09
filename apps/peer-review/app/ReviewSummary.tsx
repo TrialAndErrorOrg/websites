@@ -2,9 +2,9 @@
 
 import { Disclosure, Transition } from '@headlessui/react'
 import PaperClipIcon from '@heroicons/react/outline/PaperClipIcon'
-import { Review } from './[pr]/page'
+import { ReviewAssignment } from './pr/[pr]/page'
 
-export function ReviewSummary({ review }: { review: Review }) {
+export function ReviewSummary({ review }: { review: ReviewAssignment }) {
   return (
     <div className="bg-white border border-black overflow-hidden " key={review.reviewerId}>
       <div className="px-4 py-5 sm:px-6">
@@ -29,10 +29,6 @@ export function ReviewSummary({ review }: { review: Review }) {
               {review.reviewerComments?.[0]?.authorEmail?.toLowerCase()}
             </dd>
           </div>
-          <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500">Salary expectation</dt>
-            <dd className="mt-1 text-sm text-gray-900">$120,000</dd>
-          </div>
           <div className="sm:col-span-2">
             <dt className="text-sm font-medium text-gray-500">Reviewer Comments</dt>
             <dd className="mt-1 text-sm text-gray-900">
@@ -40,13 +36,12 @@ export function ReviewSummary({ review }: { review: Review }) {
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="text-indigo-600 hover:text-indigo-500">
-                      Show more {`${open}`}
+                      {open ? 'Hide' : 'Show'} reviewer comments
                     </Disclosure.Button>
 
                     {/*
             Use the `Transition` + `open` render prop argument to add transitions.
           */}
-                    <Disclosure.Panel>AAAAAAAAA</Disclosure.Panel>
                     <Transition
                       show={open}
                       enter="transition duration-100 ease-out"
@@ -59,15 +54,14 @@ export function ReviewSummary({ review }: { review: Review }) {
                       {/*
               Don't forget to add `static` to your `Disclosure.Panel`!
             */}
-                      {/* <Disclosure.Panel>
+                      <Disclosure.Panel>
                         <div
-                           className="prose"
-                           dangerouslySetInnerHTML={{
-                             __html: review.reviewerComments?.[0]?.comments,
-                           }}
-                         />
-                        Yes! You can purchase a license that you can share with your entire team.
-                      </Disclosure.Panel> */}
+                          className="prose"
+                          dangerouslySetInnerHTML={{
+                            __html: review.reviewerComments?.[0]?.comments,
+                          }}
+                        />
+                      </Disclosure.Panel>
                     </Transition>
                   </>
                 )}

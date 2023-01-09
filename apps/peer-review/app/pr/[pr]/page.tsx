@@ -1,10 +1,35 @@
 import { ReviewSummary } from 'apps/peer-review/app/ReviewSummary'
-interface Reviews {
-  reviewRound: ReviewRound
+import { format } from 'date-fns'
+interface Response {
+  _href: string
+  contextId: number
+  currentPublicationId: number
+  dateLastActivity: string
+  dateSubmitted: string
+  doiSuffix?: any
+  id: number
+  lastModified: string
+  locale: string
+  'pub-id::doi'?: any
+  publications: Publication[]
+  stageId: number
+  stages: Stage[]
+  status: number
+  statusLabel: string
+  submissionProgress: number
+  urlAuthorWorkflow: string
+  urlEditorialWorkflow: string
+  urlPublished: string
+  urlWorkflow: string
   reviews: Review[]
 }
 
 export interface Review {
+  reviewRound: ReviewRound
+  reviewAssignments: ReviewAssignment[]
+}
+
+export interface ReviewAssignment {
   id: number
   submissionId: number
   reviewerId: number
@@ -27,10 +52,15 @@ export interface Review {
   unconsidered: number
   reviewMethodKey: string
   recommendationText: string
-  status: number
+  status: string
   statusKey: string
   reviewFiles: ReviewFile[]
   reviewerComments: ReviewerComment[]
+  isCurrentUserAssigned: boolean
+  statusId: number
+  due: string
+  responseDue: string
+  roundId: number
 }
 
 interface ReviewerComment {
@@ -50,11 +80,11 @@ interface ReviewFile {
   caption?: any
   copyrightOwner?: any
   createdAt: string
-  creator: Creator
+  creator: FullTitle
   credit?: any
   dateCreated?: any
   dependentFiles: any[]
-  description: Creator
+  description: FullTitle
   documentType: string
   doiSuffix?: any
   fileId: number
@@ -64,15 +94,15 @@ interface ReviewFile {
   language?: any
   locale: string
   mimetype: string
-  name: Creator
+  name: FullTitle
   path: string
   'pub-id::doi'?: any
-  publisher: Creator
+  publisher: FullTitle
   revisions: any[]
-  source: Creator
+  source: FullTitle
   sourceSubmissionFileId?: any
-  sponsor: Creator
-  subject: Creator
+  sponsor: FullTitle
+  subject: FullTitle
   submissionId: number
   terms?: any
   updatedAt: string
@@ -81,44 +111,30 @@ interface ReviewFile {
   viewable?: any
 }
 
-interface Creator {
-  en_US: string
-}
-
 interface ReviewRound {
   id: number
   submissionId: number
   stageId: number
   round: number
-  status: number
+  status: string
   statusKey: string
+  statusId: number
 }
 
-interface Submission {
-  itemsMax: number
-  items: SubmissionItem[]
-}
-
-export interface SubmissionItem {
-  _href: string
-  contextId: number
-  currentPublicationId: number
-  dateLastActivity: string
-  dateSubmitted: string
-  doiSuffix?: any
+interface Stage {
   id: number
-  lastModified: string
-  locale: string
-  'pub-id::doi'?: any
-  publications: Publication[]
-  stageId: number
-  status: number
-  statusLabel: string
-  submissionProgress: number
-  urlAuthorWorkflow: string
-  urlEditorialWorkflow: string
-  urlPublished: string
-  urlWorkflow: string
+  label: string
+  isActiveStage: boolean
+  queries: any[]
+  currentUserAssignedRoles: any[]
+  files: Files
+  statusId?: number
+  status?: string
+  currentUserCanRecommendOnly?: boolean
+}
+
+interface Files {
+  count: number
 }
 
 interface Publication {
@@ -133,10 +149,10 @@ interface Publication {
   galleys: any[]
   id: number
   locale: string
-  pages?: string
+  pages?: any
   prefix: FullTitle
   primaryContactId: number
-  'pub-id::doi'?: string
+  'pub-id::doi'?: any
   'pub-id::publisher-id'?: any
   sectionId: number
   status: number
@@ -157,13 +173,13 @@ interface CoverImage {
 
 const fetchPR = async (submission: string) => {
   try {
-    const url = `${process.env.OJS_URL}/_reviews/${submission}/reviews?apiToken=${process.env.OJS_TOKEN}`
+    const url = `${process.env.OJS_URL}/_reviews/${submission}?apiToken=${process.env.OJS_TOKEN}`
     const res = await fetch(url)
-    return res.json() as Promise<Reviews[]>
+    return res.json() as Promise<Response>
   } catch (e) {
     console.error('ERROR')
     console.error(e)
-    return []
+    return {} as Response
   }
 }
 
@@ -184,7 +200,7 @@ export const fetchSubmission = async (
     console.log({ url })
     const res = await fetch(url)
     console.log({ res })
-    return res.json() as Promise<SubmissionItem>
+    return res.json() as Promise<Response>
   } catch (e) {
     console.error('ERROR')
     console.error(e)
@@ -198,9 +214,9 @@ export default async function Page(props: { params: { pr: string } }) {
   } = props
 
   console.log({ props })
-  const thing = await fetchPR(pr)
-  const submission = await fetchSubmission(pr)
-  console.log({ submission })
+  const submission = await fetchPR(pr)
+  // const submission = await fetchSubmission(pr)
+  // console.dir({ submission }, { depth: null })
   if (!submission) {
     return <div>Submission not found</div>
   }
@@ -219,12 +235,15 @@ export default async function Page(props: { params: { pr: string } }) {
         </div>
         <div className="flex flex-col gap-2">
           <span className="text-lg font-normal">Submitted</span>
-          <span className="font-normal">{submission.dateSubmitted}</span>
+
+          <span className="font-normal">
+            {format(new Date(submission.dateSubmitted), 'MMM d, yyyy, h:mm a')}
+          </span>
         </div>
 
         <div className="flex flex-col gap-2">
-          <span className="text-lg font-normal">Last Activity</span>
-          <span className="font-normal">{submission.lastModified}</span>
+          <span className="text-lg font-normal">Latest Activity</span>
+          {format(new Date(submission.lastModified), 'MMM d, yyyy, h:mm a')}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -232,23 +251,36 @@ export default async function Page(props: { params: { pr: string } }) {
           <span className="font-normal">{submission.statusLabel}</span>
         </div>
 
+        {/* Names of the Reviewers */}
         <div className="flex flex-col gap-2">
-          <span className="text-lg font-normal">Progress</span>
-          <span className="font-normal">{submission.submissionProgress}%</span>
+          <span className="text-lg font-normal">Reviewers</span>
+          <span className="font-normal">
+            {submission.reviews.map((review) => (
+              <div className="flex flex-col gap-4" key={review.reviewRound.id}>
+                {review.reviewAssignments.map((reviewer) => (
+                  <div className="flex flex-col gap-4" key={reviewer.reviewerId}>
+                    <span className="font-normal">{reviewer.reviewerFullName}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </span>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <span className="text-lg font-normal">DOI</span>
-          <span className="font-normal">{submission.publications?.[0]?.['pub-id::doi']}</span>
-        </div>
+        {submission.publications?.[0]?.['pub-id::doi'] && (
+          <div className="flex flex-col gap-2">
+            <span className="text-lg font-normal">DOI</span>
+            <span className="font-normal">{submission.publications?.[0]?.['pub-id::doi']}</span>
+          </div>
+        )}
 
         <div className="flex flex-col gap-8">
-          {thing.map((review) => (
+          {submission.reviews.map((review) => (
             <div className="flex flex-col gap-4" key={review.reviewRound.id}>
               <h2 className="text-2xl font-bold">Review Round {review.reviewRound.round}</h2>
-              <h3 className="text-lg font-bold">{review.reviewRound.statusKey}</h3>
+              <h3 className="text-lg">{review.reviewRound.status}</h3>
               <div className="flex flex-col gap-8">
-                {review.reviews.map((review) => (
+                {review.reviewAssignments.map((review) => (
                   <ReviewSummary review={review} key={review.id} />
                 ))}
               </div>
