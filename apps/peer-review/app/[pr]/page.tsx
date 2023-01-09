@@ -1,10 +1,10 @@
-import { PaperClipIcon } from '@heroicons/react/outline/index'
+import { ReviewSummary } from 'apps/peer-review/app/ReviewSummary'
 interface Reviews {
   reviewRound: ReviewRound
   reviews: Review[]
 }
 
-interface Review {
+export interface Review {
   id: number
   submissionId: number
   reviewerId: number
@@ -96,10 +96,10 @@ interface ReviewRound {
 
 interface Submission {
   itemsMax: number
-  items: Item[]
+  items: SubmissionItem[]
 }
 
-interface Item {
+export interface SubmissionItem {
   _href: string
   contextId: number
   currentPublicationId: number
@@ -156,9 +156,15 @@ interface CoverImage {
 }
 
 const fetchPR = async (submission: string) => {
-  const url = `${process.env.OJS_URL}/_reviews/${submission}/reviews?apiToken=${process.env.OJS_TOKEN}`
-  const res = await fetch(url)
-  return res.json() as Promise<Reviews[]>
+  try {
+    const url = `${process.env.OJS_URL}/_reviews/${submission}/reviews?apiToken=${process.env.OJS_TOKEN}`
+    const res = await fetch(url)
+    return res.json() as Promise<Reviews[]>
+  } catch (e) {
+    console.error('ERROR')
+    console.error(e)
+    return []
+  }
 }
 
 const fetchFile = async (file: string) => {
@@ -167,12 +173,23 @@ const fetchFile = async (file: string) => {
   return res.blob()
 }
 
-const fetchSubmission = async (submission: string) => {
-  const url = `${process.env.OJS_URL}/submissions/${submission}?apiToken=${process.env.OJS_TOKEN}`
-  console.log({ url })
-  const res = await fetch(url)
-  console.log({ res })
-  return res.json() as Promise<Item>
+export const fetchSubmission = async (
+  submission: string,
+  query: URLSearchParams = new URLSearchParams(),
+) => {
+  try {
+    const url = `${process.env.OJS_URL}/submissions/${submission}?apiToken=${
+      process.env.OJS_TOKEN
+    }&${query.toString()}}`
+    console.log({ url })
+    const res = await fetch(url)
+    console.log({ res })
+    return res.json() as Promise<SubmissionItem>
+  } catch (e) {
+    console.error('ERROR')
+    console.error(e)
+    return null
+  }
 }
 
 export default async function Page(props: { params: { pr: string } }) {
@@ -180,130 +197,59 @@ export default async function Page(props: { params: { pr: string } }) {
     params: { pr },
   } = props
 
-  console.log(props)
+  console.log({ props })
   const thing = await fetchPR(pr)
   const submission = await fetchSubmission(pr)
-  console.log('Submission')
-  console.log(submission)
+  console.log({ submission })
+  if (!submission) {
+    return <div>Submission not found</div>
+  }
   return (
     <div className="container">
-      <main className="w-full max-w-2xl mx-auto">
+      <main className="w-full max-w-2xl mx-auto flex flex-col gap-8">
         {/* Create a nicely styled page to display reviews, with links to download files */}
 
-        <h1 className="my-10 text-2xl font-bold flex flex-col">
+        <h1 className="mt-8 text-2xl font-bold flex flex-col">
           <span className="text-lg font-normal">Reviews for</span>
           <span> {submission.publications?.[0]?.title?.en_US}</span>
         </h1>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-normal">by</span>
+          <span className="font-normal">{submission.publications?.[0]?.authorsString}</span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-normal">Submitted</span>
+          <span className="font-normal">{submission.dateSubmitted}</span>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-normal">Last Activity</span>
+          <span className="font-normal">{submission.lastModified}</span>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-normal">Status</span>
+          <span className="font-normal">{submission.statusLabel}</span>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-normal">Progress</span>
+          <span className="font-normal">{submission.submissionProgress}%</span>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-normal">DOI</span>
+          <span className="font-normal">{submission.publications?.[0]?.['pub-id::doi']}</span>
+        </div>
+
+        <div className="flex flex-col gap-8">
           {thing.map((review) => (
-            <div className="flex flex-col" key={review.reviewRound.id}>
-              <h2 className="text-xl font-bold">Review Round {review.reviewRound.round}</h2>
+            <div className="flex flex-col gap-4" key={review.reviewRound.id}>
+              <h2 className="text-2xl font-bold">Review Round {review.reviewRound.round}</h2>
               <h3 className="text-lg font-bold">{review.reviewRound.statusKey}</h3>
               <div className="flex flex-col gap-8">
                 {review.reviews.map((review) => (
-                  <div
-                    className="bg-white shadow overflow-hidden sm:rounded-lg"
-                    key={review.reviewerId}
-                  >
-                    <div className="px-4 py-5 sm:px-6">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">
-                        Review by {review.reviewerFullName}
-                      </h3>
-                      <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                        Personal details and application.
-                      </p>
-                    </div>
-                    <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-                      <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">Full name</dt>
-                          <dd className="mt-1 text-sm text-gray-900">{review.reviewerFullName}</dd>
-                        </div>
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">Recommendation</dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            {review.recommendationText}
-                          </dd>
-                        </div>
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">Email address</dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            {review.reviewerComments?.[0]?.authorEmail?.toLowerCase()}
-                          </dd>
-                        </div>
-                        <div className="sm:col-span-1">
-                          <dt className="text-sm font-medium text-gray-500">Salary expectation</dt>
-                          <dd className="mt-1 text-sm text-gray-900">$120,000</dd>
-                        </div>
-                        <div className="sm:col-span-2">
-                          <dt className="text-sm font-medium text-gray-500">Reviewer Comments</dt>
-                          <dd className="mt-1 text-sm text-gray-900">
-                            <div
-                              className="prose"
-                              dangerouslySetInnerHTML={{
-                                __html: review.reviewerComments?.[0]?.comments,
-                              }}
-                            />
-                          </dd>
-                        </div>
-                        {review.reviewFiles.length > 0 && (
-                          <div className="sm:col-span-2">
-                            <dt className="text-sm font-medium text-gray-500">Attachments</dt>
-                            <dd className="mt-1 text-sm text-gray-900">
-                              <ul
-                                role="list"
-                                className="border border-gray-200 rounded-md divide-y divide-gray-200"
-                              >
-                                {review.reviewFiles.map((file) => (
-                                  <li
-                                    key={file._href}
-                                    className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
-                                  >
-                                    <div className="w-0 flex-1 flex items-center">
-                                      <PaperClipIcon
-                                        className="flex-shrink-0 h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
-                                      />
-                                      <span className="ml-2 flex-1 w-0 truncate">
-                                        {file.name.en_US}
-                                      </span>
-                                    </div>
-                                    <div className="ml-4 flex-shrink-0">
-                                      <a
-                                        href="#"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                      >
-                                        Download
-                                      </a>
-                                    </div>
-                                  </li>
-                                  // <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                  //   <div className="w-0 flex-1 flex items-center">
-                                  //     <PaperClipIcon
-                                  //       className="flex-shrink-0 h-5 w-5 text-gray-400"
-                                  //       aria-hidden="true"
-                                  //     />
-                                  //     <span className="ml-2 flex-1 w-0 truncate">
-                                  //       coverletter_back_end_developer.pdf
-                                  //     </span>
-                                  //   </div>
-                                  //   <div className="ml-4 flex-shrink-0">
-                                  //     <a
-                                  //       href="#"
-                                  //       className="font-medium text-indigo-600 hover:text-indigo-500"
-                                  //     >
-                                  //       Download
-                                  //     </a>
-                                  //   </div>
-                                  // </li>
-                                ))}
-                              </ul>
-                            </dd>
-                          </div>
-                        )}
-                      </dl>
-                    </div>
-                  </div>
+                  <ReviewSummary review={review} key={review.id} />
                 ))}
               </div>
             </div>
