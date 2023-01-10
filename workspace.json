@@ -16,6 +16,8 @@
     "scripts": "libs/scripts",
     "strapi": "apps/strapi",
     "strapi-client": "libs/strapi-client",
+    "trialanderror.org": "apps/trialanderror.org",
+    "trialanderror.org-e2e": "apps/trialanderror.org-e2e",
     "types": "libs/types",
     "ui": "libs/ui",
     "utils-try-catch": "libs/utils/try-catch",
