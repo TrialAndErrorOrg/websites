@@ -1,16 +1,193 @@
-'use client'
-
-import { Disclosure, Transition } from '@headlessui/react'
 import PaperClipIcon from '@heroicons/react/outline/PaperClipIcon'
+import { fetchUser, User } from '../utils/fetchUser'
 import { ReviewAssignment } from './pr/[pr]/page'
+import { ReviewDisclosure } from './ReviewDisclosure'
+import { Reviewer } from './Reviewer'
+interface SubmissionResponse {
+  itemsMax: number
+  items: Submission[]
+}
 
-export function ReviewSummary({ review }: { review: ReviewAssignment }) {
+interface Submission {
+  _href: string
+  contextId: number
+  currentPublicationId: number
+  dateLastActivity: string
+  dateSubmitted: string
+  id: number
+  lastModified: string
+  locale: string
+  publications: Publication[]
+  stageId: number
+  status: number
+  statusLabel: string
+  submissionProgress: number
+  urlAuthorWorkflow: string
+  urlEditorialWorkflow: string
+  urlPublished: string
+  urlWorkflow: string
+}
+
+interface Publication {
+  _href: string
+  abstract: Abstract
+  accessStatus: number
+  authors: Author[]
+  authorsString: string
+  authorsStringShort: string
+  categoryIds: number[]
+  citations: string[]
+  citationsRaw: string
+  copyrightHolder: Abstract
+  copyrightYear: number
+  coverImage: CoverImage
+  coverage: Abstract
+  datePublished: string
+  disciplines: string[]
+  fullTitle: Abstract
+  galleys: Galley[]
+  hideAuthor: boolean
+  id: number
+  issueId: number
+  keywords: string[]
+  languages: string[]
+  lastModified: string
+  licenseUrl: string
+  locale: string
+  pages: string
+  prefix: Abstract
+  primaryContactId: number
+  'pub-id::publisher-id': string
+  rights: Abstract
+  sectionId: number
+  seq: number
+  source: Abstract
+  status: number
+  subjects: string[]
+  submissionId: number
+  subtitle: Abstract
+  supportingAgencies: string[]
+  title: Abstract
+  type: Abstract
+  urlPath: string
+  urlPublished: string
+  version: number
+}
+
+interface Galley {
+  file: File
+  id: number
+  isApproved: boolean
+  label: string
+  locale: string
+  'pub-id::publisher-id': string
+  publicationId: number
+  seq: number
+  submissionFileId: number
+  urlPath: string
+  urlPublished: string
+  urlRemote: string
+}
+
+interface File {
+  _href: string
+  assocId: number
+  assocType: number
+  caption: string
+  copyrightOwner: string
+  createdAt: string
+  creator: Abstract
+  credit: string
+  dateCreated: string
+  dependentFiles: DependentFile[]
+  description: Abstract
+  documentType: string
+  fileId: number
+  fileStage: number
+  genreId: number
+  id: number
+  language: string
+  locale: string
+  mimetype: string
+  name: Abstract
+  path: string
+  publisher: Abstract
+  revisions: DependentFile[]
+  source: Abstract
+  sourceSubmissionFileId: number
+  sponsor: Abstract
+  subject: Abstract
+  submissionId: number
+  terms: string
+  updatedAt: string
+  uploaderUserId: number
+  url: string
+  viewable: boolean
+}
+
+interface DependentFile {}
+
+interface CoverImage {
+  type?: any
+  properties?: any
+  en_US: EnUS
+  fr_CA: EnUS
+}
+
+interface EnUS {
+  dateUploaded: string
+  uploadName: string
+  altText: string
+}
+
+interface Author {
+  affiliation: Abstract
+  biography: Abstract
+  country: string
+  email: string
+  familyName: Abstract
+  givenName: Abstract
+  id: number
+  includeInBrowse: boolean
+  orcid: string
+  preferredPublicName: Abstract
+  publicationId: number
+  seq: number
+  submissionLocale: string
+  url: string
+  userGroupId: number
+}
+
+interface Abstract {
+  en_US: string
+  fr_CA: string
+}
+
+async function fetchSubmissionByReviewer(reviewer: User) {
+  const res = await fetch(
+    `${process.env.OJS_URL}/submissions?searchPhrase=${
+      reviewer.familyName.en_US ?? reviewer.givenName.en_US
+    }&apiToken=${process.env.OJS_TOKEN}`,
+  )
+  const data = (await res.json()) as SubmissionResponse
+
+  const actualSubmissions = data.items.filter((submission) => {
+    const authors = submission.publications?.[0]
+  })
+  return data
+}
+
+export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
+  const user = (await fetchUser({ user: review.reviewerId })) as User
+  // const submissionsByReviewer =
   return (
     <div className="bg-white border border-black overflow-hidden " key={review.reviewerId}>
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           Review by {review.reviewerFullName}
         </h3>
+        {/* @ts-expect-error fix this when Next or Typescript fixes async react components */}
+        <Reviewer user={user} />
         <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
       </div>
       <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
@@ -29,43 +206,16 @@ export function ReviewSummary({ review }: { review: ReviewAssignment }) {
               {review.reviewerComments?.[0]?.authorEmail?.toLowerCase()}
             </dd>
           </div>
+          {user.affiliation.en_US && (
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Affiliation</dt>
+              <dd className="mt-1 text-sm text-gray-900">{user.affiliation.en_US}</dd>
+            </div>
+          )}
           <div className="sm:col-span-2">
             <dt className="text-sm font-medium text-gray-500">Reviewer Comments</dt>
             <dd className="mt-1 text-sm text-gray-900">
-              <Disclosure>
-                {({ open }) => (
-                  <>
-                    <Disclosure.Button className="text-indigo-600 hover:text-indigo-500">
-                      {open ? 'Hide' : 'Show'} reviewer comments
-                    </Disclosure.Button>
-
-                    {/*
-            Use the `Transition` + `open` render prop argument to add transitions.
-          */}
-                    <Transition
-                      show={open}
-                      enter="transition duration-100 ease-out"
-                      enterFrom="transform scale-95 opacity-0"
-                      enterTo="transform scale-100 opacity-100"
-                      leave="transition duration-75 ease-out"
-                      leaveFrom="transform scale-100 opacity-100"
-                      leaveTo="transform scale-95 opacity-0"
-                    >
-                      {/*
-              Don't forget to add `static` to your `Disclosure.Panel`!
-            */}
-                      <Disclosure.Panel>
-                        <div
-                          className="prose"
-                          dangerouslySetInnerHTML={{
-                            __html: review.reviewerComments?.[0]?.comments,
-                          }}
-                        />
-                      </Disclosure.Panel>
-                    </Transition>
-                  </>
-                )}
-              </Disclosure>
+              <ReviewDisclosure review={review} />
             </dd>
           </div>
           {review.reviewFiles.length > 0 && (
