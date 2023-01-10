@@ -1,4 +1,5 @@
 import { ReviewSummary } from 'apps/peer-review/app/ReviewSummary'
+import ErrorPage from 'next/error'
 import { format } from 'date-fns'
 interface Response {
   _href: string
@@ -189,7 +190,7 @@ const fetchFile = async (file: string) => {
   return res.blob()
 }
 
-export const fetchSubmission = async (
+const fetchSubmission = async (
   submission: string,
   query: URLSearchParams = new URLSearchParams(),
 ) => {
@@ -217,8 +218,8 @@ export default async function Page(props: { params: { pr: string } }) {
   const submission = await fetchPR(pr)
   // const submission = await fetchSubmission(pr)
   // console.dir({ submission }, { depth: null })
-  if (!submission) {
-    return <div>Submission not found</div>
+  if (!submission || submission.statusLabel !== 'Scheduled') {
+    throw new Error(404)
   }
   return (
     <div className="container">
@@ -281,6 +282,7 @@ export default async function Page(props: { params: { pr: string } }) {
               <h3 className="text-lg">{review.reviewRound.status}</h3>
               <div className="flex flex-col gap-8">
                 {review.reviewAssignments.map((review) => (
+                  /* @ts-expect-error  Server component */
                   <ReviewSummary review={review} key={review.id} />
                 ))}
               </div>
