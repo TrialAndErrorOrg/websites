@@ -28,10 +28,10 @@ interface Img {
   caption?: string
 }
 
-export async function getAllCards() {
+export async function getAllCards({ limit = 100, offset = 0 } = {}) {
   try {
     return (
-      await fetch(`${env.STRAPI_ENDPOINT}/front-page-cards`, {
+      await fetch(`${env.STRAPI_ENDPOINT}/front-page-cards?limit=${limit}&offset=${offset}`, {
         headers: {
           Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
         },

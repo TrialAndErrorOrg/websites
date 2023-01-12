@@ -17,13 +17,14 @@
   },
   "include": ["./", "src/**/*.json"],
   "exclude": [
-    "**/node_modules/**",
-    "**/build/**",
-    "**/dist/**",
-    "**/.cache/**",
-    "**/.tmp/**",
+    "./**/node_modules/**",
+    "./**/build/**",
+    "./**/dist/**",
+    "./**/.cache/**",
+    "./**/.tmp/**",
     "src/admin/",
-    "**/*.test.ts",
-    "src/plugins/**"
+    "./**/*.test.ts",
+    "src/plugins/**",
+    "src/extensions/documentation/**"
   ]
 }

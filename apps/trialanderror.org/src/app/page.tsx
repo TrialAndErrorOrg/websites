@@ -1,8 +1,11 @@
 import { getAllCards } from '../server/mixed'
 import Image from 'next/image'
+import { ClientProvider } from '../utils/trpcClient'
+import { InfiniteCards } from './InfiniteCards'
 
 export default async function Page() {
-  const cards = await getAllCards()
+  const cards = await getAllCards({ limit: 9 })
+
   return (
     <div className="grid gap-6  p-10 sm:grid-cols-2 lg:grid-cols-3 ">
       {cards.map((card) => (
@@ -29,6 +32,9 @@ export default async function Page() {
           </div>
         </article>
       ))}
+      <ClientProvider>
+        <InfiniteCards />
+      </ClientProvider>
     </div>
   )
 }

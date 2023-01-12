@@ -61,11 +61,13 @@ specifiers:
   '@tailwindcss/aspect-ratio': ^0.4.0
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/typography': ^0.5.9
+  '@tanstack/react-query': ^4.22.0
   '@tefkah/chair-flight-docsearch-react': ^3.0.5
   '@testing-library/react': 13.4.0
   '@trpc/client': ^10.8.1
   '@trpc/next': ^10.8.1
   '@trpc/react': ^9.27.4
+  '@trpc/react-query': ^10.9.0
   '@trpc/server': ^10.8.1
   '@types/github-slugger': ^2.0.0
   '@types/jest': 29.2.5
@@ -172,10 +174,12 @@ dependencies:
   '@swc/helpers': 0.4.14
   '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.2.4
   '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
+  '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
   '@tefkah/chair-flight-docsearch-react': 3.0.5_ib3m5ricvtkl2cll7qpr2f6lvq
   '@trpc/client': 10.8.1_@trpc+server@10.8.1
-  '@trpc/next': 10.8.1_wwqcvws24ilxznhz3l3l67oxde
+  '@trpc/next': 10.8.1_fmdo7234s35ejagihjjhaxow7u
   '@trpc/react': 9.27.4_opdzxxmweetfscbelncrfdbd4q
+  '@trpc/react-query': 10.9.0_krdvppocpp5g6rpv2pnlhwexoi
   '@trpc/server': 10.8.1
   '@uiball/loaders': 1.2.6_biqbaboplfbrettd7655fr4n2y
   '@vercel/analytics': 0.1.6_react@18.2.0
@@ -8833,6 +8837,28 @@ packages:
       tailwindcss: 3.2.4_aesdjsunmf4wiehhujt67my7tu
     dev: false
 
+  /@tanstack/query-core/4.22.0:
+    resolution: {integrity: sha512-OeLyBKBQoT265f5G9biReijeP8mBxNFwY7ZUu1dKL+YzqpG5q5z7J/N1eT8aWyKuhyDTiUHuKm5l+oIVzbtrjw==}
+    dev: false
+
+  /@tanstack/react-query/4.22.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-P9o+HjG42uB/xHR6dMsJaPhtZydSe4v0xdG5G/cEj1oHZAXelMlm67/rYJNQGKgBamKElKogj+HYGF+NY2yHYg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.22.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
   /@tefkah/chair-flight-docsearch-react/3.0.5_ib3m5ricvtkl2cll7qpr2f6lvq:
     resolution: {integrity: sha512-9eHcV8GECncqrWPtRC9fZBd90rJqvfGf119StKrxsLy2f/x7tDBANgUaJpj+d6NA/mQdxNMq02mUH4LfuxSq/A==}
     peerDependencies:
@@ -8893,7 +8919,7 @@ packages:
       '@trpc/server': 10.8.1
     dev: false
 
-  /@trpc/next/10.8.1_wwqcvws24ilxznhz3l3l67oxde:
+  /@trpc/next/10.8.1_fmdo7234s35ejagihjjhaxow7u:
     resolution: {integrity: sha512-Jyn421PgZwoJPUodQWxnT+AI1j/u/0aiOu+fSvwQeot4LFCv61QnsD4IkVdYdlb/CnIKZWQIhYVO76RhHHNmhA==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
@@ -8904,12 +8930,30 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
+      '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.8.1_@trpc+server@10.8.1
+      '@trpc/react-query': 10.9.0_krdvppocpp5g6rpv2pnlhwexoi
       '@trpc/server': 10.8.1
       next: 13.1.1_pjwopsidmaokadturxaafygjp4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-ssr-prepass: 1.5.0_react@18.2.0
+    dev: false
+
+  /@trpc/react-query/10.9.0_krdvppocpp5g6rpv2pnlhwexoi:
+    resolution: {integrity: sha512-I7xtdFj/AETwc9HfY2bGxKINij39r26LvfIiTBfz2pBj1ELrcgucWmPeI2eS6pon/uI1E9Nqa6fQCg/zkg764Q==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.3.8
+      '@trpc/client': 10.9.0
+      '@trpc/server': 10.9.0
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tanstack/react-query': 4.22.0_biqbaboplfbrettd7655fr4n2y
+      '@trpc/client': 10.8.1_@trpc+server@10.8.1
+      '@trpc/server': 10.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@trpc/react/9.27.4_opdzxxmweetfscbelncrfdbd4q:
