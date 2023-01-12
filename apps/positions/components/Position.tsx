@@ -1,8 +1,8 @@
 import SlideOver from './SlideOver'
 import type { OpenPosition } from '../utils/types'
 import Image from 'next/image'
-import { CalendarIcon as FilledCalendarIcon, ClockIcon } from '@heroicons/react/outline/index'
-import { CalendarIcon } from '@heroicons/react/solid/index'
+import { CalendarIcon as FilledCalendarIcon, ClockIcon } from '@heroicons/react/24/outline/index'
+import { CalendarIcon } from '@heroicons/react/24/solid/index'
 import { format } from 'date-fns'
 
 interface Props {

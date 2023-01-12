@@ -4,7 +4,7 @@ import type { OpenPosition } from '../utils/types'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { ArrowRightIcon, XIcon } from '@heroicons/react/outline'
+import { ArrowRightIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Ring } from '@uiball/loaders'
 import { Modal } from './Modal'
 
@@ -224,7 +224,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
                             {position.title}
                           </h3>
                           <button onClick={() => setOpen(false)}>
-                            <XIcon className="w-5 h-5" />
+                            <XMarkIcon className="w-5 h-5" />
                           </button>
                         </div>
 

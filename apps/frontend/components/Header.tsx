@@ -4,17 +4,15 @@ import Image from "next/image"
 
 import { Fragment } from "react"
 import { Menu, Popover, Switch, Transition } from "@headlessui/react"
-import { BellIcon, MenuIcon, MoonIcon, SunIcon } from "@heroicons/react/outline"
-import { ChevronDownIcon } from "@heroicons/react/solid"
+import {
+  BellIcon,
+  Bars3Icon,
+  MoonIcon,
+  SunIcon,
+} from "@heroicons/react/24/outline"
+import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import { GetAttributesValues } from "@strapi/strapi"
 import { useSession } from "next-auth/react"
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Highlight,
-} from "react-instantsearch-hooks-web"
-import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
 
 import { trpc } from "../utils/trpc"
 import { useDarkTheme } from "../hooks/useDarkTheme"
@@ -383,7 +381,7 @@ export const Header = () => {
         <div className="-my-2 -mr-2 md:hidden">
           <Popover.Button className="focus-visible-visible:outline-none focus-visible-visible:ring-2 focus-visible-visible:ring-inset focus-visible-visible:ring-orange-500 inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
             <span className="sr-only">Open menu</span>
-            <MenuIcon className="h-6 w-6" aria-hidden="true" />
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </Popover.Button>
         </div>
         <MainNav headers={headers} />

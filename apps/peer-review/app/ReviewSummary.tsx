@@ -1,4 +1,4 @@
-import PaperClipIcon from '@heroicons/react/outline/PaperClipIcon'
+import PaperClipIcon from '@heroicons/react/24/outline/PaperClipIcon'
 import { fetchUser, User } from '../utils/fetchUser'
 import { ReviewAssignment } from './pr/[pr]/page'
 import { ReviewDisclosure } from './ReviewDisclosure'
@@ -181,9 +181,9 @@ export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
   const user = (await fetchUser({ user: review.reviewerId })) as User
   // const submissionsByReviewer =
   return (
-    <div className="bg-white border border-black overflow-hidden " key={review.reviewerId}>
+    <div className="overflow-hidden border border-black bg-white " key={review.reviewerId}>
       <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <h3 className="text-lg font-medium leading-6 text-gray-900">
           Review by {review.reviewerFullName}
         </h3>
         {/* @ts-expect-error fix this when Next or Typescript fixes async react components */}
@@ -224,19 +224,19 @@ export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
               <dd className="mt-1 text-sm text-gray-900">
                 <ul
                   role="list"
-                  className="border border-gray-200 rounded-md divide-y divide-gray-200"
+                  className="divide-y divide-gray-200 rounded-md border border-gray-200"
                 >
                   {review.reviewFiles.map((file) => (
                     <li
                       key={file._href}
-                      className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                      className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
                     >
-                      <div className="w-0 flex-1 flex items-center">
+                      <div className="flex w-0 flex-1 items-center">
                         <PaperClipIcon
-                          className="flex-shrink-0 h-5 w-5 text-gray-400"
+                          className="h-5 w-5 flex-shrink-0 text-gray-400"
                           aria-hidden="true"
                         />
-                        <span className="ml-2 flex-1 w-0 truncate">{file.name.en_US}</span>
+                        <span className="ml-2 w-0 flex-1 truncate">{file.name.en_US}</span>
                       </div>
                       <div className="ml-4 flex-shrink-0">
                         <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">

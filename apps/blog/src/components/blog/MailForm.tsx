@@ -1,7 +1,7 @@
 // <!-- Begin Mailchimp Signup htmlForm -->
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, ExclamationIcon, XIcon } from '@heroicons/react/outline/index'
+import { CheckIcon, ExclamationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline/index'
 import { useForm } from 'react-hook-form'
 import { Ring } from '@uiball/loaders'
 import fetchJsonp from 'fetch-jsonp'
@@ -117,11 +117,11 @@ export const MailForm = ({
               {/* <div className="absolute top-2 right-2 pt-4 pr-4 sm:block"> */}
               <button
                 type="button"
-                className="text-black-400 button-sleek !absolute top-2 right-2 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                className="text-black-400 button-sleek !absolute top-2 right-2 rounded-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                 onClick={() => setOpen(false)}
               >
                 <span className="sr-only">Close</span>
-                <XIcon className="h-6 w-6" aria-hidden="true" />
+                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
               {/* </div> */}
               {isSubmitted && isSubmitSuccessful ? (
@@ -190,7 +190,7 @@ export const MailForm = ({
                         Receive updates from...
                       </span>
                       <ul className="list-none pl-0 text-sm">
-                        <li className="flex items-center gap-3">
+                        <li className="flex items-center gap-3 hover:cursor-pointer">
                           <input
                             {...register('group(7)(1)')}
                             type="checkbox"
@@ -206,7 +206,7 @@ export const MailForm = ({
                             <span className="text-rose-500">*</span>
                           </label>
                         </li>
-                        <li className="flex items-center gap-3">
+                        <li className="flex items-center gap-3 hover:cursor-pointer">
                           <input
                             {...register('group(7)(2)')}
                             type="checkbox"
@@ -219,7 +219,7 @@ export const MailForm = ({
                             New articles & issues (at most once a month)
                           </label>
                         </li>
-                        <li className="flex items-center gap-3">
+                        <li className="flex items-center gap-3 hover:cursor-pointer">
                           <input
                             {...register('group(7)(4)')}
                             type="checkbox"
@@ -306,7 +306,7 @@ export const MailForm = ({
                         ) : (
                           <>
                             {errors.main && (
-                              <ExclamationIcon
+                              <ExclamationCircleIcon
                                 className="mr-4 h-5 w-5 text-rose-500"
                                 aria-hidden="true"
                               />

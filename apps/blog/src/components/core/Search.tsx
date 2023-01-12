@@ -1,15 +1,14 @@
 import { InstantSearch, useInstantSearch } from 'react-instantsearch-hooks-web'
 import { Fragment, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
-import SearchIcon from '@heroicons/react/solid/SearchIcon.js'
+import SearchIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon'
 import { FaArrowRight } from 'react-icons/fa/index'
-import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon.js'
+import ExclamationCircleIcon from '@heroicons/react/24/outline/ExclamationCircleIcon'
 import { cx } from '../../utils/cx'
 import { instantMeiliSearch, MeiliSearchResponse } from '@meilisearch/instant-meilisearch'
 import { useSearchBox } from 'react-instantsearch-hooks-web'
 import type { MeiliSearchBlogPostResult } from '../../utils/types'
 import { ControlKeyIcon } from '../atoms/ControlKeyIcon'
-// import { getHighlightedParts } from 'instantsearch.js/es/lib/utils'
 
 const searchClient = instantMeiliSearch(
   'https://app-meilisearchcote-prod-001.azurewebsites.net',

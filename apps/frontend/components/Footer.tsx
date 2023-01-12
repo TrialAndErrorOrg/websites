@@ -14,7 +14,7 @@
   }
   ```
 */
-import { ChevronDownIcon } from "@heroicons/react/solid"
+import { ChevronDownIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { ComponentProps } from "react"
 import { trpc } from "../utils/trpc"

@@ -1,8 +1,5 @@
-import SlideOver from './SlideOver'
 import type { Application, OpenPosition } from '../utils/types'
-import Image from 'next/image'
-import jestConfig from '../jest.config'
-import { PaperClipIcon } from '@heroicons/react/outline'
+import { PaperClipIcon } from '@heroicons/react/24/outline'
 
 interface Props {
   application: Application

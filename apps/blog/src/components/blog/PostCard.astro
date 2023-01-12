@@ -1,7 +1,7 @@
 ---
 import { cx } from '../../utils/cx'
 import { parseISO, format } from 'date-fns'
-import PhotographIcon from '@heroicons/react/outline/PhotographIcon.js'
+import PhotographIcon from '@heroicons/react/24/outline/PhotoIcon'
 import Picture from '../core/Picture.astro'
 import { Image } from '@astrojs/image/components'
 import type { BlogPost } from '../../utils/types'
@@ -103,7 +103,7 @@ const darkCategoryColorMap = {
   >
     <div class="flex items-center justify-between">
       <time
-        class="text-sm text-black font-medium dark:text-slate-300"
+        class="text-sm font-medium text-black dark:text-slate-300"
         date-time={post?.publishDate ?? post.publishedAt ?? post.createdAt}
       >
         {
@@ -123,12 +123,12 @@ const darkCategoryColorMap = {
       > -->
     </div>
     <h2
-      class="text-xl md:text-3xl font-semibold font-sans leading-tight tracking-tighter text-brand-primary dark:text-white"
+      class="text-brand-primary font-sans text-xl font-semibold leading-tight tracking-tighter dark:text-white md:text-3xl"
     >
       {post.title}
     </h2>
 
-    <div class="flex md:items-center md:flex-row md:justify-between flex-col justify-end gap-y-4">
+    <div class="flex flex-col justify-end gap-y-4 md:flex-row md:items-center md:justify-between">
       {
         (
           // [...(post.blog_authors ?? []), ...(post.team_members ?? [])].map((author) => (
@@ -161,7 +161,7 @@ const darkCategoryColorMap = {
 
     <a href={`/${post.slug}`} class="link-overlay mt-auto">
       <span
-        class="sleek-underline dark:text-white flex relative z-10 items-center ml-auto gap-2 h-min w-max text-xl py-1 font-medium text-black text-brand-primary dark:text-brand-primary"
+        class="sleek-underline text-brand-primary dark:text-brand-primary relative z-10 ml-auto flex h-min w-max items-center gap-2 py-1 text-xl font-medium text-black dark:text-white"
       >
         Read
         <FaArrowRight />
