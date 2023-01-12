@@ -25,7 +25,8 @@
     "**/*.js",
     "**/*.jsx",
     "next-env.d.ts",
-    "../../apps/trialanderror.org/.next/types/**/*.ts"
+    "../../apps/trialanderror.org/.next/types/**/*.ts",
+    "../../libs/types/src/lib/schemas.d.ts"
   ],
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

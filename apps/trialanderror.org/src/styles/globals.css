@@ -85,6 +85,7 @@ h6,
 .link-overlay {
   position: static;
 }
+
 .link-overlay::before {
   position: absolute;
   top: 0px;

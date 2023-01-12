@@ -12,11 +12,11 @@
     "types": ["jest", "node"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "plugins": [
-      { "transform": "ts-transformer-keys/transformer" },
-      { "transform": "ts-transformer-enumerate/transformer" }
-    ]
+    "module": "esnext"
+    // "plugins": [
+    //   { "transform": "ts-transformer-keys/transformer" },
+    //   { "transform": "ts-transformer-enumerate/transformer" }
+    // ]
   },
   "include": [
     "**/*.ts",
