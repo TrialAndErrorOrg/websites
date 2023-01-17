@@ -32,6 +32,7 @@ const CardController: GenericController = {
         console.error(err)
         ctx.badRequest('Post report controller error', { moreDetails: err })
       }
+      console.log(data)
 
       ctx.body = data
     } catch (err) {
