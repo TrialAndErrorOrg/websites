@@ -100,3 +100,7 @@ h6,
 .sleek-underline {
   @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-200 hover:after:w-full dark:after:bg-white;
 }
+
+.sleek-underline-blue {
+  @apply relative after:absolute after:bottom-0 after:left-0 after:flex after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-200 hover:after:w-full dark:after:bg-white;
+}

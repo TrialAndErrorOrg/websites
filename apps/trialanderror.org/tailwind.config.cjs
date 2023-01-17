@@ -14,6 +14,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'thick-1': '2px 2px 0 #000',
+        'thick-2': '4px 4px 0 #000',
+        'thick-3': '8px 8px 0 #000',
+        'thick-1-white': '2px 2px 0 #fff',
+        'thick-2-white': '4px 4px 0 #fff',
+        'thick-3-white': '8px 8px 0 #fff',
+      },
       colors: {
         orange: {
           50: "#ffe13e",

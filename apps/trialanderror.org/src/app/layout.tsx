@@ -1,6 +1,7 @@
 import { NextSeo, NextSeoProps } from 'next-seo'
 import Link from 'next/link'
 import '../styles/globals.css'
+import { Navigation } from './Navigation'
 
 export const defaultImage =
   'https://cote.azureedge.net/cote-strapi-uploads/undefined/assets/large_BUFFERTE_logo_blue_back_4096_88ab80fa53.png'
@@ -61,14 +62,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SEO />
       </head>
       <body>
-        <nav className="flex gap-4 border p-10">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/team">Team</Link>
-        </nav>
-        <div className="container">
-          <main>{children}</main>
-        </div>
+        <Navigation />
+        {/* <div className="container"> */}
+        {children}
+        {/* </div> */}
+        <footer className="flex w-full justify-center bg-blue-500 p-6 text-white">
+          <p className="text-center">
+            © {new Date().getFullYear()} Center of Trial and Error. All Rights Reserved.
+          </p>
+        </footer>
       </body>
     </html>
   )
