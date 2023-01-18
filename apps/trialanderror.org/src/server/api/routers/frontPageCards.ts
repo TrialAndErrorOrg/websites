@@ -7,8 +7,8 @@ export const cardRouter = createTRPCRouter({
   infiniteCards: publicProcedure
     .input(
       z.object({
-        limit: z.number().optional().default(9),
-        cursor: z.number().optional().default(0),
+        limit: z.number().optional().default(6),
+        cursor: z.number().optional().default(6),
       }),
     )
     .query(async ({ input }) => {

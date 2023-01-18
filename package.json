@@ -44,6 +44,7 @@
     "dotenv": "^16.0.3",
     "fetch-jsonp": "^1.2.3",
     "form-data": "^4.0.0",
+    "framer-motion": "^8.4.7",
     "github-slugger": "^2.0.0",
     "image-size": "^1.0.2",
     "mime": "^3.0.0",

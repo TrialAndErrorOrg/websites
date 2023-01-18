@@ -48,8 +48,8 @@ export function InfiniteCards({ limit, cursor }: { limit?: number; cursor?: stri
   return (
     <>
       {query.data?.pages.map((page) => {
-        return page.cards.map((card) => {
-          return <Card key={card.id} card={card} />
+        return page.cards.map((card, idx) => {
+          return <Card key={card.id} delay={(idx % (limit || 9)) * 0.1 + 0.5} card={card} />
         })
       })}
 

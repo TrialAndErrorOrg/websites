@@ -10,16 +10,16 @@ export default async function Page() {
 
   return (
     // <main className="relative">
-    <div className="relative">
+    <div className="relative ">
       <div className="absolute top-[50vh] left-[15vw] -z-10 mx-auto h-[90%] w-[70vw] bg-orange-500" />
 
-      <div className="relative h-[100vh] w-[100vw] p-[15vw]">
+      <div className="relative h-[100vh] w-[100vw] snap-center p-[15vw]">
         <h1 className="absolute top-[47vh] -ml-[1vw] text-8xl font-black text-blue-500">
           The Center of Trial <br />& Error
         </h1>
         <div className="absolute left-[5vw] top-[5vh] -z-10 h-[calc(100%-10vh)] w-[calc(100%-10vw)] border-4 border-blue-500" />
       </div>
-      <div className="relative flex h-[100vh] w-[100vw] items-start gap-[8vw]">
+      <div className="relative flex h-[100vh] w-[100vw] snap-center items-start gap-[8vw]">
         <h2
           className="ml-[13vw] rotate-180 text-8xl font-black text-blue-500"
           style={{
@@ -91,7 +91,7 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <div className="relative left-[12vw] flex w-[83vw] items-start border border-red-500 lg:h-[200vh]">
+      <div className="relative left-[12vw] flex w-[83vw] snap-center items-start border border-red-500 lg:h-[200vh]">
         <h2
           className="sticky top-60 w-1 rotate-180  text-8xl font-black text-blue-500"
           style={{
@@ -101,8 +101,8 @@ export default async function Page() {
           What's New?
         </h2>
         <div className="m-10 ml-[10vw] grid grid-cols-1 gap-20 md:grid-cols-2 lg:grid-cols-3 ">
-          {cards.map((card) => (
-            <Card key={card.id} card={card} />
+          {cards.map((card, idx) => (
+            <Card key={card.id} delay={idx * 0.1} card={card} />
           ))}
           {/* <ClientProvider>
           <InfiniteCards />

@@ -17,13 +17,13 @@ import Link from 'next/link'
   ```
 */
 const navigation = {
-  solutions: [
-    { name: 'Marketing', href: '#' },
-    { name: 'Analytics', href: '#' },
-    { name: 'Commerce', href: '#' },
+  about: [
+    { name: 'About Us', href: '/about' },
+    { name: 'Meet the Team', href: '/about#team' },
+    { name: 'Manifesto', href: 'https://doi.org/10.36850/ed1' },
     { name: 'Insights', href: '#' },
   ],
-  support: [
+  projects: [
     { name: 'Pricing', href: '#' },
     { name: 'Documentation', href: '#' },
     { name: 'Guides', href: '#' },
@@ -115,72 +115,37 @@ export function Footer() {
       <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="grid grid-cols-2 gap-8 xl:col-span-2">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
-                  Solutions
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.solutions.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-base text-slate-300 hover:text-gray-900"
+            {Object.keys(navigation)
+              .slice(0, Math.floor(Object.keys(navigation).length / 2 + 0.9))
+              ?.map((name, idx) => (
+                // {Object.entries(navigation).map(([name, links]) => (
+                <div className="md:grid md:grid-cols-2 md:gap-8" key={name}>
+                  {Object.entries(navigation)
+                    ?.slice(idx * 2, idx * 2 + 2)
+                    .map(([name, links]) => (
+                      <div
+                        key={name} //className={idx % 2 === 0 ? 'mt-12 md:mt-0' : ''}>
+                        className="mt-12 md:mt-0"
                       >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
-                  Support
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.support.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-base text-slate-300 hover:text-gray-900"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
-                  Company
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.company.map((item) => (
-                    <li key={item.name}>
-                      <a href={item.href} className="text-base text-slate-300 hover:text-gray-900">
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
-                  Legal
-                </h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.legal.map((item) => (
-                    <li key={item.name}>
-                      <a href={item.href} className="text-base text-slate-300 hover:text-gray-900">
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
+                          {name}
+                        </h3>
+                        <ul role="list" className="mt-4 space-y-4">
+                          {links.map((item) => (
+                            <li key={item.name}>
+                              <Link
+                                href={item.href}
+                                className="text-base text-slate-300 hover:text-gray-900"
+                              >
+                                {item.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                </div>
+              ))}
           </div>
           <div className="mt-8 xl:mt-0">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
