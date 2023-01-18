@@ -1,6 +1,7 @@
 import { NextSeo, NextSeoProps } from 'next-seo'
 import Link from 'next/link'
 import '../styles/globals.css'
+import { AnalyticsWrapper } from './components/Analytics'
 import { Footer } from './Footer'
 import { Navigation } from './Navigation'
 
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </p>
         </footer> */}
         <Footer />
+        <AnalyticsWrapper />
       </body>
     </html>
   )
