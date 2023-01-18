@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { trpc } from '../utils/trpcClient'
+import { Card } from './Card'
 
 export function useIsIntersecting<TElement extends HTMLElement>() {
   // to prevents runtime crash in IE, let's mark it true right away
@@ -22,9 +23,9 @@ export function useIsIntersecting<TElement extends HTMLElement>() {
   return [isIntersecting, ref] as const
 }
 
-export function InfiniteCards() {
+export function InfiniteCards({ limit, cursor }: { limit?: number; cursor?: string }) {
   const query = trpc.cards.infiniteCards.useInfiniteQuery(
-    {},
+    { limit },
     {
       getNextPageParam(lastPage) {
         console.log(lastPage)
@@ -48,32 +49,7 @@ export function InfiniteCards() {
     <>
       {query.data?.pages.map((page) => {
         return page.cards.map((card) => {
-          return (
-            <article key={card.id} className="relative col-span-1 h-80 border border-black">
-              <span className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center border border-black bg-white font-bold">
-                {card.type === 'article' ? 'J' : 'B'}
-              </span>
-              {card?.image?.url ? (
-                <Image
-                  src={card.image.url}
-                  alt={card.image.alt ?? ''}
-                  width={card.image.width}
-                  height={card.image.height}
-                  className="h-full max-h-40 object-cover"
-                />
-              ) : (
-                <div className="flex h-40 items-center justify-center bg-orange-500">
-                  <span className="text-2xl text-black">{card.title[0]}</span>
-                </div>
-              )}
-              <div className="p-4">
-                <h2 className="my-2 text-xl font-bold leading-tight tracking-tighter">
-                  {card.title}
-                </h2>
-                <h2>{card.category}</h2>
-              </div>
-            </article>
-          )
+          return <Card key={card.id} card={card} />
         })
       })}
 

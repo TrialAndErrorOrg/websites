@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { ClientProvider } from '../utils/trpcClient'
 import { InfiniteCards } from './InfiniteCards'
 import Link from 'next/link'
+import { Card } from './Card'
 
 export default async function Page() {
   const cards = await getAllCards({ limit: 12 })
@@ -10,7 +11,7 @@ export default async function Page() {
   return (
     // <main className="relative">
     <div className="relative">
-      <div className="absolute top-[50vh] left-[15vw] mx-auto h-[90%] w-[70vw] bg-orange-500" />
+      <div className="absolute top-[50vh] left-[15vw] -z-10 mx-auto h-[90%] w-[70vw] bg-orange-500" />
 
       <div className="relative h-[100vh] w-[100vw] p-[15vw]">
         <h1 className="absolute top-[47vh] -ml-[1vw] text-8xl font-black text-blue-500">
@@ -90,41 +91,18 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <div className="relative h-[200vh] w-[100vw] p-[15vw]">
-        <h2 className="absolute -ml-40 -rotate-90  text-8xl font-black text-blue-500">
+      <div className="relative left-[12vw] flex w-[83vw] items-start border border-red-500 lg:h-[200vh]">
+        <h2
+          className="sticky top-60 w-1 rotate-180  text-8xl font-black text-blue-500"
+          style={{
+            writingMode: 'vertical-rl',
+          }}
+        >
           What's New?
         </h2>
-        <div className="m-10 ml-[10vw] grid max-w-7xl gap-20 sm:grid-cols-2 lg:grid-cols-3 ">
+        <div className="m-10 ml-[10vw] grid grid-cols-1 gap-20 md:grid-cols-2 lg:grid-cols-3 ">
           {cards.map((card) => (
-            <article
-              key={card.title}
-              className="hover:shadow-thick-3 group relative col-span-1 h-80 border border-black shadow-[0px_0px_0_#000] transition-all ease-in-out  hover:-translate-x-2 hover:-translate-y-2"
-            >
-              <span className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center border border-black bg-white font-bold">
-                {card.type === 'article' ? 'J' : 'B'}
-              </span>
-              {card?.image?.url ? (
-                <Image
-                  src={card.image.url}
-                  alt={card.image.alt ?? ''}
-                  width={card.image.width}
-                  height={card.image.height}
-                  className="h-full max-h-40 object-cover"
-                />
-              ) : (
-                <div className="flex h-40 items-center justify-center bg-orange-500">
-                  <span className="text-2xl text-black">{card.title[0]}</span>
-                </div>
-              )}
-              <div className="p-4">
-                <h2 className="my-2 text-xl font-bold leading-tight tracking-tighter">
-                  <Link className="link-overlay" href={`/news/${card.url?.split('/')?.pop()}`}>
-                    {card.title}
-                  </Link>
-                </h2>
-                <h2>{card.category}</h2>
-              </div>
-            </article>
+            <Card key={card.id} card={card} />
           ))}
           {/* <ClientProvider>
           <InfiniteCards />

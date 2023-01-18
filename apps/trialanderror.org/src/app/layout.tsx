@@ -1,6 +1,7 @@
 import { NextSeo, NextSeoProps } from 'next-seo'
 import Link from 'next/link'
 import '../styles/globals.css'
+import { Footer } from './Footer'
 import { Navigation } from './Navigation'
 
 export const defaultImage =
@@ -66,11 +67,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* <div className="container"> */}
         {children}
         {/* </div> */}
-        <footer className="flex w-full justify-center bg-blue-500 p-6 text-white">
+        {/* <footer className="flex w-full justify-center bg-blue-500 p-6 text-white">
           <p className="text-center">
             © {new Date().getFullYear()} Center of Trial and Error. All Rights Reserved.
           </p>
-        </footer>
+        </footer> */}
+        <Footer />
       </body>
     </html>
   )

@@ -1,6 +1,6 @@
 import { env } from '../env/server.mjs'
 
-interface Card {
+export interface Card {
   id: string
   type: 'post' | 'article'
   title: string
