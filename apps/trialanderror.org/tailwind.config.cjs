@@ -1,19 +1,27 @@
+// @ts-check
 const { createGlobPatternsForDependencies } = require("@nrwl/react/tailwind")
 
 const { join } = require("path")
+const defaultTheme = require("tailwindcss/defaultTheme")
 
 /**
  * @type {import('tailwindcss').Config}
  */
 module.exports = {
   darkMode: "class",
-  presets: [require("../../tailwind-workspace-preset.js")],
+  // presets: [require("../../tailwind-workspace-preset.js")],
   content: [
     join(__dirname, "**/*!(*.stories|*.spec).{ts,tsx,html}"),
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
+    fontFamily: {
+      overpass: ['var(--font-overpass)', ...defaultTheme.fontFamily.sans],
+    },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-open-sans)", ...defaultTheme.fontFamily.sans],
+      },
       boxShadow: {
         'thick-1': '2px 2px 0 #000',
         'thick-2': '4px 4px 0 #000',

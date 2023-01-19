@@ -19,6 +19,11 @@ const nextConfig = {
   experimental: {
     appDir: true,
     newNextLinkBehavior: true,
+    forceSwcTransforms: true,
+    fontLoaders: [
+      { loader: '@next/font/google', options: { subsets: ['latin'] } },
+
+    ]
   },
   reactStrictMode: true,
   i18n: {

@@ -1,7 +1,4 @@
 import { getAllCards } from '../server/mixed'
-import Image from 'next/image'
-import { ClientProvider } from '../utils/trpcClient'
-import { InfiniteCards } from './InfiniteCards'
 import Link from 'next/link'
 import { Card } from './Card'
 
@@ -10,14 +7,14 @@ export default async function Page() {
 
   return (
     // <main className="relative">
-    <div className="relative ">
-      <div className="absolute top-[50vh] left-[15vw] -z-10 mx-auto h-[90%] w-[70vw] bg-orange-500" />
+    <div className="relative flex flex-col items-center">
+      <div className="absolute top-[40vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500" />
 
-      <div className="relative h-[100vh] w-[100vw] snap-center p-[15vw]">
-        <h1 className="absolute top-[47vh] -ml-[1vw] text-8xl font-black text-blue-500">
+      <div className="relative grid h-[100vh] w-[100vw] grid-cols-6 items-center justify-center gap-0">
+        <h1 className="col-span-4 col-start-2 -ml-4 -mt-20 font-black leading-[1.2] tracking-tight text-blue-500 xl:text-[104px]">
           The Center of Trial <br />& Error
         </h1>
-        <div className="absolute left-[5vw] top-[5vh] -z-10 h-[calc(100%-10vh)] w-[calc(100%-10vw)] border-4 border-blue-500" />
+        <div className="absolute inset-[7vw] -z-20 border-[6px] border-blue-500" />
       </div>
       <div className="relative flex h-[100vh] w-[100vw] snap-center items-start gap-[8vw]">
         <h2

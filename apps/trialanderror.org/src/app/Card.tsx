@@ -11,25 +11,27 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
       whileInView={{
         y: 0,
         opacity: 1,
-        boxShadow: '0px 0px 0 #002642',
         x: 0,
         transition: {
           duration: 0.5,
-          delay,
+          delay: delay,
         },
       }}
       viewport={{ once: true }}
       transition={{
         ease: 'easeInOut',
         duration: 0.2,
-        delay: delay,
       }}
       whileHover={{
-        x: '-8px',
-        y: '-8px',
-        boxShadow: '8px 8px 0 #002642',
+        translateX: '-8px',
+        translateY: '-8px',
+        boxShadow: '8px 8px 0px #002642',
         transition: {
+          translateX: { delay: 0 },
+          translateY: { delay: 0 },
+          boxShadow: { delay: 0 },
           duration: 0.2,
+          delay: 0,
         },
       }}
       initial={{ y: 100, opacity: 0 }}
@@ -42,8 +44,8 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
           <Image
             src={card.image.url}
             alt={card.image.alt ?? ''}
-            width={320}
-            height={320}
+            width={card.image.height}
+            height={card.image.height}
             className="h-full w-full object-cover"
           />
         </div>
