@@ -68,7 +68,7 @@
     "ts-transformer-enumerate": "^0.5.2",
     "ts-transformer-keys": "^0.4.3",
     "tslib": "^2.4.0",
-    "wait-on": "^6.0.1",
+    "wait-on": "^7.0.1",
     "zod": "^3.20.2"
   },
   "devDependencies": {
