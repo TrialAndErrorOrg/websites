@@ -10,7 +10,7 @@ import type {
   ApiBlogHomeBlogHome,
   PluginMenusMenu,
   PluginMenusMenuItem,
-} from 'libs/types/src'
+} from './schemas.d'
 
 export type GetReturnType<T extends CollectionTypeSchema | SingleTypeSchema> = {
   [key in keyof T['attributes']]-?: GetAttributeValue<T['attributes'][key]>

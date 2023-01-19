@@ -3,6 +3,8 @@ import { ClientProvider } from '../../utils/trpcClient'
 import { Card } from '../Card'
 import { InfiniteCards } from '../InfiniteCards'
 
+export const revalidate = 3600 // revalidate every hour
+
 export default async function Page() {
   const cards = await getAllCards({ limit: 6 })
   return (

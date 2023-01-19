@@ -2,6 +2,8 @@ import { getAllCards } from '../server/mixed'
 import Link from 'next/link'
 import { Card } from './Card'
 
+export const revalidate = 3600 // revalidate every hour
+
 export default async function Page() {
   const cards = await getAllCards({ limit: 12 })
 

@@ -22,6 +22,7 @@ import {
   // XIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import Image from 'next/image'
 
 // export function Navigation() {
 //   const pathname = usePathname()
@@ -260,7 +261,12 @@ export function Navigation() {
             id="ribbon"
             className="absolute left-[calc(16.6667%-5vw)] -top-10 z-10 hidden h-[20vh] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
           >
-            <span className="p-2 text-7xl text-white">TE</span>
+            <Image
+              src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
+              alt="TE logo"
+              width={100}
+              height={100}
+            />
           </motion.a>
         </div>
         <div className="-my-2 -mr-2 md:hidden">

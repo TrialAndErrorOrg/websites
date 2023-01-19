@@ -1,5 +1,5 @@
 import { SEO } from '../../layout'
-import { getPerson } from './page'
+import { getPerson } from './pageX'
 
 export default async function TeamHead({ params }: { params: { slug: string } }) {
   const { slug } = params

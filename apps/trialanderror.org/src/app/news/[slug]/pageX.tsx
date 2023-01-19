@@ -1,8 +1,9 @@
 import { GetAttributesValues } from '@strapi/strapi'
 import Image from 'next/image'
+import { cache } from 'react'
 import { strapiClient } from '../../../server/api/strapi'
 
-async function getArticleBySlug(slug: string) {
+const getArticleBySlug = cache(async (slug: string) => {
   const article = await strapiClient
     .from<GetAttributesValues<'api::jote-article.jote-article'>>('jote-articles')
     .select()
@@ -10,7 +11,7 @@ async function getArticleBySlug(slug: string) {
     .endsWith('url', slug)
     .get()
   return article.data?.[0]
-}
+})
 
 export default async function NewsItemPage({ params }: { params: { slug: string } }) {
   const article = await getArticleBySlug(params.slug)

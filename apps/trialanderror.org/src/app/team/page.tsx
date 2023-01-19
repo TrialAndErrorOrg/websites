@@ -3,20 +3,21 @@ import { GetAttributesValues } from '@strapi/strapi'
 import Image from 'next/image'
 import Link from 'next/link'
 
+export const revalidate = 3600 // revalidate every hour
+
 export async function getTeam() {
   const team = await strapiClient
-    .from<GetAttributesValues<'api::team-member.team-member'>>('team-members')
+    .from<GetAttributesValues<'api::team-member.team-member'> & { id: number }>('team-members')
     .select()
     .populate()
     .get()
 
-  return team
+  return team?.data ?? []
 }
 
 export default async function TeamPage() {
   const team = await getTeam()
 
-  console.log(team)
   return (
     <>
       <div className="bg-white">
@@ -35,7 +36,7 @@ export default async function TeamPage() {
                 role="list"
                 className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:gap-x-8"
               >
-                {team.data?.map(
+                {team.map(
                   ({
                     id,
                     firstName,
