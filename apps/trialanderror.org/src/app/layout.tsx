@@ -8,8 +8,8 @@ import { Overpass, Open_Sans } from '@next/font/google'
 import '../styles/globals.css'
 // If loading a variable font, you don't need to specify the font weight
 const overpass = Overpass({
-  weight: ['900', '600'],
-  style: 'normal',
+  weight: ['600', '900'],
+  // style: 'normal',
   // subsets: ['latin'],
   variable: '--font-overpass',
   // default, can also use "swap" to ensure custom font always shows

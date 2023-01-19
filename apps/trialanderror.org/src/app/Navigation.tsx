@@ -237,8 +237,8 @@ const HoverPopover = ({
 export function Navigation() {
   const pathname = usePathname()
   return (
-    <Popover className="fixed top-0 z-10 w-full bg-white">
-      <div className="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 ">
+    <Popover className="fixed top-0 z-10 bg-white">
+      <div className="flex w-screen items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 ">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           {/* <a href="#">
             <span className="sr-only">Workflow</span>
@@ -252,20 +252,20 @@ export function Navigation() {
           <motion.a
             href="/"
             initial={{ translateY: '-100%' }}
-            animate={{ y: 0 }}
+            animate={{ translateY: 0 }}
             transition={{
               type: 'spring',
               stiffness: 100,
               bounce: 0.5,
             }}
             id="ribbon"
-            className="absolute left-[calc(16.6667%-5vw)] -top-10 z-10 hidden h-[20vh] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
+            className="absolute -top-10 left-[calc(16.6667%-5vw)] z-10 hidden h-[calc(21vh+2.5rem)] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
           >
             <Image
               src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
               alt="TE logo"
-              width={100}
-              height={100}
+              width={90}
+              height={90}
             />
           </motion.a>
         </div>
@@ -329,14 +329,16 @@ export function Navigation() {
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                  <Image
+                    className="bg-blue-500"
+                    src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
                     alt="Workflow"
+                    width={40}
+                    height={40}
                   />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -350,7 +352,7 @@ export function Navigation() {
                       href={solution.href}
                       className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                     >
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 text-white">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white">
                         <solution.icon className="h-6 w-6" aria-hidden="true" />
                       </div>
                       <div className="ml-4 text-base font-medium text-gray-900">
@@ -383,20 +385,6 @@ export function Navigation() {
                     {resource.name}
                   </a>
                 ))}
-              </div>
-              <div className="mt-6">
-                <a
-                  href="#"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                >
-                  Sign up
-                </a>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Existing customer?{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-500">
-                    Sign in
-                  </a>
-                </p>
               </div>
             </div>
           </div>

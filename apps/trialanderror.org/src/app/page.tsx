@@ -10,13 +10,25 @@ export default async function Page() {
   return (
     // <main className="relative">
     <div className="relative flex flex-col items-center">
-      <div className="absolute top-[40vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500" />
+      <div className="absolute top-[30vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500 lg:top-[40vh]" />
 
-      <div className="relative grid h-[100vh] w-[100vw] grid-cols-6 items-center justify-center gap-0">
-        <h1 className="col-span-4 col-start-2 -ml-4 -mt-20 font-black leading-[1.2] tracking-tight text-blue-500 xl:text-[104px]">
-          The Center of Trial <br />& Error
-        </h1>
-        <div className="absolute inset-[7vw] -z-20 border-[6px] border-blue-500" />
+      <div className="relative h-[100vh] w-[100vw]">
+        <div className="relative top-[30vh] grid w-full grid-cols-6 items-center justify-center gap-0 lg:top-[40vh]">
+          <h1 className="font-overpass col-span-5 col-start-2 -mt-6 -ml-4 max-w-[66.666667%] text-5xl font-black leading-[1.2] tracking-tight text-blue-500 lg:-mt-10 lg:text-6xl xl:text-[104px]">
+            The Center of Trial <br className="hidden lg:flex" />& Error
+          </h1>
+          <div className="col-span-4 col-start-2 mt-10 -ml-3 lg:col-start-3 lg:ml-10">
+            <h2 className="font-sans font-semibold leading-[1.2] text-blue-500 lg:text-4xl">
+              Committed to transparent and responsible scholarship.
+            </h2>
+            <p className="relative mt-4 flex max-w-5xl items-center leading-[1.2] text-blue-500 before:absolute before:-ml-4 before:hidden before:h-2/3 before:w-2  before:bg-blue-500 lg:text-3xl lg:before:-ml-8 lg:before:flex lg:before:w-3">
+              Creating a space for independent reflection on academic practice and experiment with
+              innovative publishing activities. We empower students and early early career
+              researchers to disrupt existing scholarly infrastructures.
+            </p>
+          </div>
+        </div>
+        <div className="absolute left-[6.6vw] right-[6.6vw] top-[7vw] bottom-[7vw] -z-20 border-4 border-blue-500 lg:border-[6px]" />
       </div>
       <div className="relative flex h-[100vh] w-[100vw] snap-center items-start gap-[8vw]">
         <h2
