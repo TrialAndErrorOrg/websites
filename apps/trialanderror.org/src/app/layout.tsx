@@ -9,7 +9,7 @@ import '../styles/globals.css'
 // If loading a variable font, you don't need to specify the font weight
 const overpass = Overpass({
   weight: ['600', '900'],
-  // style: 'normal',
+  style: 'normal',
   // subsets: ['latin'],
   variable: '--font-overpass',
   // default, can also use "swap" to ensure custom font always shows
@@ -17,8 +17,8 @@ const overpass = Overpass({
 })
 
 const open_sans = Open_Sans({
-  // weight: ['400', '600'],
-  // style: 'normal',
+  weight: ['400', '600'],
+  style: 'normal',
   // subsets: ['latin'],
   variable: '--font-open-sans',
   // default, can also use "swap" to ensure custom font always shows

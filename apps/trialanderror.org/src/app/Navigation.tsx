@@ -103,14 +103,16 @@ const resources = [
 
 const abouts = [
   {
-    name: 'Our vision',
+    name: 'Our mission',
     description: 'An independent, diamond open-access journal redefining failure.',
-    href: 'https://journal.trialanderror.org',
+    href: '/about#mission',
+    scroll: false,
   },
   {
     name: 'The Team',
-    description: 'A Blog',
-    href: 'https://blog.trialanderror.org',
+    description: 'Meet the people behind Trial & Error.',
+    scroll: false,
+    href: '/about#team',
   },
   {
     name: 'Publishers of Trial & Error',
@@ -159,7 +161,7 @@ const HoverPopover = ({
   titleHref,
 }: {
   pathname?: string
-  subItems: { name: string; href: string; description?: string }[]
+  subItems: { name: string; href: string; description?: string; scroll?: boolean }[]
   title: string
   titleHref?: string
 }) => {
@@ -172,8 +174,8 @@ const HoverPopover = ({
             ref={buttonRef}
             className={classNames(
               // open ? 'text-blue-500' : 'text-gray-500',
-              'sleek-underline-blue text-blue-500 ',
-              'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
+              'sleek-underline-blue text-xl text-blue-500',
+              'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
             )}
             onMouseEnter={onMouseEnter.bind(null, open)}
             onMouseLeave={onMouseLeave.bind(null, open)}
@@ -181,12 +183,14 @@ const HoverPopover = ({
             {titleHref ? (
               <Link
                 href={titleHref}
-                className={`text-blue-500 ${pathname?.startsWith('/about') ? 'after:!w-full' : ''}`}
+                className={`text-xl text-blue-500 ${
+                  pathname?.startsWith(titleHref) ? 'after:!w-full' : ''
+                }`}
               >
                 {title}
               </Link>
             ) : (
-              <span>{title}</span>
+              <span className="text-xl text-blue-500">{title}</span>
             )}
             <ChevronDownIcon
               className={classNames(
@@ -218,6 +222,7 @@ const HoverPopover = ({
                     <Link
                       key={item.name}
                       href={item.href}
+                      scroll={false}
                       className="-m-3 block rounded-md p-3 hover:bg-gray-50"
                     >
                       <p className="text-base font-medium text-gray-900">{item.name}</p>
@@ -237,10 +242,30 @@ const HoverPopover = ({
 export function Navigation() {
   const pathname = usePathname()
   return (
-    <Popover className="fixed top-0 z-10 bg-white">
-      <div className="flex w-screen items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 ">
-        <div className="flex justify-start lg:w-0 lg:flex-1">
-          {/* <a href="#">
+    <>
+      <motion.a
+        href="/"
+        initial={{ translateY: '-100%' }}
+        animate={{ translateY: 0 }}
+        transition={{
+          type: 'spring',
+          stiffness: 100,
+          bounce: 0.5,
+        }}
+        id="ribbon"
+        className="absolute -top-10 left-[calc(16.6667%-6vw)] z-10 hidden h-[calc(21vh+2.5rem)] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
+      >
+        <Image
+          src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
+          alt="TE logo"
+          width={90}
+          height={90}
+        />
+      </motion.a>
+      <Popover className="fixed top-0 z-10">
+        <div className="flex w-screen items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 md:pr-[7vw] ">
+          <div className="flex justify-start lg:w-0 lg:flex-1">
+            {/* <a href="#">
             <span className="sr-only">Workflow</span>
             <img
               className="h-8 w-auto sm:h-10"
@@ -248,149 +273,130 @@ export function Navigation() {
               alt=""
             />
           </a> */}
-
-          <motion.a
-            href="/"
-            initial={{ translateY: '-100%' }}
-            animate={{ translateY: 0 }}
-            transition={{
-              type: 'spring',
-              stiffness: 100,
-              bounce: 0.5,
-            }}
-            id="ribbon"
-            className="absolute -top-10 left-[calc(16.6667%-5vw)] z-10 hidden h-[calc(21vh+2.5rem)] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
-          >
-            <Image
-              src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
-              alt="TE logo"
-              width={90}
-              height={90}
+          </div>
+          <div className="-my-2 md:hidden">
+            <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-blue-500  hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
+              <span className="sr-only">Open menu</span>
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            </Popover.Button>
+          </div>
+          <Popover.Group as="nav" className="hidden space-x-10 md:flex">
+            <Link
+              href="/"
+              className={`sleek-underline-blue text-xl font-semibold text-blue-500 ${
+                pathname === '/' ? 'after:!w-full' : ''
+              }`}
+            >
+              Home
+            </Link>
+            <HoverPopover
+              title="About"
+              titleHref="/about"
+              subItems={abouts}
+              pathname={pathname ?? undefined}
             />
-          </motion.a>
+
+            <Link
+              href="/news"
+              className={`sleek-underline-blue text-xl text-blue-500 ${
+                pathname?.startsWith('/news') ? 'after:!w-full' : ''
+              }`}
+            >
+              News & Events
+            </Link>
+            <HoverPopover title="Projects" subItems={resources} />
+
+            <Link
+              href="/contact"
+              className={`sleek-underline-blue text-xl${
+                pathname?.startsWith('/contact') ? 'after:!w-full' : ''
+              }`}
+            >
+              Contact
+            </Link>
+          </Popover.Group>
         </div>
-        <div className="-my-2 -mr-2 md:hidden">
-          <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-            <span className="sr-only">Open menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-          </Popover.Button>
-        </div>
-        <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-          <Link
-            href="/"
-            className={`sleek-underline-blue font-semibold text-blue-500 ${
-              pathname === '/' ? 'after:!w-full' : ''
-            }`}
-          >
-            Home
-          </Link>
-          <HoverPopover
-            title="About"
-            titleHref="/about"
-            subItems={abouts}
-            pathname={pathname ?? undefined}
-          />
 
-          <Link
-            href="/news"
-            className={`sleek-underline-blue text-blue-500 ${
-              pathname?.startsWith('/news') ? 'after:!w-full' : ''
-            }`}
-          >
-            News & Events
-          </Link>
-          <HoverPopover title="Projects" subItems={resources} />
-
-          <Link
-            href="/contact"
-            className={`sleek-underline-blue ${
-              pathname?.startsWith('/contact') ? 'after:!w-full' : ''
-            }`}
-          >
-            Contact
-          </Link>
-        </Popover.Group>
-      </div>
-
-      <Transition
-        as={Fragment}
-        enter="duration-200 ease-out"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="duration-100 ease-in"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
-      >
-        <Popover.Panel
-          focus
-          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
+        <Transition
+          as={Fragment}
+          enter="duration-200 ease-out"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="duration-100 ease-in"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
         >
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="px-5 pt-5 pb-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Image
-                    className="bg-blue-500"
-                    src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
-                    alt="Workflow"
-                    width={40}
-                    height={40}
-                  />
+          <Popover.Panel
+            focus
+            className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
+          >
+            <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="px-5 pt-5 pb-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Image
+                      className="bg-blue-500"
+                      src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
+                      alt="Workflow"
+                      width={40}
+                      height={40}
+                    />
+                  </div>
+                  <div className="-mr-2">
+                    <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
+                      <span className="sr-only">Close menu</span>
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    </Popover.Button>
+                  </div>
                 </div>
-                <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </Popover.Button>
+                <div className="mt-6">
+                  <nav className="grid grid-cols-1 gap-7">
+                    {solutions.map((solution) => (
+                      <a
+                        key={solution.name}
+                        href={solution.href}
+                        className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
+                      >
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white">
+                          <solution.icon className="h-6 w-6" aria-hidden="true" />
+                        </div>
+                        <div className="ml-4 text-base font-medium text-gray-900">
+                          {solution.name}
+                        </div>
+                      </a>
+                    ))}
+                  </nav>
                 </div>
               </div>
-              <div className="mt-6">
-                <nav className="grid grid-cols-1 gap-7">
-                  {solutions.map((solution) => (
+              <div className="py-6 px-5">
+                <div className="grid grid-cols-2 gap-4">
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Pricing
+                  </a>
+
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Docs
+                  </a>
+
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Enterprise
+                  </a>
+                  {resources.map((resource) => (
                     <a
-                      key={solution.name}
-                      href={solution.href}
-                      className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
+                      key={resource.name}
+                      href={resource.href}
+                      className="text-base font-medium text-gray-900 hover:text-gray-700"
                     >
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white">
-                        <solution.icon className="h-6 w-6" aria-hidden="true" />
-                      </div>
-                      <div className="ml-4 text-base font-medium text-gray-900">
-                        {solution.name}
-                      </div>
+                      {resource.name}
                     </a>
                   ))}
-                </nav>
+                </div>
               </div>
             </div>
-            <div className="py-6 px-5">
-              <div className="grid grid-cols-2 gap-4">
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Pricing
-                </a>
-
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Docs
-                </a>
-
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Enterprise
-                </a>
-                {resources.map((resource) => (
-                  <a
-                    key={resource.name}
-                    href={resource.href}
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    {resource.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Popover.Panel>
-      </Transition>
-    </Popover>
+          </Popover.Panel>
+        </Transition>
+      </Popover>
+    </>
   )
 }
 
