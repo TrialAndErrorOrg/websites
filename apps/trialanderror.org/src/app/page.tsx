@@ -12,9 +12,9 @@ export default async function Page() {
     // <main className="relative">
     <div className="relative flex flex-col items-center">
       <div className="absolute top-[30vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500 lg:top-[40vh]" />
-      <Frame />
 
       <div className="relative h-[100vh] w-[100vw]">
+        <Frame />
         <div className="relative top-[30vh] grid w-full grid-cols-6 items-center justify-center gap-0 md:top-[40vh]">
           <h1 className="font-overpass col-span-5 col-start-2 -mt-6 -ml-4 max-w-[66.666667%] text-5xl font-black leading-[1.2] tracking-tight text-blue-500 md:-mt-40 md:text-6xl lg:-mt-10 xl:text-[104px]">
             The Center of Trial <br className="hidden lg:flex" />& Error

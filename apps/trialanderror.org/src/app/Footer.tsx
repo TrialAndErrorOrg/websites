@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SignUp } from './components/SignUp'
 
 /*
   This example requires Tailwind CSS v2.0+
@@ -151,10 +152,12 @@ export function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
               Subscribe to our newsletter
             </h3>
-            <p className="mt-4 text-base text-gray-300">
+            <p className="mt-4 mb-4 text-base text-gray-300">
               The latest news, articles, and resources, sent to your inbox weekly.
             </p>
-            <form className="mt-4 sm:flex sm:max-w-md">
+
+            <SignUp />
+            {/* <form className="mt-4 sm:flex sm:max-w-md">
               <label htmlFor="email-address" className="sr-only">
                 Email address
               </label>
@@ -175,7 +178,7 @@ export function Footer() {
                   Subscribe
                 </button>
               </div>
-            </form>
+            </form> */}
           </div>
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
