@@ -11,10 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "types": [
-      "jest",
-      "node"
-    ],
+    "types": ["jest", "node"],
     "module": "esnext",
     "plugins": [
       {
@@ -36,6 +33,7 @@
   "exclude": [
     "node_modules",
     "jest.config.ts",
-    "../../dist/apps/peer-review/.next/types/**/*.ts"
+    "../../dist/apps/peer-review/.next/types/**/*.ts",
+    "../../dist/apps/og/.next/types/**/*.ts"
   ]
 }
