@@ -82,7 +82,7 @@ const solutions = [
     icon: DocumentCheckIcon,
   },
 ]
-const resources = [
+const projects = [
   {
     name: 'Journal of Trial & Error',
     description: 'An independent, diamond open-access journal redefining failure.',
@@ -95,33 +95,28 @@ const resources = [
   },
   {
     name: 'Publishers of Trial & Error',
-    description: 'See what meet-ups and other events we might be planning near you.',
-    href: '#',
+    description: 'We publish books for the University of Tilburg.',
+    href: 'https://openpresstiu.pubpub.org',
   },
-  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#' },
 ]
 
 const abouts = [
   {
-    name: 'Our mission',
-    description: 'An independent, diamond open-access journal redefining failure.',
+    name: 'Our Mission',
     href: '/about#mission',
     scroll: false,
   },
   {
     name: 'The Team',
-    description: 'Meet the people behind Trial & Error.',
     scroll: false,
     href: '/about#team',
   },
   {
-    name: 'Publishers of Trial & Error',
-    description: 'See what meet-ups and other events we might be planning near you.',
-    href: '#',
+    name: 'Non-profit Status',
+    href: 'https://journal.trialanderror.org/legal-status',
   },
-  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#' },
 ]
-function classNames(...classes: string[]) {
+export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -217,13 +212,13 @@ const HoverPopover = ({
               onMouseLeave={onMouseLeave.bind(null, open)}
             >
               <div className="overflow-hidden border-2 border-blue-500 ring-opacity-5">
-                <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                <div className="relative  grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                   {subItems.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
                       scroll={false}
-                      className="-m-3 block rounded-md p-3 hover:bg-gray-50"
+                      className="sleek-underline-blue -m-3 block rounded-md p-3 hover:bg-blue-50/50"
                     >
                       <p className="text-base font-medium text-gray-900">{item.name}</p>
                       <p className="mt-1 text-sm text-gray-500">{item.description}</p>
@@ -263,8 +258,8 @@ export function Navigation() {
         />
       </motion.a>
       <Popover className="fixed top-0 z-10">
-        <div className="flex w-screen items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 md:pr-[7vw] ">
-          <div className="flex justify-start lg:w-0 lg:flex-1">
+        <div className="flex w-screen items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 md:pr-[9vw]">
+          <div className="flex justify-start md:w-0 md:flex-1">
             {/* <a href="#">
             <span className="sr-only">Workflow</span>
             <img
@@ -275,7 +270,7 @@ export function Navigation() {
           </a> */}
           </div>
           <div className="-my-2 md:hidden">
-            <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-blue-500  hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
+            <Popover.Button className="inline-flex items-center justify-center rounded-md border-4 border-blue-500 bg-white p-2  text-blue-500  hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
               <span className="sr-only">Open menu</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
@@ -296,24 +291,24 @@ export function Navigation() {
               pathname={pathname ?? undefined}
             />
 
-            <Link
+            {/* <Link
               href="/news"
               className={`sleek-underline-blue text-xl text-blue-500 ${
                 pathname?.startsWith('/news') ? 'after:!w-full' : ''
               }`}
             >
               News & Events
-            </Link>
-            <HoverPopover title="Projects" subItems={resources} />
+            </Link> */}
+            <HoverPopover title="Projects" subItems={projects} />
 
-            <Link
+            {/* <Link
               href="/contact"
               className={`sleek-underline-blue text-xl${
                 pathname?.startsWith('/contact') ? 'after:!w-full' : ''
               }`}
             >
               Contact
-            </Link>
+            </Link> */}
           </Popover.Group>
         </div>
 
@@ -351,44 +346,35 @@ export function Navigation() {
                 </div>
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 gap-7">
-                    {solutions.map((solution) => (
-                      <a
+                    <Link
+                      href={'/'}
+                      className="text-base font-medium text-gray-900 hover:text-gray-700"
+                    >
+                      Home
+                    </Link>
+                    {abouts.map((solution) => (
+                      <Link
                         key={solution.name}
                         href={solution.href}
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                       >
-                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white">
-                          <solution.icon className="h-6 w-6" aria-hidden="true" />
-                        </div>
-                        <div className="ml-4 text-base font-medium text-gray-900">
-                          {solution.name}
-                        </div>
-                      </a>
+                        {/* <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white"></div> */}
+                        <div className=" text-base font-medium text-gray-900">{solution.name}</div>
+                      </Link>
                     ))}
                   </nav>
                 </div>
               </div>
               <div className="py-6 px-5">
                 <div className="grid grid-cols-2 gap-4">
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                    Pricing
-                  </a>
-
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                    Docs
-                  </a>
-
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                    Enterprise
-                  </a>
-                  {resources.map((resource) => (
-                    <a
+                  {projects.map((resource) => (
+                    <Link
                       key={resource.name}
                       href={resource.href}
                       className="text-base font-medium text-gray-900 hover:text-gray-700"
                     >
                       {resource.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>

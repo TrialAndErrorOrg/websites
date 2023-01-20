@@ -15,6 +15,8 @@ export const getPerson = cache(async (slug: string) => {
   return person
 })
 
+export const config = {}
+
 export default async function PersonPage({ params }: { params: { slug: string } }) {
   const { slug } = params
 

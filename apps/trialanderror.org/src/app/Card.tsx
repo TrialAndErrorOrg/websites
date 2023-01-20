@@ -3,8 +3,21 @@ import { Card } from '../server/mixed'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { format } from 'date-fns'
 
 export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
+  const { title, image, url, excerpt, team, published, type, category, id } = card
+
+  // split the title by colons, periods, and exclamation points
+  // make the first part of the title the main title
+  // make the rest of the title the subtitle
+
+  const titleParts = title.split(/[:.?!]/)
+  const mainTitle = titleParts[0]
+  const subTitle = titleParts.slice(1).join(' ').trim()
+  const capitalizedSubTitle = subTitle.charAt(0).toUpperCase() + subTitle.slice(1)
+  const titleClass = subTitle ? 'text-2xl' : 'text-3xl'
+
   return (
     <motion.article
       // animate={{ y: 0, opacity: 1 }}
@@ -36,38 +49,75 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
       }}
       initial={{ y: 100, opacity: 0 }}
       key={card.title}
-      className="group relative col-span-1 flex flex-col border-2 border-blue-500"
+      className="group relative col-span-1 flex w-96 flex-col border-b-[6px] border-blue-500 bg-white"
       //className="hover:shadow-thick-3 group relative col-span-1 flex flex-col shadow-[0px_0px_0_#000] transition-all ease-in-out  hover:-translate-x-2 hover:-translate-y-2"
     >
       {card?.image?.url ? (
-        <div className="h-80 min-w-[20rem]">
-          <Image
-            src={card.image.url}
-            alt={card.image.alt ?? ''}
-            width={card.image.height}
-            height={card.image.height}
-            className="h-full w-full object-cover"
-          />
-        </div>
+        <Image
+          src={card.image.url}
+          alt={card.image.alt ?? ''}
+          width={card.image.height}
+          height={card.image.height}
+          className="h-80 w-96 object-cover"
+        />
       ) : (
         <div className="flex h-40 items-center justify-center bg-orange-500">
           <span className="text-2xl text-black">{card.title[0]}</span>
         </div>
       )}
       <span className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center border border-black bg-white font-bold">
-        {card.type === 'article' ? 'J' : 'B'}
+        {type === 'article' ? 'J' : 'B'}
       </span>
-      <div className="flex h-full flex-col justify-between px-4 py-2">
-        <div className="flex flex-col">
-          <h2 className="my-2 text-xl font-bold leading-tight  tracking-tight text-blue-500">
-            <Link
-              className="link-overlay"
-              href={card.type === 'post' ? `https://blog.trialanderror.org/${card.url}` : card.url}
-            >
-              {card.title}
-            </Link>
-          </h2>
-          <h2>{card.category}</h2>
+      <div className="flex flex-grow flex-col justify-between p-4">
+        <div className="flex h-full flex-col justify-between">
+          <div>
+            <h2 className="my-2 text-xl font-bold leading-tight tracking-tight  text-blue-500 md:text-2xl">
+              <Link
+                className="link-overlay"
+                href={
+                  card.type === 'post' ? `https://blog.trialanderror.org/${card.url}` : card.url
+                }
+              >
+                {mainTitle}
+              </Link>
+
+              {subTitle && (
+                <span className="capitalized  text-base font-normal text-blue-500">
+                  <br />
+                  {capitalizedSubTitle}
+                </span>
+              )}
+            </h2>
+            {/* authors  */}
+
+            {card.team?.length > 0 ? (
+              <div className="flex flex-row flex-wrap gap-x-2">
+                {card.team.map((author) => (
+                  <span className="text-sm font-bold italic text-blue-500 md:text-lg">
+                    {typeof author === 'object' ? `${author.firstName} ${author.lastName}` : author}
+                  </span>
+                ))}
+              </div>
+            ) : card.team.length > 3 ? (
+              <div className="flex flex-row gap-2">
+                <span className="text-sm font-bold italic text-blue-500 md:text-lg">
+                  {typeof card.team[0] === 'object'
+                    ? `${card.team[0].firstName} ${card.team[0].lastName} et al.`
+                    : card.team[0]}
+                </span>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <h4 className="text-sm font-bold capitalize text-blue-500 md:text-lg">
+              {card.category ?? 'open call'}
+            </h4>
+            <span>|</span>
+            <span className="text-sm font-bold text-blue-500 md:text-lg">
+              {format(new Date(card.published), 'MMMM dd, yyyy')}
+            </span>
+          </div>
         </div>
       </div>
     </motion.article>

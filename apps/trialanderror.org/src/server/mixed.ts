@@ -11,7 +11,7 @@ export interface Card {
   identifier: string
   tags: string[]
   category?: string | null
-  team: Team[]
+  team: Team[] | string[]
   image: Img
 }
 
