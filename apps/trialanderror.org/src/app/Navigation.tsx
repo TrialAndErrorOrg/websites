@@ -178,14 +178,14 @@ const HoverPopover = ({
             {titleHref ? (
               <Link
                 href={titleHref}
-                className={`text-xl text-blue-500 ${
+                className={`text-2xl text-blue-500 ${
                   pathname?.startsWith(titleHref) ? 'after:!w-full' : ''
                 }`}
               >
                 {title}
               </Link>
             ) : (
-              <span className="text-xl text-blue-500">{title}</span>
+              <span className="text-2xl text-blue-500">{title}</span>
             )}
             <ChevronDownIcon
               className={classNames(
@@ -278,7 +278,7 @@ export function Navigation() {
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
             <Link
               href="/"
-              className={`sleek-underline-blue text-xl font-semibold text-blue-500 ${
+              className={`sleek-underline-blue text-2xl font-semibold text-blue-500 ${
                 pathname === '/' ? 'after:!w-full' : ''
               }`}
             >

@@ -15,7 +15,7 @@ export default async function AboutPage() {
             <h1 className="-mt-10 text-4xl font-bold text-blue-500 md:-mt-16 md:text-7xl">
               About Us
             </h1>
-            <p className="relative flex w-[70vw] items-center leading-[1.4] text-blue-500 before:absolute before:-ml-4 before:hidden before:h-1/2 before:w-2 before:bg-blue-500 md:w-auto md:text-[2rem] md:before:-ml-12 md:before:flex md:before:w-3">
+            <p className="relative flex w-[70vw] items-center leading-[1.4] text-blue-500 before:absolute before:-ml-4 before:hidden before:h-1/2 before:w-2 before:bg-blue-500 md:w-auto md:text-lg md:before:-ml-12 md:before:flex md:before:w-3 lg:ml-40 2xl:text-[2rem]">
               The Center of Trial & Error is a virtual platform and sandbox for disruptive
               initiatives that will lead to institutional change. With the Journal of Trial & Error
               as our flagship, we aim to bridge the gap between what researchers do and what
@@ -46,7 +46,7 @@ export default async function AboutPage() {
             Our Mission
           </h2>
           <div className="flex w-[77vw] flex-col items-center gap-10 border-4 border-solid border-blue-500 bg-white py-10 px-10 md:w-auto md:gap-20 md:border-[6px] md:px-[6vw] md:py-24">
-            <p className="text-blue-500 md:text-[2rem]">
+            <p className="text-lg text-blue-500 md:text-xl 2xl:text-[2rem]">
               The Center of Trial & Error believes that a more transparent, responsible, honest, and
               reflexive way of doing scholarship requires institutional change. It thereby tries to
               disrupt existing scholarly infrastructures by empowering early career researchers to

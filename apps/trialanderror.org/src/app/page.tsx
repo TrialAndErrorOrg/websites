@@ -22,12 +22,13 @@ export default async function Page() {
           </h1>
           <div className="col-span-4 col-start-2 mt-10 -ml-3 md:col-start-3 md:ml-10 md:max-w-[52vw] lg:max-w-none">
             <h2 className="font-sans font-semibold leading-[1.2] text-blue-500 md:text-2xl lg:text-4xl">
-              Committed to transparent and responsible scholarship.
+              Creating transparent and responsible scholarship.
             </h2>
             <p className="relative mt-4 flex max-w-5xl items-center leading-[1.2] text-blue-500 before:absolute before:-ml-4 before:hidden before:h-2/3 before:w-2  before:bg-blue-500 md:text-2xl md:before:-ml-8 md:before:flex md:before:w-3 lg:text-3xl">
-              Creating a space for independent reflection on academic practice and experiment with
-              innovative publishing activities. We empower students and early early career
-              researchers to disrupt existing scholarly infrastructures.
+              We are a non-profit organization experimenting with innovative publishing activities.
+              The Center provides a space for independent reflection on academic practice and
+              stimulates students and early career researchers to disrupt existing scholarly
+              infrastructures.
             </p>
           </div>
         </div>
