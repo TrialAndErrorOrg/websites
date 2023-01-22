@@ -31,24 +31,14 @@ export default async function AboutPage() {
       </div>
       <div className="relative w-screen md:h-screen">
         <div className="mx-auto mt-[6vw] flex w-2/3 flex-col items-start gap-[6vw] md:flex-row">
-          {/* <h2
-            className=" left-[15vw] mt-[10vh] rotate-180 text-5xl font-black text-blue-500 lg:text-7xl"
-            style={{
-              // direction: 'rtl',
-              writingMode: 'vertical-rl',
-            }}
-          >
-            What Do We Do?
-          </h2> */}
           <h2
             id="mission"
             className="top-[5vh] bottom-[5vh] -ml-[10vw] w-full text-4xl font-bold text-blue-500 md:sticky md:-ml-[5vw] md:w-auto md:rotate-180 md:text-7xl md:[writing-mode:vertical-rl]"
-            // style={{ writingMode: 'vertical-rl' }}
           >
             Our Mission
           </h2>
           <div className="flex w-[77vw] flex-col items-center gap-10 border-4 border-solid border-blue-500 bg-white py-10 px-10 md:w-auto md:gap-20 md:border-[6px] md:px-[6vw] md:py-24">
-            <p className="text-lg text-blue-500 md:text-xl 2xl:text-[2rem]">
+            <p className="text-lg text-blue-500 md:text-xl 2xl:text-[2rem] 2xl:leading-10">
               The Center of Trial & Error believes that a more transparent, responsible, honest, and
               reflexive way of doing scholarship requires institutional change. It thereby tries to
               disrupt existing scholarly infrastructures by empowering early career researchers to
@@ -56,6 +46,7 @@ export default async function AboutPage() {
               academic activities.
               <br className="md:hidden" />
               <br className="md:hidden" />
+              <span className="hidden md:inline-block"> </span>
               Moreover, the Center aims to provide space for ongoing and independent reflection on
               academic culture, systemic structures, research and academic education and wants to
               connect those who (try to) enforce practical change. To do so, the Center hosts five

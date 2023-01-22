@@ -49,7 +49,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
       }}
       initial={{ y: 100, opacity: 0 }}
       key={card.title}
-      className="group relative col-span-1 flex w-96 flex-col border-b-[6px] border-blue-500 bg-white"
+      className="group relative col-span-1 flex w-80 flex-col border-b-[6px] border-blue-500 bg-white md:w-96"
       //className="hover:shadow-thick-3 group relative col-span-1 flex flex-col shadow-[0px_0px_0_#000] transition-all ease-in-out  hover:-translate-x-2 hover:-translate-y-2"
     >
       {card?.image?.url ? (
@@ -58,7 +58,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
           alt={card.image.alt ?? ''}
           width={card.image.height}
           height={card.image.height}
-          className="h-80 w-96 object-cover"
+          className="h-60 w-80 object-cover md:h-80 md:w-96"
         />
       ) : (
         <div className="flex h-40 items-center justify-center bg-orange-500">
@@ -110,11 +110,11 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
           </div>
 
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-bold capitalize text-blue-500 md:text-lg">
+            <span className="text-sm capitalize leading-3 text-blue-500 md:text-lg">
               {card.category ?? 'open call'}
-            </h4>
+            </span>
             <span>|</span>
-            <span className="text-sm font-bold text-blue-500 md:text-lg">
+            <span className="text-sm text-blue-500 md:text-lg">
               {format(new Date(card.published), 'MMMM dd, yyyy')}
             </span>
           </div>

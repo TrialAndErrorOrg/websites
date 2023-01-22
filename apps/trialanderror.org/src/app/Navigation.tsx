@@ -178,6 +178,7 @@ const HoverPopover = ({
             {titleHref ? (
               <Link
                 href={titleHref}
+                target={titleHref.startsWith('http') ? '_blank' : undefined}
                 className={`text-2xl text-blue-500 ${
                   pathname?.startsWith(titleHref) ? 'after:!w-full' : ''
                 }`}
@@ -242,6 +243,7 @@ export function Navigation() {
         href="/"
         initial={{ translateY: '-100%' }}
         animate={{ translateY: 0 }}
+        whileHover={{ translateY: '-4rem' }}
         transition={{
           type: 'spring',
           stiffness: 100,

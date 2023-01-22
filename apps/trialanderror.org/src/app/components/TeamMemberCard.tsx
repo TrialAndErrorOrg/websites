@@ -3,7 +3,15 @@ import { GetAttributesValues } from '@strapi/strapi'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 
-import { FaTwitter, FaMastodon, FaGithub, FaLink, FaOrcid, FaLinkedin } from 'react-icons/fa'
+import {
+  FaTwitter,
+  FaMastodon,
+  FaGithub,
+  FaLink,
+  FaOrcid,
+  FaLinkedin,
+  FaEnvelope,
+} from 'react-icons/fa'
 import { useState } from 'react'
 import { classNames } from '../Navigation'
 
@@ -61,12 +69,15 @@ export function TeamMemberCard({
     },
     orcid: {
       url: orcid,
-
       icon: <FaOrcid className="text-2xl text-blue-500" />,
     },
     personalWebsite: {
       url: personalWebsite,
       icon: <FaLink className="text-2xl text-blue-500" />,
+    },
+    email: {
+      url: `mailto:${member.email}`,
+      icon: <FaEnvelope className="text-2xl text-blue-500" />,
     },
   }
 
@@ -103,7 +114,7 @@ export function TeamMemberCard({
           {Object.entries(socials).map(([key, value]) => {
             if (value.url) {
               return (
-                <a key={key} href={value.url}>
+                <a key={key} href={value.url} target="_blank">
                   {value.icon}
                 </a>
               )
@@ -115,7 +126,7 @@ export function TeamMemberCard({
         // variants={variants(true)}
         id="front"
         className={classNames(
-          'absolute flex h-full w-full flex-col items-start  transition-transform duration-700 ease-out md:group-hover:[transform:rotateY(-180deg)]',
+          'absolute flex h-full w-full flex-col items-start  transition-transform duration-700 ease-out md:[transform:rotateY(0deg)] md:group-hover:[transform:rotateY(-180deg)]',
           turn ? '[transform:rotateY(-180deg)]' : '[transform:rotateY(0deg)]',
         )}
         style={{
