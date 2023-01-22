@@ -78,7 +78,7 @@ export const SEO = (
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${open_sans.variable} ${overpass.variable}`}>
-      {/* <head>
+      <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="msapplication-TileColor" content="#002642" />
         <meta name="theme-color" content="#ffffff" />
         <SEO />
-      </head> */}
+      </head>
       <body>
         <Navigation />
         {/* <div className="container"> */}
