@@ -12,9 +12,9 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
   // make the first part of the title the main title
   // make the rest of the title the subtitle
 
-  const titleParts = title.split(/[:.?!]/)
-  const mainTitle = titleParts[0]
-  const subTitle = titleParts.slice(1).join(' ').trim()
+  const titleParts = title.split(/(?<=([:.?!])) /)
+  const mainTitle = titleParts[0]?.replace(/[:.]/g, '')
+  const subTitle = titleParts.slice(1).join(' ')?.replace(/[:.]/g, '').trim()
   const capitalizedSubTitle = subTitle.charAt(0).toUpperCase() + subTitle.slice(1)
   const titleClass = subTitle ? 'text-2xl' : 'text-3xl'
 
@@ -54,7 +54,9 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
     >
       {card?.image?.url ? (
         <Image
-          src={card.image.url}
+          src={
+            card.image?.formats?.large?.url || card.image?.formats?.medium?.url || card.image.url
+          }
           alt={card.image.alt ?? ''}
           width={card.image.height}
           height={card.image.height}

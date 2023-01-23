@@ -27,6 +27,12 @@ interface Img {
   width?: number
   height?: number
   caption?: string
+  formats?: {
+    thumbnail?: Img
+    small?: Img
+    medium?: Img
+    large?: Img
+  }
 }
 
 export const getAllCards = cache(async ({ limit = 100, offset = 0 } = {}) => {

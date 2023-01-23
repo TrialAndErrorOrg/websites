@@ -135,8 +135,8 @@ export function TeamMemberCard({
       >
         <Image
           className="h-80 w-60 object-cover md:h-80 md:w-80"
-          // src={image?.formats?.medium?.url ?? image?.formats?.url}
-          src={image.url}
+          src={image?.formats?.medium?.url ?? image?.url}
+          // src={image.url}
           alt={`Picture of ${firstName} ${lastName}`}
           height={image.height}
           width={image.width}

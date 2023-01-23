@@ -25,18 +25,17 @@ const open_sans = Open_Sans({
   display: 'optional',
 })
 
-export const defaultImage =
-  'https://cote.azureedge.net/cote-strapi-uploads/undefined/assets/large_BUFFERTE_logo_blue_back_4096_88ab80fa53.png'
+export const ogURL = 'https://og.trialanderror.org/api/og/jote'
 
 // next-seo.config.js
 export const SEO = (
   {
     description = '',
-    image: _image = defaultImage,
-    canonical = 'https://trialanderror.org',
+    // image: _image = defaultImage,
+    canonical = '',
     noindex = false,
     nofollow = false,
-    title = 'Center of Trial and Error',
+    title = 'The Center of Trial and Error',
     ogTitle = '',
     ogType = 'website',
     locale = 'en_US',
@@ -51,14 +50,18 @@ export const SEO = (
       openGraph: {
         type: ogType,
         locale,
-        url: canonical,
+        url: `https://trialanderror.org/${canonical}`,
         title: ogTitle || title,
         description: description,
         images: [
           {
-            url: _image,
+            url: `${ogURL}?title=${encodeURIComponent(
+              ogTitle || title,
+            )}&author=${encodeURIComponent(description ?? '%20')}&name=${encodeURIComponent(
+              !canonical ? '' : 'Center of Trial and Error',
+            )}`,
             width: 1200,
-            height: 600,
+            height: 630,
             alt,
           },
         ],
@@ -88,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#002642" />
         <meta name="msapplication-TileColor" content="#002642" />
         <meta name="theme-color" content="#ffffff" />
-        <SEO />
+        <SEO description="Creating transparent and responsible scholarship." />
       </head>
       <body>
         <Navigation />
