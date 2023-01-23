@@ -241,16 +241,16 @@ export function Navigation() {
     <>
       <motion.a
         href="/"
-        initial={{ translateY: '-100%' }}
-        animate={{ translateY: 0 }}
-        whileHover={{ translateY: '-4rem' }}
+        initial={{ translateY: '-21vh' }}
+        animate={{ translateY: '-4rem' }}
+        whileHover={{ translateY: '-6rem' }}
         transition={{
           type: 'spring',
           stiffness: 100,
           bounce: 0.5,
         }}
         id="ribbon"
-        className="absolute -top-10 left-[calc(16.6667%-6vw)] z-10 hidden h-[calc(21vh+2.5rem)] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
+        className="absolute left-[calc(16.6667%-6vw)] z-10 hidden h-[calc(21vh+2.5rem)] w-[5vw] flex-col items-center justify-end bg-blue-500 md:flex"
       >
         <Image
           src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"

@@ -31,7 +31,7 @@ export const ogURL = 'https://og.trialanderror.org/api/og/jote'
 export const SEO = (
   {
     description = '',
-    // image: _image = defaultImage,
+    image = '',
     canonical = '',
     noindex = false,
     nofollow = false,
@@ -55,11 +55,11 @@ export const SEO = (
         description: description,
         images: [
           {
-            url: `${ogURL}?title=${encodeURIComponent(
-              ogTitle || title,
-            )}&author=${encodeURIComponent(description ?? '%20')}&name=${encodeURIComponent(
-              !canonical ? '' : 'Center of Trial and Error',
-            )}`,
+            url:
+              image ||
+              `${ogURL}?title=${encodeURIComponent(ogTitle || title)}&author=${encodeURIComponent(
+                description ?? '%20',
+              )}&name=${encodeURIComponent(!canonical ? '' : 'Center of Trial and Error')}`,
             width: 1200,
             height: 630,
             alt,
