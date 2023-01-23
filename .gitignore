@@ -166,3 +166,4 @@ patches_bak
 **/dist
 **/.next
 **/out
+libs/types/src/lib/validators.ts
