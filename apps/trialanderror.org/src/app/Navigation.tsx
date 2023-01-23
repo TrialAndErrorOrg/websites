@@ -217,6 +217,7 @@ const HoverPopover = ({
                   {subItems.map((item) => (
                     <Link
                       key={item.name}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
                       href={item.href}
                       scroll={false}
                       className="sleek-underline-blue -m-3 block rounded-md p-3 hover:bg-blue-50/50"

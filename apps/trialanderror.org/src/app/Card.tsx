@@ -76,6 +76,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
             <h2 className="my-2 text-xl font-bold leading-tight tracking-tight  text-blue-500 md:text-2xl">
               <Link
                 className="link-overlay"
+                target="_blank"
                 href={
                   card.type === 'post' ? `https://blog.trialanderror.org/${card.url}` : card.url
                 }

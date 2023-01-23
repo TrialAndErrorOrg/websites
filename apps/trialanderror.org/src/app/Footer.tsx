@@ -27,12 +27,9 @@ const navigation = {
   projects: [
     { name: 'Journal', href: 'https://blog.trialanderror.org' },
     { name: 'Blog', href: 'https://journal.trialanderror.org' },
+    { name: 'Development', href: 'https://github.com/trialanderrororg' },
   ],
-  company: [
-    { name: 'About', href: '/about' },
-    { name: 'Blog', href: 'https://blog.trialanderror.org' },
-    { name: 'Jobs', href: 'https://positions.trialanderror.org' },
-  ],
+  company: [{ name: 'Jobs', href: 'https://positions.trialanderror.org' }],
   legal: [
     { name: 'Non-profit Status', href: 'https://journal.trialanderror.org/legal-status' },
     // { name: 'Privacy', href: '#' },
@@ -96,6 +93,7 @@ export function Footer() {
                             <li key={item.name}>
                               <Link
                                 href={item.href}
+                                target={item.href.startsWith('http') ? '_blank' : undefined}
                                 className="text-base text-slate-300 transition-colors hover:text-orange-500"
                               >
                                 {item.name}
@@ -144,7 +142,12 @@ export function Footer() {
         <div className="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 text-white md:order-2">
             {social.map((item) => (
-              <a key={item.name} href={item.href} className="text-slate-100 hover:text-orange-500">
+              <a
+                key={item.name}
+                href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                className="text-slate-100 hover:text-orange-500"
+              >
                 <span className="sr-only">{item.name}</span>
                 <item.icon //className="h-6 w-6 text-white"
                 // aria-hidden="true"
