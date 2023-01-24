@@ -47,7 +47,16 @@ export type Author =
   | GetAttributesValues<'api::team-member.team-member'>
 // export type Menu = GetReturnType<PluginMenusMenu>
 
-export type Menu = GetAttributesValues<'plugin::menus.menu'>
+export interface MenuItem
+  extends Omit<GetAttributesValues<'plugin::menus.menu-item'>, 'root_menu' | 'rootMenu'> {
+  children?: MenuItem[]
+}
+
+// TODO: fix this type if the plugin works
+// the menu items don't have a children field defined
+export interface Menu extends Omit<GetAttributesValues<'plugin::menus.menu'>, 'items'> {
+  items?: MenuItem[]
+}
 
 // declare global {
 //   namespace Strapi {

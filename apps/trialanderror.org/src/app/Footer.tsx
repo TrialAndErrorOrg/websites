@@ -1,5 +1,8 @@
+import { Menu } from '@/types'
+import Image from 'next/image'
 import Link from 'next/link'
 import { FaGithub, FaInstagram, FaLinkedin, FaMastodon, FaTwitter } from 'react-icons/fa'
+import { getNavigation } from '../server/nav'
 import { SignUp } from './components/SignUp'
 
 /*
@@ -18,53 +21,82 @@ import { SignUp } from './components/SignUp'
   }
   ```
 */
-const navigation = {
-  about: [
-    { name: 'About Us', href: '/about' },
-    { name: 'Meet the Team', href: '/about#team' },
-    { name: 'Manifesto', href: 'https://doi.org/10.36850/ed1' },
-  ],
-  projects: [
-    { name: 'Journal', href: 'https://blog.trialanderror.org' },
-    { name: 'Blog', href: 'https://journal.trialanderror.org' },
-    { name: 'Development', href: 'https://github.com/trialanderrororg' },
-  ],
-  company: [{ name: 'Jobs', href: 'https://positions.trialanderror.org' }],
-  legal: [
-    { name: 'Non-profit Status', href: 'https://journal.trialanderror.org/legal-status' },
-    // { name: 'Privacy', href: '#' },
-    // { name: 'Terms', href: '#' },
+const defaultNav: Menu = {
+  slug: 'main-footer',
+  title: 'Trial and Error',
+  items: [
+    {
+      title: 'About',
+      url: '',
+      children: [
+        { title: 'About Us', url: '/about' },
+        { title: 'Meet the Team', url: '/about#team' },
+        { title: 'Manifesto', url: 'https://doi.org/10.36850/ed1' },
+      ],
+    },
+    {
+      title: 'Projects',
+      children: [
+        { title: 'Journal', url: 'https://blog.trialanderror.org' },
+        { title: 'Blog', url: 'https://journal.trialanderror.org' },
+        { title: 'Development', url: 'https://github.com/trialanderrororg' },
+      ],
+    },
+    { title: 'Company', children: [{ title: 'Jobs', url: 'https://positions.trialanderror.org' }] },
+    {
+      title: 'Legal',
+      children: [
+        { title: 'Non-profit Status', url: 'https://journal.trialanderror.org/legal-status' },
+        // { name: 'Privacy', href: '#' },
+        // { name: 'Terms', href: '#' },
+      ],
+    },
   ],
 }
-const social = [
-  {
-    name: 'Twitter',
-    href: 'https://twitter.com/jtrialerror',
-    icon: (props: React.ComponentProps<'svg'>) => <FaTwitter {...props} />,
-  },
-  {
-    name: 'GitHub',
-    href: 'https://github.com/TrialAndErrorOrg',
-    icon: (props: React.ComponentProps<'svg'>) => <FaGithub {...props} />,
-  },
-  {
-    name: 'Mastodon',
-    href: 'https://akademienl.social/@trialanderror',
-    icon: (props: React.ComponentProps<'svg'>) => <FaMastodon {...props} />,
-  },
-  {
-    name: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/jtrialanderror/',
-    icon: (props: React.ComponentProps<'svg'>) => <FaLinkedin {...props} />,
-  },
-  {
-    name: 'Instagram',
-    href: 'https://instagram.com/journaltrialerror',
-    icon: (props: React.ComponentProps<'svg'>) => <FaInstagram {...props} />,
-  },
-]
 
-export function Footer() {
+const socialMap: Record<string, React.FC<React.ComponentProps<'svg'>>> = {
+  twitter: (props: React.ComponentProps<'svg'>) => <FaTwitter {...props} />,
+  github: (props: React.ComponentProps<'svg'>) => <FaGithub {...props} />,
+  mastodon: (props: React.ComponentProps<'svg'>) => <FaMastodon {...props} />,
+  linkedin: (props: React.ComponentProps<'svg'>) => <FaLinkedin {...props} />,
+  instagram: (props: React.ComponentProps<'svg'>) => <FaInstagram {...props} />,
+}
+
+const defaultSocials: Menu = {
+  title: 'Social Items',
+  slug: 'main-socials',
+  items: [
+    {
+      title: 'Twitter',
+      url: 'https://twitter.com/jtrialerror',
+    },
+    {
+      title: 'GitHub',
+      url: 'https://github.com/TrialAndErrorOrg',
+    },
+    {
+      title: 'Mastodon',
+      url: 'https://akademienl.social/@trialanderror',
+    },
+    {
+      title: 'LinkedIn',
+      url: 'https://www.linkedin.com/company/jtrialanderror/',
+    },
+    {
+      title: 'Instagram',
+      url: 'https://instagram.com/journaltrialerror',
+    },
+  ],
+}
+
+export async function Footer() {
+  const navPromise = getNavigation('main-footer')
+  const socialPromise = getNavigation('main-socials')
+  const [nav, socials] = await Promise.all([navPromise, socialPromise])
+
+  const navigation = nav ?? defaultNav
+  const social = socials ?? defaultSocials
+
   return (
     <footer className="bg-blue-500" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
@@ -73,30 +105,30 @@ export function Footer() {
       <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="grid grid-cols-2 gap-8 xl:col-span-2">
-            {Object.keys(navigation)
-              .slice(0, Math.floor(Object.keys(navigation).length / 2 + 0.9))
-              ?.map((name, idx) => (
+            {navigation.items
+              ?.slice(0, Math.floor((navigation.items ?? []).length / 2 + 0.9))
+              ?.map(({ title }, idx) => (
                 // {Object.entries(navigation).map(([name, links]) => (
-                <div className="md:grid md:grid-cols-2 md:gap-8" key={name}>
-                  {Object.entries(navigation)
+                <div className="md:grid md:grid-cols-2 md:gap-8" key={title}>
+                  {(navigation.items ?? [])
                     ?.slice(idx * 2, idx * 2 + 2)
-                    .map(([name, links]) => (
+                    .map(({ title, children, url, target }) => (
                       <div
-                        key={name} //className={idx % 2 === 0 ? 'mt-12 md:mt-0' : ''}>
+                        key={title} //className={idx % 2 === 0 ? 'mt-12 md:mt-0' : ''}>
                         className="mt-12 md:mt-0"
                       >
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
-                          {name}
+                          {title}
                         </h3>
                         <ul role="list" className="mt-4 space-y-4">
-                          {links.map((item) => (
-                            <li key={item.name}>
+                          {(children ?? []).map(({ title, url, target }) => (
+                            <li key={title}>
                               <Link
-                                href={item.href}
-                                target={item.href.startsWith('http') ? '_blank' : undefined}
+                                href={url!}
+                                target={target || url?.startsWith('http') ? '_blank' : undefined}
                                 className="text-base text-slate-300 transition-colors hover:text-orange-500"
                               >
-                                {item.name}
+                                {title}
                               </Link>
                             </li>
                           ))}
@@ -141,19 +173,34 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 text-white md:order-2">
-            {social.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target={item.href.startsWith('http') ? '_blank' : undefined}
-                className="text-slate-100 hover:text-orange-500"
-              >
-                <span className="sr-only">{item.name}</span>
-                <item.icon //className="h-6 w-6 text-white"
-                // aria-hidden="true"
+            {social.items?.map(({ title, icon, url }) => {
+              const lowercaseTitle = title.toLowerCase()
+              const Icon = icon ? (
+                <Image
+                  src={icon?.url}
+                  alt={title}
+                  width={24}
+                  height={24}
+                  className="h-6 w-6 text-white"
                 />
-              </a>
-            ))}
+              ) : (
+                socialMap[lowercaseTitle]
+              )
+              return (
+                <a
+                  key={title}
+                  href={url}
+                  target={url?.startsWith('http') ? '_blank' : undefined}
+                  className="text-slate-100 hover:text-orange-500"
+                >
+                  <span className="sr-only">{title}</span>
+                  {/* <icon //className="h-6 w-6 text-white"
+                // aria-hidden="true"
+                /> */}
+                  <Icon />
+                </a>
+              )
+            })}
           </div>
           <p className="mt-8 text-base text-slate-100 md:order-1 md:mt-0">
             &copy; {new Date().getFullYear()} Center of Trial and Error. CC BY 4.0

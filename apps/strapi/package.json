@@ -26,7 +26,7 @@
     "strapi-plugin-comments": "^2.2.1",
     "strapi-plugin-email-designer": "^2.1.1",
     "strapi-plugin-meilisearch": "^0.8.2",
-    "strapi-plugin-menus": "^1.2.0",
+    "strapi-plugin-menus": "^1.2.1",
     "strapi-plugin-navigation": "^2.2.2",
     "strapi-plugin-notes": "^1.0.1",
     "strapi-plugin-plausible": "^1.0.5",

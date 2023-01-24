@@ -23,6 +23,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
+import { Menu, MenuItem } from '@/types'
 
 // export function Navigation() {
 //   const pathname = usePathname()
@@ -151,14 +152,13 @@ const useOnHover = () => {
 
 const HoverPopover = ({
   pathname,
-  subItems,
-  title,
-  titleHref,
+  item: { children, title, url, target },
 }: {
+  item: MenuItem
   pathname?: string
-  subItems: { name: string; href: string; description?: string; scroll?: boolean }[]
-  title: string
-  titleHref?: string
+  // subItems: { name: string; href: string; description?: string; scroll?: boolean }[]
+  // title: string
+  // titleHref?: string
 }) => {
   const { buttonRef, onMouseEnter, onMouseLeave } = useOnHover()
   return (
@@ -175,12 +175,12 @@ const HoverPopover = ({
             onMouseEnter={onMouseEnter.bind(null, open)}
             onMouseLeave={onMouseLeave.bind(null, open)}
           >
-            {titleHref ? (
+            {url ? (
               <Link
-                href={titleHref}
-                target={titleHref.startsWith('http') ? '_blank' : undefined}
+                href={url}
+                target={target ?? url?.startsWith('http') ? '_blank' : undefined}
                 className={`text-2xl text-blue-500 ${
-                  pathname?.startsWith(titleHref) ? 'after:!w-full' : ''
+                  pathname?.startsWith(url) ? 'after:!w-full' : ''
                 }`}
               >
                 {title}
@@ -214,16 +214,16 @@ const HoverPopover = ({
             >
               <div className="overflow-hidden border-2 border-blue-500 ring-opacity-5">
                 <div className="relative  grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                  {subItems.map((item) => (
+                  {children?.map(({ title, url, target, description }) => (
                     <Link
-                      key={item.name}
-                      target={item.href.startsWith('http') ? '_blank' : undefined}
-                      href={item.href}
+                      key={title}
+                      target={target ?? url?.startsWith('http') ? '_blank' : undefined}
+                      href={url ?? ''}
                       scroll={false}
                       className="sleek-underline-blue -m-3 block rounded-md p-3 hover:bg-blue-50/50"
                     >
-                      <p className="text-base font-medium text-gray-900">{item.name}</p>
-                      <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                      <p className="text-base font-medium text-gray-900">{title}</p>
+                      <p className="mt-1 text-sm text-gray-500">{description}</p>
                     </Link>
                   ))}
                 </div>
@@ -236,8 +236,9 @@ const HoverPopover = ({
   )
 }
 
-export function Navigation() {
+export function Navigation({ nav }: { nav: Menu }) {
   const pathname = usePathname()
+  console.dir(nav, { depth: null })
   return (
     <>
       <motion.a
@@ -279,20 +280,23 @@ export function Navigation() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <Link
-              href="/"
-              className={`sleek-underline-blue text-2xl font-semibold text-blue-500 ${
-                pathname === '/' ? 'after:!w-full' : ''
-              }`}
-            >
-              Home
-            </Link>
-            <HoverPopover
-              title="About"
-              titleHref="/about"
-              subItems={abouts}
-              pathname={pathname ?? undefined}
-            />
+            {nav.items?.map((item) => {
+              if (item.children?.length == 0) {
+                return (
+                  <Link
+                    key={item.title}
+                    href={item.url ?? '/'}
+                    target={item.target ?? item.url?.startsWith('http') ? '_blank' : undefined}
+                    className={`sleek-underline-blue text-2xl font-semibold text-blue-500 ${
+                      pathname === '/' ? 'after:!w-full' : ''
+                    }`}
+                  >
+                    {item.title}
+                  </Link>
+                )
+              }
+              return <HoverPopover key={item.title} item={item} />
+            })}
 
             {/* <Link
               href="/news"
@@ -302,7 +306,7 @@ export function Navigation() {
             >
               News & Events
             </Link> */}
-            <HoverPopover title="Projects" subItems={projects} />
+            {/* <HoverPopover title="Projects" subItems={projects} /> */}
 
             {/* <Link
               href="/contact"
@@ -349,7 +353,43 @@ export function Navigation() {
                 </div>
                 <div className="mt-6">
                   <nav className="grid grid-cols-1 gap-7">
-                    <Link
+                    {nav.items?.map((item) => {
+                      if (item.children?.length == 0) {
+                        return (
+                          <Link
+                            key={item.title}
+                            href={item.url ?? '/'}
+                            target={
+                              item.target ?? item.url?.startsWith('http') ? '_blank' : undefined
+                            }
+                            className="flex items-center rounded-lg hover:bg-gray-50"
+                          >
+                            <div className="text-base font-medium text-gray-900">{item.title}</div>
+                          </Link>
+                        )
+                      }
+
+                      return item?.children?.map((subItem) => {
+                        if (!subItem?.url) return null
+                        return (
+                          <Link
+                            key={subItem.title}
+                            href={subItem.url}
+                            target={
+                              subItem.target ?? subItem.url?.startsWith('http')
+                                ? '_blank'
+                                : undefined
+                            }
+                            className="flex items-center rounded-lg hover:bg-gray-50"
+                          >
+                            <div className="text-base font-medium text-gray-900">
+                              {subItem.title}
+                            </div>
+                          </Link>
+                        )
+                      })
+                    })}
+                    {/* <Link
                       href={'/'}
                       className="text-base font-medium text-gray-900 hover:text-gray-700"
                     >
@@ -361,14 +401,13 @@ export function Navigation() {
                         href={solution.href}
                         className="-m-3 flex items-center rounded-lg p-3 hover:bg-gray-50"
                       >
-                        {/* <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-orange-500 text-white"></div> */}
                         <div className=" text-base font-medium text-gray-900">{solution.name}</div>
                       </Link>
-                    ))}
+                    ))} */}
                   </nav>
                 </div>
               </div>
-              <div className="py-6 px-5">
+              {/* <div className="py-6 px-5">
                 <div className="grid grid-cols-2 gap-4">
                   {projects.map((resource) => (
                     <Link
@@ -380,7 +419,7 @@ export function Navigation() {
                     </Link>
                   ))}
                 </div>
-              </div>
+            </div> */}
             </div>
           </Popover.Panel>
         </Transition>

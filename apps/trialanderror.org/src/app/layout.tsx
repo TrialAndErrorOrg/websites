@@ -6,6 +6,7 @@ import { Navigation } from './Navigation'
 import { Overpass, Open_Sans } from '@next/font/google'
 
 import '../styles/globals.css'
+import { Nav } from './components/Nav'
 // If loading a variable font, you don't need to specify the font weight
 const overpass = Overpass({
   //weight: ['600', '900'],
@@ -94,15 +95,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SEO description="Creating transparent and responsible scholarship." />
       </head>
       <body>
-        <Navigation />
-        {/* <div className="container"> */}
+        {/* @ts-expect-error TODO: fix once Typescript is able to deal with async components or Next's typescript plugin is less ass */}
+        <Nav />
         {children}
-        {/* </div> */}
-        {/* <footer className="flex w-full justify-center bg-blue-500 p-6 text-white">
-          <p className="text-center">
-            © {new Date().getFullYear()} Center of Trial and Error. All Rights Reserved.
-          </p>
-        </footer> */}
+        {/* @ts-expect-error TODO: fix once Typescript is able to deal with async components or Next's typescript plugin is less ass */}
         <Footer />
         <AnalyticsWrapper />
       </body>
