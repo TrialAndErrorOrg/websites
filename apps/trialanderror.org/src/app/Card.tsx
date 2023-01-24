@@ -5,6 +5,12 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 
+function splitSentences(sentence: string) {
+  const regex = /[^.!?]+[.!?]/g
+  const matches = sentence.match(regex)
+  return matches ? matches.map((s) => s.trim()) : [sentence]
+}
+
 export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
   const { title, image, url, excerpt, team, published, type, category, id } = card
 
@@ -12,9 +18,9 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
   // make the first part of the title the main title
   // make the rest of the title the subtitle
 
-  const titleParts = title.split(/(?<=([:.?!])) /)
-  const mainTitle = titleParts[0]?.replace(/[:.]/g, '')
-  const subTitle = titleParts.slice(1).join(' ')?.replace(/[:.]/g, '').trim()
+  const titleParts = /(.*?[?.:!])(.*)/g.exec(title) ?? [title, title, '']
+  const mainTitle = titleParts[1]?.replace(/[:.]/g, '')
+  const subTitle = titleParts.slice(2).join(' ')?.replace(/[:.]/g, '').trim()
   const capitalizedSubTitle = subTitle.charAt(0).toUpperCase() + subTitle.slice(1)
   const titleClass = subTitle ? 'text-2xl' : 'text-3xl'
 
