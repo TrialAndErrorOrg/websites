@@ -37,6 +37,7 @@
         }
       }
     },
+
     "export": {
       "executor": "@nrwl/next:export",
       "options": {

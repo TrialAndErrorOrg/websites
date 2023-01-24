@@ -197,6 +197,7 @@ export async function Footer() {
                   {/* <icon //className="h-6 w-6 text-white"
                 // aria-hidden="true"
                 /> */}
+                  {/* @ts-expect-error TODO: fix incorrect icon type when using JSX elements in an object as a map */}
                   <Icon />
                 </a>
               )

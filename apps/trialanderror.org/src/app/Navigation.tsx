@@ -155,7 +155,7 @@ const HoverPopover = ({
   item: { children, title, url, target },
 }: {
   item: MenuItem
-  pathname?: string
+  pathname?: string | null
   // subItems: { name: string; href: string; description?: string; scroll?: boolean }[]
   // title: string
   // titleHref?: string
@@ -170,7 +170,12 @@ const HoverPopover = ({
             className={classNames(
               // open ? 'text-blue-500' : 'text-gray-500',
               'sleek-underline-blue text-xl text-blue-500',
-              'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
+              'group inline-flex items-center rounded-md text-base font-medium focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500 focus-within:ring-offset-2 hover:text-gray-900',
+              pathname &&
+                url &&
+                (pathname === url && pathname === '/' ? 'after:!w-full' : url?.startsWith(pathname))
+                ? 'after:!w-full'
+                : '',
             )}
             onMouseEnter={onMouseEnter.bind(null, open)}
             onMouseLeave={onMouseLeave.bind(null, open)}
@@ -179,9 +184,7 @@ const HoverPopover = ({
               <Link
                 href={url}
                 target={target ?? url?.startsWith('http') ? '_blank' : undefined}
-                className={`text-2xl text-blue-500 ${
-                  pathname?.startsWith(url) ? 'after:!w-full' : ''
-                }`}
+                className="text-2xl text-blue-500"
               >
                 {title}
               </Link>
@@ -238,7 +241,7 @@ const HoverPopover = ({
 
 export function Navigation({ nav }: { nav: Menu }) {
   const pathname = usePathname()
-  console.dir(nav, { depth: null })
+  console.log(pathname)
   return (
     <>
       <motion.a
@@ -281,6 +284,7 @@ export function Navigation({ nav }: { nav: Menu }) {
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
             {nav.items?.map((item) => {
+              console.log(item.url)
               if (item.children?.length == 0) {
                 return (
                   <Link
@@ -288,14 +292,18 @@ export function Navigation({ nav }: { nav: Menu }) {
                     href={item.url ?? '/'}
                     target={item.target ?? item.url?.startsWith('http') ? '_blank' : undefined}
                     className={`sleek-underline-blue text-2xl font-semibold text-blue-500 ${
-                      pathname === '/' ? 'after:!w-full' : ''
+                      pathname &&
+                      ((pathname === item.url && pathname === '/') ||
+                        item.url?.startsWith(pathname))
+                        ? 'after:!w-full'
+                        : ''
                     }`}
                   >
                     {item.title}
                   </Link>
                 )
               }
-              return <HoverPopover key={item.title} item={item} />
+              return <HoverPopover pathname={pathname} key={item.title} item={item} />
             })}
 
             {/* <Link
