@@ -173,7 +173,7 @@ const HoverPopover = ({
               'group inline-flex items-center rounded-md text-base font-medium focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500 focus-within:ring-offset-2 hover:text-gray-900',
               pathname &&
                 url &&
-                (pathname === url && pathname === '/' ? 'after:!w-full' : url?.startsWith(pathname))
+                (pathname === url && pathname === '/' ? 'after:!w-full' : pathname?.startsWith(url))
                 ? 'after:!w-full'
                 : '',
             )}
