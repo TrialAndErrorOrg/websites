@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: '[check if build necessary]'
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v2
         id: filter
         with:
           filters: |
