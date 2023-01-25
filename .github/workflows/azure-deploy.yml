@@ -45,8 +45,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           # TODO: Fix yarn cache
-          # cache: 'yarn'
-          # cache-dependency-path: ${{ env.working-directory }}/apps/strapi/yarn.lock
+          cache: 'yarn'
+          cache-dependency-path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/yarn.lock
 
       # - name: Get yarn cache directory path
       #   id: yarn-cache-dir-path
@@ -61,7 +61,7 @@ jobs:
       #       ${{ runner.os }}-yarn-
 
       - name: install & build
-        run: yarn && NODE_ENV=production yarn build
+        run: yarn --prefer-offline && NODE_ENV=production yarn build
         working-directory: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
       - name: 'Deploy to Azure WebApp'
@@ -69,8 +69,7 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: 'Production' # <-- this property wasn't in suggested file
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}   <--- in suggested file
-          # publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_**** }} # taken from original file
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_48C35E5FD0E54E52AFC6BDFFE8471FA5 }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
   #     - name: 'Tar files'
