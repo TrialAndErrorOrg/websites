@@ -70,6 +70,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1",
     "ts-to-zod": "^1.13.1"
   }
 }

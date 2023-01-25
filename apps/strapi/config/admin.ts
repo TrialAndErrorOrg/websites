@@ -1,5 +1,5 @@
 import AzureAdOAuth2Strategy from 'passport-azure-ad-oauth2'
-import * as jwt from 'jsonwebtoken'
+import { decode } from 'jsonwebtoken'
 
 export default ({ env }) => ({
   auth: {
@@ -30,8 +30,8 @@ export default ({ env }) => ({
                 arg1: { email: any; username: any; firstname: any; lastname: any },
               ) => void,
             ) => {
-              var waadProfile = jwt.decode(params.id_token)
-              const prof = jwt.decode(accessToken, { json: true })
+              const waadProfile = decode(params.id_token)
+              const prof = decode(accessToken, { json: true })
               done(null, {
                 email: prof.upn,
                 username: prof.upn,
