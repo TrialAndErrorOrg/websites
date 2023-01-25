@@ -50,7 +50,7 @@
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
     "clean": "rm -rf .cache .tmp",
     "develop": "strapi develop",
-    "start": "NODE_ENV=production strapi start",
+    "start": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
     "build": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js build",
     "strapi": "strapi",
     "postinstall": "node node_modules/patch-package/index.js"
