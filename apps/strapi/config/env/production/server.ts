@@ -2,7 +2,7 @@ import cronTasks from '@webbio/strapi-plugin-scheduler/cron-task'
 
 export default ({ env }) => ({
   host: env('HOST', 'localhost'),
-  port: env.int('PORT', 8000),
+  port: env.int('PORT', 8080),
   url: `${env('PROD_HOST', 'https://cms.trialanderror.org')}`,
   proxy: true,
   admin: {

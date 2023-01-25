@@ -37,8 +37,7 @@
     "strapi-plugin-slugify": "^2.3.2",
     "strapi-plugin-vercel-deploy": "^1.4.0",
     "strapi-provider-rest-cache-memory": "^4.2.5",
-    "strapi-provider-upload-azure-storage": "^2.1.0",
-    "strapi-stripe": "^3.1.1"
+    "strapi-provider-upload-azure-storage": "^2.1.0"
   },
   "scripts": {
     "dev": "yarn develop-strapi",
