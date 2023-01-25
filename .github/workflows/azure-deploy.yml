@@ -64,6 +64,10 @@ jobs:
         run: yarn --prefer-offline && NODE_ENV=production yarn build
         working-directory: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
+      - name: 'rm cache'
+        run: rm -rf .cache
+        working-directory: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
         with:
