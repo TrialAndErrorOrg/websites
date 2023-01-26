@@ -124,6 +124,20 @@
     "mastodon": {
       "type": "string",
       "regex": "https://.*?/@.*"
+    },
+    "Team": {
+      "type": "customField",
+      "options": [
+        "Developers",
+        "Journal",
+        "Publishers",
+        "Training",
+        "Research",
+        "Board",
+        "Supervisory Board",
+        "Operational, Facility, and Support"
+      ],
+      "customField": "plugin::multi-select.multi-select"
     }
   }
 }

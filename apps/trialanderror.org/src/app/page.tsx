@@ -7,6 +7,7 @@ export const revalidate = 3600 // revalidate every hour
 
 export default async function Page() {
   const cards = await getAllCards({ limit: 12 })
+  console.log(cards[0])
 
   return (
     // <main className="relative">

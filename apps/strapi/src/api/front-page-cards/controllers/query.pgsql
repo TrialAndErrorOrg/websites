@@ -54,7 +54,8 @@ array_to_json(array_remove(
     'height', f.height,
     'alt', f.alternative_text,
     'caption', f.caption,
-    'formats', f.formats
+    'formats', f.formats,
+    'blurhash', f.blurhash
     ) as image
 from blog_posts p
 LEFT OUTER JOIN blog_posts_blog_authors_links pal
@@ -105,7 +106,9 @@ jsonb_build_object(
   'height', f.height,
   'alt', f.alternative_text,
   'caption',f.caption,
-  'formats', f.formats) as image
+  'formats', f.formats,
+  'blurhash', f.blurhash
+  ) as image
 from jote_articles j
 LEFT OUTER JOIN jote_articles_jote_article_category_links jcl
 on j.id = jcl.jote_article_id

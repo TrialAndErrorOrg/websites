@@ -241,7 +241,7 @@ const HoverPopover = ({
 
 export function Navigation({ nav }: { nav: Menu }) {
   const pathname = usePathname()
-  console.log(pathname)
+
   return (
     <>
       <motion.a

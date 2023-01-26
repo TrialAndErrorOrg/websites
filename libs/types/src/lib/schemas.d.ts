@@ -281,6 +281,7 @@ export interface PluginUploadFile extends CollectionTypeSchema {
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::upload.file', 'oneToOne', 'admin::user'> &
       PrivateAttribute
+    blurhash: TextAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -813,132 +814,6 @@ export interface PluginSchedulerScheduler extends CollectionTypeSchema {
     createdBy: RelationAttribute<'plugin::scheduler.scheduler', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::scheduler.scheduler', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginStrapiStripeSsProduct extends CollectionTypeSchema {
-  info: {
-    tableName: 'StripeProduct'
-    singularName: 'ss-product'
-    pluralName: 'ss-products'
-    displayName: 'Product'
-    description: 'Stripe Products'
-    kind: 'collectionType'
-  }
-  options: {
-    draftAndPublish: false
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    title: StringAttribute &
-      RequiredAttribute &
-      SetMinMax<{
-        min: 1
-      }>
-    slug: UIDAttribute<'plugin::strapi-stripe.ss-product', 'title'> &
-      RequiredAttribute &
-      UniqueAttribute
-    description: TextAttribute &
-      RequiredAttribute &
-      SetMinMax<{
-        min: 1
-      }>
-    price: DecimalAttribute & RequiredAttribute
-    currency: StringAttribute &
-      RequiredAttribute &
-      SetMinMax<{
-        min: 1
-      }>
-    productImage: MediaAttribute & RequiredAttribute
-    isSubscription: BooleanAttribute & DefaultTo<false>
-    interval: StringAttribute
-    trialPeriodDays: IntegerAttribute
-    stripeProductId: StringAttribute &
-      RequiredAttribute &
-      SetMinMax<{
-        min: 3
-      }>
-    stripePriceId: StringAttribute &
-      SetMinMax<{
-        min: 3
-      }>
-    stripePlanId: StringAttribute &
-      SetMinMax<{
-        min: 3
-      }>
-    stripePayment: RelationAttribute<
-      'plugin::strapi-stripe.ss-product',
-      'oneToMany',
-      'plugin::strapi-stripe.ss-payment'
-    >
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::strapi-stripe.ss-product', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::strapi-stripe.ss-product', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginStrapiStripeSsPayment extends CollectionTypeSchema {
-  info: {
-    tableName: 'StripePayment'
-    singularName: 'ss-payment'
-    pluralName: 'ss-payments'
-    displayName: 'Payment'
-    description: 'Stripe Payment'
-    kind: 'collectionType'
-  }
-  options: {
-    draftAndPublish: false
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    txnDate: DateTimeAttribute & RequiredAttribute
-    transactionId: StringAttribute &
-      RequiredAttribute &
-      SetMinMaxLength<{
-        maxLength: 250
-      }>
-    isTxnSuccessful: BooleanAttribute & DefaultTo<false>
-    txnMessage: TextAttribute &
-      SetMinMaxLength<{
-        maxLength: 5000
-      }>
-    txnErrorMessage: StringAttribute &
-      SetMinMaxLength<{
-        maxLength: 250
-      }>
-    txnAmount: DecimalAttribute & RequiredAttribute
-    customerName: StringAttribute & RequiredAttribute
-    customerEmail: StringAttribute & RequiredAttribute
-    stripeProduct: RelationAttribute<
-      'plugin::strapi-stripe.ss-payment',
-      'manyToOne',
-      'plugin::strapi-stripe.ss-product'
-    >
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::strapi-stripe.ss-payment', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::strapi-stripe.ss-payment', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -2039,6 +1914,20 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     >
     color: StringAttribute & CustomField<'plugin::color-picker.color'>
     mastodon: StringAttribute
+    Team: JSONAttribute &
+      CustomField<
+        'plugin::multi-select.multi-select',
+        [
+          'Developers',
+          'Journal',
+          'Publishers',
+          'Training',
+          'Research',
+          'Board',
+          'Supervisory Board',
+          'Operational, Facility, and Support',
+        ]
+      >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
@@ -2327,8 +2216,6 @@ declare global {
       'plugin::users-permissions.role': PluginUsersPermissionsRole
       'plugin::users-permissions.user': PluginUsersPermissionsUser
       'plugin::scheduler.scheduler': PluginSchedulerScheduler
-      'plugin::strapi-stripe.ss-product': PluginStrapiStripeSsProduct
-      'plugin::strapi-stripe.ss-payment': PluginStrapiStripeSsPayment
       'api::about-page.about-page': ApiAboutPageAboutPage
       'api::application.application': ApiApplicationApplication
       'api::article.article': ApiArticleArticle

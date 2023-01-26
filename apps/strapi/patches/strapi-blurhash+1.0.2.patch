@@ -1,0 +1,27 @@
+diff --git a/node_modules/strapi-blurhash/server/bootstrap.js b/node_modules/strapi-blurhash/server/bootstrap.js
+index abdca5a..706315b 100644
+--- a/node_modules/strapi-blurhash/server/bootstrap.js
++++ b/node_modules/strapi-blurhash/server/bootstrap.js
+@@ -3,10 +3,20 @@
+ module.exports = ({ strapi }) => {
+ 
+   const generateBlurhash = async (event) => {
+-    const { data } = event.params;
+-    if (data.mime && data.mime.startsWith('image/')) {
++    const { data, where } = event.params;
++
++    if ((data.mime && data.mime.startsWith('image/'))) {
+       data.blurhash = await strapi.plugin('strapi-blurhash').service('blurhash').generateBlurhash(data.url);
+     }
++
++    const fullData = await strapi.db.query('plugin::upload.file').findOne({
++      select: ['url', 'blurhash', 'name', 'mime'],
++      where
++    })
++
++    if ((fullData.mime && fullData.mime.startsWith('image/')) && !fullData.blurhash) {
++      data.blurhash = await strapi.plugin('strapi-blurhash').service('blurhash').generateBlurhash(fullData.url);
++    }
+   };
+ 
+   strapi.db.lifecycles.subscribe({

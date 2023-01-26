@@ -205,4 +205,7 @@ export default ({ env }) => ({
   graphql: {
     playgroundAlways: true,
   },
+  'strapi-blurhash': {
+    enabled: true,
+  },
 })
