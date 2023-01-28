@@ -33,6 +33,7 @@ interface Img {
     medium?: Img
     large?: Img
   }
+  blurhash?: string
 }
 
 export const getAllCards = cache(async ({ limit = 100, offset = 0 } = {}) => {

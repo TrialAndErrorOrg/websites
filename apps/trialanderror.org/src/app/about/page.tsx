@@ -12,7 +12,7 @@ export default async function AboutPage() {
         <Frame />
         <div className="relative top-[20vh] left-[13vw] -z-10 h-[140vh] w-[70vw] bg-blue-50 p-6 md:w-[40vw] md:p-10 lg:top-[25vh]">
           <div className="flex w-[45vw] flex-col justify-center  gap-10 md:mb-[30vh] md:ml-[20vw] md:gap-20">
-            <h1 className="-mt-10 text-4xl font-bold text-blue-500 md:-mt-16 md:text-7xl">
+            <h1 className="-mt-10 text-4xl font-black text-blue-500 md:-mt-16 md:text-7xl">
               About Us
             </h1>
             <p className="relative flex w-[70vw] items-center leading-[1.4] text-blue-500 before:absolute before:-ml-4 before:hidden before:h-1/2 before:w-2 before:bg-blue-500 md:w-auto md:text-lg md:before:-ml-12 md:before:flex md:before:w-3 lg:ml-40 2xl:text-[2rem] 2xl:leading-10">

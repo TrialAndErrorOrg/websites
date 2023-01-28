@@ -63,6 +63,8 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
           src={
             card.image?.formats?.large?.url || card.image?.formats?.medium?.url || card.image.url
           }
+          blurDataURL={card.blurhash}
+          placeholder={card.blurhash ? 'blur' : 'empty'}
           alt={card.image.alt ?? ''}
           width={card.image.height}
           height={card.image.height}
@@ -79,7 +81,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
       <div className="flex flex-grow flex-col justify-between p-4">
         <div className="flex h-full flex-col justify-between">
           <div>
-            <h2 className="my-2 text-xl font-bold leading-tight tracking-tight  text-blue-500 md:text-2xl">
+            <h2 className="mb-2 text-xl font-bold leading-tight tracking-tight  text-blue-500 md:text-2xl">
               <Link
                 className="link-overlay"
                 target="_blank"

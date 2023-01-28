@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  '@headlessui/react@1.7.8':
+    hash: rlcjtuetgcfyox3bkj5pfyp4ry
+    path: patches/@headlessui__react@1.7.8.patch
+
 specifiers:
   '@astrojs/image': ^0.12.1
   '@astrojs/netlify': ^1.3.0
@@ -19,7 +24,7 @@ specifiers:
   '@babel/preset-typescript': 7.18.6
   '@docsearch/css': ^3.3.2
   '@fontsource/inter': ^4.5.14
-  '@headlessui/react': ^1.7.7
+  '@headlessui/react': ^1.7.8
   '@heroicons/react': ^2.0.13
   '@hookform/resolvers': ^2.9.10
   '@impulse.dev/runtime': ^0.4.5
@@ -166,7 +171,7 @@ dependencies:
   '@astrojs/react': 1.2.2_ie75ejlwqy5zh3tldgt7pftwcu
   '@astrojs/vercel': 2.4.0
   '@docsearch/css': 3.3.2
-  '@headlessui/react': 1.7.7_biqbaboplfbrettd7655fr4n2y
+  '@headlessui/react': 1.7.8_rlcjtuetgcfyox3bkj5pfyp4ry_biqbaboplfbrettd7655fr4n2y
   '@heroicons/react': 2.0.13_react@18.2.0
   '@hookform/resolvers': 2.9.10_react-hook-form@7.41.5
   '@kmariappan/strapi-client-js': 1.3.0_axios@1.2.2
@@ -4084,8 +4089,8 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: false
 
-  /@headlessui/react/1.7.7_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-BqDOd/tB9u2tA0T3Z0fn18ktw+KbVwMnkxxsGPIH2hzssrQhKB5n/6StZOyvLYP/FsYtvuXfi9I0YowKPv2c1w==}
+  /@headlessui/react/1.7.8_rlcjtuetgcfyox3bkj5pfyp4ry_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-zcwb0kd7L05hxmoAMIioEaOn235Dg0fUO+iGbLPgLVSjzl/l39V6DTpC2Df49PE5aG5/f5q0PZ9ZHZ78ENNV+A==}
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16 || ^17 || ^18
@@ -4095,6 +4100,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
+    patched: true
 
   /@heroicons/react/2.0.13_react@18.2.0:
     resolution: {integrity: sha512-iSN5XwmagrnirWlYEWNPdCDj9aRYVD/lnK3JlsC9/+fqGF80k8C7rl+1HCvBX0dBoagKqOFBs6fMhJJ1hOg1EQ==}
@@ -28582,6 +28588,7 @@ packages:
     resolution: {integrity: sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==}
     engines: {node: '>=0.8.0'}
     hasBin: true
+    requiresBuild: true
     dev: true
     optional: true
 

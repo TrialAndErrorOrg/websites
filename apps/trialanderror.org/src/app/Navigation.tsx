@@ -166,11 +166,12 @@ const HoverPopover = ({
       {({ open }) => (
         <>
           <Popover.Button
+            type="button"
             ref={buttonRef}
             className={classNames(
               // open ? 'text-blue-500' : 'text-gray-500',
               'sleek-underline-blue text-xl text-blue-500',
-              'group inline-flex items-center rounded-md text-base font-medium focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500 focus-within:ring-offset-2 hover:text-gray-900',
+              'group inline-flex items-center text-base font-medium hover:text-gray-900 hover:ring-[rgba(0,0,0,0)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2',
               pathname &&
                 url &&
                 (pathname === url && pathname === '/' ? 'after:!w-full' : pathname?.startsWith(url))
@@ -184,12 +185,12 @@ const HoverPopover = ({
               <Link
                 href={url}
                 target={target ?? url?.startsWith('http') ? '_blank' : undefined}
-                className="text-2xl text-blue-500"
+                className="text-lg text-blue-500"
               >
                 {title}
               </Link>
             ) : (
-              <span className="text-2xl text-blue-500">{title}</span>
+              <span className="text-lg text-blue-500">{title}</span>
             )}
             <ChevronDownIcon
               className={classNames(
@@ -211,7 +212,7 @@ const HoverPopover = ({
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel
-              className="absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2 sm:px-0"
+              className="absolute left-1/2 z-10 mt-3 w-screen max-w-[250px] -translate-x-1/2 transform px-2 sm:px-0"
               onMouseEnter={onMouseEnter.bind(null, open)}
               onMouseLeave={onMouseLeave.bind(null, open)}
             >
@@ -284,14 +285,13 @@ export function Navigation({ nav }: { nav: Menu }) {
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
             {nav.items?.map((item) => {
-              console.log(item.url)
               if (item.children?.length == 0) {
                 return (
                   <Link
                     key={item.title}
                     href={item.url ?? '/'}
                     target={item.target ?? item.url?.startsWith('http') ? '_blank' : undefined}
-                    className={`sleek-underline-blue text-2xl font-semibold text-blue-500 ${
+                    className={`sleek-underline-blue text-lg font-semibold text-blue-500 ${
                       pathname &&
                       ((pathname === item.url && pathname === '/') ||
                         item.url?.startsWith(pathname))

@@ -2,6 +2,7 @@ import { getAllCards } from '../server/mixed'
 import Link from 'next/link'
 import { Card } from './Card'
 import { Frame } from './components/Frame'
+import { WhatDoWeDo } from './components/WhatDoWeDo'
 
 export const revalidate = 3600 // revalidate every hour
 
@@ -44,59 +45,7 @@ export default async function Page() {
         >
           What Do We Do?
         </h2>
-        <div className="right-[6.6vw] left-[20vw] top-[20vh] bottom-[7vh] ml-[15vw]  mr-[7vw] grid grid-cols-1 justify-start gap-10 border-4  border-blue-500 bg-white p-6 md:mx-[20vw] md:p-10 lg:absolute lg:mx-0 lg:grid-cols-3  lg:p-20">
-          <div className="flex flex-col items-center justify-start gap-6 lg:gap-10">
-            <h3 className="text-4xl font-bold text-blue-500">Discussion</h3>
-            {/* Little blue bar */}
-            <div className="h-2 w-1/3 bg-blue-500" />
-
-            <p className="text-center text-base text-blue-500 md:text-lg 2xl:text-2xl">
-              We define “trial and error” as methodological flaws and conceptual errors in research.
-              <br />
-              <br />
-              The Center facilitates a reflective discussion on these issues with{' '}
-              <a className="sleek-underline-blue font-bold" href="https://blog.trialanderror.org">
-                our blog
-              </a>{' '}
-              and by encouraging empirical research and cross-disciplinary conceptual work.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center justify-start gap-6 lg:gap-10">
-            <h3 className="text-4xl font-bold text-blue-500">Publication</h3>
-
-            <div className="h-2 w-1/3 bg-blue-500" />
-            <p className="text-center text-base text-blue-500  md:text-lg 2xl:text-2xl">
-              We aim to publicize the lessons of research struggles, publish answers to the question
-              “what went wrong?”, and independently host non-profit pre-press services.
-              <br />
-              <br />
-              Two branches of the Center, the{' '}
-              <a
-                href="https://journal.trialanderror.org"
-                className="sleek-underline-blue font-bold"
-              >
-                Journal of Trial and Error
-              </a>{' '}
-              and the Publishers of Trial and Error, are dedicated to this mission.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center justify-start gap-6 lg:gap-10">
-            <h3 className="text-4xl font-bold text-blue-500">Training</h3>
-
-            <div className="h-2 w-1/3 bg-blue-500" />
-            <p className="text-center text-base text-blue-500 md:text-lg 2xl:text-2xl">
-              Institutional change results from well-equipped young people, creating a mass from
-              below.
-              <br />
-              <br />
-              As such, training is one of our most important activities. We focus efforts to educate
-              students on the systemic and organisational structures of science and scholarship to
-              make change a practical reality.
-            </p>
-          </div>
-        </div>
+        <WhatDoWeDo />
       </div>
       <div className="relative my-[20vh] flex w-full flex-col items-center gap-10">
         <h2 className="flex w-full items-center gap-10 whitespace-nowrap pl-[3vw] pr-[6.6vw] text-5xl font-black text-blue-500 before:relative before:flex before:h-[6px] before:bg-blue-500 after:relative after:h-[6px] after:flex-grow after:bg-blue-500 md:pl-[6.6vw] md:before:w-24 md:after:min-w-[4rem] lg:text-7xl">
