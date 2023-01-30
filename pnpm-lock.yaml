@@ -131,7 +131,6 @@ specifiers:
   patch-package: ^6.4.7
   postcss: ^8.4.21
   postinstall-postinstall: ^2.1.0
-  preact: ^10.11.1
   prettier: ^2.8.3
   prettier-plugin-astro: ^0.7.2
   prettier-plugin-tailwindcss: ^0.2.1
@@ -226,7 +225,7 @@ dependencies:
 devDependencies:
   '@astrojs/image': 0.12.1_sharp@0.31.2
   '@astrojs/partytown': 1.0.3
-  '@astrojs/preact': 1.2.0_preact@10.11.3
+  '@astrojs/preact': 1.2.0
   '@astrojs/rss': 2.1.0
   '@astrojs/sitemap': 1.0.0
   '@astrojs/tailwind': 2.1.3_tailwindcss@3.2.4
@@ -309,7 +308,6 @@ devDependencies:
   limax: 2.1.0
   nx: 15.4.5_agzycloy75zzulwc37tisy4s3a
   postcss: 8.4.21
-  preact: 10.11.3
   prettier: 2.8.3
   prettier-plugin-astro: 0.7.2
   prettier-plugin-tailwindcss: 0.2.2_dz7tw5xvmurghik32njsgkfs6a
@@ -473,7 +471,7 @@ packages:
       mrmime: 1.0.1
     dev: true
 
-  /@astrojs/preact/1.2.0_preact@10.11.3:
+  /@astrojs/preact/1.2.0:
     resolution: {integrity: sha512-Vm8rkBIE3cNlxhFoUO2Rsv5RxSP7x7Oi9J6qz8+91lwAIjdm6oyDOrrBmdGqsONJ1MqnjPG4EPmIZJGuFtz2SQ==}
     engines: {node: ^14.18.0 || >=16.12.0}
     peerDependencies:
@@ -481,10 +479,9 @@ packages:
     dependencies:
       '@babel/core': 7.20.12
       '@babel/plugin-transform-react-jsx': 7.20.13_@babel+core@7.20.12
-      '@preact/signals': 1.1.3_preact@10.11.3
+      '@preact/signals': 1.1.3
       babel-plugin-module-resolver: 4.1.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.6_preact@10.11.3
+      preact-render-to-string: 5.2.6
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5915,13 +5912,12 @@ packages:
     resolution: {integrity: sha512-Kui4p7PMcEQevBgsTO0JBo3gyQ88Q3qzEvsVCuSp11t0JcN4DmGCTJcGRVSCq7Bn7lGxJBO+57jNSzDoDJ+QmA==}
     dev: true
 
-  /@preact/signals/1.1.3_preact@10.11.3:
+  /@preact/signals/1.1.3:
     resolution: {integrity: sha512-N09DuAVvc90bBZVRwD+aFhtGyHAmJLhS3IFoawO/bYJRcil4k83nBOchpCEoS0s5+BXBpahgp0Mjf+IOqP57Og==}
     peerDependencies:
       preact: 10.x
     dependencies:
       '@preact/signals-core': 1.2.3
-      preact: 10.11.3
     dev: true
 
   /@proload/core/0.3.3:
@@ -23984,6 +23980,14 @@ packages:
     requiresBuild: true
     dev: false
 
+  /preact-render-to-string/5.2.6:
+    resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
+    peerDependencies:
+      preact: '>=10'
+    dependencies:
+      pretty-format: 3.8.0
+    dev: true
+
   /preact-render-to-string/5.2.6_preact@10.11.3:
     resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
     peerDependencies:
@@ -23991,9 +23995,11 @@ packages:
     dependencies:
       preact: 10.11.3
       pretty-format: 3.8.0
+    dev: false
 
   /preact/10.11.3:
     resolution: {integrity: sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg==}
+    dev: false
 
   /prebuild-install/7.1.1:
     resolution: {integrity: sha512-jAXscXWMcCK8GgCoHOfIr0ODh5ai8mj63L2nWrjuAgXE6tDyYGnx4/8o/rCgU+B4JSyZBKbeZqzhtwtC3ovxjw==}
