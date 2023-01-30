@@ -48,7 +48,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
         }}
       />
       <Component {...pageProps} />
-      {/* <Analytics /> */}
+      <Analytics />
       <Script
         strategy="afterInteractive"
         data-domain="trialanderror.org"

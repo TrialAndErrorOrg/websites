@@ -31,11 +31,11 @@ export function Layout({
         <link rel="shortcut icon" href={`${SITE.basePathname}favicon.ico`} />
         <link rel="icon" type="image/svg+xml" href={`${SITE.basePathname}favicon.svg`} />
         <link rel="mask-icon" href={`${SITE.basePathname}favicon.svg`} color="#8D46E7" />
-        <script
+        {/* <script
           defer
           data-domain="positions.trialanderror.org"
           src="https://analytics.trialanderror.org/js/plausible.js"
-        />
+        /> */}
       </Head>
 
       <NextSeo
