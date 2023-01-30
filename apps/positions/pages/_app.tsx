@@ -37,7 +37,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
           description: SITE.description,
           images: [
             {
-              url: 'https://og.trialanderro.org/api/og/jote?name=Open Positions',
+              url: 'https://og.trialanderror.org/api/og/jote?name=Open Positions',
             },
           ],
         }}
