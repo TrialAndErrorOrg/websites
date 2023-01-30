@@ -79,19 +79,28 @@ export function Layout({
           <Link className="hover:text-slate-800 transition-colors sleek-underline" href="/">
             home
           </Link>
+          <Link
+            className="hover:text-slate-800 transition-colors sleek-underline"
+            target="_blank"
+            href="https://trialanderror.org"
+          >
+            main site
+          </Link>
           <a
+            target="_blank"
             className="hover:text-slate-800 transition-colors sleek-underline"
             href="https://journal.trialanderror.org"
           >
             journal
           </a>
           <a
+            target="_blank"
             className="hover:text-slate-800 transition-colors sleek-underline"
             href="https://blog.trialanderror.org"
           >
             blog
           </a>
-          <a href="https://github.com/TrialAndErrorOrg/websites">
+          <a target="_blank" href="https://github.com/TrialAndErrorOrg/websites">
             <svg
               className="md:h-8 md:w-8 w-6 h-6 hover:text-slate-800 transition-colors"
               viewBox="0 0 256 250"

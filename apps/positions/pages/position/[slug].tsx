@@ -6,6 +6,7 @@ import { getCanonical, getPermalink } from '../../utils/permalinks'
 import { getPosition } from '../../utils/positions'
 import type { OpenPosition } from '../../utils/types'
 import { GetServerSideProps } from 'next'
+import Error from 'next/error'
 
 interface Props {
   position: OpenPosition
@@ -34,6 +35,10 @@ export default function PositionPage({
   position: OpenPosition
   image?: string
 }) {
+  if (!position?.title) {
+    return <Error statusCode={404} />
+  }
+
   const meta = {
     title: `${position.title} — ${SITE.name}`,
     description: position?.seo?.metaDescription ?? position.summary,
