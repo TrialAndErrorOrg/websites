@@ -63,8 +63,8 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
           src={
             card.image?.formats?.large?.url || card.image?.formats?.medium?.url || card.image.url
           }
-          blurDataURL={card.blurhash}
-          placeholder={card.blurhash ? 'blur' : 'empty'}
+          blurDataURL={card.image?.blurhash}
+          placeholder={card.image?.blurhash ? 'blur' : 'empty'}
           alt={card.image.alt ?? ''}
           width={card.image.height}
           height={card.image.height}

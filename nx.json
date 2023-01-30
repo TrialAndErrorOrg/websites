@@ -18,6 +18,7 @@
       "runner": "@vercel/remote-nx",
       "options": {
         "verbose": true,
+        "cacheDirectory": "/tmp/nx-cache",
         "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "check"]
       }
     }

@@ -10,9 +10,9 @@ export default async function AboutPage() {
   const team = await getTeam()
   return (
     <div className="relative flex flex-col items-center">
-      <div className="relative h-screen w-screen">
+      <div className="relative min-h-screen w-screen">
         <Frame />
-        <div className="relative top-[20vh] left-[13vw] -z-10 h-[140vh] w-[70vw] bg-blue-50 p-6 md:w-[40vw] md:p-10 lg:top-[25vh]">
+        <div className="relative top-[20vh] left-[13vw] -z-10 min-h-[140vh] w-[70vw] bg-blue-50 p-6 md:w-[40vw] md:p-10 lg:top-[25vh]">
           <div className="flex w-[45vw] flex-col justify-center  gap-10 md:mb-[30vh] md:ml-[20vw] md:gap-20">
             <h1 className="-mt-10 text-4xl font-black text-blue-500 md:-mt-16 md:text-7xl">
               About Us
@@ -31,7 +31,7 @@ export default async function AboutPage() {
           </div>
         </div>
       </div>
-      <div className="relative w-screen md:h-screen">
+      <div className="relative w-screen md:min-h-screen">
         <div className="mx-auto mt-[6vw] flex w-2/3 flex-col items-start gap-[6vw] md:flex-row">
           <h2
             id="mission"
@@ -59,10 +59,10 @@ export default async function AboutPage() {
         </div>
       </div>
       <div className="relative flex w-screen flex-col items-center ">
-        <div className="absolute top-[20vh] left-[13vw] -z-10 h-full min-h-[140vh] w-[60vw] bg-blue-50 p-6 md:w-[40vw] md:p-10 lg:top-[20vh]">
+        <div className="absolute top-[20vh] left-[13vw] -z-10 flex h-full min-h-[140vh] w-[60vw] flex-col items-end justify-center bg-blue-50 md:w-[40vw] lg:top-[20vh]">
           <h2
             id="team"
-            className="-ml-2vw -mt-[5vh] whitespace-nowrap text-4xl font-black text-blue-500 md:-mt-[7vh] md:text-7xl"
+            className="relative -top-[50%] whitespace-nowrap text-4xl font-black text-blue-500 md:text-7xl"
           >
             Meet the Team
           </h2>

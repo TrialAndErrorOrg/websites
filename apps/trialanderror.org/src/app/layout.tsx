@@ -7,6 +7,7 @@ import { Overpass, Open_Sans } from '@next/font/google'
 
 import '../styles/globals.css'
 import { Nav } from './components/Nav'
+import Script from 'next/script'
 // If loading a variable font, you don't need to specify the font weight
 const overpass = Overpass({
   //weight: ['600', '900'],
@@ -101,6 +102,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* @ts-expect-error TODO: fix once Typescript is able to deal with async components or Next's typescript plugin is less ass */}
         <Footer />
         <AnalyticsWrapper />
+        <Script
+          strategy="afterInteractive"
+          data-domain="trialanderror.org"
+          src="/stats/js/script"
+          data-api="/stats/api/event"
+        />
       </body>
     </html>
   )
