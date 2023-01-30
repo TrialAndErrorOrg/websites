@@ -4,6 +4,8 @@ import { getTeam } from '../team/page'
 import { motion } from 'framer-motion'
 import { TeamMemberCard } from '../components/TeamMemberCard'
 
+export const revalidate = 3600 // revalidate every hour
+
 export default async function AboutPage() {
   const team = await getTeam()
   return (
