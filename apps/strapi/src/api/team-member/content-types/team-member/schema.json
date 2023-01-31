@@ -141,6 +141,12 @@
     },
     "dateJoined": {
       "type": "date"
+    },
+    "collaborators": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::collaborator.collaborator",
+      "mappedBy": "teamMembers"
     }
   }
 }

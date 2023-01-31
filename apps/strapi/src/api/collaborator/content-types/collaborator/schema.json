@@ -4,7 +4,8 @@
   "info": {
     "singularName": "collaborator",
     "pluralName": "collaborators",
-    "displayName": "Collaborator"
+    "displayName": "Collaborator",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -16,12 +17,12 @@
       "required": true
     },
     "logo": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "description": {
       "type": "richtext"
@@ -35,7 +36,7 @@
     "teamMembers": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::application.application",
+      "target": "api::team-member.team-member",
       "inversedBy": "collaborators"
     },
     "url": {
