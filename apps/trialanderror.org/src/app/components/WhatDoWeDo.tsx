@@ -1,34 +1,21 @@
 'use client'
-import { animate, AnimatePresence, delay, motion, Variant } from 'framer-motion'
+import { GetAttributes, GetAttributesValues } from '@strapi/strapi'
+import { motion, useReducedMotion, Variant } from 'framer-motion'
+import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
-
-export function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(false)
-
-  useEffect(() => {
-    const media = window.matchMedia(query)
-    if (media.matches !== matches) {
-      setMatches(media.matches)
-    }
-    const listener = () => {
-      setMatches(media.matches)
-    }
-    media.addListener(listener)
-    return () => media.removeListener(listener)
-  }, [matches, query])
-
-  return matches
-}
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const WhatWeDoSection = ({
   children,
   hover,
+  image,
   title,
   setHover,
   isSmall = false,
 }: {
   children: React.ReactNode
   hover: { tab: number; show: boolean }
+  image: GetAttributesValues<'plugin::upload.file'> | null
   title: string
   isSmall?: boolean
   setHover: (arg: React.SetStateAction<{ tab: number; show: boolean }[]>) => void
@@ -44,8 +31,6 @@ const WhatWeDoSection = ({
       return newHover
     })
   }
-
-  const globalDuration = 0.4
 
   const initial = useMemo(
     () =>
@@ -75,9 +60,12 @@ const WhatWeDoSection = ({
           },
     [hover.show, isSmall],
   )
+  const isReducedMotion = useReducedMotion()
+  const globalDuration = isReducedMotion ? 0 : 0.4
 
   return (
     <motion.div
+      tabIndex={0}
       initial={initial}
       animate={animate}
       transition={{
@@ -97,6 +85,8 @@ const WhatWeDoSection = ({
           : 'border-r-4 md:border-r-[6px]'
       } border-blue-500 lg:gap-8`}
       onHoverStart={handleHover}
+      onFocus={handleHover}
+      onFocusCapture={handleHover}
     >
       <motion.h3
         initial={
@@ -122,7 +112,7 @@ const WhatWeDoSection = ({
         }
         className={`absolute flex ${
           isSmall ? '' : 'rotate-90'
-        } text-3xl font-bold text-blue-500 2xl:text-4xl`}
+        } text-3xl font-black text-blue-500 2xl:text-4xl`}
       >
         {title}
       </motion.h3>
@@ -152,12 +142,22 @@ const WhatWeDoSection = ({
           duration: globalDuration,
         }}
       >
-        <div className="h-20 w-20 bg-orange-500" />
+        {image?.url ? (
+          <Image
+            src={image.formats?.small?.url ?? image.url}
+            alt={image.alternativeText ?? ''}
+            height={160}
+            width={160}
+            className="h-16 w-16 object-cover md:h-24 md:w-24"
+          />
+        ) : (
+          <div className="h-20 w-20 bg-orange-500" />
+        )}
 
-        <h3 className="relative flex w-1 flex-col items-center text-3xl font-bold text-blue-500 2xl:text-4xl">
+        <h3 className="relative flex w-1 flex-col items-center text-3xl font-black text-blue-500 2xl:text-5xl">
           {title}
         </h3>
-        <div className="h-2 w-1/4 bg-blue-500" />
+        <div className="h-2 w-1/4 bg-blue-500 md:w-1/6" />
         <div className="flex flex-col items-center  md:text-xl xl:p-10">
           <motion.div
             initial={{ opacity: 0 }}
@@ -178,7 +178,11 @@ const WhatWeDoSection = ({
   )
 }
 
-export const WhatDoWeDo = () => {
+export const WhatDoWeDo = ({
+  images,
+}: {
+  images: (GetAttributesValues<'plugin::upload.file'> | null)[]
+}) => {
   const [hover, setHover] = useState([
     { tab: 0, show: true },
     { tab: 1, show: false },
@@ -207,7 +211,13 @@ export const WhatDoWeDo = () => {
         }}
         className="relative ml-[15vw] mr-[5vw]  flex h-[80vh] w-[70vb] flex-col justify-start overflow-hidden border-4 border-blue-500 bg-white md:ml-[25vw] md:h-auto md:w-[60vw] md:max-w-[60vw] md:flex-row  md:border-[6px]"
       >
-        <WhatWeDoSection hover={hover[0]} setHover={setHover} title="Discussing" isSmall={isSmall}>
+        <WhatWeDoSection
+          hover={hover[0]}
+          setHover={setHover}
+          title="Discussing"
+          isSmall={isSmall}
+          image={images[0]}
+        >
           {/* Little blue bar */}
 
           <p className="text-center text-blue-500">
@@ -222,7 +232,13 @@ export const WhatDoWeDo = () => {
           </p>
         </WhatWeDoSection>
 
-        <WhatWeDoSection hover={hover[1]} setHover={setHover} title="Publishing" isSmall={isSmall}>
+        <WhatWeDoSection
+          hover={hover[1]}
+          setHover={setHover}
+          title="Publishing"
+          isSmall={isSmall}
+          image={images[1]}
+        >
           <p className="text-center text-blue-500">
             We aim to publicize the lessons of research struggles, publish answers to the question
             “what went wrong?”, and independently host non-profit pre-press services.
@@ -236,7 +252,13 @@ export const WhatDoWeDo = () => {
           </p>
         </WhatWeDoSection>
 
-        <WhatWeDoSection hover={hover[2]} setHover={setHover} title="Training" isSmall={isSmall}>
+        <WhatWeDoSection
+          hover={hover[2]}
+          setHover={setHover}
+          title="Training"
+          isSmall={isSmall}
+          image={images[2]}
+        >
           <p className="text-center text-blue-500">
             Institutional change results from well-equipped young people, creating a mass from
             below.

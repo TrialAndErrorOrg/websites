@@ -77,6 +77,12 @@
     },
     "position": {
       "type": "string"
+    },
+    "collaborators": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::collaborator.collaborator",
+      "inversedBy": "teamMembers"
     }
   }
 }

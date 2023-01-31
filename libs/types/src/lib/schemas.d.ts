@@ -904,80 +904,17 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
     url: UIDAttribute & RequiredAttribute
     howDidYouFindThis: StringAttribute
     position: StringAttribute
+    collaborators: RelationAttribute<
+      'api::application.application',
+      'manyToMany',
+      'api::collaborator.collaborator'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::application.application', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface ApiArticleArticle extends CollectionTypeSchema {
-  info: {
-    singularName: 'article'
-    pluralName: 'articles'
-    displayName: 'Article'
-    name: 'article'
-    description: ''
-  }
-  options: {
-    increments: true
-    timestamps: true
-    draftAndPublish: true
-  }
-  pluginOptions: {
-    i18n: {
-      localized: true
-    }
-  }
-  attributes: {
-    title: StringAttribute &
-      RequiredAttribute &
-      SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    description: TextAttribute &
-      RequiredAttribute &
-      SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    content: RichTextAttribute &
-      RequiredAttribute &
-      SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    slug: UIDAttribute<'api::article.article', 'title'> & RequiredAttribute
-    image: MediaAttribute &
-      SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    author: RelationAttribute<'api::article.article', 'manyToOne', 'api::writer.writer'>
-    seo: ComponentAttribute<'shared.seo'> &
-      RequiredAttribute &
-      SetPluginOptions<{
-        i18n: {
-          localized: true
-        }
-      }>
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'api::article.article', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'api::article.article', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    localizations: RelationAttribute<'api::article.article', 'oneToMany', 'api::article.article'>
-    locale: StringAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
 }
@@ -1173,22 +1110,33 @@ export interface ApiCategoryCategory extends CollectionTypeSchema {
   }
 }
 
-export interface ApiDepartmentDepartment extends CollectionTypeSchema {
+export interface ApiCollaboratorCollaborator extends CollectionTypeSchema {
   info: {
-    singularName: 'department'
-    pluralName: 'departments'
-    displayName: 'Department'
+    singularName: 'collaborator'
+    pluralName: 'collaborators'
+    displayName: 'Collaborator'
   }
   options: {
     draftAndPublish: false
   }
   attributes: {
-    Name: StringAttribute
+    title: StringAttribute & RequiredAttribute
+    logo: MediaAttribute & RequiredAttribute
+    description: RichTextAttribute
+    startDate: DateAttribute
+    endDate: DateAttribute
+    teamMembers: RelationAttribute<
+      'api::collaborator.collaborator',
+      'manyToMany',
+      'api::application.application'
+    >
+    url: StringAttribute & RequiredAttribute
+    collaborationProject: StringAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'api::department.department', 'oneToOne', 'admin::user'> &
+    createdBy: RelationAttribute<'api::collaborator.collaborator', 'oneToOne', 'admin::user'> &
       PrivateAttribute
-    updatedBy: RelationAttribute<'api::department.department', 'oneToOne', 'admin::user'> &
+    updatedBy: RelationAttribute<'api::collaborator.collaborator', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -1246,33 +1194,6 @@ export interface ApiDonatePageDonatePage extends SingleTypeSchema {
   }
 }
 
-export interface ApiEditorEditor extends CollectionTypeSchema {
-  info: {
-    singularName: 'editor'
-    pluralName: 'editors'
-    displayName: 'Editor'
-    description: ''
-  }
-  options: {
-    draftAndPublish: true
-  }
-  attributes: {
-    Title: StringAttribute & RequiredAttribute & UniqueAttribute
-    email: EmailAttribute
-    jote_article_categories: RelationAttribute<
-      'api::editor.editor',
-      'oneToMany',
-      'api::jote-article-category.jote-article-category'
-    >
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    publishedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'api::editor.editor', 'oneToOne', 'admin::user'> & PrivateAttribute
-    updatedBy: RelationAttribute<'api::editor.editor', 'oneToOne', 'admin::user'> & PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
 export interface ApiGlobalGlobal extends SingleTypeSchema {
   info: {
     singularName: 'global'
@@ -1319,27 +1240,6 @@ export interface ApiHomepageHomepage extends SingleTypeSchema {
     createdBy: RelationAttribute<'api::homepage.homepage', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'api::homepage.homepage', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface ApiInitiativeInitiative extends CollectionTypeSchema {
-  info: {
-    singularName: 'initiative'
-    pluralName: 'initiatives'
-    displayName: 'Initiative'
-  }
-  options: {
-    draftAndPublish: false
-  }
-  attributes: {
-    name: StringAttribute & RequiredAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'api::initiative.initiative', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'api::initiative.initiative', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -1928,6 +1828,7 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
           'Operational, Facility, and Support',
         ]
       >
+    dateJoined: DateAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
@@ -2015,30 +1916,6 @@ export interface ApiUpdateCategoryUpdateCategory extends CollectionTypeSchema {
   }
 }
 
-export interface ApiWriterWriter extends CollectionTypeSchema {
-  info: {
-    singularName: 'writer'
-    pluralName: 'writers'
-    displayName: 'Writer'
-    name: 'writer'
-  }
-  options: {
-    increments: true
-    timestamps: true
-  }
-  attributes: {
-    name: StringAttribute
-    picture: MediaAttribute
-    articles: RelationAttribute<'api::writer.writer', 'oneToMany', 'api::article.article'>
-    email: StringAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'api::writer.writer', 'oneToOne', 'admin::user'> & PrivateAttribute
-    updatedBy: RelationAttribute<'api::writer.writer', 'oneToOne', 'admin::user'> & PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
 export interface ChoicesAuthorOrTeamMember extends ComponentSchema {
   info: {
     displayName: 'Author or Team Member'
@@ -2113,7 +1990,6 @@ export interface CotePositionOrEditor extends ComponentSchema {
   }
   attributes: {
     position: RelationAttribute<'cote.position-or-editor', 'oneToOne', 'api::position.position'>
-    editor: RelationAttribute<'cote.position-or-editor', 'oneToOne', 'api::editor.editor'>
   }
 }
 
@@ -2218,17 +2094,14 @@ declare global {
       'plugin::scheduler.scheduler': PluginSchedulerScheduler
       'api::about-page.about-page': ApiAboutPageAboutPage
       'api::application.application': ApiApplicationApplication
-      'api::article.article': ApiArticleArticle
       'api::blog-author.blog-author': ApiBlogAuthorBlogAuthor
       'api::blog-home.blog-home': ApiBlogHomeBlogHome
       'api::blog-post.blog-post': ApiBlogPostBlogPost
       'api::category.category': ApiCategoryCategory
-      'api::department.department': ApiDepartmentDepartment
+      'api::collaborator.collaborator': ApiCollaboratorCollaborator
       'api::donate-page.donate-page': ApiDonatePageDonatePage
-      'api::editor.editor': ApiEditorEditor
       'api::global.global': ApiGlobalGlobal
       'api::homepage.homepage': ApiHomepageHomepage
-      'api::initiative.initiative': ApiInitiativeInitiative
       'api::jote-article.jote-article': ApiJoteArticleJoteArticle
       'api::jote-article-category.jote-article-category': ApiJoteArticleCategoryJoteArticleCategory
       'api::jote-author.jote-author': ApiJoteAuthorJoteAuthor
@@ -2241,7 +2114,6 @@ declare global {
       'api::team-member.team-member': ApiTeamMemberTeamMember
       'api::team-page.team-page': ApiTeamPageTeamPage
       'api::update-category.update-category': ApiUpdateCategoryUpdateCategory
-      'api::writer.writer': ApiWriterWriter
       'choices.author-or-team-member': ChoicesAuthorOrTeamMember
       'components.cta': ComponentsCta
       'components.document': ComponentsDocument

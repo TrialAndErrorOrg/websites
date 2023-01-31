@@ -39,7 +39,6 @@ export function TeamMemberCard({
     firstName,
     position,
     image,
-    bio,
     lastName,
     summary,
     mastodon,
@@ -53,31 +52,31 @@ export function TeamMemberCard({
   const socials = {
     linkedIn: {
       url: linkedin,
-      icon: <FaLinkedin className="text-2xl text-blue-500" />,
+      icon: <FaLinkedin />,
     },
     mastodon: {
       url: mastodon,
-      icon: <FaMastodon className="text-2xl text-blue-500" />,
+      icon: <FaMastodon />,
     },
     twitter: {
       url: twitter,
-      icon: <FaTwitter className="text-2xl text-blue-500" />,
+      icon: <FaTwitter />,
     },
     github: {
       url: github,
-      icon: <FaGithub className="text-2xl text-blue-500" />,
+      icon: <FaGithub />,
     },
     orcid: {
       url: orcid,
-      icon: <FaOrcid className="text-2xl text-blue-500" />,
+      icon: <FaOrcid />,
     },
     personalWebsite: {
       url: personalWebsite,
-      icon: <FaLink className="text-2xl text-blue-500" />,
+      icon: <FaLink />,
     },
     email: {
       url: `mailto:${member.email}`,
-      icon: <FaEnvelope className="text-2xl text-blue-500" />,
+      icon: <FaEnvelope />,
     },
   }
 
@@ -86,7 +85,7 @@ export function TeamMemberCard({
   return (
     <div
       // flip animation on hover that shows the other side of the card which contains the bio
-      className="group relative flex h-96 w-60 cursor-pointer flex-col items-center gap-10 md:w-80"
+      className="group relative flex h-[26rem] w-60 cursor-pointer flex-col items-center gap-10 md:w-80"
       onClick={() => setTurn((turn) => !turn)}
       // initial="rest"
       // animate="rest"
@@ -110,11 +109,17 @@ export function TeamMemberCard({
           dangerouslySetInnerHTML={{ __html: summary || 'They didnt write nothin' }}
         />
         {/* Map out all the socials of the member */}
-        <div className="mt-4 flex gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 md:mt-4 md:gap-4">
           {Object.entries(socials).map(([key, value]) => {
             if (value.url) {
               return (
-                <a key={key} href={value.url} target="_blank">
+                <a
+                  key={key}
+                  className="text-xl text-blue-500 transition-colors hover:text-orange-500 md:text-2xl"
+                  href={value.url}
+                  target="_blank"
+                >
+                  <span className="sr-only">{key}</span>
                   {value.icon}
                 </a>
               )

@@ -10,11 +10,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::position.position"
-    },
-    "editor": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::editor.editor"
     }
   }
 }

@@ -1,45 +1,43 @@
 diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
-index b7e0ddc..6a85af0 100644
+index b7e0ddc..6af2d1b 100644
 --- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
 +++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
-@@ -44,7 +44,47 @@ const LeftMenu = () => {
+@@ -44,26 +44,65 @@ const LeftMenu = () => {
    const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
    const intlSingleTypeLinks = toIntl(singleTypeLinks);
  
-+  const categories= {
-+  COTE : ["Team Member", "Position", "Department", "Initiative"],
-+  JOTE : ["JOTE Article", "JOTE Author", "JOTE Article Category", "Editor"],
-+  Meta: ["Content-Content Interface", "Content-Update Interface"],
-+  Website: ["Update Category","Category"],
-+  Blog: ["Blog Author", "Blog Post", "Tag"],
-+  Podcast: ["Podcast Episode", "Podcast Topic", "Podcast Theme"],
++  const categories = {
++    COTE: ["Team Member", "Open Position", "Collaborator", "Application"],
++    JOTE: ["JOTE Article", "JOTE Author", "JOTE Article Category"],
++    Website: ["User", "Page", "Update Category"],
++    Blog: ["Blog Author", "Blog Post", "Blog Tag", "Category"],
 +  }
 +
-+  const links = intlCollectionTypeLinks.reduce((acc,curr)=>{
-+   const entry= Object.entries(categories).find(([key,arr])=>arr.includes(curr.title))
-+   if(entry){
-+     const [category, val] = entry
-+     acc[category]=[...(acc[category]||[]), curr]
-+     return acc
-+   }
-+   acc.Misc= [...(acc.Misc||[]), curr]
++  const links = intlCollectionTypeLinks.reduce((acc, curr) => {
++    const entry = Object.entries(categories).find(([key, arr]) => arr.includes(curr.title))
++    if (entry) {
++      const [category, val] = entry
++      acc[category] = [...(acc[category] || []), curr]
++      return acc
++    }
++    acc.Misc = [...(acc.Misc || []), curr]
 +
-+   return acc
++    return acc
 +
-+  },{})
++  }, {})
 +
-+  const menus = Object.entries(links).map(([category,link])=>({
++  const menus = Object.entries(links).map(([category, link]) => ({
 +    id: `${category}Types`,
-+      title: {
-+        id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
-+        defaultMessage: `${category}`,
-+        },
-+        searchable:true,
-+      links: sortBy(matchByTitle(link, search), object =>
-+        object.title.toLowerCase()
-+      ),
-+      }
-+ ))
++    title: {
++      id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
++      defaultMessage: `${category}`,
++    },
++    searchable: true,
++    links: sortBy(matchByTitle(link, search), object =>
++      object.title.toLowerCase()
++    ),
++  }
++  ))
 +
 +
 +
@@ -47,16 +45,44 @@ index b7e0ddc..6a85af0 100644
 +
    const menu = [
 +    ...menus,
++
      {
-       id: 'collectionTypes',
+-      id: 'collectionTypes',
++      id: 'singleTypes',
        title: {
-@@ -82,6 +122,10 @@ const LeftMenu = () => {
+-        id: getTrad('components.LeftMenu.collection-types'),
+-        defaultMessage: 'Collection Types',
++        id: getTrad('components.LeftMenu.single-types'),
++        defaultMessage: 'Single Types',
+       },
+       searchable: true,
+-      links: sortBy(matchByTitle(intlCollectionTypeLinks, search), (object) =>
++      links: sortBy(matchByTitle(intlSingleTypeLinks, search), (object) =>
+         object.title.toLowerCase()
+       ),
+     },
+     {
+-      id: 'singleTypes',
++      id: 'collectionTypes',
+       title: {
+-        id: getTrad('components.LeftMenu.single-types'),
+-        defaultMessage: 'Single Types',
++        id: getTrad('components.LeftMenu.collection-types'),
++        defaultMessage: 'Backup Menu',
+       },
+       searchable: true,
+-      links: sortBy(matchByTitle(intlSingleTypeLinks, search), (object) =>
++      links: sortBy(matchByTitle(intlCollectionTypeLinks, search), (object) =>
+         object.title.toLowerCase()
+       ),
+     },
+@@ -82,6 +121,10 @@ const LeftMenu = () => {
      defaultMessage: 'Content',
    });
  
-+console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
-+        object.title.toLowerCase()
-+      ))
++  console.log(sortBy(matchByTitle(matchByTitle(intlCollectionTypeLinks, search), "blog"), object =>
++    object.title.toLowerCase()
++  ))
 +
    return (
      <SubNav ariaLabel={label}>

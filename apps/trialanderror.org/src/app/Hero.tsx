@@ -5,8 +5,9 @@ import { motion } from 'framer-motion'
 export function Hero() {
   return (
     <div className="relative flex min-h-screen w-screen flex-col justify-center">
-      <div className="max-w-screen absolute inset-6 -z-20 min-h-screen border-4 border-blue-500 md:inset-20 md:border-[6px]" />
-      <div className="relative mt-[20vh] grid w-full grid-cols-6 items-center justify-center">
+      {/* <div className="max-w-screen absolute inset-6 -z-20 min-h-screen border-4 border-blue-500 md:inset-20 md:border-[6px]" /> */}
+      <Frame />
+      <div className="relative mt-[20vh] grid w-full grid-cols-6 items-center justify-center md:mt-[40vh]">
         <div className="absolute top-0 left-0 col-span-4 col-start-2 h-full w-full bg-orange-500" />
         {/* <Frame /> */}
 
@@ -14,7 +15,7 @@ export function Hero() {
           initial={{ translateX: '-100vw' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
           animate={{ translateX: 0 }}
-          className="font-overpass col-span-5 col-start-2 -mt-6 -ml-8 max-w-[66.666667%] text-5xl font-black leading-[1.2] tracking-tight text-blue-500 md:-mt-40 md:text-6xl lg:-mt-10 xl:text-7xl 2xl:text-[104px]"
+          className="font-overpass col-span-5 col-start-2 -mt-28 -ml-4  max-w-[66.666667%] text-5xl font-black leading-[1.2] tracking-tight text-blue-500 md:-ml-8 md:-mt-40 md:text-6xl lg:-mt-[15vh] xl:text-7xl 2xl:text-[104px]"
         >
           The Center of Trial <br className="hidden xl:flex" />
           and Error

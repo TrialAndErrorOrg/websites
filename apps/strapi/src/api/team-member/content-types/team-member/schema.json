@@ -138,6 +138,9 @@
         "Operational, Facility, and Support"
       ],
       "customField": "plugin::multi-select.multi-select"
+    },
+    "dateJoined": {
+      "type": "date"
     }
   }
 }
