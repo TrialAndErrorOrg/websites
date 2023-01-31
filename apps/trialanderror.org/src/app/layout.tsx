@@ -93,7 +93,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#002642" />
         <meta name="msapplication-TileColor" content="#002642" />
         <meta name="theme-color" content="#ffffff" />
-        <SEO description="Creating transparent and responsible scholarship." />
       </head>
       <body>
         {/* @ts-expect-error TODO: fix once Typescript is able to deal with async components or Next's typescript plugin is less ass */}
