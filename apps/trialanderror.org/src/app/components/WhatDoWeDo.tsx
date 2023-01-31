@@ -144,6 +144,7 @@ const WhatWeDoSection = ({
       >
         {image?.url ? (
           <Image
+            // @ts-expect-error TODO: create an image type, or figure out how to get the correct type
             src={image.formats?.small?.url ?? image.url}
             alt={image.alternativeText ?? ''}
             height={160}

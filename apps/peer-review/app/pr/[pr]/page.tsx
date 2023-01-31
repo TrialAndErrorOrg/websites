@@ -219,14 +219,14 @@ export default async function Page(props: { params: { pr: string } }) {
   // const submission = await fetchSubmission(pr)
   // console.dir({ submission }, { depth: null })
   if (!submission || submission.statusLabel !== 'Scheduled') {
-    throw new Error(404)
+    return <div>Not found</div>
   }
   return (
     <div className="container">
-      <main className="w-full max-w-2xl mx-auto flex flex-col gap-8">
+      <main className="mx-auto flex w-full max-w-2xl flex-col gap-8">
         {/* Create a nicely styled page to display reviews, with links to download files */}
 
-        <h1 className="mt-8 text-2xl font-bold flex flex-col">
+        <h1 className="mt-8 flex flex-col text-2xl font-bold">
           <span className="text-lg font-normal">Reviews for</span>
           <span> {submission.publications?.[0]?.title?.en_US}</span>
         </h1>
