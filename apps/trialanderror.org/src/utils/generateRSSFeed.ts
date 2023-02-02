@@ -4,7 +4,7 @@ import { env } from '../env/server.mjs'
 
 export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
   const allPosts = await getAllCards({ limit: 1000 })
-  const site_url = process.env.VERCEL_URL // use 'localhost:3000' in dev mode or create .env.local file in project root and add this: VERCEL_URL=http://localhost:3000
+  const site_url = process.env.VERCEL ? 'https://trialanderror.org' : 'http://localhost:4200'
 
   const feedOptions: FeedOptions = {
     updated: new Date(),
@@ -25,10 +25,10 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     copyright: `CC-BY 4.0 ${new Date().getFullYear()}, Center of Trial & Error`,
     generator: 'Feed for Node.js',
     feedLinks: {
-      rss2: `${site_url}/rss.xml`,
+      rss2: `${site_url}/rss2.xml`,
       // other feed formats
       json: `${site_url}/rss.json`,
-      atom: `${site_url}/atom.xml`,
+      atom: `${site_url}/rss.xml`,
     },
   }
 

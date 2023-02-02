@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (typeAsString !== 'rss' && typeAsString !== 'atom' && typeAsString !== 'json') {
       return res.status(400).json({ error: 'Invalid type' })
     }
+
     const rss = await generateRssFeed(typeAsString)
 
     // set response content header to xml
