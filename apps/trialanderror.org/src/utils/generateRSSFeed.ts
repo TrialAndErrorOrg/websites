@@ -14,14 +14,13 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
       email: 'info@trialanderror.org',
       link: 'https://trialanderror.org',
     },
-    feed: `${site_url}/rss.xml`,
     ttl: 60 * 60,
     title: 'Center of Trial & Error | RSS Feed',
     description: 'Updates from the Blog, Journal, and Center of Trial & Error!',
-    id: env.VERCEL_URL,
-    link: env.VERCEL_URL,
-    image: `${site_url}/favicon.png`,
-    favicon: `${site_url}/favicon.png`,
+    id: site_url,
+    link: site_url,
+    image: `${site_url}/android-chrome-384x384.png`,
+    favicon: `${site_url}/favicon.ico`,
     copyright: `CC-BY 4.0 ${new Date().getFullYear()}, Center of Trial & Error`,
     generator: 'Feed for Node.js',
     feedLinks: {
@@ -32,33 +31,62 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     },
   }
 
+  console.log(feedOptions)
   const feed = new Feed(feedOptions)
+  console.log(feed)
 
   allPosts.forEach((post) => {
     const url = `${
       post.type === 'post' ? `https://blog.trialanderror.org/${post.url}` : post.url
     }?utm_source=rss&utm_medium=rss&utm_campaign=rss`
 
+    const image = post.image?.formats?.medium?.url ?? post.image.url
+    const author =
+      post.team
+        .map((member) => {
+          if (typeof member === 'string') {
+            console.log({ member })
+            return {
+              name: member,
+              email: '',
+              link: '',
+            }
+          }
+          return {
+            name: `${member.firstName} ${member.lastName}`,
+            email: member.email,
+            link: `https://blog.trialanderror.org/author/${member.slug}`,
+          }
+        })
+        .filter((author) => author.name) ?? []
+
+    console.log(image)
     feed.addItem({
       title: post.title,
       id: url,
       date: new Date(post.published),
       link: url,
       description: post.excerpt,
-      contributor: post.team.map((member) => {
-        if (typeof member === 'string') {
-          return {
-            name: member,
-            email: '',
-            link: '',
+      guid: post.identifier,
+      content: url,
+      category: post.type
+        ? [
+            {
+              term: post.type,
+              name: post.type === 'article' ? 'Journal Article' : 'Blog Post',
+            },
+            ...(post.tags?.map((tag) => ({
+              term: tag,
+              name: tag,
+            })) ?? []),
+          ]
+        : undefined,
+      ...(image
+        ? {
+            image,
           }
-        }
-        return {
-          name: `${member.firstName} ${member.lastName}`,
-          email: member.email,
-          link: `https://blog.trialanderror.org/author/${member.slug}`,
-        }
-      }),
+        : {}),
+      ...(author.length ? { author } : {}),
     })
   })
 

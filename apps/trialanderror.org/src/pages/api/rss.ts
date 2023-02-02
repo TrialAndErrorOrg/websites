@@ -27,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).send(rss)
   } catch (e: unknown) {
+    console.error(e)
     if (!(e instanceof Error)) {
       throw e
     }
