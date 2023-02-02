@@ -14,21 +14,20 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
       email: 'info@trialanderror.org',
       link: 'https://trialanderror.org',
     },
-    feed: `${site_url}/rss.xml`,
     ttl: 60 * 60,
     title: 'Center of Trial & Error | RSS Feed',
     description: 'Updates from the Blog, Journal, and Center of Trial & Error!',
-    id: env.VERCEL_URL,
-    link: env.VERCEL_URL,
-    image: `${site_url}/favicon.png`,
-    favicon: `${site_url}/favicon.png`,
+    id: site_url,
+    link: site_url,
+    image: `${site_url}/android-chrome-384x384.png`,
+    favicon: `${site_url}/favicon.ico`,
     copyright: `CC-BY 4.0 ${new Date().getFullYear()}, Center of Trial & Error`,
     generator: 'Feed for Node.js',
     feedLinks: {
-      rss2: `${site_url}/rss2.xml`,
+      rss2: `/rss2.xml`,
       // other feed formats
-      json: `${site_url}/rss.json`,
-      atom: `${site_url}/rss.xml`,
+      json: `/rss.json`,
+      atom: `/rss.xml`,
     },
   }
 
