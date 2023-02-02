@@ -1,8 +1,8 @@
 import { getFile } from '../server/files'
 import { getAllCards } from '../server/mixed'
-import { Card } from './Card'
+import { Card } from './components/Card'
 import { WhatDoWeDo } from './components/WhatDoWeDo'
-import { Hero } from './Hero'
+import { Hero } from './components/Hero'
 
 export const revalidate = 3600 // revalidate at least every hour
 
@@ -11,7 +11,7 @@ export default async function Page() {
   const filesPromise = Promise.all([573, 571, 572].map(async (file) => await getFile(file)))
 
   const [cards, files] = await Promise.all([cardsPromise, filesPromise])
-  console.log(files)
+  console.dir(cards, { depth: null })
 
   return (
     // <main className="relative">

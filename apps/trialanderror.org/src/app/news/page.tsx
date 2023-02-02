@@ -1,7 +1,7 @@
 import { getAllCards } from '../../server/mixed'
 import { ClientProvider } from '../../utils/trpcClient'
-import { Card } from '../Card'
-import { InfiniteCards } from '../InfiniteCards'
+import { Card } from '../components/Card'
+import { InfiniteCards } from '../components/InfiniteCards'
 
 export const revalidate = 3600 // revalidate every hour
 

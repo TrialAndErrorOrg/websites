@@ -39,6 +39,24 @@ const nextConfig = {
       "tailwindui.com",
     ],
   },
+  rewrites: async () => [
+    {
+      source: '/rss.xml',
+      destination: '/api/rss',
+    },
+    {
+      source: '/rss',
+      destination: '/api/rss',
+    },
+    {
+      source: '/rss.json',
+      destination: '/api/rss?type=json',
+    },
+    {
+      source: '/rss2.xml',
+      destination: '/api/rss?type=rss',
+    },
+  ],
 }
 
 export default withNx(nextConfig)

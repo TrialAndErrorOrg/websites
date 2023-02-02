@@ -17,6 +17,8 @@ export interface Card {
 
 interface Team {
   img: Img
+  slug: string
+  email: string
   lastName: string
   firstName: string
 }

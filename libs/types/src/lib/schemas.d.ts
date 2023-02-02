@@ -1115,6 +1115,7 @@ export interface ApiCollaboratorCollaborator extends CollectionTypeSchema {
     singularName: 'collaborator'
     pluralName: 'collaborators'
     displayName: 'Collaborator'
+    description: ''
   }
   options: {
     draftAndPublish: false
@@ -1128,7 +1129,7 @@ export interface ApiCollaboratorCollaborator extends CollectionTypeSchema {
     teamMembers: RelationAttribute<
       'api::collaborator.collaborator',
       'manyToMany',
-      'api::application.application'
+      'api::team-member.team-member'
     >
     url: StringAttribute & RequiredAttribute
     collaborationProject: StringAttribute
@@ -1829,6 +1830,11 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
         ]
       >
     dateJoined: DateAttribute
+    collaborators: RelationAttribute<
+      'api::team-member.team-member',
+      'manyToMany',
+      'api::collaborator.collaborator'
+    >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::team-member.team-member', 'oneToOne', 'admin::user'> &

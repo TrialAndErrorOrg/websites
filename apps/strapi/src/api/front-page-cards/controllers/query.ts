@@ -12,6 +12,8 @@ array_to_json(array_remove(
       distinct jsonb_build_object(
           'firstName', ba.first_name,
           'lastName', ba.last_name,
+          'slug', ba.slug,
+          'email', ba.email,
           'image', jsonb_build_object(
             'url', f3.url,
             'width', f3.width,
@@ -25,6 +27,8 @@ array_to_json(array_remove(
         distinct jsonb_build_object(
           'firstName', tm.first_name,
           'lastName', tm.last_name,
+          'slug', tm.slug,
+          'email', tm.email,
           'image', jsonb_build_object(
             'url', f2.url,
             'width', f2.width,
@@ -38,6 +42,8 @@ array_to_json(array_remove(
       jsonb_build_object(
         'firstName', null,
         'lastName', null,
+        'slug', null,
+        'email', null,
         'image', jsonb_build_object(
             'url', null,
             'width', null,
@@ -54,7 +60,8 @@ array_to_json(array_remove(
     'height', f.height,
     'alt', f.alternative_text,
     'caption', f.caption,
-    'formats', f.formats
+    'formats', f.formats,
+    'blurhash', f.blurhash
     ) as image
 from blog_posts p
 LEFT OUTER JOIN blog_posts_blog_authors_links pal
@@ -105,7 +112,9 @@ jsonb_build_object(
   'height', f.height,
   'alt', f.alternative_text,
   'caption',f.caption,
-  'formats', f.formats) as image
+  'formats', f.formats,
+  'blurhash', f.blurhash
+  ) as image
 from jote_articles j
 LEFT OUTER JOIN jote_articles_jote_article_category_links jcl
 on j.id = jcl.jote_article_id

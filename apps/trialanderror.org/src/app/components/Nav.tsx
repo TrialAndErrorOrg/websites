@@ -1,5 +1,5 @@
 import { getNavigation } from '../../server/nav'
-import { Navigation } from '../Navigation'
+import { Navigation } from './Navigation'
 import { Menu } from '@/types'
 
 const defaultNav: Menu = {

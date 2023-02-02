@@ -13,7 +13,7 @@ import {
   FaEnvelope,
 } from 'react-icons/fa'
 import { useState } from 'react'
-import { classNames } from '../Navigation'
+import { classNames } from './Navigation'
 
 const variants = (front: boolean): Variants => ({
   rest: {
