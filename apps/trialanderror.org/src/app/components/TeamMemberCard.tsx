@@ -105,7 +105,7 @@ export function TeamMemberCard({
       >
         <h3 className="text-2xl font-bold text-blue-500">{`${firstName}`}</h3>
         <div
-          className="text-center text-sm text-blue-500 md:text-lg"
+          className="text-center text-sm text-blue-500 md:text-base"
           dangerouslySetInnerHTML={{ __html: summary || 'They didnt write nothin' }}
         />
         {/* Map out all the socials of the member */}

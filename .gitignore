@@ -167,3 +167,5 @@ patches_bak
 **/.next
 **/out
 libs/types/src/lib/validators.ts
+
+.react-email

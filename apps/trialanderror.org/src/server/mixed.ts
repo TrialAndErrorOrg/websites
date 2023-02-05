@@ -38,17 +38,18 @@ interface Img {
   blurhash?: string
 }
 
-export const getAllCards = cache(async ({ limit = 100, offset = 0 } = {}) => {
+export const getAllCards = async ({ limit = 100, offset = 0 } = {}) => {
   try {
     return (
       await fetch(`${env.STRAPI_ENDPOINT}/front-page-cards?limit=${limit}&offset=${offset}`, {
         headers: {
           Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
         },
+        next: { revalidate: 3600 },
       })
     ).json() as Promise<Card[]>
   } catch (err) {
     console.log(err)
     return []
   }
-})
+}

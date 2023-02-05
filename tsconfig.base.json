@@ -36,6 +36,7 @@
       "@centertrialerror/frontend": ["apps/frontend"],
       "@centertrialerror/scripts": ["libs/scripts/src/index.ts"],
       "@centertrialerror/strapi": ["apps/strapi"],
+      "@centertrialerror/email": ["apps/email"],
       "@centertrialerror/thesis": ["apps/thesis"],
       "@centertrialerror/ui": ["libs/ui/src/index.ts"],
       "@centertrialerror/webhooks": ["libs/webhooks/src/index.ts"],
