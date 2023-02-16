@@ -155,7 +155,7 @@ export function Navigation({ nav }: { nav: Menu }) {
           bounce: 0.5,
         }}
         id="ribbon"
-        className="absolute left-[calc(16.6667%-8vw)] z-20 hidden h-[calc(21vh+5rem)] w-20 flex-col items-center justify-end bg-blue-500 md:flex"
+        className="absolute left-4 z-20 hidden h-[calc(21vh+5rem)] w-20 flex-col items-center justify-end bg-blue-500 md:flex lg:left-[calc(16.6667%-8vw)]"
       >
         <Image
           src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"

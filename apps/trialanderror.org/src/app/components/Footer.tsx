@@ -143,7 +143,7 @@ export async function Footer() {
               Subscribe to our newsletter
             </h3>
             <p className="mt-4 mb-4 text-base text-gray-300">
-              The latest news, articles, and resources, sent to your inbox weekly.
+              Receive updates from us about our projects and events.
             </p>
 
             <SignUp />

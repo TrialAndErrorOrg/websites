@@ -8,6 +8,7 @@ import { Overpass, Open_Sans } from '@next/font/google'
 import '../styles/globals.css'
 import { Nav } from './components/Nav'
 import Script from 'next/script'
+import { env } from '../env/server.mjs'
 // If loading a variable font, you don't need to specify the font weight
 const overpass = Overpass({
   //weight: ['600', '900'],
@@ -27,7 +28,7 @@ const open_sans = Open_Sans({
   display: 'optional',
 })
 
-export const ogURL = 'https://og.trialanderror.org/api/og/jote'
+export const ogURL = `${env.OG_URL}/api/og/jote`
 
 // next-seo.config.js
 export const SEO = (
@@ -49,6 +50,7 @@ export const SEO = (
     {...{
       title: title,
       description: description,
+      canonical: `https://trialanderror.org/${canonical}`,
       openGraph: {
         type: ogType,
         locale,

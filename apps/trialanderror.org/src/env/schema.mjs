@@ -30,7 +30,8 @@ export const serverSchema = z.object({
   NEXT_REVALIDATION_TOKEN: z.string(),
   // ORCID_ACCESS_SECRET: z.string(),
   PORT: z.string().optional(),
-  VERCEL_URL: z.string()
+  VERCEL_URL: z.string(),
+  OG_URL: z.string().url()
 });
 
 /**

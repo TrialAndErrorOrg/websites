@@ -92,7 +92,7 @@ export async function generateJoteImage({
         )}
         <div tw="flex flex-col flex-1 pt-8 max-w-3xl justify-between">
           <div
-            tw="absolute h-[90%] w-[100%]  left-14 top-16 -z-10"
+            tw="absolute h-[80%] w-[100%]  left-14 top-32 -z-10"
             style={{
               backgroundColor: 'rgb(254 170 0) ',
             }}
@@ -107,8 +107,8 @@ export async function generateJoteImage({
                   ? 'text-6xl'
                   : title.length >= 40
                   ? 'text-7xl'
-                  : 'text-8xl -mt-4'
-              } text-[#002642]`}
+                  : 'text-8xl'
+              } text-[#002642] mt-10`}
               style={{
                 fontFamily: '"Overpass"',
                 fontWeight: 900,

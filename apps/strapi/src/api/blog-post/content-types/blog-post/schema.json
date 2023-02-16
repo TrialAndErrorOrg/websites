@@ -80,6 +80,11 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "blog_posts"
+    },
+    "doi": {
+      "type": "string",
+      "regex": "10.36850/.+",
+      "unique": true
     }
   }
 }
