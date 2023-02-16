@@ -21,7 +21,7 @@ export default async function AboutPage() {
           >
             Meet the Team
           </h2>
-          <div className="ml-[20%] grid min-w-max grid-cols-1 gap-8  md:ml-[30%]  md:grid-cols-2 md:gap-12 2xl:ml-[40%] 2xl:grid-cols-3">
+          <div className="ml-[20%] grid min-w-max grid-cols-1 gap-8  lg:ml-[30%]  lg:grid-cols-2 lg:gap-12 2xl:ml-[40%] 2xl:grid-cols-3">
             {team.map((member) =>
               member.image ? <TeamMemberCard key={member.id} member={member} /> : null,
             )}
