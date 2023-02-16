@@ -118,7 +118,7 @@ const WhatWeDoSection = ({
       </motion.h3>
 
       <motion.div
-        className={`relative flex h-[60vh] min-h-[60vh] w-full flex-col items-center  justify-center gap-6 overflow-hidden p-6  md:h-full md:min-h-0 md:w-[48vw] md:min-w-[48vw] 2xl:gap-10 2xl:p-10 `}
+        className={`relative flex h-[60vh] min-h-[60vh] w-full flex-col items-center  justify-center gap-4  overflow-hidden p-6 md:h-full  md:min-h-0 md:w-[48vw] md:min-w-[48vw] md:gap-6 2xl:gap-10 2xl:p-10 `}
         initial={
           isSmall
             ? {
@@ -159,7 +159,7 @@ const WhatWeDoSection = ({
           {title}
         </h3>
         <div className="h-2 w-1/4 bg-blue-500 md:w-1/6" />
-        <div className="flex flex-col items-center  md:text-xl xl:p-10">
+        <div className="flex flex-col items-center text-sm  md:text-xl xl:p-10">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{

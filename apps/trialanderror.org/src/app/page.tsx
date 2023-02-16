@@ -15,8 +15,8 @@ export default async function Page() {
 
   return (
     // <main className="relative">
-    <div className="relative flex flex-col items-center">
-      <div className="absolute top-[30vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500 lg:top-[40vh]" />
+    <div className="relative flex flex-col items-center overflow-clip">
+      {/* <div className="absolute top-[30vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500 lg:top-[40vh]" /> */}
 
       <Hero />
       <WhatDoWeDo images={files} />
