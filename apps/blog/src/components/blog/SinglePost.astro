@@ -140,6 +140,13 @@ console.dir(bodySplitByEmbeddedTweet, { depth: null })
         >
           {post.title}
         </h1>
+        {
+          post.doi && (
+            <a class="sleek-underline text-sm font-semibold" href={`https://doi.org/${post.doi}`}>
+              DOI: https://doi.org/{post.doi}
+            </a>
+          )
+        }
       </header>
       <div
         class="container col-span-10 col-start-2 mx-auto my-4 max-w-3xl md:col-span-5 md:col-start-3 md:mt-8"

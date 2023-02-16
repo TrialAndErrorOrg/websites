@@ -18,11 +18,12 @@ export const getAcademicMetaTags = (post: BlogPost) => {
     related,
     seo,
     academic,
+    doi,
   } = post
 
   const titleWithContext = `${title} | A Blog of Trial &amp; Error`
 
-  const { doi, abstract } = academic ?? ({} as NonNullable<typeof academic>)
+  const { abstract } = academic ?? ({} as NonNullable<typeof academic>)
 
   const titleTags = [
     { property: 'og:title', content: titleWithContext },

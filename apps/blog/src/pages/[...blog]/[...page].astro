@@ -52,10 +52,10 @@ const meta = {
     <!-- <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-orange-500"
       >Trial & Error</span
     > -->
-    <span class="inline text-8xl text-center font-sans font-black">Blog</span>
+    <span class="inline text-center font-sans text-8xl font-black">Blog</span>
   </Fragment>
   <!-- <BlogList posts={page.data} /> -->
-  <div class="flex-col flex gap-6 w-[80vw] items-center mx-auto">
+  <div class="mx-auto flex w-[80vw] flex-col items-center gap-6">
     {page.data.map((post) => <PostCard post={post} wide />)}
   </div>
   <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

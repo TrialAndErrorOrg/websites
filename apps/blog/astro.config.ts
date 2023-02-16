@@ -48,9 +48,11 @@ export default defineConfig({
       serviceEntryPoint: '@astrojs/image/sharp',
     }),
     react(),
-    prefetch({
-      selector: 'a[href^="/"]:not([href^="/tag"])',
-    }),
+    process.env.NODE_ENV === 'production' &&
+      prefetch({
+        selector:
+          'a[href^="/"]:not([href^="/tag"]):not([href^="/category"]):not([href^="/author"])',
+      }),
 
     /* Disable this integration if you don't use Google Analytics (or other external script). */
     // partytown({

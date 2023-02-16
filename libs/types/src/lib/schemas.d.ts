@@ -1055,6 +1055,7 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
     >
     academic: ComponentAttribute<'shared.academic'>
     category: RelationAttribute<'api::blog-post.blog-post', 'manyToOne', 'api::category.category'>
+    doi: StringAttribute & UniqueAttribute
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     publishedAt: DateTimeAttribute
