@@ -1,8 +1,17 @@
 diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
-index bcb39cb..39e2063 100644
+index bcb39cb..1e59d43 100644
 --- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
 +++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
-@@ -21,6 +21,16 @@ import { matchByTitle } from './utils';
+@@ -8,6 +8,8 @@ import React, { useMemo, useState } from 'react';
+ import { useSelector, shallowEqual } from 'react-redux';
+ import { useIntl } from 'react-intl';
+ import { NavLink } from 'react-router-dom';
++import sortBy from 'lodash/sortBy';
++
+ 
+ import {
+   SubNav,
+@@ -21,6 +23,16 @@ import { matchByTitle } from './utils';
  import getTrad from '../../../utils/getTrad';
  import { makeSelectModelLinks } from '../selectors';
  
@@ -19,7 +28,7 @@ index bcb39cb..39e2063 100644
  const LeftMenu = () => {
    const [search, setSearch] = useState('');
    const { formatMessage } = useIntl();
-@@ -41,24 +51,51 @@ const LeftMenu = () => {
+@@ -41,24 +53,51 @@ const LeftMenu = () => {
    const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
    const intlSingleTypeLinks = toIntl(singleTypeLinks);
  
