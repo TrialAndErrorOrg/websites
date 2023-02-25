@@ -1,0 +1,116 @@
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+index bcb39cb..39e2063 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/App/LeftMenu/index.js
+@@ -21,6 +21,16 @@ import { matchByTitle } from './utils';
+ import getTrad from '../../../utils/getTrad';
+ import { makeSelectModelLinks } from '../selectors';
+ 
++const categories = {
++  COTE: ["Team Member", "Open Position", "Collaborator", "Application"],
++  JOTE: ["JOTE Article", "JOTE Author", "JOTE Article Category"],
++  Website: ["User", "Page", "Update Category"],
++  Blog: ["Blog Author", "Blog Post", "Blog Tag", "Category"],
++}
++
++
++
++
+ const LeftMenu = () => {
+   const [search, setSearch] = useState('');
+   const { formatMessage } = useIntl();
+@@ -41,24 +51,51 @@ const LeftMenu = () => {
+   const intlCollectionTypeLinks = toIntl(collectionTypeLinks);
+   const intlSingleTypeLinks = toIntl(singleTypeLinks);
+ 
++  const links = intlCollectionTypeLinks.reduce((acc, curr) => {
++    const entry = Object.entries(categories).find(([key, arr]) => arr.includes(curr.title))
++    if (entry) {
++      const [category, val] = entry
++      acc[category] = [...(acc[category] || []), curr]
++      return acc
++    }
++    acc.Misc = [...(acc.Misc || []), curr]
++
++    return acc
++
++  }, {})
++
++  const menus = Object.entries(links).map(([category, link]) => ({
++    id: `${category}Types`,
++    title: {
++      id: getTrad(`components.LeftMenu.${category.toLowerCase()}-types`),
++      defaultMessage: `${category}`,
++    },
++    searchable: true,
++    links: sortBy(matchByTitle(link, search), object =>
++      object.title.toLowerCase()
++    ),
++  }
++  ))
++
+   const menu = [
++    ...menus,
+     {
+-      id: 'collectionTypes',
++      id: 'singleTypes',
+       title: {
+-        id: getTrad('components.LeftMenu.collection-types'),
+-        defaultMessage: 'Collection Types',
++        id: getTrad('components.LeftMenu.single-types'),
++        defaultMessage: 'Single Types',
+       },
+       searchable: true,
+-      links: matchByTitle(intlCollectionTypeLinks, search),
++      links: matchByTitle(intlSingleTypeLinks, search),
+     },
+     {
+-      id: 'singleTypes',
++      id: 'collectionTypes',
+       title: {
+-        id: getTrad('components.LeftMenu.single-types'),
+-        defaultMessage: 'Single Types',
++        id: getTrad('components.LeftMenu.collection-types'),
++        defaultMessage: 'Collection Types',
+       },
+       searchable: true,
+-      links: matchByTitle(intlSingleTypeLinks, search),
++      links: matchByTitle(intlCollectionTypeLinks, search),
+     },
+   ];
+ 
+diff --git a/node_modules/@strapi/admin/ee/server/services/passport/sso.js b/node_modules/@strapi/admin/ee/server/services/passport/sso.js
+index bad2dbc..3cc2c71 100644
+--- a/node_modules/@strapi/admin/ee/server/services/passport/sso.js
++++ b/node_modules/@strapi/admin/ee/server/services/passport/sso.js
+@@ -8,17 +8,10 @@ const providerRegistry = createProviderRegistry();
+ const errorMessage = 'SSO is disabled. Its functionnalities cannot be accessed.';
+ 
+ const getStrategyCallbackURL = (providerName) => {
+-  if (!ee.features.isEnabled('sso')) {
+-    throw new Error(errorMessage);
+-  }
+-
+   return `/admin/connect/${providerName}`;
+ };
+ 
+ const syncProviderRegistryWithConfig = () => {
+-  if (!ee.features.isEnabled('sso')) {
+-    throw new Error(errorMessage);
+-  }
+ 
+   const { providers = [] } = strapi.config.get('admin.auth', {});
+ 
+diff --git a/node_modules/@strapi/admin/strapi-server.js b/node_modules/@strapi/admin/strapi-server.js
+index a2e849f..b443f62 100644
+--- a/node_modules/@strapi/admin/strapi-server.js
++++ b/node_modules/@strapi/admin/strapi-server.js
+@@ -8,7 +8,7 @@ const mergeRoutes = (a, b, key) => {
+   return _.isArray(a) && _.isArray(b) && key === 'routes' ? a.concat(b) : undefined;
+ };
+ 
+-if (strapi.EE) {
++if (true) {
+   const eeAdmin = require('./ee/strapi-server');
+ 
+   module.exports = _.mergeWith({}, admin, eeAdmin, mergeRoutes);

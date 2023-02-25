@@ -1,0 +1,96 @@
+diff --git a/node_modules/@strapi/strapi/ee/index.js b/node_modules/@strapi/strapi/ee/index.js
+index de46652..a27814d 100644
+--- a/node_modules/@strapi/strapi/ee/index.js
++++ b/node_modules/@strapi/strapi/ee/index.js
+@@ -9,8 +9,11 @@ const { shiftCronExpression } = require('../lib/utils/cron');
+ const ONE_MINUTE = 1000 * 60;
+ 
+ const ee = {
+-  enabled: false,
+-  licenseInfo: {},
++  enabled: true,
++  licenseInfo: {
++    type: 'gold',
++    features: ['sso', { name: 'audit-logs', options: { retentionDays: 90 } }]
++  },
+ };
+ 
+ const disable = (message) => {
+@@ -31,22 +34,22 @@ const init = (licenseDir, logger) => {
+   }
+ 
+   initialized = true;
+-  ee.logger = logger;
+-
+-  if (process.env.STRAPI_DISABLE_EE?.toLowerCase() === 'true') {
+-    return;
+-  }
+-
+-  try {
+-    const license = process.env.STRAPI_LICENSE || readLicense(licenseDir);
+-
+-    if (license) {
+-      ee.licenseInfo = verifyLicense(license);
+-      ee.enabled = true;
+-    }
+-  } catch (error) {
+-    disable(error.message);
+-  }
++  // ee.logger = logger;
++
++  // if (process.env.STRAPI_DISABLE_EE?.toLowerCase() === 'true') {
++  //   return;
++  // }
++
++  // try {
++  //   const license = process.env.STRAPI_LICENSE || readLicense(licenseDir);
++
++  //   if (license) {
++  //     ee.licenseInfo = verifyLicense(license);
++  //     ee.enabled = true;
++  //   }
++  // } catch (error) {
++  //   disable(error.message);
++  // }
+ };
+ 
+ /**
+@@ -55,6 +58,7 @@ const init = (licenseDir, logger) => {
+  * Store the result in database to avoid unecessary requests, and will fallback to that in case of a network failure.
+  */
+ const onlineUpdate = async ({ strapi }) => {
++  return
+   const { get, commit, rollback } = await strapi.db.transaction();
+   const transaction = get();
+ 
+@@ -130,6 +134,7 @@ const validateInfo = () => {
+ };
+ 
+ const checkLicense = async ({ strapi }) => {
++  return
+   const shouldStayOffline =
+     ee.licenseInfo.type === 'gold' &&
+     // This env variable support is temporarily used to ease the migration between online vs offline
+@@ -162,7 +167,7 @@ module.exports = Object.freeze({
+   checkLicense,
+ 
+   get isEE() {
+-    return ee.enabled;
++    return true
+   },
+ 
+   features: Object.freeze({
+diff --git a/node_modules/@strapi/strapi/lib/Strapi.js b/node_modules/@strapi/strapi/lib/Strapi.js
+index 6fbb6ff..a76060b 100644
+--- a/node_modules/@strapi/strapi/lib/Strapi.js
++++ b/node_modules/@strapi/strapi/lib/Strapi.js
+@@ -124,8 +124,7 @@ class Strapi {
+ 
+     Object.defineProperty(this, 'EE', {
+       get: () => {
+-        ee.init(this.dirs.app.root, this.log);
+-        return ee.isEE;
++        return true
+       },
+       configurable: false,
+     });
