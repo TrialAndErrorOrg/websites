@@ -25,7 +25,7 @@ export default function Email() {
               marginBottom: '16px',
             }}
           >
-            Click here to log in with this magicashtas
+            sata Click here to log in with this magicashtas
           </Link>
           <Text style={{ ...text, marginBottom: '14px' }}>
             Or, copy and paste this temporary login code:
