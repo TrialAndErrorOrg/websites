@@ -23,10 +23,10 @@ import {
   SingleTypeSchema,
   SetPluginOptions,
   RichTextAttribute,
+  CustomField,
   ComponentAttribute,
   DateAttribute,
   DynamicZoneAttribute,
-  CustomField,
   ComponentSchema,
 } from '@strapi/strapi'
 
@@ -824,6 +824,7 @@ export interface ApiAboutPageAboutPage extends SingleTypeSchema {
     singularName: 'about-page'
     pluralName: 'about-pages'
     displayName: 'About Page'
+    description: ''
   }
   options: {
     draftAndPublish: true
@@ -843,12 +844,30 @@ export interface ApiAboutPageAboutPage extends SingleTypeSchema {
       }>
     body: RichTextAttribute &
       RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
         }
       }>
     seo: ComponentAttribute<'shared.seo'> &
+      SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    test: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -898,9 +917,27 @@ export interface ApiApplicationApplication extends CollectionTypeSchema {
       DefaultTo<'submitted'>
     name: StringAttribute & RequiredAttribute
     start: DateAttribute
-    motivation: RichTextAttribute
-    cv: RichTextAttribute
-    additional: RichTextAttribute
+    motivation: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
+    cv: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
+    additional: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     url: UIDAttribute & RequiredAttribute
     howDidYouFindThis: StringAttribute
     position: StringAttribute
@@ -933,7 +970,13 @@ export interface ApiBlogAuthorBlogAuthor extends CollectionTypeSchema {
     firstName: StringAttribute
     lastName: StringAttribute
     image: MediaAttribute
-    bio: RichTextAttribute
+    bio: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     email: EmailAttribute
     blog_posts: RelationAttribute<
       'api::blog-author.blog-author',
@@ -987,6 +1030,12 @@ export interface ApiBlogHomeBlogHome extends SingleTypeSchema {
         }
       }>
     description: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1030,9 +1079,12 @@ export interface ApiBlogPostBlogPost extends CollectionTypeSchema {
     image: MediaAttribute & RequiredAttribute
     body: RichTextAttribute &
       RequiredAttribute &
-      SetMinMaxLength<{
-        minLength: 200
-      }>
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     excerpt: TextAttribute &
       RequiredAttribute &
       SetMinMaxLength<{
@@ -1124,7 +1176,14 @@ export interface ApiCollaboratorCollaborator extends CollectionTypeSchema {
   attributes: {
     title: StringAttribute & RequiredAttribute
     logo: MediaAttribute & RequiredAttribute
-    description: RichTextAttribute
+    description: RichTextAttribute &
+      RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     startDate: DateAttribute
     endDate: DateAttribute
     teamMembers: RelationAttribute<
@@ -1168,6 +1227,12 @@ export interface ApiDonatePageDonatePage extends SingleTypeSchema {
       }>
     body: RichTextAttribute &
       RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1236,7 +1301,13 @@ export interface ApiHomepageHomepage extends SingleTypeSchema {
   attributes: {
     seo: ComponentAttribute<'shared.seo'>
     hero: ComponentAttribute<'sections.hero'> & RequiredAttribute
-    body: RichTextAttribute
+    body: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     createdAt: DateTimeAttribute
     updatedAt: DateTimeAttribute
     createdBy: RelationAttribute<'api::homepage.homepage', 'oneToOne', 'admin::user'> &
@@ -1259,7 +1330,13 @@ export interface ApiJoteArticleJoteArticle extends CollectionTypeSchema {
   }
   attributes: {
     title: StringAttribute
-    abstract: RichTextAttribute
+    abstract: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     published: DateTimeAttribute
     submitted: DateTimeAttribute
     accepted: DateTimeAttribute
@@ -1383,6 +1460,12 @@ export interface ApiLegalPageLegalPage extends SingleTypeSchema {
       }>
     body: RichTextAttribute &
       RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1430,6 +1513,12 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
       }>
     description: RichTextAttribute &
       RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1456,6 +1545,12 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
       }> &
       DefaultTo<false>
     needToHave: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1503,12 +1598,24 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
     >
     niceToHave: RichTextAttribute &
       RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
         }
       }>
     whatYoullDo: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1568,12 +1675,24 @@ export interface ApiOpenPositionOpenPosition extends CollectionTypeSchema {
         }
       }>
     whatWeOffer: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
         }
       }>
     finalWords: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1619,6 +1738,12 @@ export interface ApiOpenPositionsPageOpenPositionsPage extends SingleTypeSchema 
         }
       }>
     body: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1626,6 +1751,12 @@ export interface ApiOpenPositionsPageOpenPositionsPage extends SingleTypeSchema 
       }>
     noPositionsText: RichTextAttribute &
       RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1782,7 +1913,14 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
     firstName: StringAttribute & RequiredAttribute
     lastName: StringAttribute
     email: EmailAttribute
-    bio: RichTextAttribute
+    bio: RichTextAttribute &
+      RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
     image: MediaAttribute
     show_pronouns: BooleanAttribute & RequiredAttribute & DefaultTo<true>
     pronouns: StringAttribute & RequiredAttribute
@@ -1808,7 +1946,15 @@ export interface ApiTeamMemberTeamMember extends CollectionTypeSchema {
       'manyToMany',
       'api::blog-post.blog-post'
     >
-    summary: RichTextAttribute
+    summary: RichTextAttribute &
+      RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+          maxLengthCharacters: 400
+        }
+      >
     relatedOpenPositions: RelationAttribute<
       'api::team-member.team-member',
       'manyToMany',
@@ -1868,6 +2014,12 @@ export interface ApiTeamPageTeamPage extends SingleTypeSchema {
         }
       }>
     content: RichTextAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      > &
       SetPluginOptions<{
         i18n: {
           localized: true
@@ -1923,6 +2075,36 @@ export interface ApiUpdateCategoryUpdateCategory extends CollectionTypeSchema {
   }
 }
 
+export interface AdminAuditLog extends CollectionTypeSchema {
+  info: {
+    singularName: 'audit-log'
+    pluralName: 'audit-logs'
+    displayName: 'Audit Log'
+  }
+  options: {
+    draftAndPublish: false
+    timestamps: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    action: StringAttribute & RequiredAttribute
+    date: DateTimeAttribute & RequiredAttribute
+    user: RelationAttribute<'admin::audit-log', 'oneToOne', 'admin::user'>
+    payload: JSONAttribute
+    createdAt: DateTimeAttribute
+    updatedAt: DateTimeAttribute
+    createdBy: RelationAttribute<'admin::audit-log', 'oneToOne', 'admin::user'> & PrivateAttribute
+    updatedBy: RelationAttribute<'admin::audit-log', 'oneToOne', 'admin::user'> & PrivateAttribute
+  }
+}
+
 export interface ChoicesAuthorOrTeamMember extends ComponentSchema {
   info: {
     displayName: 'Author or Team Member'
@@ -1975,7 +2157,14 @@ export interface ComponentsRichText extends ComponentSchema {
     icon: 'text-height'
   }
   attributes: {
-    body: RichTextAttribute & RequiredAttribute
+    body: RichTextAttribute &
+      RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
   }
 }
 
@@ -1986,7 +2175,14 @@ export interface ComponentsTextBlock extends ComponentSchema {
     description: ''
   }
   attributes: {
-    body: RichTextAttribute
+    body: RichTextAttribute &
+      RequiredAttribute &
+      CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbarBaloon'
+        }
+      >
   }
 }
 
@@ -2121,6 +2317,7 @@ declare global {
       'api::team-member.team-member': ApiTeamMemberTeamMember
       'api::team-page.team-page': ApiTeamPageTeamPage
       'api::update-category.update-category': ApiUpdateCategoryUpdateCategory
+      'admin::audit-log': AdminAuditLog
       'choices.author-or-team-member': ChoicesAuthorOrTeamMember
       'components.cta': ComponentsCta
       'components.document': ComponentsDocument

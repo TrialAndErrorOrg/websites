@@ -30,7 +30,11 @@
           "localized": true
         }
       },
-      "type": "richtext"
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "noPositionsText": {
       "pluginOptions": {
@@ -38,7 +42,11 @@
           "localized": true
         }
       },
-      "type": "richtext",
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor",
       "required": true
     }
   }

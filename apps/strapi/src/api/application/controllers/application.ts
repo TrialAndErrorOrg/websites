@@ -4,8 +4,10 @@
 
 import { factories } from '@strapi/strapi'
 import { EntityService } from '@strapi/strapi/lib/services/entity-service'
-import { writeFileSync } from 'fs'
-import { join } from 'path'
+
+type Body = {
+  data?: string
+}
 
 export default factories.createCoreController('api::application.application', ({ strapi }) => ({
   async create(ctx) {
@@ -14,11 +16,16 @@ export default factories.createCoreController('api::application.application', ({
 
     const {
       body,
-      // @ts-expect-error this should be defined according to the docs https://docs.strapi.io/developer-docs/latest/development/backend-customization/requests-responses.html#accessing-the-request-context-anywhere
+      // @ts-expect-error files does exist, but it's not in the types
       files: { 'files.documents': documents },
     } = ctx.request
-    console.log({ body, documents })
-    const { name, email, additional, url, motivation, cv, open_position } = JSON.parse(body.data)
+    // console.log({ body, documents })
+
+    const bod = body as Body
+    if (!bod || typeof bod !== 'object' || !bod?.data || typeof bod.data !== 'string') {
+      return ctx.badRequest(standardRes, 'No data in body')
+    }
+    const { name, email, additional, url, motivation, cv, open_position } = JSON.parse(bod.data)
 
     const files = Array.isArray(documents) ? documents : [documents]
     // strapi.service('api::application.application').

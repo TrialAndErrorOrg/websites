@@ -1,7 +1,18 @@
+// @ts-expect-error no declaration file for this
 import AzureAdOAuth2Strategy from 'passport-azure-ad-oauth2'
 import { decode } from 'jsonwebtoken'
 
-export default ({ env }) => ({
+export type Env = {
+  int: (key: string, defaultValue?: number) => number
+  array: (key: string, defaultValue?: string[]) => string[]
+  float: (key: string, defaultValue?: number) => number
+  bool: (key: string, defaultValue?: boolean) => boolean
+  json: (key: string, defaultValue?: any) => any
+  date: (key: string, defaultValue?: Date) => Date
+} & ((key: string, defaultValue?: string) => string) &
+  ((key: string, defaultValue?: number) => number)
+
+export default ({ env }: { env: Env }) => ({
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'c0b47f9208b27587591171747a858bc8'),
     providers: [
@@ -32,6 +43,7 @@ export default ({ env }) => ({
             ) => {
               const waadProfile = decode(params.id_token)
               const prof = decode(accessToken, { json: true })
+              if (!prof) return
               done(null, {
                 email: prof.upn,
                 username: prof.upn,

@@ -1,5 +1,6 @@
+import { Env } from './admin'
 import menus from './menus'
-export default ({ env }) => ({
+export default ({ env }: { env: Env }) => ({
   upload: {
     config: {
       provider: 'strapi-provider-upload-azure-storage',
@@ -192,9 +193,9 @@ export default ({ env }) => ({
   navigation: {
     enabled: false,
   },
-  ckeditor: {
-    enabled: true,
-  },
+  // ckeditor: {
+  //   enabled: true,
+  // },
   menus,
   meilisearch: {
     config: {

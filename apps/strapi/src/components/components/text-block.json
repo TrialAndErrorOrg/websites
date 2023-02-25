@@ -8,7 +8,12 @@
   "options": {},
   "attributes": {
     "body": {
-      "type": "richtext"
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "required": true,
+      "customField": "plugin::ckeditor5.CKEditor"
     }
   }
 }

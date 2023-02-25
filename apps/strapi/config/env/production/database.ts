@@ -1,4 +1,6 @@
-export default ({ env }) => ({
+import { Env } from '../../admin'
+
+export default ({ env }: { env: Env }) => ({
   connection: {
     client: 'postgres',
     connection: {

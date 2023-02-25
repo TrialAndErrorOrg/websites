@@ -24,7 +24,12 @@
       "type": "email"
     },
     "bio": {
-      "type": "richtext"
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "required": true,
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "image": {
       "type": "media",
@@ -43,7 +48,7 @@
     },
     "pronouns": {
       "type": "string",
-      "regex": "((he|she|they|it)(\\/(her?|she|they|him|her|them|its?))+)",
+      "regex": "(any|(he|she|they|it|any)(\\/(her?|she|they|him|her|them|its?|any))+)",
       "required": true
     },
     "azureID": {
@@ -109,7 +114,13 @@
       "mappedBy": "team_members"
     },
     "summary": {
-      "type": "richtext"
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon",
+        "maxLengthCharacters": 400
+      },
+      "required": true,
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "relatedOpenPositions": {
       "type": "relation",

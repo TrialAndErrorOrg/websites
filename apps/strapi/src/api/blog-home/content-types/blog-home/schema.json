@@ -31,7 +31,11 @@
           "localized": true
         }
       },
-      "type": "richtext"
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "seo": {
       "type": "component",

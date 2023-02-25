@@ -1,6 +1,8 @@
+// @ts-expect-error no declaration file for this
 import cronTasks from '@webbio/strapi-plugin-scheduler/cron-task'
+import { Env } from '../../admin'
 
-export default ({ env }) => ({
+export default ({ env }: { env: Env }) => ({
   host: env('HOST', 'localhost'),
   port: env.int('PORT', 8080),
   url: `${env('PROD_HOST', 'https://cms.trialanderror.org')}`,

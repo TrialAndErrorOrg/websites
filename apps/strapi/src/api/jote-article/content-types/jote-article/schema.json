@@ -16,7 +16,11 @@
       "type": "string"
     },
     "abstract": {
-      "type": "richtext"
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "published": {
       "type": "datetime"
@@ -31,11 +35,7 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ]
+      "allowedTypes": ["images", "files", "videos"]
     },
     "jote_article_category": {
       "type": "relation",

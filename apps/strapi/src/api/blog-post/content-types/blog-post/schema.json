@@ -26,9 +26,12 @@
       ]
     },
     "body": {
-      "type": "richtext",
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
       "required": true,
-      "minLength": 200
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "excerpt": {
       "type": "text",

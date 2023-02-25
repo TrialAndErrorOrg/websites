@@ -25,12 +25,7 @@
       "required": true
     },
     "documents": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
+      "allowedTypes": ["images", "files", "videos", "audios"],
       "type": "media",
       "multiple": true,
       "pluginOptions": {
@@ -45,7 +40,11 @@
           "localized": true
         }
       },
-      "type": "richtext",
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBaloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor",
       "required": true
     }
   }
