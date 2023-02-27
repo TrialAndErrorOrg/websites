@@ -1,4 +1,4 @@
-export const query = `((select p.id::varchar(255) as id,
+export const query = (limit: number, offset: number) => `(select p.id::varchar(255) as id,
 'post' as type,
 p.title,
 p.excerpt,
@@ -124,4 +124,8 @@ ON jcl.jote_article_category_id = jc.id
 LEFT OUTER JOIN files_related_morphs fp
 on (j.id = fp.related_id and fp.related_type = 'api::jote-article.jote-article')
 LEFT OUTER JOIN files f on (f.id=fp.file_id and fp.related_type = 'api::jote-article.jote-article')
-where j.published is not null)) as all_posts`
+where j.published is not null)
+
+ORDER BY published DESC
+LIMIT ${limit}
+OFFSET ${offset}`
