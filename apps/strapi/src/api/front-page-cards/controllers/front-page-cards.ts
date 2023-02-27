@@ -2,7 +2,6 @@
  * A set of functions called "actions" for `front-page-cards`
  */
 import { Controller, GenericController } from '@strapi/strapi/lib/core-api/controller'
-import { Knex } from 'knex'
 import { query } from './query'
 
 const CardController: GenericController = {

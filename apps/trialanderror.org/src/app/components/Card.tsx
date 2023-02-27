@@ -103,7 +103,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
 
             {card.team?.length > 0 ? (
               <div className="flex flex-row flex-wrap gap-x-2">
-                {card.team.map((author) => (
+                {(card?.team ?? []).map((author) => (
                   <span
                     className="text-sm font-bold italic text-blue-500 md:text-lg"
                     key={typeof author === 'object' ? author.firstName : author}
