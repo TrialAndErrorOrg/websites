@@ -92,6 +92,7 @@ LEFT OUTER JOIN blog_posts_category_links pcl
 on p.id = pcl.blog_post_id
 LEFT OUTER JOIN categories c
 ON pcl.category_id = c.id
+WHERE p.published_at is not null
 GROUP BY p.title, image, c.title, p.id, p.excerpt, p.publish_date, p.published_at, p.slug
 
 UNION
