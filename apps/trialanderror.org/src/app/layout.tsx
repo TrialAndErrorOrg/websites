@@ -2,7 +2,6 @@ import { NextSeo, NextSeoProps } from 'next-seo'
 import Link from 'next/link'
 import { AnalyticsWrapper } from './components/Analytics'
 import { Footer } from './components/Footer'
-import { Navigation } from './components/Navigation'
 import { Overpass, Open_Sans } from '@next/font/google'
 
 import '../styles/globals.css'

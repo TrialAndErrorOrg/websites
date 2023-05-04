@@ -58,5 +58,10 @@
     }
   },
   "defaultProject": "strapi",
-  "plugins": ["@nxtensions/astro"]
+  "plugins": ["@nxtensions/astro"],
+  "targetDefaults": {
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    }
+  }
 }

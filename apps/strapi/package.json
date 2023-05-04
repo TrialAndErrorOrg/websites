@@ -5,7 +5,6 @@
   "description": "Backend CMS for COTE",
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^2.0.3",
-    "@strapi-newsletter/strapi": "^0.1.2",
     "@strapi/plugin-color-picker": "^4.6.2",
     "@strapi/plugin-documentation": "^4.6.2",
     "@strapi/plugin-graphql": "^4.6.2",
@@ -43,6 +42,7 @@
   },
   "scripts": {
     "dev": "yarn develop-strapi",
+    "preinstall": "yarn config set ignore-engines true",
     "sstart": "NODE_ENV=production node node_modules/@strapi/strapi/bin/strapi.js start",
     "develop-strapi": "strapi ts:generate-types --verbose -o ../../libs/types/src/lib && ts-to-zod ../../libs/types/src/lib/schemas.d.ts ../../libs/types/src/lib/validators.ts && strapi develop --watch-admin",
     "develop-strapi-prod": "NODE_ENV=production yarn develop-strapi",
@@ -66,7 +66,7 @@
     "starter": "@strapi/starter-next-blog"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=16.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
