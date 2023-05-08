@@ -1,13 +1,13 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "prettier", "prefer-arrow"],
+  "plugins": ["@nx", "prettier", "prefer-arrow"],
   "rules": {},
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -24,7 +24,7 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript", "airbnb", "airbnb-typescript", "next", "prettier"],
+      "extends": ["plugin:@nx/typescript", "airbnb", "airbnb-typescript", "next", "prettier"],
       "rules": {
         "prefer-arrow/prefer-arrow-functions": [
           "error",
@@ -34,8 +34,19 @@
             "classPropertiesAllowed": false
           }
         ],
-        "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
-        "func-style": ["error", "expression", { "allowArrowFunctions": true }],
+        "prefer-arrow-callback": [
+          "error",
+          {
+            "allowNamedFunctions": true
+          }
+        ],
+        "func-style": [
+          "error",
+          "expression",
+          {
+            "allowArrowFunctions": true
+          }
+        ],
         "react/prop-types": "off",
         "import/prefer-default-export": "off",
         "import/no-extraneous-dependencies": "off",
@@ -61,7 +72,12 @@
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
       "rules": {}
     }
   ]

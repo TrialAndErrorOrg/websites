@@ -3,8 +3,8 @@
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds.
  */
-!process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
-import { withNx } from "@nrwl/next/plugins/with-nx.js"
+!process.env.SKIP_ENV_VALIDATION && (await import('./src/env/server.mjs'));
+import { withNx } from '@nx/next/plugins/with-nx.js';
 
 // const withBundleAnalyzer = require("@next/bundle-analyzer")({
 //   enabled: process.env.ANALYZE === "true",
@@ -20,10 +20,9 @@ const nextConfig = {
     appDir: true,
     newNextLinkBehavior: true,
     forceSwcTransforms: true,
-    fontLoaders: [
-      { loader: '@next/font/google', options: { subsets: ['latin'] } },
-
-    ]
+    // fontLoaders: [
+    //   { loader: '@next/font/google', options: { subsets: ['latin'] } },
+    // ],
   },
   reactStrictMode: true,
   // i18n: {
@@ -33,10 +32,10 @@ const nextConfig = {
   staticPageGenerationTimeout: 120,
   images: {
     domains: [
-      "avatars.githubusercontent.com",
-      "cote.azureedge.net",
-      "res.cloudinary.com",
-      "tailwindui.com",
+      'avatars.githubusercontent.com',
+      'cote.azureedge.net',
+      'res.cloudinary.com',
+      'tailwindui.com',
     ],
   },
   rewrites: async () => [
@@ -57,6 +56,6 @@ const nextConfig = {
       destination: '/api/rss?type=rss',
     },
   ],
-}
+};
 
-export default withNx(nextConfig)
+export default nextConfig;

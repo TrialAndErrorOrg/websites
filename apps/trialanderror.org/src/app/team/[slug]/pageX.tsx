@@ -1,8 +1,14 @@
-import { strapiClient } from '../../../server/api/strapi'
-import { GetAttributesValues } from '@strapi/strapi'
-import { cache } from 'react'
-import Image from 'next/image'
-import { FaGithub, FaLink, FaLinkedin, FaOrcid, FaTwitter } from 'react-icons/fa'
+import { strapiClient } from '../../../server/api/strapi';
+import { GetAttributesValues } from '@strapi/strapi';
+import { cache } from 'react';
+import Image from 'next/image';
+import {
+  FaGithub,
+  FaLink,
+  FaLinkedin,
+  FaOrcid,
+  FaTwitter,
+} from 'react-icons/fa';
 
 export const getPerson = cache(async (slug: string) => {
   const person = await strapiClient
@@ -10,15 +16,17 @@ export const getPerson = cache(async (slug: string) => {
     .select()
     .populate()
     .equalTo('slug', slug)
-    .get()
+    .get();
 
-  return person
-})
+  return person;
+});
 
-export const config = {}
-
-export default async function PersonPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function PersonPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = params;
 
   const {
     firstName,
@@ -38,7 +46,7 @@ export default async function PersonPage({ params }: { params: { slug: string } 
     personalWebsite,
     twitter,
     orcid,
-  } = (await getPerson(slug)).data?.[0] ?? {}
+  } = (await getPerson(slug)).data?.[0] ?? {};
 
   return (
     <main>
@@ -73,7 +81,10 @@ export default async function PersonPage({ params }: { params: { slug: string } 
 
           <div className="col-span-4 row-span-1 flex flex-wrap items-center justify-center gap-1 leading-none">
             {orcid && (
-              <a href={orcid} className="button-sleek flex items-center  text-black">
+              <a
+                href={orcid}
+                className="button-sleek flex items-center  text-black"
+              >
                 <FaOrcid className="h-5 w-5" />
                 <span className="sr-only">ORCID</span>
               </a>
@@ -85,19 +96,28 @@ export default async function PersonPage({ params }: { params: { slug: string } 
               </a>
             )}
             {github && (
-              <a href={github} className="button-sleek z-10 flex items-center gap-1">
+              <a
+                href={github}
+                className="button-sleek z-10 flex items-center gap-1"
+              >
                 <FaGithub className="h-5 w-5" />
                 <span className="sr-only">Github</span>
               </a>
             )}
             {linkedin && (
-              <a href={linkedin} className="button-sleek z-10 flex items-center gap-1">
+              <a
+                href={linkedin}
+                className="button-sleek z-10 flex items-center gap-1"
+              >
                 <FaLinkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </a>
             )}
             {personalWebsite && (
-              <a href={personalWebsite} className="button-sleek z-10 flex items-center gap-1">
+              <a
+                href={personalWebsite}
+                className="button-sleek z-10 flex items-center gap-1"
+              >
                 <FaLink className="h-5 w-5" />
                 <span className="sr-only">Website</span>
               </a>
@@ -114,7 +134,10 @@ export default async function PersonPage({ params }: { params: { slug: string } 
             )} */}
           </div>
         </div>
-        <div className="prose" dangerouslySetInnerHTML={{ __html: bio || summary || '' }} />
+        <div
+          className="prose"
+          dangerouslySetInnerHTML={{ __html: bio || summary || '' }}
+        />
       </div>
       {blog_posts && (
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
@@ -126,7 +149,10 @@ export default async function PersonPage({ params }: { params: { slug: string } 
             <article className="prose relative">
               <h3>{post.title}</h3>
               <p>{post.excerpt}</p>
-              <a href={`https://blog.trialanderror.org/${post.slug}`} className="link-overlay">
+              <a
+                href={`https://blog.trialanderror.org/${post.slug}`}
+                className="link-overlay"
+              >
                 Read More
               </a>
             </article>
@@ -134,5 +160,5 @@ export default async function PersonPage({ params }: { params: { slug: string } 
         </div>
       )}
     </main>
-  )
+  );
 }

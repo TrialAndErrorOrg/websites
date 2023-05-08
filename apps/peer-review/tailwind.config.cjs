@@ -1,8 +1,8 @@
 // @ts-check
-const { createGlobPatternsForDependencies } = require('@nrwl/react/tailwind')
-const defaultTheme = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
-const { join } = require('path')
+const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
+const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
+const { join } = require('path');
 
 /**
  * @type {import('tailwindcss').Config}
@@ -27,4 +27,4 @@ module.exports = {
   },
 
   plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
-}
+};

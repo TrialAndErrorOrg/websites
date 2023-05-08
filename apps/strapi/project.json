@@ -22,7 +22,7 @@
       "executor": "@nx-extend/strapi:serve"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["coverage/apps/strapi"],
       "options": {
         "jestConfig": "apps/strapi/jest.config.js",
@@ -30,7 +30,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/strapi/**/*.{ts,tsx,js,jsx}"]

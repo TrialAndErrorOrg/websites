@@ -11,7 +11,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "module": "esnext",
     "plugins": [
       {
@@ -27,7 +30,8 @@
     "next-env.d.ts",
     "../../apps/trialanderror.org/.next/types/**/*.ts",
     "../../libs/types/src/lib/schemas.d.ts",
-    "../../dist/apps/trialanderror.org/.next/types/**/*.ts"
+    "../../dist/apps/trialanderror.org/.next/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

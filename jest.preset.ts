@@ -1,4 +1,4 @@
-const nxPreset = require('@nrwl/jest/preset')
+const nxPreset = require('@nx/jest/preset');
 
 module.exports = {
   ...nxPreset,
@@ -17,4 +17,4 @@ module.exports = {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-}
+};

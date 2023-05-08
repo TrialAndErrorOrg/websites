@@ -1,23 +1,23 @@
 const config = {
-  displayName: 'thesis',
-  preset: '../../jest.preset.ts',
+  displayName: "thesis",
+  preset: "../../jest.preset.ts",
   globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
+    "ts-jest": {
+      tsconfig: "<rootDir>/tsconfig.spec.json",
       useESM: true,
     },
   },
-  testEnvironment: 'node',
+  testEnvironment: "node",
   transform: {
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
-    '^.+\\.[tj]sx?$': ['@swc/jest'],
+    "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "@nx/react/plugins/jest",
+    "^.+\\.[tj]sx?$": ["@swc/jest"],
   },
   transformIgnorePatterns: [],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/apps/thesis',
-  extensionsToTreatAsEsm: ['.ts'],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
+  coverageDirectory: "../../coverage/apps/thesis",
+  extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+    "^(\\.{1,2}/.*)\\.js$": "$1",
   },
 }
 
