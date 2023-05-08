@@ -1,0 +1,112 @@
+---
+import { Icon } from 'astro-icon'
+import Logo from '../atoms/Logo.astro'
+import ToggleTheme from '../core/ToggleTheme.astro'
+import ToggleMenu from '../core/ToggleMenu.astro'
+
+// import { getPermalink, getBlogPermalink, getHomePermalink } from '../../utils/permalinks'
+import { getMain } from '../../utils/menu'
+import { Search } from '../core/Search'
+
+const main = await getMain()
+---
+
+<header
+  className="sticky top-0 z-50 mx-auto w-full flex-none overflow-clip border-b-2 border-black bg-white text-black dark:border-white dark:bg-slate-700 dark:text-white md:h-14"
+>
+  <div
+    className="flex h-full w-full grid-cols-4 flex-col items-center justify-between py-0 md:flex-row md:justify-between lg:grid-cols-12"
+  >
+    <div
+      className="col-span-2 col-start-1 flex h-full w-full justify-between border-black dark:border-white lg:col-span-1"
+    >
+      <a
+        className="group flex h-full w-16 items-center justify-center !rounded-none !border-r-2 !border-r-black bg-black p-2 transition-colors hover:bg-orange-500 hover:fill-black dark:border-r-0 dark:border-white dark:!border-r-white md:w-20 md:p-4"
+        href={main[0]?.url}
+      >
+        <span className="sr-only">Home</span>
+        <span className="h-8 w-8 md:h-14 md:w-14">
+          <Logo />
+        </span>
+      </a>
+      <div className="col-start-3 mr-3 flex items-center md:hidden">
+        <!-- <ToggleTheme className="px-2 py-1 button-sleek" /> -->
+        <ToggleMenu className="button-sleek px-2 py-1" />
+      </div>
+    </div>
+
+    <nav
+      className="hidden h-screen w-full items-center dark:text-slate-200 md:flex md:h-auto md:w-auto md:gap-4 md:text-2xl lg:col-end-10"
+      aria-label="Main navigation"
+      id="menu"
+    >
+      <ul
+        className="collapsed flex h-full w-full flex-col gap-8 px-4 pt-8 text-lg md:w-auto md:flex-row md:gap-4 md:self-center md:px-0 md:pt-0"
+      >
+        <li>
+          <a
+            className="sleek-underline flex items-center transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white"
+            href={'/blog'}>Blog</a
+          >
+        </li>
+        <li>
+          <a
+            className="sleek-underline flex items-center transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white"
+            href={'https://trialanderror.org'}>Center</a
+          >
+        </li>
+        <li>
+          <a
+            className="sleek-underline flex items-center transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white"
+            href={'https://journal.trialanderror.org'}>Journal</a
+          >
+        </li>
+
+        <li className="md:hidden">
+          <a
+            className="button-sleek flex w-full items-center gap-2 font-medium text-black focus:outline-none dark:focus:ring-white"
+            aria-label="RSS Feed"
+            href="/rss.xml"
+          >
+            <Icon name="tabler:rss" className="w-5 h-5" />
+            RSS Feed
+          </a>
+        </li>
+        <li className="md:hidden">
+          <a
+            href="https://github.com/journaloftrialanderror/centeroftrialanderror.com"
+            className="button-sleek flex items-center gap-2 rounded-lg font-medium focus:outline-none dark:focus:ring-white"
+            aria-label="Center of Trial & Error Github"
+          >
+            <Icon name="tabler:brand-github" className="w-5 h-5" />
+            Source Code
+          </a>
+        </li>
+        <li className="h-12 w-full self-end justify-self-end border-2 border-black md:hidden">
+          <Search client:visible />
+        </li>
+      </ul>
+      <div className="mx-2 mb-4 ml-2 flex items-center md:mr-4 md:mb-0 md:self-center">
+        <div className="hidden items-center md:flex">
+          <a
+            className="button-sleek inline-flex items-center text-sm text-black focus:outline-none focus:ring-4 focus:ring-black dark:focus:ring-white"
+            aria-label="RSS Feed"
+            href="/rss.xml"
+          >
+            <Icon name="tabler:rss" className="w-6 h-6" />
+          </a>
+          <a
+            href="https://github.com/journaloftrialanderror/centeroftrialanderror.com"
+            className="button-sleek inline-block rounded-lg text-sm focus:outline-none focus:ring-4 focus:ring-black dark:focus:ring-white"
+            aria-label="Center of Trial & Error Github"
+          >
+            <Icon name="tabler:brand-github" className="w-6 h-6" />
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div className="col-start-4 ml-2 hidden h-full md:col-span-2 md:col-start-11 md:flex md:w-60">
+      <Search client:visible />
+    </div>
+  </div>
+</header>

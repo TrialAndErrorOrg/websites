@@ -1,35 +1,99 @@
-import { getFile } from '../server/files'
-import { getAllCards } from '../server/mixed'
-import { Card } from './components/Card'
-import { WhatDoWeDo } from './components/WhatDoWeDo'
-import { Hero } from './components/Hero'
+import { SITE } from '../config.mjs'
+import { getCanonical, getHomePermalink } from '../utils/permalinks'
+import { getPosts } from '../utils/blog'
+import { SignUp } from './components/client/SignUp'
+import { createMetadata } from '../utils/createMetadata'
+import { PostCard } from './components/blog/PostCard'
 
-export const revalidate = 3600 // revalidate at least every hour
+export const metadata = createMetadata({
+  title: SITE.title,
+  description: SITE.description,
+  canonical: getCanonical(getHomePermalink()),
+})
 
-export default async function Page() {
-  const cardsPromise = await getAllCards({ limit: 12 })
-  // TODO: don't hardcode the images
-  const filesPromise = Promise.all([573, 571, 572].map(async (file) => await getFile(file)))
-
-  const [cards, files] = await Promise.all([cardsPromise, filesPromise])
-
+export default async function Index() {
+  const posts = (await getPosts()) ?? []
   return (
-    // <main className="relative">
-    <div className="relative flex flex-col items-center overflow-clip">
-      {/* <div className="absolute top-[30vh] -z-10 mx-auto h-[90%] w-2/3 bg-orange-500 lg:top-[40vh]" /> */}
+    <main>
+      <div className="cols mx-6 grid max-w-[100rem] grid-cols-12 px-5 py-10 md:mx-auto md:px-0">
+        <div className="col-span-full flex justify-center pb-10 pt-20 md:col-span-11 md:col-start-2">
+          <h1 className="group relative -ml-24 mr-0 inline-flex w-min text-center text-4xl font-semibold leading-none tracking-tighter text-black md:text-left lg:text-6xl">
+            <a
+              href="https://trialanderror.org"
+              className="font-overpass !absolute -top-10 z-20 flex transform-gpu flex-col pl-20 text-black transition-all duration-500 ease-out will-change-transform hover:translate-x-72 hover:underline"
+            >
+              <span className="relative z-30 w-max border-4 border-b-0 border-black bg-orange-500 p-2 pb-0 pr-4 md:px-4 lg:border-4 lg:border-b-0 lg:pb-0 lg:pl-8 lg:pr-14 lg:pt-6">
+                Center of
+              </span>
+              <span className="relative -mt-1 w-max border-4 border-black bg-orange-500 p-2 md:px-4 lg:-mt-1 lg:border-4 lg:px-8">
+                Trial & Error.
+              </span>
+            </a>
+            <a
+              href="https://journal.trialanderror.org"
+              className="font-overpass !absolute -top-5 z-30 flex transform-gpu flex-col pl-10 text-white transition-all duration-500 ease-out will-change-transform hover:translate-x-64 hover:underline"
+            >
+              <span className="relative z-30 w-max border-4 border-b-0 border-black bg-blue-500 p-2 pb-0 pr-4 md:px-4 lg:border-4 lg:border-b-0 lg:px-8 lg:pb-0 lg:pt-6">
+                Journal of
+              </span>
+              <span className="relative -mt-1 w-max border-4 border-black bg-blue-500 p-2 md:px-4 lg:-mt-1 lg:border-4 lg:px-8">
+                Trial & Error.
+              </span>
+            </a>
 
-      <Hero />
-      <WhatDoWeDo images={files} />
-      <div className="relative my-[20vh] flex w-full flex-col items-center gap-10">
-        <h2 className="flex w-full items-center gap-10 whitespace-nowrap pl-[3vw] pr-[6.6vw] text-5xl font-black text-blue-500 before:relative before:flex before:h-[6px] before:bg-blue-500 after:relative after:h-[6px] after:flex-grow after:bg-blue-500 md:pl-[6.6vw] md:before:w-24 md:after:min-w-[4rem] lg:text-7xl">
-          What's New?
-        </h2>
-        <div className="m-10 grid grid-cols-1 gap-20 md:grid-cols-2 md:gap-24 2xl:grid-cols-3 2xl:gap-20 ">
-          {cards.map((card, idx) => (
-            <Card key={card.id} delay={idx * 0.1} card={card} />
-          ))}
+            <span className="group pointer-events-none relative z-40 flex flex-col bg-none">
+              <span className="pointer-events-auto relative z-40 w-max rounded-b-none border-4 border-b-0 border-black bg-white p-2 pb-0 pr-4 transition-all md:px-8 md:pr-12 lg:border-4 lg:border-b-0 lg:pb-0 lg:pt-6">
+                A Blog of
+              </span>
+              <span className="pointer-events-auto relative -mt-1 w-max rounded-tl-none border-4 border-black bg-white p-2 md:px-4 lg:border-t-4 lg:px-8">
+                Trial & Error.
+              </span>
+            </span>
+          </h1>
+        </div>
+        <div className="col-span-full md:col-span-10 md:col-start-2">
+          <PostCard post={posts[0]} className="card group my-10 grid md:flex" preloadImage wide />
+        </div>
+
+        <div className="col-span-full md:col-span-10 md:col-start-2">
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {posts.slice(1, 7).map((post) => (
+              <PostCard key={post.title} post={post} aspect="square" />
+            ))}
+          </div>
+        </div>
+        <div className="col-span-full my-32 flex items-center justify-center md:col-span-10 md:col-start-2">
+          <div className="mx-auto grid items-center justify-between gap-10 p-10 md:grid-cols-3">
+            <div className="flex flex-col gap-10 md:col-span-2">
+              <h2 className="text-center font-sans text-6xl font-black tracking-tighter text-black dark:text-white md:text-left xl:text-7xl">
+                Subscribe to our
+                <br className="hidden md:block" />
+                <span className="text-orange-500">newsletter!</span>
+              </h2>
+              <SignUp mailId={'email'} />
+            </div>
+
+            <p className="mx-auto text-center font-sans text-2xl font-medium tracking-tighter text-black dark:text-white md:text-3xl">
+              Keep up to date with the Blog,
+              <a href="https://trialanderror.org" className="sleek-underline font-bold">
+                Center
+              </a>
+              , and <br />
+              <a href="https://trialanderror.org" className="sleek-underline font-bold">
+                Journal of Trial & Error
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div className="col-span-full md:col-span-10 md:col-start-2">
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {posts.slice(7).map((post) => (
+              <PostCard key={post.title} post={post} aspect="square" />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
