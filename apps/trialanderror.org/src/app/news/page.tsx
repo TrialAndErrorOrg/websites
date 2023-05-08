@@ -21,9 +21,7 @@ export default async function Page() {
       </p>
       <div className="grid grid-cols-1 gap-20 p-[10vw] md:grid-cols-2 lg:grid-cols-3 ">
         {cards.map((card, idx) => (
-          // <motion.div key={card.id}>
           <Card key={card.id} delay={idx * 0.1} card={card} />
-          // </motion.div>
         ))}
         <ClientProvider>
           <InfiniteCards />
