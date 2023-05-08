@@ -1,9 +1,15 @@
 import { getAllCards } from '../../server/mixed'
+import { createMetadata } from '../../utils/createMetadata'
 import { ClientProvider } from '../../utils/trpcClient'
 import { Card } from '../components/Card'
 import { InfiniteCards } from '../components/InfiniteCards'
 
 export const revalidate = 3600 // revalidate every hour
+
+export const metadata = createMetadata({
+  title: 'News & Events',
+  description: 'News and Events Updates from the Center of Trial and Error',
+})
 
 export default async function Page() {
   const cards = await getAllCards({ limit: 6 })

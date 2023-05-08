@@ -1,39 +1,34 @@
-import { strapiClient } from '../../../server/api/strapi';
-import { GetAttributesValues } from '@strapi/strapi';
-import { cache } from 'react';
-import Image from 'next/image';
-import {
-  FaGithub,
-  FaLink,
-  FaLinkedin,
-  FaOrcid,
-  FaTwitter,
-} from 'react-icons/fa';
+import Image from 'next/image'
+import { FaGithub, FaLink, FaLinkedin, FaOrcid, FaTwitter } from 'react-icons/fa'
+import { createMetadata } from '../../../utils/createMetadata'
+import { getPerson } from '../../../server/person'
 
-export const getPerson = cache(async (slug: string) => {
-  const person = await strapiClient
-    .from<GetAttributesValues<'api::team-member.team-member'>>('team-members')
-    .select()
-    .populate()
-    .equalTo('slug', slug)
-    .get();
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const { slug } = params
+  const person = (await getPerson(slug)).data?.[0]
 
-  return person;
-});
+  if (!person) {
+    return createMetadata({
+      title: '404',
+    })
+  }
 
-export default async function PersonPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = params;
+  const { firstName, lastName, position, summary, image } = person
+
+  return createMetadata({
+    title: `${firstName} ${lastName}, ${position} at the Center of Trial and Error`,
+    description: summary,
+    image: image.url ?? undefined,
+  })
+}
+
+export default async function PersonPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
 
   const {
     firstName,
     lastName,
-    email,
     position,
-    department,
     pronouns,
     show_pronouns,
     bio,
@@ -42,11 +37,10 @@ export default async function PersonPage({
     image,
     blog_posts,
     linkedin,
-    mastodon,
     personalWebsite,
     twitter,
     orcid,
-  } = (await getPerson(slug)).data?.[0] ?? {};
+  } = (await getPerson(slug)).data?.[0] ?? {}
 
   return (
     <main>
@@ -81,10 +75,7 @@ export default async function PersonPage({
 
           <div className="col-span-4 row-span-1 flex flex-wrap items-center justify-center gap-1 leading-none">
             {orcid && (
-              <a
-                href={orcid}
-                className="button-sleek flex items-center  text-black"
-              >
+              <a href={orcid} className="button-sleek flex items-center  text-black">
                 <FaOrcid className="h-5 w-5" />
                 <span className="sr-only">ORCID</span>
               </a>
@@ -96,28 +87,19 @@ export default async function PersonPage({
               </a>
             )}
             {github && (
-              <a
-                href={github}
-                className="button-sleek z-10 flex items-center gap-1"
-              >
+              <a href={github} className="button-sleek z-10 flex items-center gap-1">
                 <FaGithub className="h-5 w-5" />
                 <span className="sr-only">Github</span>
               </a>
             )}
             {linkedin && (
-              <a
-                href={linkedin}
-                className="button-sleek z-10 flex items-center gap-1"
-              >
+              <a href={linkedin} className="button-sleek z-10 flex items-center gap-1">
                 <FaLinkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </a>
             )}
             {personalWebsite && (
-              <a
-                href={personalWebsite}
-                className="button-sleek z-10 flex items-center gap-1"
-              >
+              <a href={personalWebsite} className="button-sleek z-10 flex items-center gap-1">
                 <FaLink className="h-5 w-5" />
                 <span className="sr-only">Website</span>
               </a>
@@ -134,10 +116,7 @@ export default async function PersonPage({
             )} */}
           </div>
         </div>
-        <div
-          className="prose"
-          dangerouslySetInnerHTML={{ __html: bio || summary || '' }}
-        />
+        <div className="prose" dangerouslySetInnerHTML={{ __html: bio || summary || '' }} />
       </div>
       {blog_posts && (
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
@@ -145,14 +124,10 @@ export default async function PersonPage({
             Blog Posts by {firstName} {lastName}
           </h2>
           {blog_posts.map((post) => (
-            //<PostCard wide post={post} />)}
             <article className="prose relative">
               <h3>{post.title}</h3>
               <p>{post.excerpt}</p>
-              <a
-                href={`https://blog.trialanderror.org/${post.slug}`}
-                className="link-overlay"
-              >
+              <a href={`https://blog.trialanderror.org/${post.slug}`} className="link-overlay">
                 Read More
               </a>
             </article>
@@ -160,5 +135,5 @@ export default async function PersonPage({
         </div>
       )}
     </main>
-  );
+  )
 }

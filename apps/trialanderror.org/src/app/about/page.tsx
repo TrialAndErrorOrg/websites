@@ -1,18 +1,24 @@
-import { Frame } from '../components/Frame';
-import { getTeam } from '../team/page';
-import { TeamMemberCard } from '../components/TeamMemberCard';
-import { OurMission } from '../components/OurMission';
-import { AboutUs } from '../components/AboutUs';
-import { ShittyScrollHack } from './ShittyScrollHack';
+import { Frame } from '../components/Frame'
+import { getTeam } from '../team/page'
+import { TeamMemberCard } from '../components/TeamMemberCard'
+import { OurMission } from '../components/OurMission'
+import { AboutUs } from '../components/AboutUs'
+import { ShittyScrollHack } from './ShittyScrollHack'
+import { createMetadata } from '../../utils/createMetadata'
 
-export const revalidate = 3600; // revalidate every hour
+export const revalidate = 3600 // revalidate every hour
+
+export const metadata = createMetadata({
+  title: 'About Us',
+  description: 'Read the vision and mission of the Center of Trial and Error.',
+  canonical: 'about',
+})
 
 export default async function AboutPage() {
-  const team = await getTeam();
+  const team = await getTeam()
 
   return (
     <div className="relative flex flex-col items-center">
-      <ShittyScrollHack />
       <AboutUs />
       <OurMission />
       <div className="relative my-[20vh] flex min-h-screen w-screen flex-col">
@@ -26,13 +32,11 @@ export default async function AboutPage() {
           </h2>
           <div className="ml-[20%] grid min-w-max grid-cols-1 gap-8  lg:ml-[30%]  lg:grid-cols-2 lg:gap-12 2xl:ml-[40%] 2xl:grid-cols-3">
             {team.map((member) =>
-              member.image ? (
-                <TeamMemberCard key={member.id} member={member} />
-              ) : null
+              member.image ? <TeamMemberCard key={member.id} member={member} /> : null,
             )}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

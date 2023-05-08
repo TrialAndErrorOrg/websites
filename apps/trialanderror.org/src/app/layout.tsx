@@ -1,85 +1,28 @@
-import { NextSeo, NextSeoProps } from 'next-seo'
-import Link from 'next/link'
 import { AnalyticsWrapper } from './components/Analytics'
 import { Footer } from './components/Footer'
-import { Overpass, Open_Sans } from '@next/font/google'
+import { Nav } from './components/Nav'
+import { createMetadata } from '../utils/createMetadata'
+
+import { Overpass, Open_Sans } from 'next/font/google'
+import Script from 'next/script'
 
 import '../styles/globals.css'
-import { Nav } from './components/Nav'
-import Script from 'next/script'
-import { env } from '../env/server.mjs'
-// If loading a variable font, you don't need to specify the font weight
+
 const overpass = Overpass({
-  //weight: ['600', '900'],
-  // style: 'normal',
   subsets: ['latin'],
   variable: '--font-overpass',
-  // default, can also use "swap" to ensure custom font always shows
   display: 'swap',
 })
 
 const open_sans = Open_Sans({
-  //weight: ['400', '600'],
-  //style: 'normal',
   subsets: ['latin'],
   variable: '--font-open-sans',
-  // default, can also use "swap" to ensure custom font always shows
   display: 'swap',
 })
 
-export const ogURL = `${env.OG_URL}/api/og/jote`
-
-// next-seo.config.js
-export const SEO = (
-  {
-    description = '',
-    image = '',
-    canonical = '',
-    noindex = false,
-    nofollow = false,
-    title = 'The Center of Trial and Error',
-    ogTitle = '',
-    ogType = 'website',
-    locale = 'en_US',
-    alt = '',
-  } = {},
-  otherProps?: NextSeoProps,
-) => (
-  <NextSeo
-    {...{
-      title: title,
-      description: description,
-      canonical: `https://trialanderror.org/${canonical}`,
-      openGraph: {
-        type: ogType,
-        locale,
-        url: `https://trialanderror.org/${canonical}`,
-        title: ogTitle || title,
-        description: description,
-        images: [
-          {
-            url:
-              image ||
-              `${ogURL}?title=${encodeURIComponent(ogTitle || title)}&author=${encodeURIComponent(
-                description ?? '%20',
-              )}&name=${encodeURIComponent(!canonical ? '' : 'Center of Trial and Error')}`,
-            width: 1200,
-            height: 630,
-            alt,
-          },
-        ],
-        siteName: 'Center of Trial and Error',
-      },
-      twitter: {
-        handle: '@jtrialerror',
-        site: '@jtrialerror',
-        cardType: 'summary_large_image',
-      },
-      useAppDir: true,
-      ...otherProps,
-    }}
-  />
-)
+export const metadata = createMetadata({
+  description: 'Creating transparent and responsible scholarship.',
+})
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
