@@ -56,7 +56,6 @@ const ACTION_KEY_DEFAULT = 'Ctrl' as const
 const ACTION_KEY_APPLE = '⌘' as const
 
 export function Search() {
-  const apple = typeof navigator !== 'undefined' && isAppleDevice()
   const searchButtonRef = useRef<HTMLButtonElement>(null)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -486,3 +485,5 @@ export function useSearchKeyboardEvents({
     }
   }, [isOpen, onOpen, onClose, onInput, searchButtonRef])
 }
+
+export default Search

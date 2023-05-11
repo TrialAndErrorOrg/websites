@@ -16,7 +16,10 @@ export type GetReturnType<T extends CollectionTypeSchema | SingleTypeSchema> = {
   [key in keyof T['attributes']]-?: GetAttributeValue<T['attributes'][key]>
 }
 
-export type BlogPost = Omit<GetAttributesValues<'api::blog-post.blog-post'>, 'image'> & {
+export type BlogPost = Omit<
+  GetAttributesValues<'api::blog-post.blog-post'>,
+  'image' | 'related'
+> & {
   image: {
     id: number
     name: string
@@ -37,6 +40,8 @@ export type BlogPost = Omit<GetAttributesValues<'api::blog-post.blog-post'>, 'im
     updatedAt: string
     alt?: string
   }
+} & { id: number } & {
+  related?: BlogPost[]
 }
 
 // interface Formats {

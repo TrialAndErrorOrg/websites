@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="selection:bg-salmon bg-white tracking-tight text-gray-900 antialiased transition-colors selection:border selection:border-black selection:transition-all dark:bg-slate-800 dark:text-slate-300">
         <HeaderWrapper />
         {children}
-        {/* <Footer /> */}
+        <Footer />
         <AnalyticsWrapper />
         <Script
           strategy="afterInteractive"

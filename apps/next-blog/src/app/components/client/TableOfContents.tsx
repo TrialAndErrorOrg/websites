@@ -178,7 +178,8 @@ export const useTableOfContentsBad = (tableOfContents: Section[]) => {
     return () => {
       window.removeEventListener('scroll', onScroll, {
         capture: true,
-        passive: true,
+
+        // passive: true,
       })
     }
   }, [headings, tableOfContents])

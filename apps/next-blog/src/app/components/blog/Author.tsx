@@ -1,6 +1,7 @@
+import Link from 'next/link'
 import { cx } from '../../../utils/cx'
 import type { Author } from '../../../utils/types'
-import { Image } from '@astrojs/image/components'
+import Image from 'next/image'
 import { FaOrcid, FaTwitter, FaGithub, FaLink, FaLinkedin } from 'react-icons/fa/index'
 
 interface Props {
@@ -27,12 +28,12 @@ export function Author(props: Props) {
             <span>{author.lastName?.[0] ?? author?.firstName?.[0]}</span>
           )}
         </div>
-        <a
+        <Link
           className="link-overlay col-span-3 row-span-1 text-xl font-bold md:text-2xl"
           href={`/author/${author.slug}`}
         >
           {author.firstName} {author.lastName}
-        </a>
+        </Link>
         {'position' in author && author.position && (
           <div className="col-span-3 row-span-1">{author.position}</div>
         )}

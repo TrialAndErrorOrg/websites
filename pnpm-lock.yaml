@@ -34,8 +34,8 @@ dependencies:
     specifier: ^1.3.0
     version: 1.4.0(axios@1.3.6)(qs@6.11.1)
   '@meilisearch/instant-meilisearch':
-    specifier: ^0.12.0
-    version: 0.12.0
+    specifier: ^0.9.0
+    version: 0.9.0
   '@next/font':
     specifier: ^13.4.0
     version: 13.4.0
@@ -5472,10 +5472,10 @@ packages:
       react: 18.3.0-canary-aef7ce554-20230503
     dev: true
 
-  /@meilisearch/instant-meilisearch@0.12.0:
-    resolution: {integrity: sha512-DmiqrJvW5onR8pDxXWvg71p10rFx+4sLioZrteT3I033iOVyJbuOTglNMNUetHbRBiCaqJ4kNFx0Yj/fkGzzfg==}
+  /@meilisearch/instant-meilisearch@0.9.0:
+    resolution: {integrity: sha512-XEQQGpQFra1T/9s2Sm9nwS9n19BBtlmobp1MMfj/y9OtRb8vG38kFtfICpDb3DqGcyecn56rUh4urUk6ErIxRQ==}
     dependencies:
-      meilisearch: 0.32.3
+      meilisearch: 0.28.0
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -9498,7 +9498,7 @@ packages:
       fs-extra: 10.0.0
       inquirer: 8.2.4
       lodash: 4.17.21
-      node-fetch: 2.6.7
+      node-fetch: 2.6.9
       node-machine-id: 1.1.12
       ora: 5.4.1
       semver: 7.3.8
@@ -22068,8 +22068,8 @@ packages:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
 
-  /meilisearch@0.32.3:
-    resolution: {integrity: sha512-EOgfBuRE5SiIPIpEDYe2HO0D7a4z5bexIgaAdJFma/dH5hx1kwO+u/qb2g3qKyjG+iA3l8MlmTj/Xd72uahaAw==}
+  /meilisearch@0.28.0:
+    resolution: {integrity: sha512-zC50xLyPWBtfAIZiFTSJyYJp/a5bO+dSSigBKUEoShFkuv9+/KC4J3T3ZejNVHXG2DU0ohOMf8TZ3HAHXNd3EA==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:

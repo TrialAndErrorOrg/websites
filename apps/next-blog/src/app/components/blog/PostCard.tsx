@@ -6,6 +6,7 @@ import type { BlogPost } from '../../../utils/types'
 import { AuthorList } from './AuthorList'
 import { Tags } from './Tags'
 import { FaArrowRight } from 'react-icons/fa/index'
+import Link from 'next/link'
 
 interface Props {
   post: BlogPost
@@ -39,9 +40,7 @@ export async function PostCard({
               post.image.url
             }
             alt={post.image.alt || 'Thumbnail'}
-            className={`${
-              wide ? 'h-full w-full' : 'h-52 w-full md:h-72'
-            } object-cover transition-all`}
+            className={'h-full w-full object-cover transition-all'}
             loading={preloadImage ? 'eager' : 'lazy'}
             height={
               (wide
@@ -62,14 +61,14 @@ export async function PostCard({
           </span>
         )}
 
-        <a
+        <Link
           className={`group/button absolute right-0 top-4 z-10 overflow-clip !rounded-none !border-2 !border-r-0 border-black !bg-orange-500 px-4 py-1  text-lg !font-semibold text-black dark:border-white dark:text-white md:text-xl `}
           href={`/category/${post?.category?.title?.toLowerCase().replace(' ', '-')}`}
         >
           <span className="sleek-underline group-hover/button:after:w-full">
             {post.category?.title}
           </span>
-        </a>
+        </Link>
         <Tags
           tags={post.blog_tags ?? []}
           className="absolute bottom-3 right-4 z-10 flex max-w-[80%] flex-wrap justify-end gap-x-1 text-sm"
@@ -97,7 +96,7 @@ export async function PostCard({
             )}
           </time>
         </div>
-        <h2 className="text-brand-primary font-sans text-xl font-semibold leading-tight tracking-tighter dark:text-white md:text-3xl">
+        <h2 className="text-brand-primary font-sans text-xl font-semibold leading-tight tracking-tighter dark:text-white md:text-2xl">
           {post.title}
         </h2>
 
@@ -108,17 +107,17 @@ export async function PostCard({
         <div>
           {post.excerpt && (
             <p className="line-clamp-4 max-w-[50ch] font-medium leading-relaxed text-black dark:text-white">
-              <a href={`/${post.slug}`}>{post.excerpt}</a>
+              <Link href={`/${post.slug}`}>{post.excerpt}</Link>
             </p>
           )}
         </div>
 
-        <a href={`/${post.slug}`} className="link-overlay mt-auto">
+        <Link href={`/${post.slug}`} className="link-overlay mt-auto">
           <span className="sleek-underline text-brand-primary dark:text-brand-primary relative z-10 ml-auto flex h-min w-max items-center gap-2 py-1 text-xl font-medium text-black dark:text-white">
             Read
             <FaArrowRight />
           </span>
-        </a>
+        </Link>
       </div>
     </div>
   )

@@ -9,7 +9,7 @@ export function Logo() {
         x="0px"
         y="0px"
         viewBox="0 0 177 177.8"
-        style={{ enableBackground: 'new 0 0 177 177.8' }}
+        // style={{ enableBackground: 'new 0 0 177 177.8' }}
         xmlSpace="preserve"
         className="h-full w-full fill-white group-hover:fill-black dark:fill-white"
       >

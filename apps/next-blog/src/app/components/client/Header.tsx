@@ -1,9 +1,11 @@
 'use client'
 
-import { FaGithub, FaRss } from 'react-icons/fa'
+import { VscGithubAlt, VscRss } from 'react-icons/vsc'
 import { ToggleMenu } from '../ToggleMenu'
 import { Logo } from './Logo'
-import { Search } from './Search'
+import { Suspense, lazy } from 'react'
+
+const Search = lazy(() => import('./Search'))
 
 export function Header() {
   return (
@@ -60,8 +62,7 @@ export function Header() {
               aria-label="RSS Feed"
               href="/rss.xml"
             >
-              {/* <Icon name="tabler:rss" className="h-5 w-5" /> */}
-              <FaRss className="h-5 w-5" />
+              <VscRss className="h-5 w-5" />
               RSS Feed
             </a>
           </li>
@@ -71,7 +72,7 @@ export function Header() {
               className="button-sleek flex items-center gap-2 rounded-lg font-medium focus:outline-none dark:focus:ring-white"
               aria-label="Center of Trial & Error Github"
             >
-              <FaGithub className="h-5 w-5" />
+              <VscGithubAlt className="h-5 w-5" />
               Source Code
             </a>
           </li>
@@ -86,20 +87,22 @@ export function Header() {
               aria-label="RSS Feed"
               href="/rss.xml"
             >
-              <FaRss className="h-6 w-6" />
+              <VscRss className="h-6 w-6" />
             </a>
             <a
               href="https://github.com/journaloftrialanderror/centeroftrialanderror.com"
               className="button-sleek inline-block rounded-lg text-sm focus:outline-none focus:ring-4 focus:ring-black dark:focus:ring-white"
               aria-label="Center of Trial & Error Github"
             >
-              <FaGithub className="h-6 w-6" />
+              <VscGithubAlt className="h-6 w-6" />
             </a>
           </div>
         </div>
       </nav>
       <div className="col-start-4 ml-2 hidden h-full md:col-span-2 md:col-start-11 md:flex md:w-60">
-        <Search />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Search />
+        </Suspense>
       </div>
     </div>
   )

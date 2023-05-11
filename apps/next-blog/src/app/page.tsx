@@ -4,6 +4,8 @@ import { getPosts } from '../utils/blog'
 import { SignUp } from './components/client/SignUp'
 import { createMetadata } from '../utils/createMetadata'
 import { PostCard } from './components/blog/PostCard'
+import Link from 'next/link'
+import { SignUpWrapper } from './components/client/SignUpWrapper'
 
 export const metadata = createMetadata({
   title: SITE.title,
@@ -18,7 +20,7 @@ export default async function Index() {
       <div className="cols mx-6 grid max-w-[100rem] grid-cols-12 px-5 py-10 md:mx-auto md:px-0">
         <div className="col-span-full flex justify-center pb-10 pt-20 md:col-span-11 md:col-start-2">
           <h1 className="group relative -ml-24 mr-0 inline-flex w-min text-center text-4xl font-semibold leading-none tracking-tighter text-black md:text-left lg:text-6xl">
-            <a
+            <Link
               href="https://trialanderror.org"
               className="font-overpass !absolute -top-10 z-20 flex transform-gpu flex-col pl-20 text-black transition-all duration-500 ease-out will-change-transform hover:translate-x-72 hover:underline"
             >
@@ -28,7 +30,7 @@ export default async function Index() {
               <span className="relative -mt-1 w-max border-4 border-black bg-orange-500 p-2 md:px-4 lg:-mt-1 lg:border-4 lg:px-8">
                 Trial & Error.
               </span>
-            </a>
+            </Link>
             <a
               href="https://journal.trialanderror.org"
               className="font-overpass !absolute -top-5 z-30 flex transform-gpu flex-col pl-10 text-white transition-all duration-500 ease-out will-change-transform hover:translate-x-64 hover:underline"
@@ -70,7 +72,7 @@ export default async function Index() {
                 <br className="hidden md:block" />
                 <span className="text-orange-500">newsletter!</span>
               </h2>
-              <SignUp mailId={'email'} />
+              <SignUpWrapper mailId={'email'} />
             </div>
 
             <p className="mx-auto text-center font-sans text-2xl font-medium tracking-tighter text-black dark:text-white md:text-3xl">
@@ -79,7 +81,7 @@ export default async function Index() {
                 Center
               </a>
               , and <br />
-              <a href="https://trialanderror.org" className="sleek-underline font-bold">
+              <a href="https://journal.trialanderror.org" className="sleek-underline font-bold">
                 Journal of Trial & Error
               </a>
             </p>
