@@ -4,6 +4,7 @@ import { VscGithubAlt, VscRss } from 'react-icons/vsc'
 import { ToggleMenu } from '../ToggleMenu'
 import { Logo } from './Logo'
 import { Suspense, lazy, useState } from 'react'
+import { SearchFacade } from './SearchFacade'
 
 const Search = lazy(() => import('./Search'))
 
@@ -81,7 +82,9 @@ export function Header() {
           </li>
           {!hidden && (
             <li className="h-12 w-full self-end justify-self-end border-2 border-black md:hidden">
-              <Search />
+              <Suspense fallback={<SearchFacade />}>
+                <Search />
+              </Suspense>
             </li>
           )}
         </ul>
@@ -106,7 +109,7 @@ export function Header() {
       </nav>
       <div className="col-start-4 ml-2 hidden h-full md:col-span-2 md:col-start-11 md:flex md:w-60">
         {hidden && (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<SearchFacade />}>
             <Search />
           </Suspense>
         )}
