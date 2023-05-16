@@ -33,5 +33,11 @@ export async function GET(request: Request) {
   // Redirect to the path from the fetched post
   // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
   //   NextResponse.redirect(`/${post.slug}`)
-  redirect(`/${post.slug}`, RedirectType.push)
+  // redirect(`/${post.slug}`, RedirectType.push)
+  return new Response(null, {
+    status: 307,
+    headers: {
+      Location: `/${post.slug}`,
+    },
+  })
 }

@@ -42,8 +42,7 @@ export const createMetadata = (
   openGraph: {
     locale,
     url: `https://blog.trialanderror.org/${canonical}`,
-    title:
-      ogTitle ?? (title ? `${title} | Center of Trial and Error` : 'Center of Trial and Error'),
+    title: ogTitle || (title ? `${title} | Blog of Trial and Error` : 'A Blog of Trial and Error'),
     description: description,
     images: [
       {
@@ -51,13 +50,13 @@ export const createMetadata = (
           image ||
           `${ogURL}?title=${encodeURIComponent(ogTitle || title)}&author=${encodeURIComponent(
             description ?? '%20',
-          )}&name=${encodeURIComponent(!canonical ? '' : 'Center of Trial and Error')}`,
+          )}&name=${encodeURIComponent(!canonical ? '' : 'A Blog of Trial and Error')}`,
         width: 1200,
         height: 630,
         alt,
       },
     ],
-    siteName: 'Center of Trial and Error',
+    siteName: 'A Blog of Trial and Error',
   },
   twitter: {
     site: '@jtrialerror',

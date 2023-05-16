@@ -20,9 +20,7 @@ const open_sans = Open_Sans({
   display: 'swap',
 })
 
-export const metadata = createMetadata({
-  description: 'Creating transparent and responsible scholarship.',
-})
+export const metadata = createMetadata({})
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

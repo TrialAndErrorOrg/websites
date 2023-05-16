@@ -15,8 +15,18 @@ export async function generateStaticParams() {
   const blogPages = Array.from({ length: totalPages }, (_, i) => ({
     page: (i + 1).toString(),
   }))
+  const { categories, tags } = getUniqueCategoriesAndTags(posts)
 
-  return blogPages
+  const categoryPages = categories.map((category) => ({
+    page: category.slug,
+  }))
+
+  const tagPages = tags.map((tag) => ({
+    page: tag.slug,
+  }))
+  const allPages = [...blogPages, ...categoryPages, ...tagPages]
+
+  return allPages
 }
 
 export default async function BlogPage({

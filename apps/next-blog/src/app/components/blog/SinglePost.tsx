@@ -14,6 +14,7 @@ import { Section, TableOfContents } from '../client/TableOfContents'
 import { License } from './License'
 import { getTweet } from '../../../utils/getTweetData'
 import { NamedList } from './NamedList'
+import { blurHashToDataURL } from 'apps/next-blog/src/utils/blurhashToDataUrl'
 
 interface Props {
   post: BlogPost
@@ -99,6 +100,13 @@ export async function SinglePost(props: Props) {
 
   const bodyWithEmbeddedTweets = bodySplitByEmbeddedTweet.join('')
 
+  const blurhash = post.image?.blurhash
+  const blurDataURL = blurhash ? blurHashToDataURL(blurhash) : undefined
+  console.log({
+    blurhash,
+    blurDataURL,
+  })
+
   return (
     <section className="relative mx-auto flex flex-col bg-white dark:bg-slate-700">
       {post.image?.width && post.image?.height && (
@@ -107,8 +115,11 @@ export async function SinglePost(props: Props) {
           className="sticky top-12 max-h-[45vh] w-full border-b border-black object-cover dark:bg-slate-700 md:max-h-[60vh]"
           height={post.image?.formats?.large?.height ?? post.image.height}
           width={post.image?.formats?.large?.width ?? post.image.width}
+          blurDataURL={blurDataURL}
+          placeholder={blurDataURL ? 'blur' : 'empty'}
           // format="webp"
           // fit="cover"
+
           loading="eager"
           // aspectRatio="21:9"
           alt={post.image.alt ?? post.seo?.metaDescription ?? ''}

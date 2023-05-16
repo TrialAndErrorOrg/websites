@@ -211,6 +211,9 @@ export default ({ env }: { env: Env }) => ({
   },
   'strapi-blurhash': {
     enabled: true,
+    config: {
+      regenerateOnUpdate: true,
+    },
   },
   'preview-button': {
     config: {

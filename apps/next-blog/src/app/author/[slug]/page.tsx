@@ -47,7 +47,7 @@ export async function generateMetadata({
 
   return createMetadata({
     title: `${author.firstName} ${author.lastName}`,
-    description: author.summary ?? '',
+    description: author.summary?.replace(/<[^>]*?>/gm, '') ?? '',
     canonical: `/author/${params.slug}`,
     image: `${process.env.OG_URL}/api/og/person?author=${author.slug}${
       'azureId' in author ? '' : `&guest=true`
