@@ -24,7 +24,7 @@ interface Props {
   author: Author
 }
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   if (BLOG?.disabled || BLOG?.author?.disabled) return []
 
   const posts = await getPosts()

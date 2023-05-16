@@ -4,7 +4,6 @@ import { createClient, StrapiClient, StrapiClientOptions } from '@kmariappan/str
 import { env } from '../../env/server.mjs'
 
 declare global {
-  // @ts-expect-error i kinda need to
   // eslint-disable-next-line vars-on-top, no-var
   var strapi: StrapiClient | undefined
 }

@@ -22,7 +22,8 @@ export async function PostCard({
   preloadImage,
   wide,
   className: className = wide ? 'card grid md:flex group' : 'flex-col flex group card',
-}: Props) {
+}: Props): // @ts-expect-error TODO: [BLOG] Remove after 5.1 is stable
+JSX.Element {
   return (
     <div className={className}>
       <div
@@ -63,7 +64,7 @@ export async function PostCard({
 
         <Link
           className={`group/button absolute right-0 top-4 z-10 overflow-clip !rounded-none !border-2 !border-r-0 border-black !bg-orange-500 px-4 py-1  text-lg !font-semibold text-black dark:border-white dark:text-white md:text-xl `}
-          href={`/category/${post?.category?.title?.toLowerCase().replace(' ', '-')}`}
+          href={`/blog/${post?.category?.title?.toLowerCase().replace(' ', '-')}`}
         >
           <span className="sleek-underline group-hover/button:after:w-full">
             {post.category?.title}

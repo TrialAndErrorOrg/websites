@@ -25,7 +25,7 @@
     "**/*.js",
     "**/*.jsx",
     "next-env.d.ts",
-    "src/typed.d.ts",
+    "src/types.d.ts",
     "../../libs/types/src/lib/schemas.d.ts",
     ".next/types/**/*.ts"
   ],

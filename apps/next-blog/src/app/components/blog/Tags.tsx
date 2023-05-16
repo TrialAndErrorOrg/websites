@@ -12,10 +12,10 @@ export function Tags(props: Props) {
   return Array.isArray(tags) ? (
     <ul className={className}>
       {tags.map((tag) => (
-        <li>
+        <li key={tag.slug}>
           <Link
             className="button mb-2 flex items-center px-2 py-1 text-xs font-medium  leading-none "
-            href={`/tag/${tag.slug}`}
+            href={`/blog/${tag.slug}`}
           >
             {tag.title}
           </Link>

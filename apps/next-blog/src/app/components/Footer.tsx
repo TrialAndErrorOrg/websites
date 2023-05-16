@@ -10,7 +10,8 @@ import {
 import { getMenu } from '../../utils/menu'
 import { SignUpWrapper } from './client/SignUpWrapper'
 
-export async function Footer() {
+export async function Footer(): // @ts-expect-error TODO: [BLOG] Remove after 5.1 is stable
+JSX.Element {
   const footer = (await getMenu('footer-blog')) ?? []
 
   const socials = (await getMenu('socials')) ?? []

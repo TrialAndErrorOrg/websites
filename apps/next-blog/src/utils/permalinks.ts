@@ -1,6 +1,6 @@
 import { SITE, BLOG } from '../../src/config.mjs'
 
-const trim = (str: string, ch: string) => {
+const trim = (str: string, ch?: string) => {
   let start = 0,
     end = str.length
   while (start < end && str[start] === ch) ++start
@@ -9,7 +9,7 @@ const trim = (str: string, ch: string) => {
 }
 
 const trimSlash = (s: string) => trim(trim(s, '/'))
-const createPath = (...params) => '/' + params.filter((el) => !!el).join('/')
+const createPath = (...params: string[]) => '/' + params.filter((el) => !!el).join('/')
 
 const basePathname = trimSlash(SITE.basePathname)
 

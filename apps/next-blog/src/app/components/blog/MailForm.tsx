@@ -1,5 +1,6 @@
 'use client'
-import { Fragment } from 'react'
+// <!-- Begin Mailchimp Signup htmlForm -->
+import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline/index'
 import { useForm } from 'react-hook-form'
@@ -21,6 +22,8 @@ type FormData = {
   'group(7)(2)': string | boolean
   'group(7)(4)': string | boolean
   'gdpr(47)': string
+  tags?: string
+  b_3b2e720baa7621e1bde91b1a2_13b78e80c7?: string
 }
 
 export const MailForm = ({
@@ -32,16 +35,25 @@ export const MailForm = ({
   setOpen: (curr: boolean) => void
   email?: string
 }) => {
+  // const [open, setOpen] = useState(true)
+
   const {
     register,
     handleSubmit,
     setError,
     formState: { isSubmitting, isSubmitSuccessful, errors, isSubmitted },
-  } = useForm({
-    defaultValues: {
-      EMAIL: email,
+  } = useForm<FormData>({
+    values: {
+      EMAIL: email ?? '',
+      'gdpr(47)': '0',
       'group(7)(1)': true,
+      'group(7)(2)': false,
+      'group(7)(4)': false,
     },
+    // defaultValues: {
+    //   EMAIL: email,
+    //   'group(7)(1)': true,
+    // },
   })
 
   const onSubmit = async (data: FormData) => {
@@ -56,6 +68,7 @@ export const MailForm = ({
     const queryString = new URLSearchParams(nonFalseValues).toString()
 
     const encodedURL = replaceEncodedParensWithEncodedBrackets(queryString)
+    // console.log(queryString)
 
     const url = `https://trialanderror.us21.list-manage.com/subscribe/post-json?u=3b2e720baa7621e1bde91b1a2&amp;id=13b78e80c7&amp;v_id=3&amp;f_id=0099c0e1f0&${encodedURL}`
     try {
@@ -64,7 +77,7 @@ export const MailForm = ({
       })
       const res = await response.json()
       if (res.result === 'error') {
-        setError('main', { type: 'manual', message: res.msg })
+        setError('EMAIL', { type: 'manual', message: res.msg })
       }
     } catch (error) {
       console.log(error)
@@ -100,7 +113,18 @@ export const MailForm = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
+            {/* <Form setOpen={setOpen} /> */}
+
+            {/* // const Form = ({setOpen}: {setOpen: (curr: boolean) => void }) => ( */}
+            {/* <div className="relative inline-block transform overflow-hidden rounded-lg  px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"> */}
+            {/* <div
+              id="mc_embed_signup"
+              className="relative max-w-xl border-2 border-black bg-white  p-6  md:p-12"
+            > */}
             <div className="shadow-thick-3 relative inline-block max-w-xl transform overflow-hidden border-2 border-black bg-white px-6 pb-4 pt-5 text-left  align-bottom transition-all sm:my-8 sm:w-full sm:p-6 sm:align-middle">
+              {/* </div> */}
+
+              {/* <div className="absolute top-2 right-2 pt-4 pr-4 sm:block"> */}
               <button
                 type="button"
                 className="text-black-400 button-sleek !absolute right-2 top-2 rounded-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
@@ -109,6 +133,7 @@ export const MailForm = ({
                 <span className="sr-only">Close</span>
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
+              {/* </div> */}
               {isSubmitted && isSubmitSuccessful ? (
                 <div>
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
@@ -131,6 +156,7 @@ export const MailForm = ({
                 </div>
               ) : (
                 <form
+                  // method="post"
                   onSubmit={handleSubmit(onSubmit)}
                   id="mc-embedded-subscribe-form"
                   name="mc-embedded-subscribe-form"
@@ -149,9 +175,6 @@ export const MailForm = ({
                         </span>
                       </h2>
                     </div>
-                    {errors['main'] && (
-                      <div className="text-sm text-red-500">{errors['main'].message}</div>
-                    )}
                     <div className="col-span-6 w-full sm:col-span-6">
                       <label
                         htmlFor="mce-EMAIL"
@@ -162,13 +185,17 @@ export const MailForm = ({
                       <input
                         required
                         type="email"
+                        // name="EMAIL"
                         id="mce-EMAIL"
                         autoComplete="email"
                         className="mt-1 block w-full rounded-sm border-2 border-black shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         {...register('EMAIL', { required: true })}
                       />
+                      {errors['EMAIL'] && (
+                        <div className="text-sm text-red-500">{errors['EMAIL'].message}</div>
+                      )}
                     </div>
-                    <div className="mc-field-group input-group">
+                    <div>
                       <span className="text-base font-semibold text-black">
                         Receive updates from...
                       </span>
@@ -216,7 +243,12 @@ export const MailForm = ({
                           </label>
                         </li>
                       </ul>
-                      {/* <span id="mce-group[7]-HELPERTEXT" className="helper_text"></span> */}
+
+                      {errors['group(7)(1)'] || errors['group(7)(2)'] || errors['group(7)(4)'] ? (
+                        <div className="text-sm text-red-500">
+                          Please select at least one option
+                        </div>
+                      ) : null}
                     </div>
                     <div
                       id="mergeRow-gdpr"
@@ -228,12 +260,17 @@ export const MailForm = ({
                           Please select all the ways you would like to hear from the Center of Trial
                           & Error:
                         </p>
+                        {/* <fieldset
+                        className="mc_fieldset gdprRequired mc-field-group"
+                        // name="interestgroup_field"
+                      > */}
                         <div className="flex h-5 items-center gap-3">
                           <input
                             required
                             {...register('gdpr(47)')}
                             type="checkbox"
                             id="gdpr_47"
+                            // name="gdpr(47)"
                             value="Y"
                             className="h-5 w-5 rounded-full border-2 border-black text-orange-500 focus:ring-orange-500"
                           />
@@ -243,6 +280,7 @@ export const MailForm = ({
                             </span>
                           </label>
                         </div>
+                        {/* </fieldset> */}
                         <p>
                           You can unsubscribe at any time by clicking the link in the footer of our
                           emails. for information about our privacy practices, please visit our
@@ -271,6 +309,7 @@ export const MailForm = ({
                       <input
                         {...register('b_3b2e720baa7621e1bde91b1a2_13b78e80c7')}
                         type="text"
+                        // name="b_3b2e720baa7621e1bde91b1a2_13b78e80c7"
                         tabIndex={-1}
                         value=""
                       />
@@ -281,12 +320,6 @@ export const MailForm = ({
                           <Ring />
                         ) : (
                           <>
-                            {errors.main && (
-                              <ExclamationCircleIcon
-                                className="mr-4 h-5 w-5 text-rose-500"
-                                aria-hidden="true"
-                              />
-                            )}
                             <button
                               type="submit"
                               name="subscribe"
@@ -313,6 +346,8 @@ export const MailForm = ({
                   </div>
                 </form>
               )}
+              {/* {isSubmitting && <div className="text-center">Submitting...</div>} */}
+              {/* {isSubmitSuccessful && <div className="text-center">Thank you for subscribing!</div>} */}
             </div>
           </Transition.Child>
         </div>
@@ -320,3 +355,4 @@ export const MailForm = ({
     </Transition.Root>
   )
 }
+export default MailForm

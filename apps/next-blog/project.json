@@ -4,7 +4,7 @@
   "sourceRoot": "apps/next-blog",
   "projectType": "application",
   "targets": {
-    "build": {
+    "old-build": {
       "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
@@ -17,6 +17,13 @@
           "outputPath": "apps/next-blog"
         },
         "production": {}
+      }
+    },
+
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["next build apps/next-blog"]
       }
     },
     "dev": {

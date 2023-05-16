@@ -1,8 +1,6 @@
 import { AnalyticsWrapper } from './components/Analytics'
 import { Footer } from './components/Footer'
-import { Nav } from './components/Nav'
 import { createMetadata } from '../utils/createMetadata'
-import { SITE } from '../config.mjs'
 
 import { Overpass, Open_Sans } from 'next/font/google'
 import Script from 'next/script'
@@ -41,9 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#ffffff" />
       </head>
 
-      <body className="selection:bg-salmon bg-white tracking-tight text-gray-900 antialiased transition-colors selection:border selection:border-black selection:transition-all dark:bg-slate-800 dark:text-slate-300">
+      <body className="selection:bg-salmon flex min-h-screen flex-col bg-white tracking-tight text-gray-900 antialiased transition-colors selection:border selection:border-black selection:transition-all dark:bg-slate-800 dark:text-slate-300">
         <HeaderWrapper />
-        {children}
+        <div className="flex-grow">{children}</div>
         <Footer />
         <AnalyticsWrapper />
         <Script

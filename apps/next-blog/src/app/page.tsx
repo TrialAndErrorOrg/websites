@@ -1,20 +1,23 @@
 import { SITE } from '../config.mjs'
 import { getCanonical, getHomePermalink } from '../utils/permalinks'
-import { getPosts } from '../utils/blog'
+import { getAllPosts } from '../utils/blog'
 import { SignUp } from './components/client/SignUp'
 import { createMetadata } from '../utils/createMetadata'
 import { PostCard } from './components/blog/PostCard'
 import Link from 'next/link'
 import { SignUpWrapper } from './components/client/SignUpWrapper'
+import { draftMode } from 'next/headers'
 
 export const metadata = createMetadata({
   title: SITE.title,
   description: SITE.description,
-  canonical: getCanonical(getHomePermalink()),
 })
 
 export default async function Index() {
-  const posts = (await getPosts()) ?? []
+  const { isEnabled } = draftMode()
+
+  const posts = (await getAllPosts(isEnabled)) ?? []
+
   return (
     <main>
       <div className="cols mx-6 grid max-w-[100rem] grid-cols-12 px-5 py-10 md:mx-auto md:px-0">

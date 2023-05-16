@@ -24,7 +24,7 @@ const nextConfig = {
     //   { loader: '@next/font/google', options: { subsets: ['latin'] } },
     // ],
   },
-  reactStrictMode: true,
+  // reactStrictMode: true,
   // i18n: {
   //   locales: ["en"],
   //   defaultLocale: "en",
