@@ -33,15 +33,20 @@
     "baseUrl": ".",
     "paths": {
       "@/types": ["libs/types/src/index.ts"],
+      "@centertrialerror/email": ["apps/email"],
       "@centertrialerror/frontend": ["apps/frontend"],
       "@centertrialerror/scripts": ["libs/scripts/src/index.ts"],
       "@centertrialerror/strapi": ["apps/strapi"],
-      "@centertrialerror/email": ["apps/email"],
       "@centertrialerror/thesis": ["apps/thesis"],
       "@centertrialerror/ui": ["libs/ui/src/index.ts"],
       "@centertrialerror/webhooks": ["libs/webhooks/src/index.ts"],
+      "@centertrialerror/workspace-plugin": [
+        "tools/workspace-plugin/src/index.ts"
+      ],
       "@trialanderror/strapi": ["libs/strapi-client/src/index.ts"],
-      "next-auth-orcid-provider": ["libs/next-auth-orcid-provider/src/index.ts"],
+      "next-auth-orcid-provider": [
+        "libs/next-auth-orcid-provider/src/index.ts"
+      ],
       "orcid-client": ["libs/orcid-client/src/index.ts"],
       "try-catch": ["libs/utils/try-catch/src/index.ts"]
     }

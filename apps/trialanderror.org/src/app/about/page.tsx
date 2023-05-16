@@ -3,11 +3,20 @@ import { getTeam } from '../team/page'
 import { TeamMemberCard } from '../components/TeamMemberCard'
 import { OurMission } from '../components/OurMission'
 import { AboutUs } from '../components/AboutUs'
+import { ShittyScrollHack } from './ShittyScrollHack'
+import { createMetadata } from '../../utils/createMetadata'
 
 export const revalidate = 3600 // revalidate every hour
 
+export const metadata = createMetadata({
+  title: 'About Us',
+  description: 'Read the vision and mission of the Center of Trial and Error.',
+  canonical: 'about',
+})
+
 export default async function AboutPage() {
   const team = await getTeam()
+
   return (
     <div className="relative flex flex-col items-center">
       <AboutUs />

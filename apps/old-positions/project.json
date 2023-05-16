@@ -1,11 +1,13 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "old-positions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/old-positions/src",
   "targets": {
     "build": {
-      "outputs": ["dist"],
+      "outputs": [
+        "dist"
+      ],
       "executor": "@nxtensions/astro:build",
       "options": {
         "config": "astro.config.ts"
@@ -18,8 +20,7 @@
     "preview": {
       "dependsOn": [
         {
-          "target": "build",
-          "projects": "self"
+          "target": "build"
         }
       ],
       "executor": "@nxtensions/astro:preview",

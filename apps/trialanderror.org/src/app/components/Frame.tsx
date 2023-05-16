@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { motion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
 export function Frame() {
-  const ref = useRef<SVGSVGElement>(null)
+  const ref = useRef<SVGSVGElement>(null);
 
   const isInView = useInView(ref, {
     // once: true,
-  })
-  console.log(isInView)
+  });
+  console.log(isInView);
 
   return (
     // <div className="absolute h-screen w-screen">
@@ -19,6 +19,7 @@ export function Frame() {
       className="absolute inset-6 -z-20 flex h-full w-[calc(100vw-3rem)] md:inset-20 md:w-[calc(100vw-10rem)]"
       preserveAspectRatio="none"
       ref={ref}
+      pointerEvents={'none'}
       // vectorEffect="non-scaling-stroke"
     >
       <motion.rect
@@ -44,5 +45,5 @@ export function Frame() {
     </svg>
     // <div className="absolute left-[3.6vw] right-[3.6vw] bottom-[18vw] top-[18vw] -z-20 border-4 border-blue-500 md:top-[10vw] md:border-[6px] lg:top-[3vw]  lg:bottom-[3vw]" />
     // </div>
-  )
+  );
 }

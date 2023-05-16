@@ -1,9 +1,15 @@
 import { getAllCards } from '../../server/mixed'
+import { createMetadata } from '../../utils/createMetadata'
 import { ClientProvider } from '../../utils/trpcClient'
 import { Card } from '../components/Card'
 import { InfiniteCards } from '../components/InfiniteCards'
 
 export const revalidate = 3600 // revalidate every hour
+
+export const metadata = createMetadata({
+  title: 'News & Events',
+  description: 'News and Events Updates from the Center of Trial and Error',
+})
 
 export default async function Page() {
   const cards = await getAllCards({ limit: 6 })
@@ -15,9 +21,7 @@ export default async function Page() {
       </p>
       <div className="grid grid-cols-1 gap-20 p-[10vw] md:grid-cols-2 lg:grid-cols-3 ">
         {cards.map((card, idx) => (
-          // <motion.div key={card.id}>
           <Card key={card.id} delay={idx * 0.1} card={card} />
-          // </motion.div>
         ))}
         <ClientProvider>
           <InfiniteCards />

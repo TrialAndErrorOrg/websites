@@ -8,10 +8,10 @@ export const revalidate = 3600 // revalidate at least every hour
 
 export default async function Page() {
   const cardsPromise = await getAllCards({ limit: 12 })
+  // TODO: don't hardcode the images
   const filesPromise = Promise.all([573, 571, 572].map(async (file) => await getFile(file)))
 
   const [cards, files] = await Promise.all([cardsPromise, filesPromise])
-  console.dir(cards, { depth: null })
 
   return (
     // <main className="relative">

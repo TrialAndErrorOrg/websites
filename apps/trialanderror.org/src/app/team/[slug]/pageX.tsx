@@ -1,21 +1,26 @@
-import { strapiClient } from '../../../server/api/strapi'
-import { GetAttributesValues } from '@strapi/strapi'
-import { cache } from 'react'
 import Image from 'next/image'
 import { FaGithub, FaLink, FaLinkedin, FaOrcid, FaTwitter } from 'react-icons/fa'
+import { createMetadata } from '../../../utils/createMetadata'
+import { getPerson } from '../../../server/person'
 
-export const getPerson = cache(async (slug: string) => {
-  const person = await strapiClient
-    .from<GetAttributesValues<'api::team-member.team-member'>>('team-members')
-    .select()
-    .populate()
-    .equalTo('slug', slug)
-    .get()
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const { slug } = params
+  const person = (await getPerson(slug)).data?.[0]
 
-  return person
-})
+  if (!person) {
+    return createMetadata({
+      title: '404',
+    })
+  }
 
-export const config = {}
+  const { firstName, lastName, position, summary, image } = person
+
+  return createMetadata({
+    title: `${firstName} ${lastName}, ${position} at the Center of Trial and Error`,
+    description: summary,
+    image: image.url ?? undefined,
+  })
+}
 
 export default async function PersonPage({ params }: { params: { slug: string } }) {
   const { slug } = params
@@ -23,9 +28,7 @@ export default async function PersonPage({ params }: { params: { slug: string } 
   const {
     firstName,
     lastName,
-    email,
     position,
-    department,
     pronouns,
     show_pronouns,
     bio,
@@ -34,7 +37,6 @@ export default async function PersonPage({ params }: { params: { slug: string } 
     image,
     blog_posts,
     linkedin,
-    mastodon,
     personalWebsite,
     twitter,
     orcid,
@@ -122,7 +124,6 @@ export default async function PersonPage({ params }: { params: { slug: string } 
             Blog Posts by {firstName} {lastName}
           </h2>
           {blog_posts.map((post) => (
-            //<PostCard wide post={post} />)}
             <article className="prose relative">
               <h3>{post.title}</h3>
               <p>{post.excerpt}</p>

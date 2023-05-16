@@ -1,0 +1,14 @@
+{
+  "generators": {
+    "component": {
+      "implementation": "./src/generators/component",
+      "schema": "./src/generators/component/schema.json",
+      "description": "Create a React Component for Nx."
+    },
+    "node-lib": {
+      "implementation": "./src/generators/node-lib",
+      "schema": "./src/generators/node-lib/schema.json",
+      "description": "Generator node-lib"
+    }
+  }
+}

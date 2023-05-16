@@ -437,39 +437,6 @@ export interface PluginSlugifySlug extends CollectionTypeSchema {
   }
 }
 
-export interface PluginPublisherAction extends CollectionTypeSchema {
-  info: {
-    singularName: 'action'
-    pluralName: 'actions'
-    displayName: 'actions'
-  }
-  options: {
-    draftAndPublish: false
-    comment: ''
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    executeAt: DateTimeAttribute
-    mode: StringAttribute
-    entityId: IntegerAttribute
-    entitySlug: StringAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::publisher.action', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::publisher.action', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
 export interface PluginMenusMenu extends CollectionTypeSchema {
   info: {
     displayName: 'Menu'
@@ -533,83 +500,6 @@ export interface PluginMenusMenuItem extends CollectionTypeSchema {
     createdBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
       PrivateAttribute
     updatedBy: RelationAttribute<'plugin::menus.menu-item', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginStrapiNewsletterNewsletter extends CollectionTypeSchema {
-  info: {
-    singularName: 'newsletter'
-    pluralName: 'newsletters'
-    displayName: 'Newsletter'
-  }
-  options: {
-    draftAndPublish: false
-    comment: ''
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    subject: StringAttribute & RequiredAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'plugin::strapi-newsletter.newsletter',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    updatedBy: RelationAttribute<
-      'plugin::strapi-newsletter.newsletter',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
-export interface PluginStrapiNewsletterSubscribedUser extends CollectionTypeSchema {
-  info: {
-    singularName: 'subscribed-user'
-    pluralName: 'subscribed-users'
-    displayName: 'Subscribed Users'
-  }
-  options: {
-    draftAndPublish: false
-    comment: ''
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    email: EmailAttribute & RequiredAttribute & UniqueAttribute
-    provider: StringAttribute & RequiredAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<
-      'plugin::strapi-newsletter.subscribed-user',
-      'oneToOne',
-      'admin::user'
-    > &
-      PrivateAttribute
-    updatedBy: RelationAttribute<
-      'plugin::strapi-newsletter.subscribed-user',
-      'oneToOne',
-      'admin::user'
-    > &
       PrivateAttribute
     sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
   }
@@ -2285,11 +2175,8 @@ declare global {
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate
       'plugin::entity-notes.note': PluginEntityNotesNote
       'plugin::slugify.slug': PluginSlugifySlug
-      'plugin::publisher.action': PluginPublisherAction
       'plugin::menus.menu': PluginMenusMenu
       'plugin::menus.menu-item': PluginMenusMenuItem
-      'plugin::strapi-newsletter.newsletter': PluginStrapiNewsletterNewsletter
-      'plugin::strapi-newsletter.subscribed-user': PluginStrapiNewsletterSubscribedUser
       'plugin::i18n.locale': PluginI18NLocale
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission
       'plugin::users-permissions.role': PluginUsersPermissionsRole

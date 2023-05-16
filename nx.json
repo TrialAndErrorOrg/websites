@@ -4,7 +4,7 @@
     "defaultBase": "main"
   },
   "cli": {
-    "defaultCollection": "@nrwl/next"
+    "defaultCollection": "@nx/next"
   },
   "implicitDependencies": {
     "package.json": {
@@ -19,7 +19,14 @@
       "options": {
         "verbose": true,
         "cacheDirectory": "/tmp/nx-cache",
-        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "check"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "build-storybook",
+          "check"
+        ]
       }
     }
   },
@@ -32,7 +39,7 @@
     ]
   },
   "generators": {
-    "@nrwl/react": {
+    "@nx/react": {
       "application": {
         "babel": true
       },
@@ -50,7 +57,7 @@
         "style": "none"
       }
     },
-    "@nrwl/next": {
+    "@nx/next": {
       "application": {
         "style": "none",
         "linter": "eslint"
@@ -58,5 +65,10 @@
     }
   },
   "defaultProject": "strapi",
-  "plugins": ["@nxtensions/astro"]
+  "plugins": ["@nxtensions/astro"],
+  "targetDefaults": {
+    "lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    }
+  }
 }
