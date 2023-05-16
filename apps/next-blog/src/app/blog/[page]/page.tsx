@@ -25,10 +25,8 @@ export default async function BlogPage({
 }: {
   params: { page: string; final: string }
 }) {
-  console.log(page, typeof page)
   const posts: BlogPost[] = (await getAllPosts()) ?? []
   let actualPosts = []
-  console.log(posts.length)
 
   const { categories, tags } = getUniqueCategoriesAndTags(posts)
 
@@ -41,7 +39,6 @@ export default async function BlogPage({
   try {
     intPage = parseInt(page)
   } catch (e) {}
-  console.log('intPage', intPage)
 
   const pageType =
     intPage && !isNaN(intPage)
@@ -53,7 +50,6 @@ export default async function BlogPage({
       : ''
 
   if (!pageType) {
-    console.log('404')
     return notFound()
   }
 
@@ -106,7 +102,7 @@ export default async function BlogPage({
 
   return (
     <>
-      {Title}
+      <div className="flex h-40 items-center">{Title}</div>
       {posts.map((post) => (
         <PostCard post={post} wide key={post.id} />
       ))}

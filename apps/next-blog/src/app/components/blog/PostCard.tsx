@@ -29,9 +29,9 @@ JSX.Element {
       <div
         className={cx(
           'overflow-hidden border-black bg-gray-100 transition-all dark:border-white  dark:bg-gray-800',
-          'aspect-video',
+          wide ? 'aspect-square' : 'aspect-video',
           'relative',
-          wide ? 'w-full border-b-2 md:border-b-0 md:border-r-2' : 'border-b-2',
+          wide ? 'w-1/2 border-b-2 md:border-b-0 md:border-r-2' : 'border-b-2',
         )}
       >
         {post.image ? (
@@ -41,7 +41,7 @@ JSX.Element {
               post.image.url
             }
             alt={post.image.alt || 'Thumbnail'}
-            className={'h-full w-full object-cover transition-all'}
+            className={cx('h-full object-cover transition-all', !wide && 'w-full')}
             loading={preloadImage ? 'eager' : 'lazy'}
             height={
               (wide
@@ -77,8 +77,8 @@ JSX.Element {
       </div>
       <div
         className={cx(
-          'flex flex-grow flex-col gap-2 bg-white dark:bg-slate-700 md:gap-6 ',
-          wide ? 'p-6 pb-4 pt-6' : 'p-6',
+          'flex flex-col gap-2 bg-white dark:bg-slate-700 md:gap-6 ',
+          wide ? 'w-1/2 p-6 pb-4 pt-6' : 'flex-grow p-6',
         )}
       >
         <div className="flex items-center justify-between">
