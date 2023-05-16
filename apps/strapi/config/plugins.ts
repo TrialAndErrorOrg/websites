@@ -15,28 +15,33 @@ export default ({ env }: { env: Env }) => ({
       },
     },
   },
-  // "rest-cache": {
-  //   config: {
-  //     provider: {
-  //       name: "memory",
-  //       options: {
-  //         max: 32767,
-  //         maxAge: 3600,
-  //       },
-  //     },
-  //     strategy: {
-  //       contentTypes: [
-  //         // list of Content-Types UID to cache
-  //         "api::category.category",
-  //         "api::content-content-interface.content-content-interface",
-  //         "api::content-update-interface.content-update-interface",
-  //         "api::article.article",
-  //         "api::global.global",
-  //         "api::homepage.homepage",
-  //       ],
-  //     },
-  //   },
-  // },
+  'rest-cache': {
+    config: {
+      provider: {
+        name: 'memory',
+        options: {
+          max: 32767,
+          maxAge: 3600,
+        },
+      },
+      strategy: {
+        contentTypes: [
+          // list of Content-Types UID to cache
+          'api::category.category',
+          'api::jote-article.jote-article',
+          'api::page.page',
+          'api::blog-post.blog-post',
+          'api::tag.tag',
+          'api::blog-author.blog-author',
+          'api::team-member.team-member',
+          'plugin::menus.menu',
+        ],
+        hitpass: (ctx: any) => {
+          return Boolean(ctx.request.headers.cookie)
+        },
+      },
+    },
+  },
   comments: {
     enabled: false,
   },
