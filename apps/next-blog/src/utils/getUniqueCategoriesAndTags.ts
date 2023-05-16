@@ -1,6 +1,6 @@
 import { BlogPost } from './types'
 
-function getUniqueList<T>(list: T[]): T[] {
+export function getUniqueList<T>(list: T[]): T[] {
   const uniqueList = Array.from(new Set(list.map((item) => JSON.stringify(item)))).map((item) =>
     JSON.parse(item),
   )

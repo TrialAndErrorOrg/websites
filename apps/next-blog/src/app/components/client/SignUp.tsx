@@ -35,7 +35,7 @@ export const SignUp = ({ mailId }: { mailId?: string }) => {
         <div className="mt-3 rounded-md sm:ml-3 sm:mt-0 sm:flex-shrink-0">
           <button
             type="submit"
-            className="hover:shadow-thick-1 flex w-full items-center justify-center rounded-full border-2 border-black bg-orange-600 px-4 py-2 text-base font-semibold text-black transition-all hover:-translate-x-1 hover:-translate-y-1"
+            className="hover:shadow-thick-1 flex w-full items-center justify-center rounded-full border-2 border-black bg-orange-500 px-4 py-2 text-base font-bold text-black transition-all hover:-translate-x-1 hover:-translate-y-1"
           >
             Subscribe
           </button>

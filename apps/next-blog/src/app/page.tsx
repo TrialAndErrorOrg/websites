@@ -1,7 +1,6 @@
 import { SITE } from '../config.mjs'
 import { getCanonical, getHomePermalink } from '../utils/permalinks'
 import { getAllPosts } from '../utils/blog'
-import { SignUp } from './components/client/SignUp'
 import { createMetadata } from '../utils/createMetadata'
 import { PostCard } from './components/blog/PostCard'
 import Link from 'next/link'
@@ -9,7 +8,6 @@ import { SignUpWrapper } from './components/client/SignUpWrapper'
 import { draftMode } from 'next/headers'
 
 export const metadata = createMetadata({
-  title: SITE.title,
   description: SITE.description,
 })
 
@@ -71,15 +69,14 @@ export default async function Index() {
           <div className="mx-auto grid items-center justify-between gap-10 p-10 md:grid-cols-3">
             <div className="flex flex-col gap-10 md:col-span-2">
               <h2 className="text-center font-sans text-6xl font-black tracking-tighter text-black dark:text-white md:text-left xl:text-7xl">
-                Subscribe to our
-                <br className="hidden md:block" />
+                Subscribe to our <br className="hidden md:block" />
                 <span className="text-orange-500">newsletter!</span>
               </h2>
               <SignUpWrapper mailId={'email'} />
             </div>
 
             <p className="mx-auto text-center font-sans text-2xl font-medium tracking-tighter text-black dark:text-white md:text-3xl">
-              Keep up to date with the Blog,
+              Keep up to date with the Blog,{' '}
               <a href="https://trialanderror.org" className="sleek-underline font-bold">
                 Center
               </a>

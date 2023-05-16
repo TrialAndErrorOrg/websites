@@ -13,15 +13,14 @@ export async function generateStaticParams() {
   const totalPages = Math.ceil(posts.length / postsPerPage)
 
   const blogPages = Array.from({ length: totalPages }, (_, i) => ({
-    params: { page: (i + 1).toString() },
+    page: (i + 1).toString(),
   }))
-  console.log(blogPages)
 
   return blogPages
 }
 
 export default async function BlogPage({
-  params: { page, final },
+  params: { page },
 }: {
   params: { page: string; final: string }
 }) {

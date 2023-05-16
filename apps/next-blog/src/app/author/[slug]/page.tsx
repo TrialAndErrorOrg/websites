@@ -1,6 +1,6 @@
-import { SITE, BLOG } from '../../../config.mjs'
+import { BLOG } from '../../../config.mjs'
 
-import { cleanSlug, AUTHOR_BASE } from '../../../utils/permalinks'
+import { cleanSlug } from '../../../utils/permalinks'
 import { getPosts } from '../../../utils/blog'
 import { PostCard } from '../../components/blog/PostCard'
 import type { Author, BlogPost } from '../../../utils/types'
@@ -9,20 +9,7 @@ import { FaGithub, FaLink, FaLinkedin, FaOrcid, FaTwitter } from 'react-icons/fa
 import { EmailRevealButton } from '../../components/client/EmailRevealButton'
 import { createMetadata } from 'apps/next-blog/src/utils/createMetadata'
 import { getPerson } from 'apps/next-blog/src/utils/person'
-
-interface Props {
-  page: {
-    currentPage: number
-    totalPages: number
-    url: {
-      current: string
-      prev: string
-      next: string
-    }
-    data: BlogPost[]
-  }
-  author: Author
-}
+import { Metadata } from 'next'
 
 export async function generateStaticParams() {
   if (BLOG?.disabled || BLOG?.author?.disabled) return []
@@ -43,14 +30,16 @@ export async function generateStaticParams() {
         ),
       )
       .map((author) => ({
-        params: {
-          slug: author.slug ?? cleanSlug(lastName ?? ''),
-        },
+        slug: author.slug ?? cleanSlug(lastName ?? ''),
       })),
   )
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
   const author = await getPerson(params.slug)
   if (!author) {
     return createMetadata()
@@ -58,7 +47,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return createMetadata({
     title: `${author.firstName} ${author.lastName}`,
-    description: SITE.description,
+    description: author.summary ?? '',
     canonical: `/author/${params.slug}`,
     image: `${process.env.OG_URL}/api/og/person?author=${author.slug}${
       'azureId' in author ? '' : `&guest=true`

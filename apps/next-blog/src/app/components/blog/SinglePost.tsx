@@ -14,6 +14,7 @@ import GithubSlugger from 'github-slugger'
 import { Section, TableOfContents } from '../client/TableOfContents'
 import { License } from './License'
 import { getTweet } from '../../../utils/getTweetData'
+import { NamedList } from './NamedList'
 
 interface Props {
   post: BlogPost
@@ -125,18 +126,19 @@ JSX.Element {
             </time>{' '}
             ~ {Math.ceil(readingTime(post.body).minutes)} min read
           </p>
+
+          {post.doi && (
+            <p className="col-span-8 col-start-2 md:col-start-3">
+              DOI:{' '}
+              <a className="sleek-underline font-semibold" href={`https://doi.org/${post.doi}`}>
+                https://doi.org/{post.doi}
+              </a>
+            </p>
+          )}
           <header className="col-span-10 col-start-2 my-1 md:col-span-8 md:col-start-3 md:my-2">
             <h1 className="leading-tighter font-heading max-w-3xl text-3xl font-bold tracking-tighter text-black dark:text-white md:text-6xl">
               {post.title}
             </h1>
-            {post.doi && (
-              <a
-                className="sleek-underline text-sm font-semibold"
-                href={`https://doi.org/${post.doi}`}
-              >
-                DOI: https://doi.org/{post.doi}
-              </a>
-            )}
           </header>
           <div className="container col-span-10 col-start-2 mx-auto my-4 max-w-3xl md:col-span-5 md:col-start-3 md:mt-8">
             <Tags tags={post.blog_tags ?? []} />
@@ -260,24 +262,8 @@ JSX.Element {
             )}
           </div>
         </div>
-        <div className="relative mx-auto grid max-w-[100rem] grid-cols-12 bg-white py-8 dark:bg-slate-700 dark:text-gray-50">
-          <h2 className="col-span-10 col-start-2 my-4 text-4xl font-bold md:col-span-7 md:col-start-3">
-            {post.related?.length ? 'Related Posts' : 'Latest Posts'}
-          </h2>
-          <div className="col-span-10 col-start-2 flex max-w-5xl flex-col gap-4 md:col-span-9 md:col-start-3">
-            {(post.related?.length ? post.related : latest)
-              ?.sort((a, b) => {
-                const aDate = a.publishDate ?? a.publishedAt
-                const bDate = b.publishDate ?? b.publishedAt
-                const aDateObj = aDate ? new Date(aDate) : new Date()
-                const bDateObj = bDate ? new Date(bDate) : new Date()
-                return bDateObj.valueOf() - aDateObj.valueOf()
-              })
-              .map((post) => (
-                <PostCard post={post} wide />
-              ))}
-          </div>
-        </div>
+        {post.related && <NamedList title="Related" posts={post.related} />}
+        <NamedList title="Latest" posts={latest} />
       </div>
     </section>
   )

@@ -29,9 +29,9 @@ JSX.Element {
       <div
         className={cx(
           'overflow-hidden border-black bg-gray-100 transition-all dark:border-white  dark:bg-gray-800',
-          wide ? 'aspect-square' : 'aspect-video',
+          wide ? 'md:aspect-square' : 'aspect-video',
           'relative',
-          wide ? 'w-1/2 border-b-2 md:border-b-0 md:border-r-2' : 'border-b-2',
+          wide ? 'border-b-2 md:w-1/2 md:border-b-0 md:border-r-2' : 'border-b-2',
         )}
       >
         {post.image ? (
@@ -78,7 +78,7 @@ JSX.Element {
       <div
         className={cx(
           'flex flex-col gap-2 bg-white dark:bg-slate-700 md:gap-6 ',
-          wide ? 'w-1/2 p-6 pb-4 pt-6' : 'flex-grow p-6',
+          wide ? 'p-6 pb-4 pt-6 md:w-1/2' : 'flex-grow p-6',
         )}
       >
         <div className="flex items-center justify-between">

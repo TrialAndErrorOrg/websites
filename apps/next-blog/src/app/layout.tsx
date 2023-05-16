@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnalyticsWrapper />
         <Script
           strategy="afterInteractive"
-          data-domain="trialanderror.org"
+          data-domain="blog.trialanderror.org"
           src="/stats/js/script"
           data-api="/stats/api/event"
         />

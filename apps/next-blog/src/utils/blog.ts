@@ -7,13 +7,7 @@ import { GetAttributesValues } from '@strapi/strapi'
 const getPostBase = (draftMode = false) => {
   const base = strapi
     ?.from<BlogPost>('blog-posts')
-    .select()
-    .populateWith('title')
-    .populateWith('slug')
-    // .populateWith('body')
-    .populateWith('excerpt')
-    .populateWith('publishDate')
-    .populateWith('publishedAt')
+    .select(['title', 'slug', 'publishDate', 'publishedAt', 'doi', 'excerpt', 'id', 'updatedAt'])
     // .populateDeep([
     //   {
     //     path: 'related',
@@ -39,13 +33,13 @@ const getPostBase = (draftMode = false) => {
     //     ],
     //   },
     // ])
-    .populateWith('blog_authors', undefined, true)
-    .populateWith('blog_tags', undefined, true)
-    .populateWith('team_members', undefined, true)
+    .populateWith('blog_authors')
+    .populateWith('blog_tags')
+    .populateWith('team_members')
     // .populateWith('seo', undefined, true)
     // .populateWith('academic', undefined, true)
-    .populateWith('image', undefined, true)
-    .populateWith('category', undefined, true)
+    .populateWith('image')
+    .populateWith('category')
 
   return draftMode ? base.withDraft() : base
 }
@@ -142,4 +136,58 @@ export const getNextPublishPost = cache(async (publishedTime: Date) => {
     .get()
 
   return post?.data?.[0]
+})
+
+export const getSinglePost = cache(async (slug: string, draftMode = false) => {
+  const getPost = await strapi
+    .from<BlogPost>('blog-posts')
+    .select()
+    // .populateWith('blog_authors')
+    .populateWith('blog_tags')
+    // .populateWith('team_members')
+    .populateDeep([
+      {
+        path: 'team_members',
+        fields: [
+          'firstName',
+          'lastName',
+          'slug',
+          'position',
+          'orcid',
+          'twitter',
+          'github',
+          'linkedin',
+          'personalWebsite',
+          'summary',
+          'mastodon',
+        ],
+        children: [
+          { key: 'image', fields: ['url', 'formats', 'alternativeText', 'height', 'width'] },
+        ],
+      },
+      {
+        path: 'blog_authors',
+        fields: [
+          'firstName',
+          'lastName',
+          'slug',
+          'orcid',
+          'twitter',
+          'github',
+          'linkedIn',
+          'personalWebsite',
+          'summary',
+        ],
+        children: [
+          { key: 'image', fields: ['url', 'formats', 'alternativeText', 'height', 'width'] },
+        ],
+      },
+    ])
+    .populateWith('image')
+    .populateWith('category')
+    .equalTo('slug', slug)
+
+  const post = draftMode ? getPost.withDraft().get() : getPost.get()
+
+  return (await post)?.data?.[0]
 })

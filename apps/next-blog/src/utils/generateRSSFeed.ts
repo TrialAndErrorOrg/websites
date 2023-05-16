@@ -1,6 +1,4 @@
 import { Feed, FeedOptions } from 'feed'
-import { getAllCards } from '../server/mixed'
-import { env } from '../env/server.mjs'
 import { getAllPosts } from './blog'
 
 export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
@@ -32,9 +30,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     },
   }
 
-  console.log(feedOptions)
   const feed = new Feed(feedOptions)
-  console.log(feed)
 
   allPosts.forEach((post) => {
     const url = `https://blog.trialanderror.org/${post.slug}?utm_source=rss&utm_medium=rss&utm_campaign=rss`
@@ -51,11 +47,10 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
         })
         .filter((author) => author.name) ?? []
 
-    console.log(image)
     feed.addItem({
       title: post.title,
       id: url,
-      date: new Date(post.publishedAt ?? post.publishDate),
+      date: new Date(post.publishedAt ?? post.publishDate ?? Date.now()),
       link: url,
       description: post.excerpt,
       guid: post.slug,

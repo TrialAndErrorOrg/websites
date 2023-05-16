@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import { env } from '../env/server.mjs'
+import { Author } from './types'
+import { getFirstAuthorLink } from './getFirstAuthorLink'
 
 export const ogURL = `${env.OG_URL}/api/og/jote`
 
@@ -14,6 +16,8 @@ export const createMetadata = (
     ogTitle = '',
     locale = 'en_US',
     alt = '',
+    abstract,
+    authors,
   }: {
     description?: string
     image?: string
@@ -24,10 +28,12 @@ export const createMetadata = (
     ogTitle?: string
     locale?: string
     alt?: string
+    abstract?: string
+    authors?: Author[]
   } = {},
   metadata?: Partial<Metadata>,
 ): Metadata => ({
-  title: title ? `${title} | Center of Trial and Error` : 'Center of Trial and Error',
+  title: title ? `${title} | Blog of Trial and Error` : 'A Blog of Trial and Error',
   description,
   robots: {
     follow: !nofollow,
@@ -35,7 +41,7 @@ export const createMetadata = (
   },
   openGraph: {
     locale,
-    url: `https://trialanderror.org/${canonical}`,
+    url: `https://blog.trialanderror.org/${canonical}`,
     title:
       ogTitle ?? (title ? `${title} | Center of Trial and Error` : 'Center of Trial and Error'),
     description: description,
@@ -58,5 +64,14 @@ export const createMetadata = (
     creator: '@jtrialerror',
     card: 'summary_large_image',
   },
+  authors:
+    authors?.map((author) => ({
+      name: `${author.firstName ?? ''} ${author.lastName ?? ''}`,
+      twitter: author.twitter,
+      url: getFirstAuthorLink(author),
+    })) ?? [],
+  abstract,
+  metadataBase: new URL('https://blog.trialanderrror.org'),
+  publisher: 'Center of Trial and Error',
   ...metadata,
 })

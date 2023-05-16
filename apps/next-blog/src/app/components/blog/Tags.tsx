@@ -14,7 +14,7 @@ export function Tags(props: Props) {
       {tags.map((tag) => (
         <li key={tag.slug}>
           <Link
-            className="button mb-2 flex items-center px-2 py-1 text-xs font-medium  leading-none "
+            className="button mb-2 flex items-center px-2 py-1 text-xs font-medium leading-none"
             href={`/blog/${tag.slug}`}
           >
             {tag.title}

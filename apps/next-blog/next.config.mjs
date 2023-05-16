@@ -41,19 +41,15 @@ const nextConfig = {
   rewrites: async () => [
     {
       source: '/rss.xml',
-      destination: '/api/rss',
-    },
-    {
-      source: '/rss',
-      destination: '/api/rss',
+      destination: '/rss',
     },
     {
       source: '/rss.json',
-      destination: '/api/rss?type=json',
+      destination: '/rss?type=json',
     },
     {
       source: '/rss2.xml',
-      destination: '/api/rss?type=rss',
+      destination: '/rss?type=rss',
     },
   ],
 };
