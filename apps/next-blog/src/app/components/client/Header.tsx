@@ -3,11 +3,12 @@
 import { VscGithubAlt, VscRss } from 'react-icons/vsc'
 import { ToggleMenu } from '../ToggleMenu'
 import { Logo } from './Logo'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useState } from 'react'
 
 const Search = lazy(() => import('./Search'))
 
 export function Header() {
+  const [hidden, setHidden] = useState(true)
   return (
     <div className="flex h-full w-full grid-cols-4 flex-col items-center justify-between py-0 md:flex-row md:justify-between lg:grid-cols-12">
       <div className="col-span-2 col-start-1 flex h-full w-full justify-between border-black dark:border-white lg:col-span-1">
@@ -21,12 +22,14 @@ export function Header() {
           </span>
         </a>
         <div className="col-start-3 mr-3 flex items-center md:hidden">
-          <ToggleMenu />
+          <ToggleMenu setHidden={setHidden} />
         </div>
       </div>
 
       <nav
-        className="hidden h-screen w-full items-center dark:text-slate-200 md:flex md:h-auto md:w-auto md:gap-4 md:text-2xl lg:col-end-10"
+        className={`${
+          hidden ? 'hidden' : ''
+        } h-screen w-full items-center dark:text-slate-200 md:flex md:h-auto md:w-auto md:gap-4 md:text-2xl lg:col-end-10`}
         aria-label="Main navigation"
         id="menu"
       >
@@ -76,9 +79,11 @@ export function Header() {
               Source Code
             </a>
           </li>
-          {/* <li className="h-12 w-full self-end justify-self-end border-2 border-black md:hidden">
-            <Search />
-          </li> */}
+          {!hidden && (
+            <li className="h-12 w-full self-end justify-self-end border-2 border-black md:hidden">
+              <Search />
+            </li>
+          )}
         </ul>
         <div className="mx-2 mb-4 ml-2 flex items-center md:mb-0 md:mr-4 md:self-center">
           <div className="hidden items-center md:flex">
@@ -100,9 +105,11 @@ export function Header() {
         </div>
       </nav>
       <div className="col-start-4 ml-2 hidden h-full md:col-span-2 md:col-start-11 md:flex md:w-60">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Search />
-        </Suspense>
+        {hidden && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Search />
+          </Suspense>
+        )}
       </div>
     </div>
   )
