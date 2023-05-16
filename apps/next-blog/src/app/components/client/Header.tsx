@@ -34,7 +34,7 @@ export function Header() {
           <li>
             <a
               className="sleek-underline flex items-center transition duration-150 ease-in-out hover:text-gray-900 dark:hover:text-white"
-              href={'/blog'}
+              href={'/blog/1'}
             >
               Blog
             </a>
