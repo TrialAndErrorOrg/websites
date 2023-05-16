@@ -11532,10 +11532,10 @@ strapi-plugin-plausible@^1.0.5:
   resolved "https://registry.yarnpkg.com/strapi-plugin-plausible/-/strapi-plugin-plausible-1.0.5.tgz#871f83fada0c4074f515275d2f037ff9eda9f90a"
   integrity sha512-cIx6cBxz9EjdKbxMq+/8ruRuWAPRR1LVbxGffgdRC0s0SkQ05rNBVQ78zbC7W2eypmIjkf/RRNmd8ML27upwhw==
 
-strapi-plugin-preview-button@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/strapi-plugin-preview-button/-/strapi-plugin-preview-button-1.1.2.tgz#453a5b91a2e53ff3a930917e74aceb57460a0121"
-  integrity sha512-YnNTLxa9YFK9H6Vk4/tFQlWAfGSLuX2IKZMxVOiqww5yt78rn0AiKU+pk/ZqYUFB2msO8uCGWeJxsBvFHDhl2g==
+strapi-plugin-preview-button@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-preview-button/-/strapi-plugin-preview-button-1.1.3.tgz#c1d30dd741d637e70ef55e55b633a8851e67840b"
+  integrity sha512-j+32xYeA0ZRm1yrVBJASHDln1NCCWgWICM5BI/dxV7614Rg2CzAUAe3q0NnMMrocjuvRBbhuxnigOhh0QEjDgQ==
   dependencies:
     immer "^9.0.12"
     prop-types "^15.8.1"

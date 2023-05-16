@@ -31,7 +31,7 @@
     "strapi-plugin-navigation": "^2.2.4",
     "strapi-plugin-notes": "^1.0.1",
     "strapi-plugin-plausible": "^1.0.5",
-    "strapi-plugin-preview-button": "^1.1.2",
+    "strapi-plugin-preview-button": "^1.1.3",
     "strapi-plugin-publisher": "^1.2.0",
     "strapi-plugin-rest-cache": "^4.2.6",
     "strapi-plugin-sitemap": "^2.0.9",

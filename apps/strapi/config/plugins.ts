@@ -129,13 +129,6 @@ export default ({ env }: { env: Env }) => ({
   'entity-notes': {
     enabled: true,
   },
-  // scheduler: {
-  //   enabled: true,
-  //   // pathToPlugin: '../../../node_modules/strapi-plugin-scheduler',
-  //   config: {
-  //     model: 'scheduler',
-  //   },
-  // },
   seo: {
     // pathToPlugin: '../../../node_modules/@strapi/plugin-seo',
     enabled: true,
@@ -188,7 +181,7 @@ export default ({ env }: { env: Env }) => ({
     },
   },
   publisher: {
-    enabled: true,
+    enabled: false,
   },
   navigation: {
     enabled: false,
@@ -201,6 +194,11 @@ export default ({ env }: { env: Env }) => ({
     config: {
       host: env('MEILISEARCH_URL'),
       apiKey: env('MEILISEARCH_API_KEY'),
+      'blog-post': {
+        settings: {
+          filterableAttributes: ['blog_tags', 'category', 'blog_authors', 'team_members'],
+        },
+      },
     },
   },
   graphql: {
@@ -208,5 +206,38 @@ export default ({ env }: { env: Env }) => ({
   },
   'strapi-blurhash': {
     enabled: true,
+  },
+  'preview-button': {
+    config: {
+      openTarget: '_blank',
+      contentTypes: [
+        {
+          uid: 'api::blog-post.blog-post',
+          draft: {
+            url: 'https://blog.trialanderror.org/api/draft',
+            query: {
+              secret: env('DRAFT_SECRET'),
+              slug: '{slug}',
+            },
+          },
+          published: {
+            url: 'https://blog.trialanderror.org/{slug}',
+          },
+        },
+        {
+          uid: 'api::page.page',
+          draft: {
+            url: 'https://trialanderror.org/api/draft',
+            query: {
+              secret: env('DRAFT_SECRET'),
+              slug: '{slug}',
+            },
+          },
+          published: {
+            url: 'https://trialanderror.org/{slug}',
+          },
+        },
+      ],
+    },
   },
 })

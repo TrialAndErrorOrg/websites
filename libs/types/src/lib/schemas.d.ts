@@ -437,39 +437,6 @@ export interface PluginSlugifySlug extends CollectionTypeSchema {
   }
 }
 
-export interface PluginPublisherAction extends CollectionTypeSchema {
-  info: {
-    singularName: 'action'
-    pluralName: 'actions'
-    displayName: 'actions'
-  }
-  options: {
-    draftAndPublish: false
-    comment: ''
-  }
-  pluginOptions: {
-    'content-manager': {
-      visible: false
-    }
-    'content-type-builder': {
-      visible: false
-    }
-  }
-  attributes: {
-    executeAt: DateTimeAttribute
-    mode: StringAttribute
-    entityId: IntegerAttribute
-    entitySlug: StringAttribute
-    createdAt: DateTimeAttribute
-    updatedAt: DateTimeAttribute
-    createdBy: RelationAttribute<'plugin::publisher.action', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    updatedBy: RelationAttribute<'plugin::publisher.action', 'oneToOne', 'admin::user'> &
-      PrivateAttribute
-    sitemap_exclude: BooleanAttribute & PrivateAttribute & DefaultTo<false>
-  }
-}
-
 export interface PluginMenusMenu extends CollectionTypeSchema {
   info: {
     displayName: 'Menu'
@@ -2208,7 +2175,6 @@ declare global {
       'plugin::email-designer.email-template': PluginEmailDesignerEmailTemplate
       'plugin::entity-notes.note': PluginEntityNotesNote
       'plugin::slugify.slug': PluginSlugifySlug
-      'plugin::publisher.action': PluginPublisherAction
       'plugin::menus.menu': PluginMenusMenu
       'plugin::menus.menu-item': PluginMenusMenuItem
       'plugin::i18n.locale': PluginI18NLocale
