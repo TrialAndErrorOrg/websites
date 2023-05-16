@@ -2,7 +2,53 @@ import { cache } from 'react'
 import { strapi } from './strapi'
 import type { BlogPost } from './types'
 import { GetAttributesValues } from '@strapi/strapi'
+import { env } from '../env/server.mjs'
 
+type StrapiResponse = {
+  data:
+    | {
+        id: number
+        attributes: {
+          [key: string]: StrapiResponse | StrapiResponse[] | string | number | boolean | null
+        }
+      }
+    | {
+        id: number
+        attributes: {
+          [key: string]: StrapiResponse | StrapiResponse[] | string | number | boolean | null
+        }
+      }[]
+}
+
+export function _normalizeData(data: any): any {
+  const isObject = (data2: any) => Object.prototype.toString.call(data2) === '[object Object]'
+  const flatten = (data2: any) => {
+    if (!data2.attributes) return data2
+    return {
+      id: data2.id,
+      ...data2.attributes,
+    }
+  }
+  if (Array.isArray(data)) {
+    return data.map((item: any) => _normalizeData(item))
+  }
+  if (isObject(data)) {
+    if (Array.isArray(data.data)) {
+      data = [...data.data]
+    } else if (isObject(data.data)) {
+      data = flatten({ ...data.data })
+    } else if (data.data === null) {
+      data = null
+    } else {
+      data = flatten(data)
+    }
+    for (const key in data) {
+      data[key] = _normalizeData(data[key])
+    }
+    return data
+  }
+  return data
+}
 // function bc otherwise react-cache fucks with it
 const getPostBase = (draftMode = false) => {
   const base = strapi
@@ -98,7 +144,29 @@ export const getPostBy = cache(
   },
 )
 
-export const getAllPosts = cache(async (draftMode = false) => {
+export const getAllPosts = async (draftMode = false) => {
+  const data = await fetch(
+    `${
+      env.STRAPI_ENDPOINT
+    }/blog-posts?fields[0]=title&fields[1]=slug&fields[2]=publishDate&fields[3]=publishedAt&fields[4]=doi&fields[5]=excerpt&fields[6]=id&fields[7]=updatedAt&populate[blog_authors][populate]=&populate[blog_tags][populate]=&populate[team_members][populate]=&populate[image][populate]=&populate[category][populate]=&sort[0]=publishDate%3Adesc&sort[1]=publishedAt%3Adesc${
+      draftMode ? '&publicationState=preview' : ''
+    }`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
+      },
+    },
+  )
+
+  const posts = await data.json()
+
+  return _normalizeData(posts) as BlogPost[]
+}
+
+export const _getAllPosts = cache(async (draftMode = false) => {
+  console.log(new Date().toISOString(), 'IM FETCHIN')
   const posts = await getPostBase(draftMode)
     .sortBy([
       { field: 'publishDate', order: 'desc' },
@@ -138,7 +206,28 @@ export const getNextPublishPost = cache(async (publishedTime: Date) => {
   return post?.data?.[0]
 })
 
-export const getSinglePost = cache(async (slug: string, draftMode = false) => {
+export const getSinglePost = async (slug: string, draftMode = false) => {
+  const data = await fetch(
+    `${
+      env.STRAPI_ENDPOINT
+    }/blog-posts?populate[blog_tags][populate]=&populate%5Bteam_members%5D%5Bfields%5D%5B0%5D=firstName&populate%5Bteam_members%5D%5Bfields%5D%5B1%5D=lastName&populate%5Bteam_members%5D%5Bfields%5D%5B2%5D=slug&populate%5Bteam_members%5D%5Bfields%5D%5B3%5D=position&populate%5Bteam_members%5D%5Bfields%5D%5B4%5D=orcid&populate%5Bteam_members%5D%5Bfields%5D%5B5%5D=twitter&populate%5Bteam_members%5D%5Bfields%5D%5B6%5D=github&populate%5Bteam_members%5D%5Bfields%5D%5B7%5D=linkedin&populate%5Bteam_members%5D%5Bfields%5D%5B8%5D=personalWebsite&populate%5Bteam_members%5D%5Bfields%5D%5B9%5D=summary&populate%5Bteam_members%5D%5Bfields%5D%5B10%5D=mastodon&populate%5Bteam_members%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B0%5D=url&populate%5Bteam_members%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B1%5D=formats&populate%5Bteam_members%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B2%5D=alternativeText&populate%5Bteam_members%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B3%5D=height&populate%5Bteam_members%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B4%5D=width&populate%5Bblog_authors%5D%5Bfields%5D%5B0%5D=firstName&populate%5Bblog_authors%5D%5Bfields%5D%5B1%5D=lastName&populate%5Bblog_authors%5D%5Bfields%5D%5B2%5D=slug&populate%5Bblog_authors%5D%5Bfields%5D%5B3%5D=orcid&populate%5Bblog_authors%5D%5Bfields%5D%5B4%5D=twitter&populate%5Bblog_authors%5D%5Bfields%5D%5B5%5D=github&populate%5Bblog_authors%5D%5Bfields%5D%5B6%5D=linkedIn&populate%5Bblog_authors%5D%5Bfields%5D%5B7%5D=personalWebsite&populate%5Bblog_authors%5D%5Bfields%5D%5B8%5D=summary&populate%5Bblog_authors%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B0%5D=url&populate%5Bblog_authors%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B1%5D=formats&populate%5Bblog_authors%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B2%5D=alternativeText&populate%5Bblog_authors%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B3%5D=height&populate%5Bblog_authors%5D%5Bpopulate%5D%5Bimage%5D%5Bfields%5D%5B4%5D=width&populate[image][populate]=&populate[category][populate]=&filters[slug][$eq]=${slug}${
+      draftMode ? '&publicationState=preview' : ''
+    }`,
+    {
+      headers: {
+        Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
+      },
+    },
+  )
+
+  const post = await data.json()
+
+  const normalizedPost = _normalizeData(post)
+
+  return normalizedPost?.[0] as BlogPost
+}
+
+export const _getSinglePost = cache(async (slug: string, draftMode = false) => {
   const getPost = await strapi
     .from<BlogPost>('blog-posts')
     .select()

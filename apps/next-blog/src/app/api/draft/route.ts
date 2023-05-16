@@ -10,11 +10,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
-  console.log('secret', secret)
-  console.log('slug', slug)
-  console.log('env.DRAFT_SECRET', env.DRAFT_SECRET)
 
-  console.log(secret !== env.DRAFT_SECRET || !slug)
   // Check the secret and next parameters
   // This secret should only be known to this route handler and the CMS
   if (secret !== env.DRAFT_SECRET || !slug) {
@@ -37,5 +33,5 @@ export async function GET(request: Request) {
   // Redirect to the path from the fetched post
   // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
   //   NextResponse.redirect(`/${post.slug}`)
-  redirect(`/${post.slug}`, RedirectType.replace)
+  redirect(`/${post.slug}`, RedirectType.push)
 }

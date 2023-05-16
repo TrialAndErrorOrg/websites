@@ -16,14 +16,13 @@ interface Props {
   wide?: boolean
 }
 
-export async function PostCard({
+export function PostCard({
   post,
   aspect,
   preloadImage,
   wide,
   className: className = wide ? 'card grid md:flex group' : 'flex-col flex group card',
-}: Props): // @ts-expect-error TODO: [BLOG] Remove after 5.1 is stable
-JSX.Element {
+}: Props) {
   return (
     <div className={className}>
       <div
@@ -64,7 +63,7 @@ JSX.Element {
 
         <Link
           className={`group/button absolute right-0 top-4 z-10 overflow-clip !rounded-none !border-2 !border-r-0 border-black !bg-orange-500 px-4 py-1  text-lg !font-semibold text-black dark:border-white dark:text-white md:text-xl `}
-          href={`/blog/${post?.category?.title?.toLowerCase().replace(' ', '-')}`}
+          href={`/blog/${post?.category?.title?.toLowerCase().replace(/ /g, '-')}`}
         >
           <span className="sleek-underline group-hover/button:after:w-full">
             {post.category?.title}

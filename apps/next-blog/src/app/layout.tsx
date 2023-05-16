@@ -40,8 +40,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className="selection:bg-salmon flex min-h-screen flex-col bg-white tracking-tight text-gray-900 antialiased transition-colors selection:border selection:border-black selection:transition-all dark:bg-slate-800 dark:text-slate-300">
+        {/* @ts-expect-error TODO: Typescript 5.1 */}
         <HeaderWrapper />
         <div className="flex-grow">{children}</div>
+        {/* @ts-expect-error TODO: Typescript 5.1 */}
         <Footer />
         <AnalyticsWrapper />
         <Script

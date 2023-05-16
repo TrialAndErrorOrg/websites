@@ -3,8 +3,8 @@
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds.
  */
-!process.env.SKIP_ENV_VALIDATION && (await import('./src/env/server.mjs'));
-import { withNx } from '@nx/next/plugins/with-nx.js';
+// !process.env.SKIP_ENV_VALIDATION && (await import('./src/env/server.mjs'));
+// import { withNx } from '@nx/next/plugins/with-nx.js';
 
 // const withBundleAnalyzer = require("@next/bundle-analyzer")({
 //   enabled: process.env.ANALYZE === "true",
@@ -15,21 +15,11 @@ import { withNx } from '@nx/next/plugins/with-nx.js';
  */
 const nextConfig = {
   /* config options here */
-  swcMinify: true,
-  experimental: {
-    appDir: true,
-    newNextLinkBehavior: true,
-    forceSwcTransforms: true,
-    // fontLoaders: [
-    //   { loader: '@next/font/google', options: { subsets: ['latin'] } },
-    // ],
-  },
   // reactStrictMode: true,
   // i18n: {
   //   locales: ["en"],
   //   defaultLocale: "en",
   // },
-  staticPageGenerationTimeout: 120,
   images: {
     domains: [
       'avatars.githubusercontent.com',
@@ -38,20 +28,20 @@ const nextConfig = {
       'tailwindui.com',
     ],
   },
-  rewrites: async () => [
-    {
-      source: '/rss.xml',
-      destination: '/rss',
-    },
-    {
-      source: '/rss.json',
-      destination: '/rss?type=json',
-    },
-    {
-      source: '/rss2.xml',
-      destination: '/rss?type=rss',
-    },
-  ],
+  // rewrites: async () => [
+  //   {
+  //     source: '/rss.xml',
+  //     destination: '/rss',
+  //   },
+  //   {
+  //     source: '/rss.json',
+  //     destination: '/rss?type=json',
+  //   },
+  //   {
+  //     source: '/rss2.xml',
+  //     destination: '/rss?type=rss',
+  //   },
+  // ],
 };
 
 export default nextConfig;

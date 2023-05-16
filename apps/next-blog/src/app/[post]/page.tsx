@@ -7,8 +7,8 @@ import { getPostBy, getAllPosts, getSinglePost } from '../../utils/blog'
 import { createMetadata } from '../../utils/createMetadata'
 import { notFound } from 'next/navigation'
 
-import { draftMode } from 'next/headers'
 import { getAcademicOtherSeo } from '../../utils/getAcademicOtherSEO'
+import { draftMode } from 'next/headers'
 
 export async function generateMetadata({ params }: { params: { post: string } }) {
   const post = await getPostBy({ field: 'slug', value: params.post })
@@ -40,6 +40,7 @@ export async function generateStaticParams() {
 
 export default async function Post({ params }: { params: { post: string } }) {
   const { isEnabled } = draftMode()
+  console.log({ isEnabled })
 
   const { post: slug } = params
   const posts = (await getAllPosts(isEnabled)) ?? []
@@ -58,8 +59,9 @@ export default async function Post({ params }: { params: { post: string } }) {
     notFound()
   }
 
-  console.log(`Generating post ${post?.title}`)
+  console.log(new Date().toISOString(), `Generating post ${post?.title}`)
   return (
+    // @ts-expect-error TODO: Typescript 5.1
     <SinglePost latest={latest} prev={prev} next={next} post={{ ...post, image: post.image }} />
   )
 }

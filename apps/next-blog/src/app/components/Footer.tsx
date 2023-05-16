@@ -10,8 +10,7 @@ import {
 import { getMenu } from '../../utils/menu'
 import { SignUpWrapper } from './client/SignUpWrapper'
 
-export async function Footer(): // @ts-expect-error TODO: [BLOG] Remove after 5.1 is stable
-JSX.Element {
+export async function Footer() {
   const footer = (await getMenu('footer-blog')) ?? []
 
   const socials = (await getMenu('socials')) ?? []
@@ -31,12 +30,16 @@ JSX.Element {
               // TODO: [blog] clean up the footer
               new Array(Math.floor(((footer?.length ?? 0) - 0.1) / 2) + 1).fill(0).map((_, idx) => (
                 <div
+                  key={_ + idx}
                   className={`flex-wrap md:flex md:grid-cols-${
                     Math.floor(((footer?.length ?? 0) - 0.1) / 2) + 1
                   } md:gap-8`}
                 >
                   {[footer?.[idx * 2], footer?.[idx * 2 + 1]]?.map((section, ix) => (
-                    <div className={ix % 2 ? 'mt-12 md:mt-0' : ''}>
+                    <div
+                      className={ix % 2 ? 'mt-12 md:mt-0' : ''}
+                      key={section?.title ?? section?.url ?? section?.createdAt ?? ix}
+                    >
                       <h3 className="text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:text-orange-500 dark:text-slate-200">
                         {section?.url ? <a href={section.url}>{section?.title}</a> : section?.title}
                       </h3>
@@ -44,7 +47,7 @@ JSX.Element {
                         {
                           // @ts-expect-error thing is wrong
                           section?.children?.map((item, indx) => (
-                            <li>
+                            <li key={item.title}>
                               <a
                                 href={item.url ?? '/'}
                                 className="sleek-underline text-base text-white dark:text-slate-100 dark:hover:text-white"
@@ -90,6 +93,7 @@ JSX.Element {
               return (
                 <a
                   href={url}
+                  key={title}
                   className="button-sleek flex h-10 w-10 items-center justify-center text-lg !text-white hover:!text-black dark:text-white"
                 >
                   <span className="sr-only">{title}</span>

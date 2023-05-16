@@ -12,7 +12,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <>
       <div className="mx-auto flex max-w-screen-xl flex-col gap-10 p-10 md:flex-row">
-        <aside className="flex flex-col gap-4 self-start px-4 md:sticky md:top-64 md:max-w-sm">
+        <aside className="flex flex-col gap-4 self-start px-4 md:sticky md:top-20 md:mt-44 md:max-w-sm">
           <h2 className="text-lg font-bold">Tags</h2>
           <Tags tags={tags} />
 
@@ -20,7 +20,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <ul>
             {categories.map((category) => (
               <li key={category.slug}>
-                <Link href={`/category/${category.slug}`}>{category.title}</Link>
+                <Link href={`/blog/${category.slug}`}>{category.title}</Link>
               </li>
             ))}
           </ul>

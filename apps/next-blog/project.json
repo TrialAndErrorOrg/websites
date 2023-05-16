@@ -23,7 +23,8 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["next build apps/next-blog"]
+        "commands": ["next build apps/next-blog"],
+        "outputPath": "apps/next-blog/.next"
       }
     },
     "dev": {

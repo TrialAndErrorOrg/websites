@@ -25,7 +25,7 @@ export default async function BlogPage({
   params: { page: string; final: string }
 }) {
   const posts: BlogPost[] = (await getAllPosts()) ?? []
-  let actualPosts = []
+  let actualPosts: BlogPost[] = []
 
   const { categories, tags } = getUniqueCategoriesAndTags(posts)
 
@@ -102,7 +102,7 @@ export default async function BlogPage({
   return (
     <>
       <div className="flex h-40 items-center">{Title}</div>
-      {posts.map((post) => (
+      {actualPosts?.map((post) => (
         <PostCard post={post} wide key={post.id} />
       ))}
       {isBasicBlog && <Pagination prevUrl={prevUrl} nextUrl={nextUrl} />}

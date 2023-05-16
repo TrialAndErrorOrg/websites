@@ -1,6 +1,5 @@
 import { cx } from '../../../utils/cx'
 import type { Author } from '../../../utils/types'
-import { getFirstAuthorLink } from '../../../utils/getFirstAuthorLink'
 
 interface Props {
   authors: Author[]
@@ -19,6 +18,7 @@ export function AuthorList(props: Props) {
       >
         {authors.map((author, idx) => (
           <a
+            key={author?.firstName ?? author.lastName ?? author.slug ?? author.createdAt}
             href={`/author/${author.slug}`}
             className={cx(
               `group/one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2 `,

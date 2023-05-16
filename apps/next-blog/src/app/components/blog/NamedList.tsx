@@ -22,7 +22,7 @@ export function NamedList({ title, posts }: NamedListProps) {
             return bDateObj.valueOf() - aDateObj.valueOf()
           })
           .map((post) => (
-            <PostCard post={post} wide />
+            <PostCard post={post} wide key={post.id} />
           ))}
       </div>
     </div>

@@ -8,7 +8,6 @@ import { cx } from '../../../utils/cx'
 import { getFormattedDate } from '../../../utils/utils'
 import type { BlogPost } from '../../../utils/types'
 import readingTime from 'reading-time'
-import { PostCard } from './PostCard'
 import { FaOrcid } from 'react-icons/fa/index'
 import GithubSlugger from 'github-slugger'
 import { Section, TableOfContents } from '../client/TableOfContents'
@@ -23,10 +22,7 @@ interface Props {
   latest: BlogPost[]
 }
 
-export async function SinglePost(
-  props: Props,
-): // @ts-expect-error TODO: [BLOG] Remove ts-expect-error once Typescript 5.1 is stable
-JSX.Element {
+export async function SinglePost(props: Props) {
   const { post, prev, next, latest } = props
   const slugger = new GithubSlugger()
   const headingRegex = /<(h(2|3))(.*?)>(.*?)<\/\1>/gms
@@ -147,7 +143,7 @@ JSX.Element {
           <p className="col-span-9 col-start-2 flex flex-wrap gap-x-1 text-lg md:col-start-3 md:mt-8">
             By
             {authors.map((author, idx) => (
-              <span className="flex items-center gap-1 ">
+              <span className="flex items-center gap-1" key={author.firstName}>
                 <a
                   href={`/author/${author.slug}`}
                   className="sleek-underline font-semibold text-black dark:text-white"
@@ -231,7 +227,7 @@ JSX.Element {
           )}
           <div className="col-span-10 col-start-2 grid gap-3 md:col-span-5 md:col-start-3">
             {authors.map((author) => (
-              <Author className="" author={author} />
+              <Author className="" author={author} key={author.lastName} />
             ))}
             <div className="mt-16">
               <License post={post} />

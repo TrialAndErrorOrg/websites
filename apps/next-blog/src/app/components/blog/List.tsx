@@ -7,7 +7,7 @@ export function BlogList(props: { posts: BlogPost[] }) {
   return (
     <ul>
       {posts.map((post: BlogPost) => (
-        <li className="card mb-10 md:mb-16">
+        <li className="card mb-10 md:mb-16" key={post.id}>
           <PostCard post={post} wide />
         </li>
       ))}

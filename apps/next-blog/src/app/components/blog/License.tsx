@@ -34,7 +34,7 @@ export function License(props: Props) {
           </a>{' '}
           by{' '}
           {authors.map((author, idx) => (
-            <span>
+            <span key={author.firstName}>
               <Link
                 // xmlnsCc="http://creativecommons.org/ns#"
                 property="cc:attributionName"

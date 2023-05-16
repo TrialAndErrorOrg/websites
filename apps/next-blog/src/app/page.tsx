@@ -1,5 +1,4 @@
 import { SITE } from '../config.mjs'
-import { getCanonical, getHomePermalink } from '../utils/permalinks'
 import { getAllPosts } from '../utils/blog'
 import { createMetadata } from '../utils/createMetadata'
 import { PostCard } from './components/blog/PostCard'
@@ -10,6 +9,8 @@ import { draftMode } from 'next/headers'
 export const metadata = createMetadata({
   description: SITE.description,
 })
+
+export const dynamic = 'force-static'
 
 export default async function Index() {
   const { isEnabled } = draftMode()

@@ -8,6 +8,7 @@ interface Props {
   author: Author
   className?: string
 }
+
 export function Author(props: Props) {
   const { author, className: className } = props
   const firstLink = author.personalWebsite || author.orcid || author.twitter || author.github
