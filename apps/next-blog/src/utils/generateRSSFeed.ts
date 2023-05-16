@@ -1,9 +1,10 @@
 import { Feed, FeedOptions } from 'feed'
 import { getAllCards } from '../server/mixed'
 import { env } from '../env/server.mjs'
+import { getAllPosts } from './blog'
 
 export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
-  const allPosts = await getAllCards({ limit: 1000 })
+  const allPosts = (await getAllPosts()) ?? []
   const site_url = process.env.VERCEL ? 'https://trialanderror.org' : 'http://localhost:4200'
 
   const feedOptions: FeedOptions = {
@@ -36,22 +37,12 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
   console.log(feed)
 
   allPosts.forEach((post) => {
-    const url = `${
-      post.type === 'post' ? `https://blog.trialanderror.org/${post.url}` : post.url
-    }?utm_source=rss&utm_medium=rss&utm_campaign=rss`
+    const url = `https://blog.trialanderror.org/${post.slug}?utm_source=rss&utm_medium=rss&utm_campaign=rss`
 
     const image = post.image?.formats?.medium?.url ?? post.image.url
     const author =
-      post.team
+      [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
         .map((member) => {
-          if (typeof member === 'string') {
-            console.log({ member })
-            return {
-              name: member,
-              email: '',
-              link: '',
-            }
-          }
           return {
             name: `${member.firstName} ${member.lastName}`,
             email: member.email,
@@ -64,23 +55,19 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     feed.addItem({
       title: post.title,
       id: url,
-      date: new Date(post.published),
+      date: new Date(post.publishedAt ?? post.publishDate),
       link: url,
       description: post.excerpt,
-      guid: post.identifier,
+      guid: post.slug,
       content: url,
-      category: post.type
-        ? [
-            {
-              term: post.type,
-              name: post.type === 'article' ? 'Journal Article' : 'Blog Post',
-            },
-            ...(post.tags?.map((tag) => ({
-              term: tag,
-              name: tag,
-            })) ?? []),
-          ]
-        : undefined,
+      category: [
+        {
+          term: post.category?.title,
+        },
+        ...(post.blog_tags?.map((tag) => ({
+          term: tag.title,
+        })) ?? []),
+      ],
       ...(image
         ? {
             image,
