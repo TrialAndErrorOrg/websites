@@ -7,7 +7,7 @@
     "@_sh/strapi-plugin-ckeditor": "^2.0.3",
     "@strapi/plugin-color-picker": "^4.6.2",
     "@strapi/plugin-documentation": "^4.6.2",
-    "@strapi/plugin-graphql": "^4.6.2",
+    "@strapi/plugin-graphql": "^4.7.1",
     "@strapi/plugin-i18n": "^4.6.2",
     "@strapi/plugin-seo": "^1.8.0",
     "@strapi/plugin-users-permissions": "^4.6.2",
