@@ -28,6 +28,11 @@ const nextConfig = {
       'tailwindui.com',
     ],
   },
+  experimental: {
+    outputFileTracingIgnores: [
+      '**/@swc+core*',
+    ]
+  }
   // rewrites: async () => [
   //   {
   //     source: '/rss.xml',

@@ -19,14 +19,7 @@
       "options": {
         "verbose": true,
         "cacheDirectory": "/tmp/nx-cache",
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e",
-          "build-storybook",
-          "check"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "check"]
       }
     }
   },
@@ -55,6 +48,9 @@
         "pascalCaseFiles": true,
         "pascalCaseDirectory": true,
         "style": "none"
+      },
+      "library": {
+        "unitTestRunner": "vitest"
       }
     },
     "@nx/next": {
@@ -69,6 +65,9 @@
   "targetDefaults": {
     "lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    },
+    "test": {
+      "inputs": ["default", "^default"]
     }
   }
 }

@@ -4,7 +4,7 @@
  * This is especially useful for Docker builds.
  */
 !process.env.SKIP_ENV_VALIDATION && (await import('./src/env/server.mjs'));
-import { withNx } from '@nx/next/plugins/with-nx.js';
+// import { withNx } from '@nx/next/plugins/with-nx.js';
 
 // const withBundleAnalyzer = require("@next/bundle-analyzer")({
 //   enabled: process.env.ANALYZE === "true",
@@ -15,15 +15,15 @@ import { withNx } from '@nx/next/plugins/with-nx.js';
  */
 const nextConfig = {
   /* config options here */
-  swcMinify: true,
-  experimental: {
-    appDir: true,
-    newNextLinkBehavior: true,
-    forceSwcTransforms: true,
-    // fontLoaders: [
-    //   { loader: '@next/font/google', options: { subsets: ['latin'] } },
-    // ],
-  },
+  // swcMinify: true,
+  // experimental: {
+  //   appDir: true,
+  //   newNextLinkBehavior: true,
+  //   forceSwcTransforms: true,
+  //   // fontLoaders: [
+  //   //   { loader: '@next/font/google', options: { subsets: ['latin'] } },
+  //   // ],
+  // },
   reactStrictMode: true,
   // i18n: {
   //   locales: ["en"],
