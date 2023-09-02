@@ -11,13 +11,13 @@ import '../styles/globals.css'
 const overpass = Overpass({
   subsets: ['latin'],
   variable: '--font-overpass',
-  display: 'swap',
+  // display: 'swap',
 })
 
 const open_sans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-open-sans',
-  display: 'swap',
+  // display: 'swap',
 })
 
 export const metadata = createMetadata({
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Nav />
-        {children}
+        <main>{children}</main>
         <Footer />
         <AnalyticsWrapper />
         <Script

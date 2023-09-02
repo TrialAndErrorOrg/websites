@@ -1,32 +1,8 @@
 import { SITE } from '../config'
 import { NextSeo } from 'next-seo'
 
-// const { src: defaultImage } = await getImage({
-//   src: defaultImageSrc,
-//   width: 1200,
-//   height: 628,
-// })
-
-// const {
-//   title = SITE.name,
-//   description = '',
-//   // image: _image = defaultImage,
-
-//   canonical,
-//   noindex = false,
-//   nofollow = false,
-
-//   ogTitle = title,
-//   ogType = 'website',
-// } = Astro.props
-
 const image =
   'https://cote.azureedge.net/cote-strapi-uploads/undefined/assets/large_BUFFERTE_logo_blue_back_4096_88ab80fa53.png'
-// typeof _image === 'string'
-//   ? new URL(_image, Astro.site)
-//   : _image && typeof _image['src'] !== 'undefined'
-//   ? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
-//   : null
 
 export interface MetaProps {
   title?: string
@@ -41,7 +17,6 @@ export interface MetaProps {
 export function MetaTags({
   title = SITE.name,
   description = '',
-  // image: _image = defaultImage,
   canonical,
   noindex = false,
   nofollow = false,
@@ -72,11 +47,8 @@ export function MetaTags({
                 },
               ]
             : undefined,
-          // site_name: 'SiteName',
         }}
         twitter={{
-          // handle: '@handle',
-          // site: '@site',
           cardType: image ? 'summary_large_image' : undefined,
         }}
       />

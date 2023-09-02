@@ -33,13 +33,6 @@ html.dark:root {
   }
 }
 
-[astro-icon] > * {
-  stroke-width: 1.5;
-}
-
-[astro-icon].icon-bold > * {
-  stroke-width: 2;
-}
 [data-aw-toggle-menu] path {
   @apply transition;
 }

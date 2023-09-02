@@ -23,26 +23,19 @@ html.dark:root {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded border border-transparent py-3 px-6 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
+    @apply inline-flex items-center justify-center rounded border border-transparent px-6 py-3 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
   }
 }
 
-[astro-icon] > * {
-  stroke-width: 1.5;
-}
-
-[astro-icon].icon-bold > * {
-  stroke-width: 2;
-}
 [data-aw-toggle-menu] path {
   @apply transition;
 }
 [data-aw-toggle-menu].expanded g > path:first-child {
-  @apply translate-y-[15px] translate-x-[-3px] -rotate-45;
+  @apply translate-x-[-3px] translate-y-[15px] -rotate-45;
 }
 
 [data-aw-toggle-menu].expanded g > path:last-child {
-  @apply translate-y-[-8px] translate-x-[14px] rotate-45;
+  @apply translate-x-[14px] translate-y-[-8px] rotate-45;
 }
 
 p,

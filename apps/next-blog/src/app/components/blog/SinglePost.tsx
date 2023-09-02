@@ -1,4 +1,3 @@
-// import Picture from '../../components/core/Picture.astro'
 import Image from 'next/image'
 import { Tags } from './Tags'
 import { Author } from './Author'

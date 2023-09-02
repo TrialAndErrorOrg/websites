@@ -23,7 +23,7 @@ html.dark:root {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded border border-transparent py-3 px-6 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
+    @apply inline-flex items-center justify-center rounded border border-transparent px-6 py-3 text-center text-base font-medium leading-snug shadow-lg transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200;
   }
 }
 @layer base {
@@ -33,22 +33,15 @@ html.dark:root {
   }
 }
 
-[astro-icon] > * {
-  stroke-width: 1.5;
-}
-
-[astro-icon].icon-bold > * {
-  stroke-width: 2;
-}
 [data-aw-toggle-menu] path {
   @apply transition;
 }
 [data-aw-toggle-menu].expanded g > path:first-child {
-  @apply translate-y-[15px] translate-x-[-3px] -rotate-45;
+  @apply translate-x-[-3px] translate-y-[15px] -rotate-45;
 }
 
 [data-aw-toggle-menu].expanded g > path:last-child {
-  @apply translate-y-[-8px] translate-x-[14px] rotate-45;
+  @apply translate-x-[14px] translate-y-[-8px] rotate-45;
 }
 
 p,
@@ -91,7 +84,7 @@ h6,
 }
 
 .card {
-  @apply relative z-0 rounded-none border-2 border-black bg-white text-black shadow-[0px_0px_0_#000]  transition-all ease-in-out hover:-translate-x-2 hover:-translate-y-2 hover:shadow-thick-3 hover:before:translate-x-2  hover:after:translate-y-2 active:translate-y-2   active:translate-x-0 active:shadow-[0px_0px_0_#000] active:before:translate-x-0 active:before:translate-y-0 active:after:translate-y-0 active:after:translate-x-0 dark:border-white  dark:bg-slate-500 dark:text-white dark:hover:shadow-thick-3-white;
+  @apply hover:shadow-thick-3 dark:hover:shadow-thick-3-white relative z-0 rounded-none border-2 border-black bg-white  text-black shadow-[0px_0px_0_#000] transition-all ease-in-out hover:-translate-x-2 hover:-translate-y-2  hover:before:translate-x-2 hover:after:translate-y-2   active:translate-x-0 active:translate-y-2 active:shadow-[0px_0px_0_#000] active:before:translate-x-0 active:before:translate-y-0 active:after:translate-x-0 active:after:translate-y-0  dark:border-white dark:bg-slate-500 dark:text-white;
 }
 
 .card::before,
@@ -104,7 +97,7 @@ h6,
   @apply right-[2px] top-[1px];
 }
 .card::after {
-  @apply left-[1px] bottom-[2px];
+  @apply bottom-[2px] left-[1px];
 }
 
 .strokeme {
@@ -112,11 +105,11 @@ h6,
 }
 
 .button {
-  @apply rounded-full border-[1px] border-black bg-white text-black shadow-[0_0_0_#000] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer hover:shadow-thick-2 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:border-white dark:bg-blue-900 dark:text-white dark:hover:shadow-thick-2-white;
+  @apply hover:shadow-thick-2 dark:hover:shadow-thick-2-white rounded-full border-[1px] border-black bg-white text-black shadow-[0_0_0_#000] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:cursor-pointer focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:border-white dark:bg-blue-900 dark:text-white;
 }
 
 .button-sleek {
-  @apply rounded-full border-2 border-transparent bg-none p-1 text-black shadow-[0_0_0_#000] transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white hover:shadow-thick-2 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2  dark:text-white dark:hover:border-white dark:hover:bg-blue-900 dark:hover:shadow-thick-2-white;
+  @apply hover:shadow-thick-2 dark:hover:shadow-thick-2-white rounded-full border-2 border-transparent bg-none p-1 text-black shadow-[0_0_0_#000] transition-[bg-color_box-shadow_translate_border-color] hover:-translate-x-1 hover:-translate-y-1 hover:border-black hover:bg-white focus-visible:ring-2 focus-visible:ring-orange-500  focus-visible:ring-offset-2 dark:text-white dark:hover:border-white dark:hover:bg-blue-900;
 }
 
 .link-overlay {

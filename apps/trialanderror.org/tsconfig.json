@@ -11,10 +11,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "types": [
-      "jest",
-      "node"
-    ],
+    "typeRoots": ["../../node_modules/@types", "./src/types.d.ts"],
+    "types": ["jest", "node"],
     "module": "esnext",
     "plugins": [
       {
