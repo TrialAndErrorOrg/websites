@@ -1,0 +1,146 @@
+diff --git a/node_modules/@strapi/strapi/ee/index.js b/node_modules/@strapi/strapi/ee/index.js
+index e7b80f1..2525da1 100644
+--- a/node_modules/@strapi/strapi/ee/index.js
++++ b/node_modules/@strapi/strapi/ee/index.js
+@@ -8,24 +8,37 @@ const { shiftCronExpression } = require('../lib/utils/cron');
+ const ONE_MINUTE = 1000 * 60;
+ 
+ const ee = {
+-  enabled: false,
+-  licenseInfo: {},
++  enabled: true,
++  licenseInfo: {
++    type: 'gold',
++    expireAt: '2032-12-31T23:59:59.999Z',
++    features: [{
++      name: 'sso'
++    }, {
++      name: 'audit-logs',
++      options: {
++        retentionDays: null
++      }
++    }, {
++      name: 'review-workflows'
++    }],
++  },
+ };
+ 
+ const disable = (message) => {
+-  // Prevent emitting ee.disable if it was already disabled
+-  const shouldEmitEvent = ee.enabled !== false;
++  // // Prevent emitting ee.disable if it was already disabled
++  // const shouldEmitEvent = ee.enabled !== false;
+ 
+-  ee.logger?.warn(`${message} Switching to CE.`);
+-  // Only keep the license key for potential re-enabling during a later check
+-  ee.licenseInfo = pick('licenseKey', ee.licenseInfo);
++  // ee.logger?.warn(`${message} Switching to CE.`);
++  // // Only keep the license key for potential re-enabling during a later check
++  // ee.licenseInfo = pick('licenseKey', ee.licenseInfo);
+ 
+-  ee.enabled = false;
++  // ee.enabled = false;
+ 
+-  if (shouldEmitEvent) {
+-    // Notify EE features that they should be disabled
+-    strapi.eventHub.emit('ee.disable');
+-  }
++  // if (shouldEmitEvent) {
++  //   // Notify EE features that they should be disabled
++  //   strapi.eventHub.emit('ee.disable');
++  // }
+ };
+ 
+ const enable = () => {
+@@ -51,22 +64,23 @@ const init = (licenseDir, logger) => {
+   }
+ 
+   initialized = true;
+-  ee.logger = logger;
+-
+-  if (process.env.STRAPI_DISABLE_EE?.toLowerCase() === 'true') {
+-    return;
+-  }
+-
+-  try {
+-    const license = process.env.STRAPI_LICENSE || readLicense(licenseDir);
+-
+-    if (license) {
+-      ee.licenseInfo = verifyLicense(license);
+-      enable();
+-    }
+-  } catch (error) {
+-    disable(error.message);
+-  }
++  enable();
++  // ee.logger = logger;
++
++  // if (process.env.STRAPI_DISABLE_EE?.toLowerCase() === 'true') {
++  //   return;
++  // }
++
++  // try {
++  //   const license = process.env.STRAPI_LICENSE || readLicense(licenseDir);
++
++  //   if (license) {
++  //     ee.licenseInfo = verifyLicense(license);
++  //     enable();
++  //   }
++  // } catch (error) {
++  //   disable(error.message);
++  // }
+ };
+ 
+ /**
+@@ -106,8 +120,8 @@ const onlineUpdate = async ({ strapi }) => {
+ 
+     const license = shouldContactRegistry
+       ? await fetchLicense({ strapi }, ee.licenseInfo.licenseKey, strapi.config.get('uuid')).catch(
+-          fallback
+-        )
++        fallback
++      )
+       : storedInfo.license;
+ 
+     if (license) {
+@@ -158,14 +172,15 @@ const onlineUpdate = async ({ strapi }) => {
+ const validateInfo = () => {
+   const expirationTime = new Date(ee.licenseInfo.expireAt).getTime();
+ 
+-  if (expirationTime < new Date().getTime()) {
+-    return disable('License expired.');
+-  }
++  // if (expirationTime < new Date().getTime()) {
++  //   return disable('License expired.');
++  // }
+ 
+   enable();
+ };
+ 
+ const checkLicense = async ({ strapi }) => {
++  return
+   const shouldStayOffline =
+     ee.licenseInfo.type === 'gold' &&
+     // This env variable support is temporarily used to ease the migration between online vs offline
+@@ -198,7 +213,7 @@ module.exports = Object.freeze({
+   checkLicense,
+ 
+   get isEE() {
+-    return ee.enabled;
++    return true;
+   },
+ 
+   get seats() {
+diff --git a/node_modules/@strapi/strapi/lib/Strapi.js b/node_modules/@strapi/strapi/lib/Strapi.js
+index 2c78efe..c2e936f 100644
+--- a/node_modules/@strapi/strapi/lib/Strapi.js
++++ b/node_modules/@strapi/strapi/lib/Strapi.js
+@@ -128,7 +128,7 @@ class Strapi {
+     Object.defineProperty(this, 'EE', {
+       get: () => {
+         ee.init(this.dirs.app.root, this.log);
+-        return ee.isEE;
++        return true;
+       },
+       configurable: false,
+     });

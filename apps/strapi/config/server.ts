@@ -1,5 +1,3 @@
-// @ts-expect-error no declaration file for this
-import cronTasks from '@webbio/strapi-plugin-scheduler/cron-task'
 import { Env } from './admin'
 
 export default ({ env }: { env: Env }) => ({
@@ -10,6 +8,5 @@ export default ({ env }: { env: Env }) => ({
   },
   cron: {
     enabled: true,
-    tasks: cronTasks,
   },
 })

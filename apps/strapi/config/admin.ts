@@ -13,6 +13,11 @@ export type Env = {
   ((key: string, defaultValue?: number) => number)
 
 export default ({ env }: { env: Env }) => ({
+  transfer: {
+    token: {
+      salt: env('TRANSFER_TOKEN_SALT'),
+    },
+  },
   auth: {
     secret: env('ADMIN_JWT_SECRET', 'c0b47f9208b27587591171747a858bc8'),
     providers: [
