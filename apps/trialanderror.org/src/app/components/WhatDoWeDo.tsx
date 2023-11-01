@@ -1,8 +1,8 @@
 'use client'
-import { GetAttributes, GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import { motion, useReducedMotion, Variant } from 'framer-motion'
 import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 const WhatWeDoSection = ({
@@ -15,7 +15,7 @@ const WhatWeDoSection = ({
 }: {
   children: React.ReactNode
   hover: { tab: number; show: boolean }
-  image: GetAttributesValues<'plugin::upload.file'> | null
+  image: Attribute.GetValues<'plugin::upload.file'> | null
   title: string
   isSmall?: boolean
   setHover: (arg: React.SetStateAction<{ tab: number; show: boolean }[]>) => void
@@ -182,7 +182,7 @@ const WhatWeDoSection = ({
 export const WhatDoWeDo = ({
   images,
 }: {
-  images: (GetAttributesValues<'plugin::upload.file'> | null)[]
+  images: (Attribute.GetValues<'plugin::upload.file'> | null)[]
 }) => {
   const [hover, setHover] = useState([
     { tab: 0, show: true },
@@ -193,9 +193,9 @@ export const WhatDoWeDo = ({
   const isSmall = useMediaQuery('(max-width: 768px)')
 
   return (
-    <div className="relative mt-[30vh] mb-[20vh] flex w-screen items-start">
+    <div className="relative mb-[20vh] mt-[30vh] flex w-screen items-start">
       <motion.h2
-        className="sticky top-[5vh] bottom-[5vh] left-[12vw] rotate-180 text-5xl font-black text-blue-500 md:left-[15vw] 2xl:text-7xl"
+        className="sticky bottom-[5vh] left-[12vw] top-[5vh] rotate-180 text-5xl font-black text-blue-500 md:left-[15vw] 2xl:text-7xl"
         style={{
           // direction: 'rtl',
           writingMode: 'vertical-rl',

@@ -14,10 +14,10 @@
   }
   ```
 */
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import Link from "next/link"
 
-type HeroType = GetAttributesValues<"sections.hero">
+type HeroType = Attribute.GetValues<"sections.hero">
 
 export const Hero = ({ hero }: { hero?: HeroType }) =>
   !hero ? null : (

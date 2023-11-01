@@ -1,5 +1,5 @@
 'use client'
-import { GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 
@@ -33,7 +33,7 @@ const variants = (front: boolean): Variants => ({
 export function TeamMemberCard({
   member,
 }: {
-  member: GetAttributesValues<'api::team-member.team-member'> & { id: number }
+  member: Attribute.GetValues<'api::team-member.team-member'> & { id: number }
 }) {
   const {
     firstName,

@@ -8,7 +8,7 @@ export function Hero() {
       {/* <div className="max-w-screen absolute inset-6 -z-20 min-h-screen border-4 border-blue-500 md:inset-20 md:border-[6px]" /> */}
       <Frame />
       <div className="relative mt-[20vh] grid w-full grid-cols-6 items-center justify-center md:mt-[40vh]">
-        <div className="absolute top-4 left-0 -z-20 col-span-4 col-start-2 h-[10000rem] w-full bg-orange-500 md:top-8 2xl:top-10" />
+        <div className="absolute left-0 top-4 -z-20 col-span-4 col-start-2 h-[10000rem] w-full bg-orange-500 md:top-8 2xl:top-10" />
         {/* <Frame /> */}
 
         <motion.h1
@@ -24,7 +24,7 @@ export function Hero() {
           initial={{ translateX: '100vw' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
           animate={{ translateX: 0 }}
-          className="col-span-4 col-start-2 mt-10 -ml-3 md:col-start-3 md:ml-10 md:max-w-[52vw] lg:max-w-none"
+          className="col-span-4 col-start-2 -ml-3 mt-10 md:col-start-3 md:ml-10 md:max-w-[52vw] lg:max-w-none"
         >
           <h2 className="font-sans font-semibold leading-[1.2] text-blue-500 md:text-2xl lg:text-3xl 2xl:text-4xl">
             Creating transparent and responsible scholarship.

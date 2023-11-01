@@ -1,9 +1,9 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { TRPCError } from "@trpc/server"
 import { createRouter } from "./context"
 
-type User = GetAttributesValues<"plugin::users-permissions.user">
+type User = Attribute.GetValues<"plugin::users-permissions.user">
 export const authRouter = createRouter()
   .query("getSession", {
     resolve({ ctx }) {

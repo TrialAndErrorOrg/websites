@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { z } from "zod"
 import { createRouter } from "./context"
 
@@ -20,9 +20,9 @@ type Pages =
 type Page<
   T extends Pages,
   P extends FilteredStrapiApiStrings = FilteredStrapiApiStrings
-> = P extends `${string}${T}` ? GetAttributesValues<P> : never
+> = P extends `${string}${T}` ? Attribute.GetValues<P> : never
 
-type PlainPage = GetAttributesValues<"api::page.page">
+type PlainPage = Attribute.GetValues<"api::page.page">
 
 const populateHero = {
   path: "hero",

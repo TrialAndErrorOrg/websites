@@ -1,8 +1,8 @@
 import Head from "next/head"
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { trpc } from "../utils/trpc"
 
-type SEO = GetAttributesValues<"api::global.global">
+type SEO = Attribute.GetValues<"api::global.global">
 interface SeoProps {
   seo?: SEO["defaultSeo"]
 }

@@ -1,9 +1,9 @@
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import Image from "next/image"
 import Link from "next/link"
 
 interface TeamCardProps {
-  teamMember: GetAttributesValues<"api::team-member.team-member">
+  teamMember: Attribute.GetValues<"api::team-member.team-member">
 }
 const TeamCard = ({ teamMember }: TeamCardProps) => {
   const {

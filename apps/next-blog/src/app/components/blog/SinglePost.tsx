@@ -5,7 +5,7 @@ import { addBigLetterToBody } from '../../../utils/addBigLetterToBody'
 import { cx } from '../../../utils/cx'
 
 import { getFormattedDate } from '../../../utils/utils'
-import type { BlogPost } from '../../../utils/types'
+import type { BlogPost } from '@/types'
 import readingTime from 'reading-time'
 import { FaOrcid } from 'react-icons/fa/index'
 import GithubSlugger from 'github-slugger'

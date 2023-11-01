@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { z } from "zod"
 import { createRouter } from "./context"
 
-type File = GetAttributesValues<"plugin::upload.file">
+type File = Attribute.GetValues<"plugin::upload.file">
 
 export const pageRouter = createRouter()
   .query("get", {

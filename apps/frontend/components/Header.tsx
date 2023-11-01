@@ -11,7 +11,7 @@ import {
   SunIcon,
 } from "@heroicons/react/24/outline"
 import { ChevronDownIcon } from "@heroicons/react/24/solid"
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { useSession } from "next-auth/react"
 
 import { trpc } from "../utils/trpc"
@@ -48,8 +48,8 @@ const PlainLink = ({ slug, title }: { slug: string; title: string }) => (
   </Link>
 )
 
-type MenuType = GetAttributesValues<"plugin::menus.menu">
-type MenuItem = GetAttributesValues<"plugin::menus.menu-item">
+type MenuType = Attribute.GetValues<"plugin::menus.menu">
+type MenuItem = Attribute.GetValues<"plugin::menus.menu-item">
 type HeaderType = MenuItem & { children: MenuItem[] }
 
 const Popout = ({ header }: { header: HeaderType }) => (

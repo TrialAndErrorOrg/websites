@@ -1,10 +1,10 @@
-import { GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import { cache } from 'react'
 import { strapi } from './strapi'
 
 export const getPerson = cache(async (slug: string) => {
   const person = await strapi
-    .from<GetAttributesValues<'api::team-member.team-member'>>('team-members')
+    .from<Attribute.GetValues<'api::team-member.team-member'>>('team-members')
     .select()
     .populateWith('image', undefined, true)
     .populateDeep([
@@ -38,7 +38,7 @@ export const getPerson = cache(async (slug: string) => {
   if (!person.data?.[0]) {
     return (
       await strapi
-        .from<GetAttributesValues<'api::blog-author.blog-author'>>('blog-authors')
+        .from<Attribute.GetValues<'api::blog-author.blog-author'>>('blog-authors')
         .select()
         .populateWith('image', undefined, true)
         .populateDeep([

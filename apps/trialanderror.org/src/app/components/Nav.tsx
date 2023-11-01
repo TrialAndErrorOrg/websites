@@ -1,8 +1,8 @@
 import { getNavigation } from '../../server/nav'
 import { Navigation } from './Navigation'
-import { Menu } from '@/types'
+import { EasyMenu } from '@/types'
 
-const defaultNav: Menu = {
+const defaultNav: EasyMenu = {
   title: 'Main navigation',
   slug: 'main-nav',
   items: [

@@ -1,11 +1,11 @@
-import { GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import Image from 'next/image'
 import { cache } from 'react'
 import { strapiClient } from '../../../server/api/strapi'
 
 const getArticleBySlug = cache(async (slug: string) => {
   const article = await strapiClient
-    .from<GetAttributesValues<'api::jote-article.jote-article'>>('jote-articles')
+    .from<Attribute.GetValues<'api::jote-article.jote-article'>>('jote-articles')
     .select()
     .populate()
     .endsWith('url', slug)
@@ -25,12 +25,12 @@ export default async function NewsItemPage({ params }: { params: { slug: string 
           width={article?.image?.width}
           height={article?.image?.height}
         />
-        <p className="text-sm">{article?.published}</p>
+        <p className="text-sm">{(article?.published as any) || ''}</p>
         <h1 className="text-4xl font-bold">{article?.title}</h1>
         <p className="text-xl">{article?.abstract}</p>
         {/* Button which links to the full article */}
         <a
-          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           href={article?.url}
         >
           Read full article

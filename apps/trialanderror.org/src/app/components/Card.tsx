@@ -12,13 +12,11 @@ function splitSentences(sentence: string) {
 }
 
 export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
-  const { title, image, url, excerpt, team, published, type, category, id } = card
+  const { title, type } = card
 
-  // split the title by colons, periods, and exclamation points
-  // make the first part of the title the main title
-  // make the rest of the title the subtitle
+  const titleWithoutAcronymsWithPeriods = title.replace(/([A-Z])\.([A-Z])\.?/g, '$1$2')
 
-  const titleParts = /(.*?[?.:!])(.*)/g.exec(title) ?? [title, title, '']
+  const titleParts = /(.*?[?.:!])(.*)/g.exec(titleWithoutAcronymsWithPeriods) ?? [title, title, '']
   const mainTitle = titleParts[1]?.replace(/[:.]/g, '')
   const subTitle = titleParts.slice(2).join(' ')?.replace(/[:.]/g, '').trim()
   const capitalizedSubTitle = subTitle.charAt(0).toUpperCase() + subTitle.slice(1)
@@ -75,7 +73,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
           <span className="text-2xl text-black">{card.title[0]}</span>
         </div>
       )}
-      <span className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center border border-black bg-white font-bold">
+      <span className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center border border-black bg-white font-bold">
         {type === 'article' ? 'J' : 'B'}
       </span>
       <div className="flex flex-grow flex-col justify-between p-4">

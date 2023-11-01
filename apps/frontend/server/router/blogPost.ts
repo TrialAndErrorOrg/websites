@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { z } from "zod"
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { createRouter } from "./context"
 
-type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
+type BlogPost = Attribute.GetValues<"api::blog-post.blog-post">
 
 const orderEnum = ["asc", "desc"] as const
 const orderByEnum = ["title", "publishDate", "publishedAt"] as const
 type SortArr = {
-  field: typeof orderByEnum[number]
-  order: typeof orderEnum[number]
+  field: (typeof orderByEnum)[number]
+  order: (typeof orderEnum)[number]
 }[]
 
 const makeSortArray = ({
   order,
   orderBy,
 }: {
-  order: typeof orderEnum[number]
-  orderBy: typeof orderByEnum[number]
+  order: (typeof orderEnum)[number]
+  orderBy: (typeof orderByEnum)[number]
 }): SortArr =>
   (orderBy === "title"
     ? [{ field: "title", order }]

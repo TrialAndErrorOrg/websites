@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { BlogTag } from '../../../utils/types'
+import type { BlogTag } from '@/types'
 
 interface Props {
   tags: BlogTag[]

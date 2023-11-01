@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { z } from "zod"
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { createRouter } from "./context"
 
-type TeamMember = GetAttributesValues<"api::team-member.team-member">
+type TeamMember = Attribute.GetValues<"api::team-member.team-member">
 
 export const teamMemberRouter = createRouter()
   .query("getAll", {

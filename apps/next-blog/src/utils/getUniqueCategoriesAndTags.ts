@@ -9,12 +9,17 @@ export function getUniqueList<T>(list: T[]): T[] {
 
 export function getUniqueCategoriesAndTags(posts: BlogPost[]) {
   const categories = getUniqueList(
-    posts.map((post) => ({ title: post.category?.title, slug: post.category?.slug })),
+    posts.map((post) => ({
+      title: post.category?.title,
+      slug: post.category?.slug,
+      id: post.category?.id,
+    })),
   )
 
   const tags = getUniqueList(
     posts.flatMap(
-      (post) => post.blog_tags?.map((tag) => ({ title: tag.title, slug: tag.slug })) ?? [],
+      (post) =>
+        post.blog_tags?.map((tag) => ({ title: tag.title, slug: tag.slug, id: tag.id })) ?? [],
     ),
   )
 

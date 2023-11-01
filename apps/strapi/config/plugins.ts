@@ -135,7 +135,6 @@ export default ({ env }: { env: Env }) => ({
     enabled: true,
   },
   seo: {
-    // pathToPlugin: '../../../node_modules/@strapi/plugin-seo',
     enabled: true,
   },
   plausible: {
@@ -145,13 +144,18 @@ export default ({ env }: { env: Env }) => ({
         'https://analytics.trialanderror.org/share/blog.trialanderror.org?auth=XFeoDlc0fe0TDF4Q_Hy5j',
     },
   },
-  'vercel-deploy': {
+  'multi-site-vercel-deploy': {
     enabled: true,
     config: {
-      deployHook: env('VERCEL_DEPLOY_PLUGIN_HOOK'),
-      apiToken: env('VERCEL_DEPLOY_PLUGIN_API_TOKEN'),
-      teamFilter: env('VERCEL_DEPLOY_PLUGIN_TEAM_FILTER'),
-      roles: ['strapi-super-admin'],
+      sites: [
+        {
+          deployHook: env('VERCEL_DEPLOY_PLUGIN_HOOK'),
+          apiToken: env('VERCEL_DEPLOY_PLUGIN_API_TOKEN'),
+          teamFilter: env('VERCEL_DEPLOY_PLUGIN_TEAM_FILTER'),
+          roles: ['strapi-super-admin'],
+          displayName: 'Blog',
+        },
+      ],
     },
   },
   slugify: {

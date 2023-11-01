@@ -1,7 +1,7 @@
 import { cache } from 'react'
 import { strapi } from './strapi'
 import type { BlogPost } from './types'
-import { GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import { env } from '../env/server.mjs'
 
 type StrapiResponse = {
@@ -178,7 +178,7 @@ export const _getAllPosts = cache(async (draftMode = false) => {
 
 export const getTags = cache(async () => {
   const tags = await strapi
-    ?.from<GetAttributesValues<'api::tag.tag'>>('tags')
+    ?.from<Attribute.GetValues<'api::tag.tag'>>('tags')
     .select()
     .populate()
     .get()
@@ -188,7 +188,7 @@ export const getTags = cache(async () => {
 
 export const getCategories = cache(async () => {
   const categories = await strapi
-    ?.from<GetAttributesValues<'api::category.category'>>('categories')
+    ?.from<Attribute.GetValues<'api::category.category'>>('categories')
     .select()
     .populate()
     .get()

@@ -1,5 +1,5 @@
 import { strapiClient } from '../../server/api/strapi'
-import { GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,7 +7,7 @@ export const revalidate = 3600 // revalidate every hour
 
 export async function getTeam() {
   const team = await strapiClient
-    .from<GetAttributesValues<'api::team-member.team-member'> & { id: number }>('team-members')
+    .from<Attribute.GetValues<'api::team-member.team-member'> & { id: number }>('team-members')
     .select()
     .populate()
     .get()
@@ -21,7 +21,7 @@ export default async function TeamPage() {
   return (
     <>
       <div className="bg-white">
-        <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-24">
           <div className="space-y-12 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
             <div className="space-y-5 sm:space-y-4">
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Our Team</h2>

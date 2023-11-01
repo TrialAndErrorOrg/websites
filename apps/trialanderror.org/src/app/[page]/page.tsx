@@ -35,7 +35,6 @@ export default async function AboutPage({ params: { page } }: Props) {
               return (
                 <div
                   className="prose"
-                  // @ts-expect-error does have an id
                   key={block.id}
                   dangerouslySetInnerHTML={{
                     __html: block.body ?? '',

@@ -1,9 +1,9 @@
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { GetStaticProps } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
-type BlogPost = GetAttributesValues<"api::blog-post.blog-post">
+type BlogPost = Attribute.GetValues<"api::blog-post.blog-post">
 
 export const BlogPosts = ({
   posts,

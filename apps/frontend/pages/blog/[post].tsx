@@ -8,7 +8,7 @@ import {
   InferGetStaticPropsType,
 } from "next"
 import superjson from "superjson"
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import React from "react"
 import { trpc } from "../../utils/trpc"
 import { BaseLayout } from "../../layouts/BaseLayout"
@@ -55,7 +55,7 @@ export const getStaticProps = async (
 export const getStaticPaths: GetStaticPaths = async () => {
   const ctx = await createContext()
   const { data: posts } = await ctx.strapi
-    .from<GetAttributesValues<"api::blog-post.blog-post">>("blog-posts")
+    .from<Attribute.GetValues<"api::blog-post.blog-post">>("blog-posts")
     .select(["slug"])
     .get()
 
@@ -84,7 +84,7 @@ const BlogPost = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const { data } = trpc.useQuery(["blog.getBySlug", post as string])
   const blogPost =
-    data?.[0] ?? ({} as GetAttributesValues<"api::blog-post.blog-post">)
+    data?.[0] ?? ({} as Attribute.GetValues<"api::blog-post.blog-post">)
   const {
     title,
     body,

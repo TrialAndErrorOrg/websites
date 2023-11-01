@@ -1,10 +1,10 @@
-import type { GetAttributesValues } from '@strapi/strapi'
+import type { Attribute } from '@strapi/strapi'
 import { strapi } from './strapi'
 import type { OpenPosition } from './types'
 
 export const getPositions = async (props?: { page?: number; pageSize?: number }) => {
   const posts = await strapi
-    ?.from<GetAttributesValues<'api::open-position.open-position'>>('open-positions')
+    ?.from<Attribute.GetValues<'api::open-position.open-position'>>('open-positions')
     .select()
     .populate()
     .sortBy([{ field: 'publishedAt', order: 'desc' }])
@@ -15,7 +15,7 @@ export const getPositions = async (props?: { page?: number; pageSize?: number })
 
 export const getPosition = async (slug: string) => {
   const posts = await strapi
-    ?.from<GetAttributesValues<'api::open-position.open-position'>>('open-positions')
+    ?.from<Attribute.GetValues<'api::open-position.open-position'>>('open-positions')
     .select()
     .equalTo('slug', slug)
     .populate()

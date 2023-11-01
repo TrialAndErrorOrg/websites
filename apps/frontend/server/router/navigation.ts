@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import { z } from "zod"
 import { createRouter } from "./context"
 
-type Menu = GetAttributesValues<"plugin::menus.menu">
+type Menu = Attribute.GetValues<"plugin::menus.menu">
 
 export const navigationRouter = createRouter()
   .query("main", {

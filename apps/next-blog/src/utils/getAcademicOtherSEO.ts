@@ -83,9 +83,11 @@ export const getAcademicOtherSeo = (post: BlogPost): Metadata['other'] => {
     : null
 
   const dateTags = {
-    'article:published_time': publishDate ?? publishedAt ?? new Date().toString(),
-    citation_publication_date: publishDate ?? publishedAt ?? new Date().toString(),
-    'dc.date': publishDate ?? publishedAt ?? new Date().toString(),
+    'article:published_time':
+      publishDate?.toString() ?? publishedAt?.toString() ?? new Date().toString(),
+    citation_publication_date:
+      publishDate?.toString() ?? publishedAt?.toString() ?? new Date().toString(),
+    'dc.date': publishDate?.toString() ?? publishedAt?.toString() ?? new Date().toString(),
   }
 
   const tags = {

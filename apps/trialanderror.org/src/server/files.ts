@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import { strapiClient } from './api/strapi'
-import { GetAttributesValues } from '@strapi/strapi'
+import { Attribute } from '@strapi/strapi'
 import { env } from '../env/server.mjs'
 
 export const getFile = async (id: number) => {
@@ -11,7 +11,7 @@ export const getFile = async (id: number) => {
           Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
         },
       })
-    ).json() as Promise<GetAttributesValues<'plugin::upload.file'>>
+    ).json() as Promise<Attribute.GetValues<'plugin::upload.file'>>
   } catch (err) {
     console.log(err)
     return null

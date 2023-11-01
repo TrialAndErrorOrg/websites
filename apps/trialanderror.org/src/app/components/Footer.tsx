@@ -1,7 +1,14 @@
-import { Menu } from '@/types'
+import { EasyMenu } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaGithub, FaInstagram, FaLinkedin, FaMastodon, FaTwitter } from 'react-icons/fa'
+import {
+  FaEnvelope,
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaMastodon,
+  FaTwitter,
+} from 'react-icons/fa'
 import { getNavigation } from '../../server/nav'
 import { SignUp } from './SignUp'
 
@@ -21,7 +28,7 @@ import { SignUp } from './SignUp'
   }
   ```
 */
-const defaultNav: Menu = {
+const defaultNav: EasyMenu = {
   slug: 'main-footer',
   title: 'Trial and Error',
   items: [
@@ -32,6 +39,7 @@ const defaultNav: Menu = {
         { title: 'About Us', url: '/about' },
         { title: 'Meet the Team', url: '/about#team' },
         { title: 'Manifesto', url: 'https://doi.org/10.36850/ed1' },
+        { title: 'Contact', url: 'mailto:info@trialanderror.org' },
       ],
     },
     {
@@ -60,9 +68,10 @@ const socialMap: Record<string, React.FC<React.ComponentProps<'svg'>>> = {
   mastodon: (props: React.ComponentProps<'svg'>) => <FaMastodon {...props} />,
   linkedin: (props: React.ComponentProps<'svg'>) => <FaLinkedin {...props} />,
   instagram: (props: React.ComponentProps<'svg'>) => <FaInstagram {...props} />,
+  email: (props: React.ComponentProps<'svg'>) => <FaEnvelope {...props} />,
 }
 
-const defaultSocials: Menu = {
+const defaultSocials: EasyMenu = {
   title: 'Social Items',
   slug: 'main-socials',
   items: [
@@ -86,6 +95,10 @@ const defaultSocials: Menu = {
       title: 'Instagram',
       url: 'https://instagram.com/journaltrialerror',
     },
+    {
+      title: 'Email',
+      url: 'mailto:info@trialanderror.org',
+    },
   ],
 }
 
@@ -102,7 +115,7 @@ export async function Footer() {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="grid grid-cols-2 gap-8 xl:col-span-2">
             {navigation.items
@@ -142,7 +155,7 @@ export async function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
               Subscribe to our newsletter
             </h3>
-            <p className="mt-4 mb-4 text-base text-gray-300">
+            <p className="mb-4 mt-4 text-base text-gray-300">
               Receive updates from us about our projects and events.
             </p>
 

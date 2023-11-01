@@ -1,10 +1,10 @@
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import Head from "next/head"
 
 export const BlogSeo = ({
   post,
 }: {
-  post: GetAttributesValues<"api::blog-post.blog-post">
+  post: Attribute.GetValues<"api::blog-post.blog-post">
 }) => {
   const {
     title,

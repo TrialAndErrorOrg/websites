@@ -61,7 +61,6 @@ export default async function Post({ params }: { params: { post: string } }) {
 
   console.log(new Date().toISOString(), `Generating post ${post?.title}`)
   return (
-    // @ts-expect-error TODO: Typescript 5.1
     <SinglePost latest={latest} prev={prev} next={next} post={{ ...post, image: post.image }} />
   )
 }

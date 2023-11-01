@@ -9,7 +9,7 @@ import { createContext } from "react"
 import { SessionProvider } from "next-auth/react"
 // import { fetchAPI } from "../lib/api"
 // import { getStrapiMedia } from "../lib/media"
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import type { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { Session } from "next-auth"
@@ -27,7 +27,7 @@ export type NextPageWithLayout<P = Record<string, unknown>> = NextPage<P> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 
-type SEO = GetAttributesValues<"api::global.global">
+type SEO = Attribute.GetValues<"api::global.global">
 
 if (process.env.NODE_ENV === "development") {
   import("@impulse.dev/runtime").then((impulse) =>
@@ -123,7 +123,7 @@ const getBaseUrl = () => {
 //   // Fetch global site settings from Strapi
 
 //   // const globalRes = await strapi
-//   //   ?.from<GetAttributesValues<"api::global.global">>("global")
+//   //   ?.from<Attribute.GetValues<"api::global.global">>("global")
 //   //   .select()
 //   //   .populate()
 //   //   .get()

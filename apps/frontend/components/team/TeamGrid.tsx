@@ -1,8 +1,8 @@
-import { GetAttributesValues } from "@strapi/strapi"
+import { Attribute } from "@strapi/strapi"
 import TeamCard from "./TeamCard"
 
 interface TeamGridProps {
-  teamMembers: GetAttributesValues<"api::team-member.team-member">[]
+  teamMembers: Attribute.GetValues<"api::team-member.team-member">[]
 }
 
 const TeamGrid = ({ teamMembers }: TeamGridProps) => (

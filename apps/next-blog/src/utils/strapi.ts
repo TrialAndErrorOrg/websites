@@ -2,7 +2,6 @@ import { createClient, StrapiClient, StrapiClientOptions } from '@kmariappan/str
 // eslint-disable-next-line import/extensions
 
 declare global {
-  // @ts-expect-error i kinda need to
   // eslint-disable-next-line vars-on-top, no-var
   var strapi: StrapiClient | undefined
 }
