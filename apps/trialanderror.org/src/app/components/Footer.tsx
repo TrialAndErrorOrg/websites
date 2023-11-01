@@ -1,4 +1,3 @@
-import { EasyMenu } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -9,6 +8,7 @@ import {
   FaMastodon,
   FaTwitter,
 } from 'react-icons/fa'
+import { EasyMenu } from '@/types'
 import { getNavigation } from '../../server/nav'
 import { SignUp } from './SignUp'
 
@@ -120,28 +120,28 @@ export async function Footer() {
           <div className="grid grid-cols-2 gap-8 xl:col-span-2">
             {navigation.items
               ?.slice(0, Math.floor((navigation.items ?? []).length / 2 + 0.9))
-              ?.map(({ title }, idx) => (
+              ?.map(({ title: t }, idx) => (
                 // {Object.entries(navigation).map(([name, links]) => (
-                <div className="md:grid md:grid-cols-2 md:gap-8" key={title}>
+                <div className="md:grid md:grid-cols-2 md:gap-8" key={t}>
                   {(navigation.items ?? [])
                     ?.slice(idx * 2, idx * 2 + 2)
-                    .map(({ title, children, url, target }) => (
+                    .map(({ title, children }) => (
                       <div
-                        key={title} //className={idx % 2 === 0 ? 'mt-12 md:mt-0' : ''}>
+                        key={title} // className={idx % 2 === 0 ? 'mt-12 md:mt-0' : ''}>
                         className="mt-12 md:mt-0"
                       >
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">
                           {title}
                         </h3>
-                        <ul role="list" className="mt-4 space-y-4">
-                          {(children ?? []).map(({ title, url, target }) => (
-                            <li key={title}>
+                        <ul className="mt-4 space-y-4">
+                          {(children ?? []).map(({ title: nestedTitle, url, target }) => (
+                            <li key={nestedTitle}>
                               <Link
                                 href={url!}
                                 target={target || url?.startsWith('http') ? '_blank' : undefined}
                                 className="text-base text-slate-300 transition-colors hover:text-orange-500"
                               >
-                                {title}
+                                {nestedTitle}
                               </Link>
                             </li>
                           ))}

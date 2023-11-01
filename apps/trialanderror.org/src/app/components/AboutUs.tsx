@@ -5,8 +5,7 @@ import { Frame } from './Frame'
 import { growFadeIn } from '../../utils/motionPresets'
 
 export function AboutUs() {
-  return (
-    <div className="relative min-h-screen w-screen">
+  return <div className="relative min-h-screen w-screen">
       <Frame />
       <motion.div
         initial={{ opacity: 0 }}
@@ -55,5 +54,4 @@ export function AboutUs() {
         </motion.div>
       </motion.div>
     </div>
-  )
 }

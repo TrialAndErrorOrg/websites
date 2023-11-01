@@ -18,10 +18,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (typeAsString) {
       case 'rss':
         res.setHeader('Content-Type', 'application/rss+xml')
+        break
       case 'atom':
         res.setHeader('Content-Type', 'application/atom+xml')
+        break
       case 'json':
         res.setHeader('Content-Type', 'application/json')
+        break
+      default:
+        break
     }
     res.setHeader('Cache-Control', 'max-age=0, s-maxage=3600')
 

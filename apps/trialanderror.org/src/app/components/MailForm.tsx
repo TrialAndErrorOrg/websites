@@ -1,8 +1,11 @@
 'use client'
+
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 // <!-- Begin Mailchimp Signup htmlForm -->
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, ExclamationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline/index'
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline/index'
 import { useForm } from 'react-hook-form'
 import { Ring } from '@uiball/loaders'
 import fetchJsonp from 'fetch-jsonp'
@@ -26,7 +29,7 @@ type FormData = {
   b_3b2e720baa7621e1bde91b1a2_13b78e80c7?: string
 }
 
-export const MailForm = ({
+export function MailForm({
   open,
   setOpen,
   email,
@@ -34,7 +37,7 @@ export const MailForm = ({
   open: boolean
   setOpen: (curr: boolean) => void
   email?: string
-}) => {
+}) {
   // const [open, setOpen] = useState(true)
 
   const {
@@ -87,7 +90,7 @@ export const MailForm = ({
   return (
     <Transition.Root show={open ?? false} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={setOpen}>
-        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -121,13 +124,13 @@ export const MailForm = ({
               id="mc_embed_signup"
               className="relative max-w-xl border-2 border-black bg-white  p-6  md:p-12"
             > */}
-            <div className="shadow-thick-3 relative inline-block max-w-xl transform overflow-hidden border-2 border-black bg-white px-6 pt-5 pb-4 text-left  align-bottom transition-all sm:my-8 sm:w-full sm:p-6 sm:align-middle">
+            <div className="shadow-thick-3 relative inline-block max-w-xl transform overflow-hidden border-2 border-black bg-white px-6 pb-4 pt-5 text-left  align-bottom transition-all sm:my-8 sm:w-full sm:p-6 sm:align-middle">
               {/* </div> */}
 
               {/* <div className="absolute top-2 right-2 pt-4 pr-4 sm:block"> */}
               <button
                 type="button"
-                className="text-black-400 button-sleek !absolute top-2 right-2 rounded-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                className="text-black-400 button-sleek !absolute right-2 top-2 rounded-md hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                 onClick={() => setOpen(false)}
               >
                 <span className="sr-only">Close</span>
@@ -145,8 +148,8 @@ export const MailForm = ({
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        We're still setting this up so you won't hear from us for a bit. If you want
-                        to change your subscription please email{' '}
+                        We&apos;re still setting this up so you won&apos;t hear from us for a bit.
+                        If you want to change your subscription please email{' '}
                         <a href="mailto:support@trialanderror.org?subject=Change~My~Subscription%20">
                           support@trialanderror.org
                         </a>
@@ -168,7 +171,7 @@ export const MailForm = ({
                     className="flex flex-col items-start gap-2 md:gap-4"
                   >
                     <div className="items-top flex justify-between">
-                      <h2 className="!mt-0 !mb-4 flex flex-col text-left font-sans text-3xl font-black md:text-5xl">
+                      <h2 className="!mb-4 !mt-0 flex flex-col text-left font-sans text-3xl font-black md:text-5xl">
                         Subscribe
                         <span className="text-base font-medium">
                           Get updates from the Center of Trial & Error
@@ -191,8 +194,8 @@ export const MailForm = ({
                         className="mt-1 block w-full rounded-sm border-2 border-black shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         {...register('EMAIL', { required: true })}
                       />
-                      {errors['EMAIL'] && (
-                        <div className="text-sm text-red-500">{errors['EMAIL'].message}</div>
+                      {errors.EMAIL && (
+                        <div className="text-sm text-red-500">{errors.EMAIL.message}</div>
                       )}
                     </div>
                     <div>
@@ -288,7 +291,7 @@ export const MailForm = ({
                         </p>
                       </div>
                     </div>
-                    <div hidden={true}>
+                    <div hidden>
                       <input type="hidden" value="501" {...register('tags')} />
                     </div>
                     <div id="mce-responses" className="clear foot">
@@ -298,12 +301,12 @@ export const MailForm = ({
                         style={{
                           display: 'none',
                         }}
-                      ></div>
+                      />
                       <div
                         className="response"
                         id="mce-success-response"
                         style={{ display: 'none' }}
-                      ></div>
+                      />
                     </div>
                     <div className="absolute left-[-5000px]" aria-hidden="true">
                       <input
@@ -319,16 +322,14 @@ export const MailForm = ({
                         {isSubmitting ? (
                           <Ring />
                         ) : (
-                          <>
-                            <button
-                              type="submit"
-                              name="subscribe"
-                              id="mc-embedded-subscribe"
-                              className="button !border-2 !bg-orange-500 px-4 py-2 text-xl font-medium focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
-                            >
-                              Subscribe
-                            </button>
-                          </>
+                          <button
+                            type="submit"
+                            name="subscribe"
+                            id="mc-embedded-subscribe"
+                            className="button !border-2 !bg-orange-500 px-4 py-2 text-xl font-medium focus:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                          >
+                            Subscribe
+                          </button>
                         )}
                       </div>
                     </div>
@@ -339,7 +340,7 @@ export const MailForm = ({
                         acknowledge that your information will be transferred to Mailchimp for
                         processing.
                         <a href="https://mailchimp.com/legal/terms" target="_blank">
-                          Learn more about Mailchimp's privacy practices here.
+                          Learn more about Mailchimp&apos;s privacy practices here.
                         </a>
                       </p>
                     </div>

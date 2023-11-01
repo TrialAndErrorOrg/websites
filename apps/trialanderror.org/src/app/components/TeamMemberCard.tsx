@@ -1,7 +1,7 @@
 'use client'
+
 import { Attribute } from '@strapi/strapi'
 import Image from 'next/image'
-import { motion, Variants } from 'framer-motion'
 
 import {
   FaTwitter,
@@ -14,21 +14,6 @@ import {
 } from 'react-icons/fa'
 import { useState } from 'react'
 import { classNames } from './Navigation'
-
-const variants = (front: boolean): Variants => ({
-  rest: {
-    rotateY: front ? 0 : 180,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  hover: {
-    rotateY: front ? 180 : 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-})
 
 export function TeamMemberCard({
   member,
@@ -83,10 +68,13 @@ export function TeamMemberCard({
   const [turn, setTurn] = useState(false)
 
   return (
-    <div
+    <button
+      type="button"
       // flip animation on hover that shows the other side of the card which contains the bio
       className="group relative flex h-[26rem] w-60 cursor-pointer flex-col items-center gap-10 md:w-80"
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       onClick={() => setTurn((turn) => !turn)}
+      tabIndex={0}
       // initial="rest"
       // animate="rest"
       // whileHover="hover"
@@ -111,19 +99,20 @@ export function TeamMemberCard({
         {/* Map out all the socials of the member */}
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 md:mt-4 md:gap-4">
           {Object.entries(socials).map(([key, value]) => {
-            if (value.url) {
-              return (
-                <a
-                  key={key}
-                  className="text-xl text-blue-500 transition-colors hover:text-orange-500 md:text-2xl"
-                  href={value.url}
-                  target="_blank"
-                >
-                  <span className="sr-only">{key}</span>
-                  {value.icon}
-                </a>
-              )
+            if (!value.url) {
+              return null
             }
+            return (
+              <a
+                key={key}
+                className="text-xl text-blue-500 transition-colors hover:text-orange-500 md:text-2xl"
+                href={value.url}
+                target="_blank"
+              >
+                <span className="sr-only">{key}</span>
+                {value.icon}
+              </a>
+            )
           })}
         </div>
       </div>
@@ -153,6 +142,6 @@ export function TeamMemberCard({
           <p className="text-lg text-blue-500">{position}</p>
         </div>
       </div>
-    </div>
+    </button>
   )
 }

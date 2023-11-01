@@ -3,7 +3,6 @@ import { getTeam } from '../team/page'
 import { TeamMemberCard } from '../components/TeamMemberCard'
 import { OurMission } from '../components/OurMission'
 import { AboutUs } from '../components/AboutUs'
-import { ShittyScrollHack } from './ShittyScrollHack'
 import { createMetadata } from '../../utils/createMetadata'
 
 export const revalidate = 3600 // revalidate every hour

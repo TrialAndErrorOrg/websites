@@ -4,9 +4,7 @@ import { strapiClient } from './api/strapi'
 // otherwise the strapiClient will be type undefined
 import type { Page } from '@/types'
 
-export const getPage = cache(async (slug: string) => {
-  return (
+export const getPage = cache(async (slug: string) => (
     (await strapiClient.from<Page>('pages').select().equalTo('slug', slug).populate().get())
       ?.data?.[0] ?? ({} as Page)
-  )
-})
+  ))

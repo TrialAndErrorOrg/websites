@@ -4,8 +4,7 @@ import { strapiClient } from './api/strapi'
 // otherwise the strapiClient will be type undefined
 import { Menu } from '@/types'
 
-export const getNavigation = cache(async (slug: string) => {
-  return (
+export const getNavigation = cache(async (slug: string) => (
     (
       await strapiClient
         .from<Menu>('menus?nested=true')
@@ -14,5 +13,4 @@ export const getNavigation = cache(async (slug: string) => {
         .populate()
         .get()
     )?.data?.[0] ?? ({} as Menu)
-  )
-})
+  ))

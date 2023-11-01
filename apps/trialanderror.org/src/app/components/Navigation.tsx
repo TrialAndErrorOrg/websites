@@ -1,60 +1,63 @@
-'use client';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+'use client'
 
-import { Fragment, useRef, useState } from 'react';
-import { Popover, Transition } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import Image from 'next/image';
-import { Menu, MenuItem } from '@/types';
-import { useHideableNavbar } from '../../hooks/useHideableNavbar';
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react/jsx-no-bind */
+
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+
+import { Fragment, useRef, useState } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import Image from 'next/image'
+import { Menu, MenuItem } from '@/types'
+import { useHideableNavbar } from '../../hooks/useHideableNavbar'
 
 export function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(' ')
 }
 
 const useOnHover = () => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const timeoutDuration = 200;
-  let timeout: NodeJS.Timeout;
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const timeoutDuration = 200
+  let timeout: NodeJS.Timeout
 
-  const closePopover = () => {
-    return buttonRef.current?.dispatchEvent(
+  const closePopover = () =>
+    buttonRef.current?.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'Escape',
         bubbles: true,
         cancelable: true,
-      })
-    );
-  };
+      }),
+    )
 
   const onMouseEnter = (open: boolean) => {
-    clearTimeout(timeout);
-    if (open) return;
-    return buttonRef.current?.click();
-  };
+    clearTimeout(timeout)
+    if (open) return
+    buttonRef.current?.click()
+  }
 
   const onMouseLeave = (open: boolean) => {
-    if (!open) return;
-    timeout = setTimeout(() => closePopover(), timeoutDuration);
-  };
+    if (!open) return
+    timeout = setTimeout(() => closePopover(), timeoutDuration)
+  }
 
-  return { buttonRef, onMouseEnter, onMouseLeave };
-};
+  return { buttonRef, onMouseEnter, onMouseLeave }
+}
 
-const HoverPopover = ({
+function HoverPopover({
   pathname,
   item: { children, title, url, target },
 }: {
-  item: MenuItem;
-  pathname?: string | null;
+  item: MenuItem
+  pathname?: string | null
   // subItems: { name: string; href: string; description?: string; scroll?: boolean }[]
   // title: string
   // titleHref?: string
-}) => {
-  const { buttonRef, onMouseEnter, onMouseLeave } = useOnHover();
+}) {
+  const { buttonRef, onMouseEnter, onMouseLeave } = useOnHover()
   return (
     <Popover className="relative">
       {({ open }) => (
@@ -68,11 +71,9 @@ const HoverPopover = ({
               'group inline-flex items-center text-base font-medium hover:text-gray-900 hover:ring-[rgba(0,0,0,0)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2',
               pathname &&
                 url &&
-                (pathname === url && pathname === '/'
-                  ? 'after:!w-full'
-                  : pathname?.startsWith(url))
+                (pathname === url && pathname === '/' ? 'after:!w-full' : pathname?.startsWith(url))
                 ? 'after:!w-full'
-                : ''
+                : '',
             )}
             onMouseEnter={onMouseEnter.bind(null, open)}
             onMouseLeave={onMouseLeave.bind(null, open)}
@@ -80,9 +81,7 @@ const HoverPopover = ({
             {url ? (
               <Link
                 href={url}
-                target={
-                  target ?? url?.startsWith('http') ? '_blank' : undefined
-                }
+                target={target ?? url?.startsWith('http') ? '_blank' : undefined}
                 className="text-lg text-blue-500"
               >
                 {title}
@@ -115,19 +114,13 @@ const HoverPopover = ({
                   {children?.map(({ title, url, target, description }) => (
                     <Link
                       key={title}
-                      target={
-                        target ?? url?.startsWith('http') ? '_blank' : undefined
-                      }
+                      target={target ?? url?.startsWith('http') ? '_blank' : undefined}
                       href={url ?? ''}
                       scroll={false}
                       className="sleek-underline-blue -m-3 block rounded-md p-3 hover:bg-blue-50/50"
                     >
-                      <p className="text-base font-medium text-gray-900">
-                        {title}
-                      </p>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {description}
-                      </p>
+                      <p className="text-base font-medium text-gray-900">{title}</p>
+                      <p className="mt-1 text-sm text-gray-500">{description}</p>
                     </Link>
                   ))}
                 </div>
@@ -137,14 +130,14 @@ const HoverPopover = ({
         </>
       )}
     </Popover>
-  );
-};
+  )
+}
 
 export function Navigation({ nav }: { nav: Menu }) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
-  const { isNavbarVisible, navbarRef } = useHideableNavbar();
-  const [hover, setHover] = useState(false);
+  const { isNavbarVisible, navbarRef } = useHideableNavbar()
+  const [hover, setHover] = useState(false)
   return (
     <Popover
       as="nav"
@@ -175,7 +168,7 @@ export function Navigation({ nav }: { nav: Menu }) {
         />
       </motion.a>
       <div className="flex w-screen items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 md:pr-[9vw]">
-        <div className="flex justify-start md:w-0 md:flex-1"></div>
+        <div className="flex justify-start md:w-0 md:flex-1" />
         <div className="-my-2 md:hidden">
           <Popover.Button className="inline-flex items-center justify-center rounded-md border-4 border-blue-500 bg-white p-2  text-blue-500  hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
             <span className="sr-only">Open menu</span>
@@ -184,18 +177,15 @@ export function Navigation({ nav }: { nav: Menu }) {
         </div>
         <Popover.Group as="nav" className="hidden space-x-10 md:flex">
           {nav.items?.map((item) => {
-            if (item.children?.length == 0) {
+            if (item.children?.length === 0) {
               const shouldOpenInNewTab =
-                item.target ?? item.url?.startsWith('http')
-                  ? '_blank'
-                  : undefined;
+                item.target ?? item.url?.startsWith('http') ? '_blank' : undefined
 
               const underlineMaybe =
                 pathname &&
-                ((pathname === item.url && pathname === '/') ||
-                  item.url?.startsWith(pathname))
+                ((pathname === item.url && pathname === '/') || item.url?.startsWith(pathname))
                   ? 'after:!w-full'
-                  : '';
+                  : ''
               return (
                 <Link
                   key={item.title}
@@ -205,11 +195,9 @@ export function Navigation({ nav }: { nav: Menu }) {
                 >
                   {item.title}
                 </Link>
-              );
+              )
             }
-            return (
-              <HoverPopover pathname={pathname} key={item.title} item={item} />
-            );
+            return <HoverPopover pathname={pathname} key={item.title} item={item} />
           })}
         </Popover.Group>
       </div>
@@ -228,7 +216,7 @@ export function Navigation({ nav }: { nav: Menu }) {
           className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
         >
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="px-5 pt-5 pb-6">
+            <div className="px-5 pb-6 pt-5">
               <div className="flex items-center justify-between">
                 <div>
                   <Image
@@ -249,11 +237,9 @@ export function Navigation({ nav }: { nav: Menu }) {
               <div className="mt-6">
                 <nav className="grid grid-cols-1">
                   {nav.items?.map((item) => {
-                    if (item.children?.length == 0) {
+                    if (item.children?.length === 0) {
                       const shouldOpenInNewTab =
-                        item.target ?? item.url?.startsWith('http')
-                          ? '_blank'
-                          : undefined;
+                        item.target ?? item.url?.startsWith('http') ? '_blank' : undefined
                       return (
                         <Link
                           key={item.title}
@@ -261,20 +247,16 @@ export function Navigation({ nav }: { nav: Menu }) {
                           target={shouldOpenInNewTab}
                           className="flex items-center rounded-lg py-3 hover:bg-gray-50"
                         >
-                          <div className="text-base font-medium text-gray-900">
-                            {item.title}
-                          </div>
+                          <div className="text-base font-medium text-gray-900">{item.title}</div>
                         </Link>
-                      );
+                      )
                     }
 
                     return item?.children?.map((subItem) => {
-                      if (!subItem?.url) return null;
+                      if (!subItem?.url) return null
 
                       const shouldOpenInNewTab =
-                        subItem.target ?? subItem.url?.startsWith('http')
-                          ? '_blank'
-                          : undefined;
+                        subItem.target ?? subItem.url?.startsWith('http') ? '_blank' : undefined
                       return (
                         <Link
                           key={subItem.title}
@@ -282,12 +264,10 @@ export function Navigation({ nav }: { nav: Menu }) {
                           target={shouldOpenInNewTab}
                           className="flex items-center rounded-lg py-3 hover:bg-gray-50"
                         >
-                          <div className="text-base font-medium text-gray-900">
-                            {subItem.title}
-                          </div>
+                          <div className="text-base font-medium text-gray-900">{subItem.title}</div>
                         </Link>
-                      );
-                    });
+                      )
+                    })
                   })}
                 </nav>
               </div>
@@ -296,5 +276,5 @@ export function Navigation({ nav }: { nav: Menu }) {
         </Popover.Panel>
       </Transition>
     </Popover>
-  );
+  )
 }

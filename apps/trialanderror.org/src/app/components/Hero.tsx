@@ -1,10 +1,10 @@
 'use client'
-import { Frame } from './Frame'
+
 import { motion } from 'framer-motion'
+import { Frame } from './Frame'
 
 export function Hero() {
-  return (
-    <div className="relative flex min-h-screen w-screen flex-col justify-center">
+  return <div className="relative flex min-h-screen w-screen flex-col justify-center">
       {/* <div className="max-w-screen absolute inset-6 -z-20 min-h-screen border-4 border-blue-500 md:inset-20 md:border-[6px]" /> */}
       <Frame />
       <div className="relative mt-[20vh] grid w-full grid-cols-6 items-center justify-center md:mt-[40vh]">
@@ -38,5 +38,4 @@ export function Hero() {
         </motion.div>
       </div>
     </div>
-  )
 }

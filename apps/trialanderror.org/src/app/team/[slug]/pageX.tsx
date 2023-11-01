@@ -30,12 +30,12 @@ export default async function PersonPage({ params }: { params: { slug: string } 
     lastName,
     position,
     pronouns,
-    show_pronouns,
+    show_pronouns: showPronouns,
     bio,
     summary,
     github,
     image,
-    blog_posts,
+    blog_posts: blogPosts,
     linkedin,
     personalWebsite,
     twitter,
@@ -49,7 +49,7 @@ export default async function PersonPage({ params }: { params: { slug: string } 
           {firstName} {lastName}
         </span>
 
-        {show_pronouns && (
+        {showPronouns && (
           <p className="text-center text-3xl text-orange-500 dark:text-gray-400 md:text-4xl">
             {pronouns}
           </p>
@@ -118,13 +118,13 @@ export default async function PersonPage({ params }: { params: { slug: string } 
         </div>
         <div className="prose" dangerouslySetInnerHTML={{ __html: bio || summary || '' }} />
       </div>
-      {blog_posts && (
+      {blogPosts && (
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <h2 className="md:text-4x text-2xl font-bold">
             Blog Posts by {firstName} {lastName}
           </h2>
-          {blog_posts.map((post) => (
-            <article className="prose relative">
+          {blogPosts.map((post) => (
+            <article key={post.id} className="prose relative">
               <h3>{post.title}</h3>
               <p>{post.excerpt}</p>
               <a href={`https://blog.trialanderror.org/${post.slug}`} className="link-overlay">

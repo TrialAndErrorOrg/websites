@@ -31,17 +31,15 @@ export default async function AboutPage({ params: { page } }: Props) {
             <h1 className="-mt-10 text-4xl font-black text-blue-500 md:-mt-16 md:text-7xl">
               {title}
             </h1>
-            {block?.map((block) => {
-              return (
-                <div
-                  className="prose"
-                  key={block.id}
-                  dangerouslySetInnerHTML={{
-                    __html: block.body ?? '',
-                  }}
-                />
-              )
-            })}
+            {block?.map((b) => (
+              <div
+                className="prose"
+                key={b.id}
+                dangerouslySetInnerHTML={{
+                  __html: b.body ?? '',
+                }}
+              />
+            ))}
           </article>
         </div>
       </div>

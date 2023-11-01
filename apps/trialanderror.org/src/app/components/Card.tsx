@@ -1,17 +1,18 @@
 'use client'
-import { Card } from '../../server/mixed'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
+import type { Card as CardType } from '../../server/mixed'
 
-function splitSentences(sentence: string) {
-  const regex = /[^.!?]+[.!?]/g
-  const matches = sentence.match(regex)
-  return matches ? matches.map((s) => s.trim()) : [sentence]
-}
+// function splitSentences(sentence: string) {
+//   const regex = /[^.!?]+[.!?]/g
+//   const matches = sentence.match(regex)
+//   return matches ? matches.map((s) => s.trim()) : [sentence]
+// }
 
-export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
+export function Card({ card, delay = 0 }: { card: CardType; delay?: number }) {
   const { title, type } = card
 
   const titleWithoutAcronymsWithPeriods = title.replace(/([A-Z])\.([A-Z])\.?/g, '$1$2')
@@ -20,7 +21,6 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
   const mainTitle = titleParts[1]?.replace(/[:.]/g, '')
   const subTitle = titleParts.slice(2).join(' ')?.replace(/[:.]/g, '').trim()
   const capitalizedSubTitle = subTitle.charAt(0).toUpperCase() + subTitle.slice(1)
-  const titleClass = subTitle ? 'text-2xl' : 'text-3xl'
 
   return (
     <motion.article
@@ -31,7 +31,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
         x: 0,
         transition: {
           duration: 0.5,
-          delay: delay,
+          delay,
         },
       }}
       viewport={{ once: true }}
@@ -54,7 +54,7 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
       initial={{ y: 100, opacity: 0 }}
       key={card.title}
       className="group relative col-span-1 flex w-80 flex-col border-b-[6px] border-blue-500 bg-white md:w-96"
-      //className="hover:shadow-thick-3 group relative col-span-1 flex flex-col shadow-[0px_0px_0_#000] transition-all ease-in-out  hover:-translate-x-2 hover:-translate-y-2"
+      // className="hover:shadow-thick-3 group relative col-span-1 flex flex-col shadow-[0px_0px_0_#000] transition-all ease-in-out  hover:-translate-x-2 hover:-translate-y-2"
     >
       {card?.image?.url ? (
         <Image
@@ -99,26 +99,31 @@ export function Card({ card, delay = 0 }: { card: Card; delay?: number }) {
             </h2>
             {/* authors  */}
 
-            {card.team?.length > 0 ? (
-              <div className="flex flex-row flex-wrap gap-x-2">
-                {(card?.team ?? []).map((author) => (
-                  <span
-                    className="text-sm font-bold italic text-blue-500 md:text-lg"
-                    key={typeof author === 'object' ? author.firstName : author}
-                  >
-                    {typeof author === 'object' ? `${author.firstName} ${author.lastName}` : author}
+            {
+              // eslint-disable-next-line no-nested-ternary
+              card.team?.length > 0 ? (
+                <div className="flex flex-row flex-wrap gap-x-2">
+                  {(card?.team ?? []).map((author) => (
+                    <span
+                      className="text-sm font-bold italic text-blue-500 md:text-lg"
+                      key={typeof author === 'object' ? author.firstName : author}
+                    >
+                      {typeof author === 'object'
+                        ? `${author.firstName} ${author.lastName}`
+                        : author}
+                    </span>
+                  ))}
+                </div>
+              ) : card.team.length > 3 ? (
+                <div className="flex flex-row gap-2">
+                  <span className="text-sm font-bold italic text-blue-500 md:text-lg">
+                    {typeof card.team[0] === 'object'
+                      ? `${card.team[0].firstName} ${card.team[0].lastName} et al.`
+                      : card.team[0]}
                   </span>
-                ))}
-              </div>
-            ) : card.team.length > 3 ? (
-              <div className="flex flex-row gap-2">
-                <span className="text-sm font-bold italic text-blue-500 md:text-lg">
-                  {typeof card.team[0] === 'object'
-                    ? `${card.team[0].firstName} ${card.team[0].lastName} et al.`
-                    : card.team[0]}
-                </span>
-              </div>
-            ) : null}
+                </div>
+              ) : null
+            }
           </div>
 
           <div className="flex items-center gap-2">

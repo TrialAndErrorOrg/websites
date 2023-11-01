@@ -1,4 +1,3 @@
-import { cache } from 'react'
 import { env } from '../env/server.mjs'
 
 export interface Card {
@@ -40,14 +39,14 @@ interface Img {
 
 export const getAllCards = async ({ limit = 100, offset = 0 } = {}) => {
   try {
-    return (
+    return await ((
       await fetch(`${env.STRAPI_ENDPOINT}/front-page-cards?limit=${limit}&offset=${offset}`, {
         headers: {
           Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
         },
         next: { revalidate: 3600 },
       })
-    ).json() as Promise<Card[]>
+    ).json() as Promise<Card[]>)
   } catch (err) {
     console.log(err)
     return []

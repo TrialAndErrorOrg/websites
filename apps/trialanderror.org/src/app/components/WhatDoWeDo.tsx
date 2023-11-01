@@ -1,11 +1,12 @@
 'use client'
+
 import { Attribute } from '@strapi/strapi'
 import { motion, useReducedMotion, Variant } from 'framer-motion'
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
-const WhatWeDoSection = ({
+function WhatWeDoSection({
   children,
   hover,
   image,
@@ -19,9 +20,9 @@ const WhatWeDoSection = ({
   title: string
   isSmall?: boolean
   setHover: (arg: React.SetStateAction<{ tab: number; show: boolean }[]>) => void
-}) => {
+}) {
   const handleHover = () => {
-    setHover((prev) => {
+    setHover(() => {
       const newHover = [
         { tab: 0, show: false },
         { tab: 1, show: false },
@@ -78,6 +79,7 @@ const WhatWeDoSection = ({
         flexShrink: 1,
       }}
       className={`relative flex flex-col items-center bg-white ${
+        // eslint-disable-next-line no-nested-ternary
         hover.tab === 2
           ? ''
           : isSmall
@@ -179,11 +181,11 @@ const WhatWeDoSection = ({
   )
 }
 
-export const WhatDoWeDo = ({
+export function WhatDoWeDo({
   images,
 }: {
   images: (Attribute.GetValues<'plugin::upload.file'> | null)[]
-}) => {
+}) {
   const [hover, setHover] = useState([
     { tab: 0, show: true },
     { tab: 1, show: false },

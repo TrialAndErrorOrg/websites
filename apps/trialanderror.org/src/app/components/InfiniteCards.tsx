@@ -1,5 +1,5 @@
 'use client'
-import Image from 'next/image'
+
 import React from 'react'
 import { trpc } from '../../utils/trpcClient'
 import { Card } from './Card'
@@ -16,6 +16,7 @@ export function useIsIntersecting<TElement extends HTMLElement>() {
     }
     const observer = new IntersectionObserver(([entry]) => setIsIntersecting(entry.isIntersecting))
     observer.observe(ref.current)
+    // eslint-disable-next-line consistent-return
     return () => {
       observer.disconnect()
     }
@@ -23,12 +24,11 @@ export function useIsIntersecting<TElement extends HTMLElement>() {
   return [isIntersecting, ref] as const
 }
 
-export function InfiniteCards({ limit, cursor }: { limit?: number; cursor?: string }) {
+export function InfiniteCards({ limit }: { limit?: number }) {
   const query = trpc.cards.infiniteCards.useInfiniteQuery(
     { limit },
     {
       getNextPageParam(lastPage) {
-        console.log(lastPage)
         return lastPage.nextCursor
       },
     },
@@ -44,25 +44,25 @@ export function InfiniteCards({ limit, cursor }: { limit?: number; cursor?: stri
     }
   }, [isLoadMoreVisible, query.hasNextPage, query.isFetching])
 
-  console.log(query.data)
   return (
     <>
-      {query.data?.pages.map((page) => {
-        return page.cards.map((card, idx) => {
-          return <Card key={card.id} delay={(idx % (limit || 9)) * 0.1 + 0.5} card={card} />
-        })
-      })}
+      {query.data?.pages.map((page) =>
+        page.cards.map((card, idx) => (
+          <Card key={card.id} delay={(idx % (limit || 9)) * 0.1 + 0.5} card={card} />
+        )),
+      )}
 
       <div ref={ref}>
         {query.isFetchingNextPage ? (
           <span>Loading</span>
         ) : (
           <button
+            type="button"
             disabled={!query.hasNextPage}
             onClick={() => {
               query.fetchNextPage()
             }}
-            className={'w-full cursor-pointer p-4' + (!query.hasNextPage ? ' opacity-50' : '')}
+            className={`w-full cursor-pointer p-4${!query.hasNextPage ? ' opacity-50' : ''}`}
           >
             {query.hasNextPage ? 'Load more' : 'You loaded everything'}
           </button>

@@ -1,10 +1,9 @@
 import { Feed, FeedOptions } from 'feed'
 import { getAllCards } from '../server/mixed'
-import { env } from '../env/server.mjs'
 
 export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
   const allPosts = await getAllCards({ limit: 1000 })
-  const site_url = process.env.VERCEL ? 'https://trialanderror.org' : 'http://localhost:4200'
+  const siteUrl = process.env.VERCEL ? 'https://trialanderror.org' : 'http://localhost:4200'
 
   const feedOptions: FeedOptions = {
     updated: new Date(),
@@ -17,10 +16,10 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     ttl: 60 * 60,
     title: 'Center of Trial & Error | RSS Feed',
     description: 'Updates from the Blog, Journal, and Center of Trial & Error!',
-    id: site_url,
-    link: site_url,
-    image: `${site_url}/android-chrome-384x384.png`,
-    favicon: `${site_url}/favicon.ico`,
+    id: siteUrl,
+    link: siteUrl,
+    image: `${siteUrl}/android-chrome-384x384.png`,
+    favicon: `${siteUrl}/favicon.ico`,
     copyright: `CC-BY 4.0 ${new Date().getFullYear()}, Center of Trial & Error`,
     generator: 'Feed for Node.js',
     feedLinks: {
@@ -90,15 +89,12 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     })
   })
 
-  if (type === 'rss') {
-    return feed.rss2()
-  }
-
-  if (type === 'atom') {
-    return feed.atom1()
-  }
-
-  if (type === 'json') {
-    return feed.json1()
+  switch (type) {
+    case 'json':
+      return feed.json1()
+    case 'atom':
+      return feed.atom1()
+    default:
+      return feed.rss2()
   }
 }

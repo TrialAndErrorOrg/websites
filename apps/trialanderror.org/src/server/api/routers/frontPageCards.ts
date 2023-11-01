@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { getAllCards } from '../../mixed'
 
-import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc'
+import { createTRPCRouter, publicProcedure } from '../trpc'
 
 export const cardRouter = createTRPCRouter({
   infiniteCards: publicProcedure
@@ -14,10 +14,10 @@ export const cardRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const cards = await getAllCards({ limit: input.limit + 1, offset: input.cursor })
 
-      let nextCursor: number | undefined = undefined
+      let nextCursor: number | undefined
 
       if (cards.length > input.limit) {
-        const lastCard = cards.pop()
+        cards.pop()
 
         nextCursor = input.cursor + input.limit
       }

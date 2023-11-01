@@ -5,7 +5,10 @@
     "next/core-web-vitals",
     "../../.eslintrc.json"
   ],
-  "ignorePatterns": ["!**/*", ".next/**/*"],
+  "parserOptions": {
+    "project": "apps/trialanderror.org/tsconfig.*json"
+  },
+  "ignorePatterns": ["!**/*", ".next/**/*", "**/*jest.config.ts"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -23,7 +26,8 @@
     }
   ],
   "rules": {
-    "@next/next/no-html-link-for-pages": "off"
+    "@next/next/no-html-link-for-pages": "off",
+    "@typescript-eslint/no-shadow": "off"
   },
   "env": {
     "jest": true

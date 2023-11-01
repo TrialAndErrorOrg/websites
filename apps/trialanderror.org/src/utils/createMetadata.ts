@@ -38,7 +38,7 @@ export const createMetadata = (
     url: `https://trialanderror.org/${canonical}`,
     title:
       ogTitle ?? (title ? `${title} | Center of Trial and Error` : 'Center of Trial and Error'),
-    description: description,
+    description,
     images: [
       {
         url:

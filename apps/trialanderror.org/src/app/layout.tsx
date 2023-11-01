@@ -1,10 +1,9 @@
+import { Overpass, Open_Sans } from 'next/font/google'
+import Script from 'next/script'
 import { AnalyticsWrapper } from './components/Analytics'
 import { Footer } from './components/Footer'
 import { Nav } from './components/Nav'
 import { createMetadata } from '../utils/createMetadata'
-
-import { Overpass, Open_Sans } from 'next/font/google'
-import Script from 'next/script'
 
 import '../styles/globals.css'
 
@@ -14,7 +13,7 @@ const overpass = Overpass({
   // display: 'swap',
 })
 
-const open_sans = Open_Sans({
+const openSans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-open-sans',
   // display: 'swap',
@@ -26,7 +25,7 @@ export const metadata = createMetadata({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${open_sans.variable} ${overpass.variable}`}>
+    <html lang="en" className={`${openSans.variable} ${overpass.variable}`}>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

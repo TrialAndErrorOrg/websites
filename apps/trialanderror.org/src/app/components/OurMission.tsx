@@ -4,8 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 export function OurMission() {
-  return (
-    <div className="relative mt-[20vh] w-screen md:min-h-screen">
+  return <div className="relative mt-[20vh] w-screen md:min-h-screen">
       {/* light blue backdrop  */}
       <div className="absolute top-0 left-[13vw] -z-10 flex h-[60%] w-[70vw] flex-col items-end justify-center bg-blue-50 md:w-[60vw] 2xl:w-[40vw]" />
       <div className="mx-[6vw] mt-[6vw] flex  flex-col items-start gap-[6vw] md:mx-auto md:w-2/3 md:flex-row">
@@ -58,5 +57,4 @@ export function OurMission() {
         </motion.div>
       </div>
     </div>
-  )
 }

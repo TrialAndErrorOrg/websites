@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef } from 'react'
 // import {useScrollPosition} from '../utils/scrollUtils';
 import { useMotionValueEvent, useScroll } from 'framer-motion'
 

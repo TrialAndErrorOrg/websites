@@ -5,7 +5,7 @@ import { env } from '../../env/server.mjs'
 
 declare global {
   // eslint-disable-next-line vars-on-top, no-var
-  var strapi: StrapiClient | undefined
+  var strapiClient: StrapiClient
 }
 
 export const strapiClientOptions: StrapiClientOptions = {
@@ -16,8 +16,8 @@ export const strapiClientOptions: StrapiClientOptions = {
   persistSession: false,
 }
 
-export const strapiClient = global.strapi || createClient(strapiClientOptions)
+export const strapiClient = global.strapiClient || createClient(strapiClientOptions)
 
 if (env.NODE_ENV !== 'production') {
-  global.strapi = strapiClient
+  global.strapiClient = strapiClient
 }

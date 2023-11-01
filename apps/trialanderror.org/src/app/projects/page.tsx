@@ -5,17 +5,17 @@ export default async function ProjectsPage() {
 
       <section>
         <h2 className="text-2xl font-bold">Journal of Trial & Error</h2>
-        <p></p>
+        <p />
       </section>
 
       <section>
         <h2 className="text-2xl font-bold">Blog of Trial & Error</h2>
-        <p></p>
+        <p />
       </section>
 
       <section>
         <h2 className="text-2xl font-bold">Publishers of Trial & Error</h2>
-        <p></p>
+        <p />
       </section>
     </div>
   )
