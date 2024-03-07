@@ -9,7 +9,6 @@ export function Frame() {
   const isInView = useInView(ref, {
     // once: true,
   })
-  console.log(isInView)
 
   return (
     // <div className="absolute h-screen w-screen">

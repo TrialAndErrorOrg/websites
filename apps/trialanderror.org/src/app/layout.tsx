@@ -1,5 +1,4 @@
 import { Overpass, Open_Sans } from 'next/font/google'
-import Script from 'next/script'
 import { AnalyticsWrapper } from './components/Analytics'
 import { Footer } from './components/Footer'
 import { Nav } from './components/Nav'
@@ -20,6 +19,7 @@ const openSans = Open_Sans({
 })
 
 export const metadata = createMetadata({
+  title: 'Center of Trial and Error',
   description: 'Creating transparent and responsible scholarship.',
 })
 
@@ -42,12 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <AnalyticsWrapper />
-        <Script
-          strategy="afterInteractive"
-          data-domain="trialanderror.org"
-          src="/stats/js/script"
-          data-api="/stats/api/event"
-        />
       </body>
     </html>
   )

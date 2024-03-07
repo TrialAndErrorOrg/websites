@@ -181,11 +181,17 @@ export function Navigation({ nav }: { nav: Menu }) {
               const shouldOpenInNewTab =
                 item.target ?? item.url?.startsWith('http') ? '_blank' : undefined
 
-              const underlineMaybe =
-                pathname &&
-                ((pathname === item.url && pathname === '/') || item.url?.startsWith(pathname))
-                  ? 'after:!w-full'
-                  : ''
+              // eslint-disable-next-line no-nested-ternary
+              const underlineMaybe = !pathname
+                ? ''
+                : pathname.replace(/^\//, '') === item.url?.replace(/^\//, '')
+                ? 'after:!w-full'
+                : ''
+              // const underlineMaybe =
+              //   pathname &&
+              //   ((pathname === item.url && pathname === '/') || item.url?.startsWith(pathname))
+              //     ? 'after:!w-full'
+              //     : ''
               return (
                 <Link
                   key={item.title}

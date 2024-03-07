@@ -111,7 +111,7 @@ export async function Footer() {
   const social = socials ?? defaultSocials
 
   return (
-    <footer className="bg-blue-500" aria-labelledby="footer-heading">
+    <footer className="z-1 relative bg-blue-500" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
