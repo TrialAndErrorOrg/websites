@@ -9,14 +9,14 @@ import ExclamationCircleIcon from '@heroicons/react/24/outline/ExclamationCircle
 import { cx } from '../../../utils/cx'
 import { instantMeiliSearch, MeiliSearchResponse } from '@meilisearch/instant-meilisearch'
 import { useSearchBox } from 'react-instantsearch-hooks-web'
-import type { MeiliSearchBlogPostResult } from '../../../utils/types'
+import type { MeiliSearchBlogPostResult } from '@/types'
 import { ControlKeyIcon } from './ControlKeyIcon'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 const searchClient = instantMeiliSearch(
-  'https://app-meilisearchcote-prod-001.azurewebsites.net',
-  'aa45f3a7-48d5-4a41-bf8a-503a0cbc6ad7',
+  process.env.NEXT_PUBLIC_MEILISEARCH_URL!,
+  process.env.NEXT_PUBLIC_MEILISEARCH_API_SEARCH_KEY!,
 )
 
 const getHighlightedParts = (result: string, query?: string) => {
