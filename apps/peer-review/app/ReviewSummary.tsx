@@ -186,7 +186,6 @@ export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
         <h3 className="text-lg font-medium leading-6 text-gray-900">
           Review by {review.reviewerFullName}
         </h3>
-        {/* @ts-expect-error fix this when Next or Typescript fixes async react components */}
         <Reviewer user={user} />
         <p className="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
       </div>

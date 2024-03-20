@@ -282,7 +282,6 @@ export default async function Page(props: { params: { pr: string } }) {
               <h3 className="text-lg">{review.reviewRound.status}</h3>
               <div className="flex flex-col gap-8">
                 {review.reviewAssignments.map((review) => (
-                  /* @ts-expect-error  Server component */
                   <ReviewSummary review={review} key={review.id} />
                 ))}
               </div>
