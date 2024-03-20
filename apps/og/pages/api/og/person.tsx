@@ -59,7 +59,7 @@ export default async function handler(req: NextRequest) {
     orcid,
   } = author
 
-  const cleanSummary = summary.replace(/<[^>]*>?|&nbsp;/gm, '')
+  const cleanSummary = summary?.replace(/<[^>]*>?|&nbsp;/gm, '') || ''
 
   return new ImageResponse(
     (

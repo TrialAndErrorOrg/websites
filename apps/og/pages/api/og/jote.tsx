@@ -40,18 +40,18 @@ export async function generateJoteImage({
   type,
 }: {
   logo: string
-  title?: string
-  name?: string
+  title?: string | null
+  name?: string | null
 
-  author?: string
-  description?: string
-  publishedPretty?: string
-  publishedRaw?: string
-  publishedYear?: string
-  references?: string
-  volume?: string
-  issue?: string
-  doi?: string
+  author?: string | null
+  description?: string | null
+  publishedPretty?: string | null
+  publishedRaw?: string | null
+  publishedYear?: string | null
+  references?: string | null
+  volume?: string | null
+  issue?: string | null
+  doi?: string | null
   type?:
     | 'empirical'
     | 'meta-research'
@@ -60,6 +60,7 @@ export async function generateJoteImage({
     | 'reflection'
     | 'editorial'
     | 'other'
+    | null
 }) {
   const overpass = await overpassFontData
   const openSans = await openSansFontData
