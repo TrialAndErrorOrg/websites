@@ -59,6 +59,9 @@ export interface Menu extends Omit<Attribute.GetValues<'plugin::menus.menu'>, 'i
   items?: MenuItem[]
 }
 
+export interface OpenPosition extends Attribute.GetValues<'api::open-position.open-position'> {}
+export interface Application extends Attribute.GetValues<'api::application.application'> {}
+
 export interface MeiliSearchBlogPostResult {
   id: string
   title: string

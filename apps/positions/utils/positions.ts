@@ -1,6 +1,6 @@
 import type { Attribute } from '@strapi/strapi'
 import { strapi } from './strapi'
-import type { OpenPosition } from './types'
+import type { OpenPosition } from '@/types'
 
 export const getPositions = async (props?: { page?: number; pageSize?: number }) => {
   const posts = await strapi

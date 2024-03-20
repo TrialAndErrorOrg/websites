@@ -6,7 +6,7 @@ import { DefaultSeo } from 'next-seo'
 import { SITE } from '../config'
 import Script from 'next/script'
 
-import { Overpass, Open_Sans } from '@next/font/google'
+import { Overpass, Open_Sans } from 'next/font/google'
 
 const overpass = Overpass({
   subsets: ['latin'],

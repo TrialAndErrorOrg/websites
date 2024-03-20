@@ -1,4 +1,4 @@
-import type { Application, OpenPosition } from '../utils/types'
+import type { Application, OpenPosition } from '@/types'
 import { PaperClipIcon } from '@heroicons/react/24/outline'
 
 interface Props {

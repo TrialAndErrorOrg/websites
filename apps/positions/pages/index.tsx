@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Logo } from '../core/Logo'
 import { Layout } from '../layouts/Layout'
 import { getPositions } from '../utils/positions'
-import { OpenPosition } from '../utils/types'
+import { OpenPosition } from '@/types'
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const positions = (await getPositions()) ?? []
@@ -13,6 +13,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       positions,
     },
+    revalidate: 60 * 60 * 24, // revalidate every 24 hours
   }
 }
 

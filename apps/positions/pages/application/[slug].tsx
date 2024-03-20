@@ -2,7 +2,7 @@ import { SITE } from '../../config'
 import { Layout } from '../../layouts/Layout'
 import { getCanonical, getPermalink } from '../../utils/permalinks'
 import { Application } from '../../components/Application'
-import { Application as ApplicationType } from '../../utils/types'
+import { Application as ApplicationType } from '@/types'
 import { GetServerSideProps } from 'next'
 import { strapi } from '../../utils/strapi'
 

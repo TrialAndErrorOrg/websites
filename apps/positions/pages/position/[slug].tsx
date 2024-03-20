@@ -4,7 +4,7 @@ import { Position } from '../../components/Position'
 
 import { getCanonical, getPermalink } from '../../utils/permalinks'
 import { getPosition } from '../../utils/positions'
-import type { OpenPosition } from '../../utils/types'
+import type { OpenPosition } from '@/types'
 import { GetServerSideProps } from 'next'
 import Error from 'next/error'
 

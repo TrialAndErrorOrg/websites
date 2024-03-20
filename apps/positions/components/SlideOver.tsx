@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import type { OpenPosition } from '../utils/types'
+import type { OpenPosition } from '@/types'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -96,7 +96,7 @@ export default function SlideOver({ position }: { position: OpenPosition }) {
         },
       })
       const formData = new FormData()
-      data['open_position'] = position.id
+      data['open_position'] = position.id?.toString()
 
       if (cvFile?.[0]) {
         formData.append('files.documents', cvFile[0], cvFile[0].name)
