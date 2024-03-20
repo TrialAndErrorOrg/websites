@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { env } from '../env/server.mjs'
-import { Author } from './types'
+import { Author } from '@/types'
 import { getFirstAuthorLink } from './getFirstAuthorLink'
 
 export const ogURL = `${env.OG_URL}/api/og/jote`

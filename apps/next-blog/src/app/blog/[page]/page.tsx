@@ -1,4 +1,4 @@
-import { BlogPost } from '../../../utils/types'
+import { BlogPost } from '@/types'
 import { getAllPosts } from '../../../utils/blog'
 import { Pagination } from '../../components/blog/Pagination'
 import { PostCard } from '../../components/blog/PostCard'

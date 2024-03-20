@@ -1,4 +1,4 @@
-import { BlogPost } from '../../../utils/types'
+import { BlogPost } from '@/types'
 import { PostCard } from './PostCard'
 
 interface NamedListProps {

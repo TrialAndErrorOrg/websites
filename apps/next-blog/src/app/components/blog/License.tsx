@@ -1,5 +1,5 @@
 import { FaCreativeCommons, FaCreativeCommonsBy } from 'react-icons/fa/index'
-import type { BlogPost } from '../../../utils/types'
+import type { BlogPost } from '@/types'
 import Link from 'next/link'
 
 interface Props {

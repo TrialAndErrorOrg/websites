@@ -1,4 +1,4 @@
-import type { Menu } from './types'
+import type { Menu } from '@/types'
 import { strapi } from './strapi'
 import { cache } from 'react'
 import { env } from '../env/server.mjs'

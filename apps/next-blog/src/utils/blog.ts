@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import { strapi } from './strapi'
-import type { BlogPost } from './types'
+import type { BlogPost } from '@/types'
 import { Attribute } from '@strapi/strapi'
 import { env } from '../env/server.mjs'
 

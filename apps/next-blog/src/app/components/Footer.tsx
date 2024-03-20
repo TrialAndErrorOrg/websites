@@ -11,9 +11,9 @@ import { getMenu } from '../../utils/menu'
 import { SignUpWrapper } from './client/SignUpWrapper'
 
 export async function Footer() {
-  const footer = (await getMenu('footer-blog')) ?? []
+  const footer = await getMenu('footer-blog')
 
-  const socials = (await getMenu('socials')) ?? []
+  const socials = await getMenu('socials')
   return (
     <footer
       className="relative border-t-2 border-black bg-black text-white dark:border-white"
@@ -38,25 +38,22 @@ export async function Footer() {
                   {[footer?.[idx * 2], footer?.[idx * 2 + 1]]?.map((section, ix) => (
                     <div
                       className={ix % 2 ? 'mt-12 md:mt-0' : ''}
-                      key={section?.title ?? section?.url ?? section?.createdAt ?? ix}
+                      key={section?.title ?? section?.url ?? section?.createdAt?.toString() ?? ix}
                     >
                       <h3 className="text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:text-orange-500 dark:text-slate-200">
                         {section?.url ? <a href={section.url}>{section?.title}</a> : section?.title}
                       </h3>
                       <ul className="mt-4 space-y-4">
-                        {
-                          // @ts-expect-error thing is wrong
-                          section?.children?.map((item, indx) => (
-                            <li key={item.title}>
-                              <a
-                                href={item.url ?? '/'}
-                                className="sleek-underline text-base text-white dark:text-slate-100 dark:hover:text-white"
-                              >
-                                {item.title}
-                              </a>
-                            </li>
-                          ))
-                        }
+                        {section?.children?.map((item, indx) => (
+                          <li key={item.title}>
+                            <a
+                              href={item.url ?? '/'}
+                              className="sleek-underline text-base text-white dark:text-slate-100 dark:hover:text-white"
+                            >
+                              {item.title}
+                            </a>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   ))}

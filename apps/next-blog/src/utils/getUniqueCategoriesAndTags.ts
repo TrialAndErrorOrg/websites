@@ -1,4 +1,4 @@
-import { BlogPost } from './types'
+import { BlogPost } from '@/types'
 
 export function getUniqueList<T>(list: T[]): T[] {
   const uniqueList = Array.from(new Set(list.map((item) => JSON.stringify(item)))).map((item) =>

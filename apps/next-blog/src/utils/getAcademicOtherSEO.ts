@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import type { BlogPost } from './types'
+import type { BlogPost } from '@/types'
 
 export const getAcademicOtherSeo = (post: BlogPost): Metadata['other'] => {
   const {

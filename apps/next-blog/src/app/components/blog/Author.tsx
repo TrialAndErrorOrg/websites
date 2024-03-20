@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { cx } from '../../../utils/cx'
-import type { Author } from '../../../utils/types'
+import type { Author } from '@/types'
 import Image from 'next/image'
 import { FaOrcid, FaTwitter, FaGithub, FaLink, FaLinkedin } from 'react-icons/fa/index'
 

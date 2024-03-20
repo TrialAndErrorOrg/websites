@@ -2,7 +2,7 @@ import { cx } from '../../../utils/cx'
 import { parseISO, format } from 'date-fns'
 import PhotographIcon from '@heroicons/react/24/outline/PhotoIcon'
 import Image from 'next/image'
-import type { BlogPost } from '../../../utils/types'
+import type { BlogPost } from '@/types'
 import { AuthorList } from './AuthorList'
 import { Tags } from './Tags'
 import { FaArrowRight } from 'react-icons/fa/index'
@@ -87,9 +87,7 @@ export function PostCard({
           >
             {format(
               parseISO(
-                post?.publishDate ??
-                  post?.publishedAt ??
-                  post.createdAt ??
+                (post?.publishDate ?? post?.publishedAt ?? post.createdAt)?.toString() ??
                   new Date().toISOString(),
               ),
               'MMMM dd, yyyy',

@@ -1,4 +1,4 @@
-import type { BlogPost } from '../../../utils/types'
+import type { BlogPost } from '@/types'
 import { PostCard } from './PostCard'
 
 export function BlogList(props: { posts: BlogPost[] }) {

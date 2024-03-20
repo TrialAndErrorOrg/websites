@@ -127,8 +127,8 @@ export async function SinglePost(props: Props) {
       <div className="relative w-full border-t-2 border-black bg-white">
         <article className="relative mx-auto grid w-full max-w-[100rem] grid-cols-12 border-black bg-white py-10 dark:border-white dark:bg-slate-700">
           <p className="col-span-8 col-start-2 max-w-3xl md:col-start-3">
-            <time dateTime={post.publishDate ?? post.publishedAt}>
-              {getFormattedDate(post.publishDate ?? post.publishedAt)}
+            <time dateTime={(post.publishDate ?? post.publishedAt)?.toString()}>
+              {getFormattedDate((post.publishDate ?? post.publishedAt)?.toString())}
             </time>{' '}
             ~ {Math.ceil(readingTime(post.body).minutes)} min read
           </p>
