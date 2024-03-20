@@ -1,6 +1,5 @@
-import slugify from 'limax'
-
 import { SITE, PATHS } from '../config'
+import slugify from 'slugify'
 
 const trim = (str: string, ch?: string) => {
   let start = 0,

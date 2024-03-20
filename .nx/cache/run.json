@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx build positions",
+    "startTime": "2024-03-20T14:04:14.158Z",
+    "endTime": "2024-03-20T14:04:36.450Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "positions:build:production",
+      "target": "build",
+      "projectName": "positions",
+      "hash": "8cb301daa325f98655643ec5e66a54ee38722e050177c1817502ec3d235de3aa",
+      "startTime": "2024-03-20T14:04:14.161Z",
+      "endTime": "2024-03-20T14:04:36.450Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 0
+    }
+  ]
+}
