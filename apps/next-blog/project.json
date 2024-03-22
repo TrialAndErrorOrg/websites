@@ -28,7 +28,17 @@
     "dev": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["next dev apps/next-blog -p 4200"]
+        "commands": [
+          "yarn --cwd apps/strapi develop-strapi-prod",
+          "next dev apps/trialanderror.org -p 4201"
+        ],
+        "parallel": true
+      }
+    },
+    "dev-no-strapi": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["next dev apps/trialanderror.org -p 4201"]
       }
     },
     "serve": {

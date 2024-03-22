@@ -28,6 +28,12 @@
         "parallel": true
       }
     },
+    "dev-no-strapi": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["next dev apps/trialanderror.org -p 4200"]
+      }
+    },
     "serve": {
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
