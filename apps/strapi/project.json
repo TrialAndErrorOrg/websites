@@ -4,6 +4,9 @@
   "projectType": "application",
   "sourceRoot": "apps/strapi/src",
   "targets": {
+    "dev": {
+      "command": "yarn --cwd apps/strapi develop-strapi-prod"
+    },
     "build": {
       "executor": "@nx-extend/strapi:build",
       "outputs": ["{options.outputPath}"],
