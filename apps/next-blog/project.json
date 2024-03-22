@@ -9,7 +9,6 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "root": "apps/next-blog",
         "outputPath": "dist/apps/next-blog"
       },
       "configurations": {
@@ -19,13 +18,12 @@
         "production": {}
       }
     },
-
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["next build apps/next-blog"],
-        "outputPath": "apps/next-blog/.next"
-      }
+        "commands": ["next build apps/next-blog"]
+      },
+      "outputs": ["{workspaceRoot}/apps/next-blog/.next"]
     },
     "dev": {
       "executor": "nx:run-commands",
@@ -61,16 +59,12 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/next-blog/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/next-blog/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/next-blog/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     }
   },
   "tags": []

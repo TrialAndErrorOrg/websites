@@ -23,18 +23,14 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["coverage/apps/strapi"],
+      "outputs": ["{workspaceRoot}/coverage/apps/strapi"],
       "options": {
-        "jestConfig": "apps/strapi/jest.config.js",
-        "passWithNoTests": true
+        "jestConfig": "apps/strapi/jest.config.js"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/strapi/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     }
   },
   "tags": []

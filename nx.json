@@ -1,11 +1,4 @@
 {
-  "npmScope": "centertrialerror",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nx/next"
-  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -17,9 +10,7 @@
     "default": {
       "runner": "@vercel/remote-nx",
       "options": {
-        "verbose": true,
-        "cacheDirectory": "/tmp/nx-cache",
-        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "check"]
+        "verbose": true
       }
     }
   },
@@ -62,11 +53,28 @@
   },
   "defaultProject": "strapi",
   "targetDefaults": {
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    "build": {
+      "cache": true
     },
-    "test": {
-      "inputs": ["default", "^default"]
+    "@nx/jest:jest": {
+      "inputs": ["default", "^default"],
+      "cache": true,
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "@nx/eslint:lint": {
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
     }
-  }
+  },
+  "cacheDirectory": "/tmp/nx-cache",
+  "useInferencePlugins": false,
+  "defaultBase": "main"
 }
