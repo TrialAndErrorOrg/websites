@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { getAllPosts } from '../../../utils/blog'
 
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
   const { entry, model, event } = body
 
-  const relevantModels = ['blog-author', 'team-member', 'tag', 'category', 'blog-post']
+  const relevantModels = ['blog-author', 'team-member', 'tag', 'category', 'blog-post'] as const
 
   if (!model || !event) {
     const res = new Response('No model or event provided', { status: 400 })
@@ -43,21 +43,21 @@ export async function POST(request: NextRequest) {
 
   revalidatePath('/')
 
-  if (model === 'blog_author' || model === 'team_member') {
+  if (model === 'blog-author' || model === 'team-member') {
     revalidatePath(`/author/${entry.slug}`)
     return new Response('Revalidated author or team member')
   }
 
   if (model === 'tag' || model === 'category') {
-    revalidateTag(`/blog/${entry.slug}`)
+    revalidatePath(`/blog/${entry.slug}`)
     return new Response('Revalidated tag or category')
   }
 
-  if (model === 'blog_post') {
+  if (model === 'blog-post') {
     revalidatePath(`/${entry.slug}`)
 
     const tags = entry.blog_tags.map((tag: any) => tag.slug)
-    tags.forEach((tag: string) => revalidateTag(`/blog/${tag}`))
+    tags.forEach((tag: string) => revalidatePath(`/blog/${tag}`))
 
     const authors = [...entry.blog_authors, entry.team_members].map((author: any) => author.slug)
 
@@ -77,11 +77,13 @@ export async function POST(request: NextRequest) {
 
       const pages = Math.ceil(posts.length / 10)
 
-      for (let i = 1; i <= pages; i++) {
+      for (let i = 1; i <= pages; i += 1) {
         revalidatePath(`/blog/${i}`)
       }
     }
 
     return new Response('Revalidated blog post')
   }
+
+  return new Response('No model or event provided', { status: 400 })
 }
