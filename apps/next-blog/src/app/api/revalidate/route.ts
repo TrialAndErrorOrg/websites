@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const token = request.headers.get('x-revalidation-token')
+  //  const token = request.headers.get('x-revalidation-token')
   const body = await request.json()
 
   if (!body) {
