@@ -1,12 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { getAllPosts } from '../../../utils/blog'
+import { env } from '../../../env/server.mjs'
 
 export async function GET(request: NextRequest) {
   const path = request.nextUrl.searchParams.get('path')
+  const layout = Boolean(request.nextUrl.searchParams.get('layout'))
+  const token = request.headers.get('x-revalidation-token')
+
+  if (token !== env.NEXT_REVALIDATION_TOKEN) {
+    return new Response('Invalid token', { status: 401 })
+  }
 
   if (path) {
-    revalidatePath(path)
+    revalidatePath(path, layout ? 'layout' : 'page')
     return new Response(`Revalidated path: ${path}`)
   }
 
@@ -23,6 +30,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const token = request.headers.get('x-revalidation-token')
   const body = await request.json()
+
+  if (token !== env.NEXT_REVALIDATION_TOKEN) {
+    return new Response('Invalid token', { status: 401 })
+  }
 
   if (!body) {
     return new Response('No body provided')
