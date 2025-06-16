@@ -32,45 +32,50 @@ export const createMetadata = (
     authors?: Author[]
   } = {},
   metadata?: Partial<Metadata>,
-): Metadata => ({
-  title: title ? `${title} | Blog of Trial and Error` : 'A Blog of Trial and Error',
-  description,
-  robots: {
-    follow: !nofollow,
-    index: !noindex,
-  },
-  openGraph: {
-    locale,
-    url: `https://blog.trialanderror.org/${canonical}`,
-    title: ogTitle || (title ? `${title} | Blog of Trial and Error` : 'A Blog of Trial and Error'),
-    description: description,
-    images: [
-      {
-        url:
-          image ||
-          `${ogURL}?title=${encodeURIComponent(ogTitle || title)}&author=${encodeURIComponent(
-            description ?? '%20',
-          )}&name=${encodeURIComponent(!canonical ? '' : 'A Blog of Trial and Error')}`,
-        width: 1200,
-        height: 630,
-        alt,
-      },
-    ],
-    siteName: 'A Blog of Trial and Error',
-  },
-  twitter: {
-    site: '@jtrialerror',
-    creator: '@jtrialerror',
-    card: 'summary_large_image',
-  },
-  authors:
-    authors?.map((author) => ({
-      name: `${author.firstName ?? ''} ${author.lastName ?? ''}`,
-      twitter: author.twitter,
-      url: getFirstAuthorLink(author),
-    })) ?? [],
-  abstract,
-  metadataBase: new URL('https://blog.trialanderrror.org'),
-  publisher: 'Center of Trial and Error',
-  ...metadata,
-})
+): Metadata => {
+  const finalTitle =
+    ogTitle || (title ? `${title} | Blog of Trial and Error` : 'A Blog of Trial and Error')
+
+  return {
+    title: finalTitle,
+    description,
+    robots: {
+      follow: !nofollow,
+      index: !noindex,
+    },
+    openGraph: {
+      locale,
+      url: `https://blog.trialanderror.org/${canonical}`,
+      title: finalTitle,
+      description,
+      images: [
+        {
+          url:
+            image ||
+            `${ogURL}?title=${encodeURIComponent(finalTitle)}&author=${encodeURIComponent(
+              description ?? '%20',
+            )}&name=${encodeURIComponent(!canonical ? '' : 'A Blog of Trial and Error')}`,
+          width: 1200,
+          height: 630,
+          alt,
+        },
+      ],
+      siteName: 'A Blog of Trial and Error',
+    },
+    twitter: {
+      site: '@jtrialerror',
+      creator: '@jtrialerror',
+      card: 'summary_large_image',
+    },
+    authors:
+      authors?.map((author) => ({
+        name: `${author.firstName ?? ''} ${author.lastName ?? ''}`,
+        twitter: author.twitter,
+        url: getFirstAuthorLink(author),
+      })) ?? [],
+    abstract,
+    metadataBase: new URL('https://blog.trialanderrror.org'),
+    publisher: 'Center of Trial and Error',
+    ...metadata,
+  }
+}
