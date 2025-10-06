@@ -21,14 +21,18 @@ export async function GET(req: NextRequest) {
     switch (typeAsString) {
       case 'rss':
         headers['Content-Type'] = 'application/rss+xml'
+        break
       case 'atom':
         headers['Content-Type'] = 'application/atom+xml'
+        break
       case 'json':
         headers['Content-Type'] = 'application/json'
+        break
     }
 
     headers['Cache-Control'] = 'max-age=0, s-maxage=3600'
 
+    console.log('ttttt', typeAsString)
     return new Response(rss, { headers })
   } catch (e: unknown) {
     console.error(e)
