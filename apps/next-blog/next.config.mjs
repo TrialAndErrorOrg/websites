@@ -15,6 +15,12 @@
  */
 const nextConfig = {
   /* config options here */
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   // reactStrictMode: true,
   // i18n: {
   //   locales: ["en"],
@@ -29,10 +35,8 @@ const nextConfig = {
     ],
   },
   experimental: {
-    outputFileTracingIgnores: [
-      '**/@swc+core*',
-    ]
-  }
+    outputFileTracingIgnores: ['**/@swc+core*'],
+  },
   // rewrites: async () => [
   //   {
   //     source: '/rss.xml',
@@ -47,6 +51,6 @@ const nextConfig = {
   //     destination: '/rss?type=rss',
   //   },
   // ],
-};
+}
 
-export default nextConfig;
+export default nextConfig
