@@ -22,11 +22,9 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     favicon: `${site_url}/favicon.ico`,
     copyright: `CC-BY 4.0 ${new Date().getFullYear()}, Center of Trial and Error`,
     generator: 'Feed for Node.js',
+
     feedLinks: {
       rss2: `/rss.xml`,
-      // // other feed formats
-      // json: `/rss.json`,
-      // atom: `/rss.xml`,
     },
   }
 
@@ -82,17 +80,13 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
         : {}),
     })
   })
-  feed.addExtension({})
 
-  if (type === 'rss') {
-    return feed.rss2()
-  }
+  const feedString = feed.rss2()
 
-  // if (type === 'atom') {
-  //   return feed.atom1()
-  // }
+  const feedstringWithCorrectXml = feedString.replace(
+    /(<rss.*)>/,
+    '$1 xmlns:media="http://search.yahoo.com/mrss/"',
+  )
 
-  // if (type === 'json') {
-  //   return feed.json1()
-  // }
+  return feedstringWithCorrectXml
 }
