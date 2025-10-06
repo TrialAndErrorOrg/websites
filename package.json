@@ -170,12 +170,6 @@
     "url-loader": "^4.1.1",
     "webpack-cli": "^5.0.2"
   },
-  "packageManager": "yarn@1.22.1",
   "repository": "https://github.com/TrialAndErrorOrg/websites",
-  "author": "Thomas F. K. Jorna <hello@tefkah.com>",
-  "pnpm": {
-    "patchedDependencies": {
-      "@headlessui/react@1.7.8": "patches/@headlessui__react@1.7.8.patch"
-    }
-  }
+  "author": "Thomas F. K. Jorna <hello@tefkah.com>"
 }

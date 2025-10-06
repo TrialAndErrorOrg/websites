@@ -3,19 +3,21 @@ import { getAllPosts } from './blog'
 
 export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
   const allPosts = (await getAllPosts()) ?? []
-  const site_url = process.env.VERCEL ? 'https://trialanderror.org' : 'http://localhost:4200'
+  console.log(allPosts, allPosts.length)
+  // const site_url = process.env.VERCEL ? 'https://blog.trialanderror.org' : 'http://localhost:4200'
+  const site_url = 'https://blog.trialanderror.org'
 
   const feedOptions: FeedOptions = {
     updated: new Date(),
     language: 'en',
     author: {
-      name: 'Center of Trial & Error',
+      name: 'Blog of Center of Trial & Error',
       email: 'info@trialanderror.org',
-      link: 'https://trialanderror.org',
+      link: 'https://blog.trialanderror.org',
     },
     ttl: 60 * 60,
-    title: 'Center of Trial & Error | RSS Feed',
-    description: 'Updates from the Blog, Journal, and Center of Trial & Error!',
+    title: 'Blog of Center of Trial & Error | RSS Feed',
+    description: 'Updates from the Blog of Trial & Error!',
     id: site_url,
     link: site_url,
     image: `${site_url}/android-chrome-384x384.png`,
@@ -23,10 +25,10 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
     copyright: `CC-BY 4.0 ${new Date().getFullYear()}, Center of Trial & Error`,
     generator: 'Feed for Node.js',
     feedLinks: {
-      rss2: `/rss2.xml`,
-      // other feed formats
-      json: `/rss.json`,
-      atom: `/rss.xml`,
+      rss2: `/rss.xml`,
+      // // other feed formats
+      // json: `/rss.json`,
+      // atom: `/rss.xml`,
     },
   }
 
@@ -55,6 +57,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
       description: post.excerpt,
       guid: post.slug,
       content: url,
+      // image: post.image?.formats?.thumbnail?.url ?? post.image.url,
       category: [
         {
           term: post.category?.title,
@@ -63,6 +66,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
           term: tag.title,
         })) ?? []),
       ],
+      // image: 'https://google.com',
       ...(image
         ? {
             image,

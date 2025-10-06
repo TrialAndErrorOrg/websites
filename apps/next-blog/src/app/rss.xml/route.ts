@@ -1,12 +1,12 @@
 // src/pages/api/rss/index.ts
-import { generateRssFeed } from '../../utils/generateRSSFeed'
 import { NextRequest, NextResponse } from 'next/server'
+import { generateRssFeed } from '../../utils/generateRSSFeed'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
   try {
-    const type = req.nextUrl.searchParams.get('type') || 'atom'
+    const type = req.nextUrl.searchParams.get('type') || 'rss'
 
     const typeAsString = Array.isArray(type) ? type[0] : type
 
