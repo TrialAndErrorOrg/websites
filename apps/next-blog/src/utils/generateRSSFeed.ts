@@ -3,8 +3,6 @@ import { getAllPosts } from './blog'
 
 export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
   const allPosts = (await getAllPosts()) ?? []
-  console.log(allPosts, allPosts.length)
-  // const site_url = process.env.VERCEL ? 'https://blog.trialanderror.org' : 'http://localhost:4200'
   const site_url = 'https://blog.trialanderror.org'
 
   const feedOptions: FeedOptions = {
