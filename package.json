@@ -47,7 +47,7 @@
     "date-fns": "^2.30.0",
     "dotenv": "^16.0.3",
     "fast-blurhash": "^1.1.2",
-    "feed": "^4.2.2",
+    "feed": "^5.1.0",
     "fetch-jsonp": "^1.2.3",
     "form-data": "^4.0.0",
     "framer-motion": "^10.12.8",

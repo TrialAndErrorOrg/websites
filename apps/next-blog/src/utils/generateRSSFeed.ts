@@ -35,7 +35,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
   allPosts.forEach((post) => {
     const url = `https://blog.trialanderror.org/${post.slug}?utm_source=rss&utm_medium=rss&utm_campaign=rss`
 
-    const image = post.image?.formats?.medium?.url ?? post.image.url
+    const image = post.image?.formats?.thumbnail ?? post.image
     const author =
       [...(post.team_members ?? []), ...(post.blog_authors ?? [])]
         .map((member) => {
@@ -53,36 +53,46 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
       date: new Date(post.publishedAt ?? post.publishDate ?? Date.now()),
       link: url,
       description: post.excerpt,
-      guid: post.slug,
+      guid: url,
       content: url,
-      // image: post.image?.formats?.thumbnail?.url ?? post.image.url,
+      published: new Date(post.publishedAt ?? post.publishDate ?? Date.now()),
+
       category: [
         {
-          term: post.category?.title,
+          name: post.category?.title,
         },
         ...(post.blog_tags?.map((tag) => ({
-          term: tag.title,
+          name: tag.title,
         })) ?? []),
       ],
-      // image: 'https://google.com',
       ...(image
         ? {
             image,
           }
         : {}),
       ...(author.length ? { author } : {}),
+      ...(image
+        ? {
+            extensions: [
+              {
+                name: `media:thumbnail width="${image.width}" height="${image.height}" url="${image.url}"`,
+              },
+            ],
+          }
+        : {}),
     })
   })
+  feed.addExtension({})
 
   if (type === 'rss') {
     return feed.rss2()
   }
 
-  if (type === 'atom') {
-    return feed.atom1()
-  }
+  // if (type === 'atom') {
+  //   return feed.atom1()
+  // }
 
-  if (type === 'json') {
-    return feed.json1()
-  }
+  // if (type === 'json') {
+  //   return feed.json1()
+  // }
 }
