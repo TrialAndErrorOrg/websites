@@ -85,7 +85,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
 
   const feedstringWithCorrectXml = feedString.replace(
     /(<rss.*)>/,
-    '$1 xmlns:media="http://search.yahoo.com/mrss/"',
+    '$1 xmlns:media="http://search.yahoo.com/mrss/">',
   )
 
   return feedstringWithCorrectXml
