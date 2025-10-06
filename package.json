@@ -171,5 +171,22 @@
     "webpack-cli": "^5.0.2"
   },
   "repository": "https://github.com/TrialAndErrorOrg/websites",
-  "author": "Thomas F. K. Jorna <hello@tefkah.com>"
+  "author": "Thomas F. K. Jorna <hello@tefkah.com>",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@strapi/strapi",
+      "@swc/core",
+      "core-js",
+      "core-js-pure",
+      "cypress",
+      "esbuild",
+      "fsevents",
+      "nx",
+      "postinstall-postinstall",
+      "sharp",
+      "strapi",
+      "unrs-resolver"
+    ]
+  }
 }
