@@ -52,7 +52,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
       link: url,
       description: post.excerpt,
       guid: url,
-      content: url,
+      // content: url,
       published: new Date(post.publishedAt ?? post.publishDate ?? Date.now()),
 
       category: [
@@ -63,12 +63,7 @@ export async function generateRssFeed(type: 'rss' | 'atom' | 'json' = 'rss') {
           name: tag.title,
         })) ?? []),
       ],
-      ...(image
-        ? {
-            image,
-          }
-        : {}),
-      ...(author.length ? { author } : {}),
+      ...(author.length ? { author: author[0] } : {}),
       ...(image
         ? {
             extensions: [
