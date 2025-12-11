@@ -40,7 +40,6 @@ export async function generateStaticParams() {
 
 export default async function Post({ params }: { params: { post: string } }) {
   const { isEnabled } = draftMode()
-  console.log({ isEnabled })
 
   const { post: slug } = params
   const posts = (await getAllPosts(isEnabled)) ?? []
@@ -59,7 +58,6 @@ export default async function Post({ params }: { params: { post: string } }) {
     notFound()
   }
 
-  console.log(new Date().toISOString(), `Generating post ${post?.title}`)
   return (
     <SinglePost latest={latest} prev={prev} next={next} post={{ ...post, image: post.image }} />
   )

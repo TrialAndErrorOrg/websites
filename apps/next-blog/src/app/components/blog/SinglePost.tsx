@@ -31,6 +31,9 @@ export async function SinglePost(props: Props) {
     .replace(/<\!--.*?-->/g, '')
     .replace(/<p>&nbsp;<\/p>/g, '')
     .replace(/&nbsp;/g, ' ')
+    // get rid of all inline styles
+    // this is not very safe
+    .replace(/(<\w{1,3} )style=".*?"/g, '$1')
     // only one h1
     .replace(/(<\/)?h1/g, '$1h2')
     // give h2 and h3 tags ids so the table of contents can link to them
