@@ -32,7 +32,6 @@ export function useHideableNavbar(hideOnScroll = true): {
   const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
-    console.log('Page scroll: ', latest)
     const scrollTop = scrollY.get()
     const lastScrollTop = scrollY.getPrevious()
     if (!hideOnScroll) {

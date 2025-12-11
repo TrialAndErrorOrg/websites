@@ -30,7 +30,7 @@ export const GoogleScript = () => {
 				// console.log("gtag script ready");
 				window.dataLayer = window.dataLayer || [];
 				function gtag() {
-					dataLayer.push(arguments);
+					window.dataLayer?.push(arguments);
 				}
 				window.gtag = gtag;
 				gtag("js", new Date());
