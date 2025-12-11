@@ -24,9 +24,9 @@ export function AuthorList(props: Props) {
             href={`/author/${author.slug}`}
             className={cx(
               `group/one absolute h-8 min-w-[2rem] !rounded-none border-2  border-black px-2 `,
-              idx === 0 && 'bg-white',
-              idx === 1 && 'bg-orange-500 text-black',
-              idx === 2 && 'bg-blue-500 text-white',
+              idx % 3 === 0 && 'bg-white',
+              idx % 3 === 1 && 'bg-orange-500 text-black',
+              idx % 3 === 2 && 'bg-blue-500 text-white',
             )}
             style={{
               // '--size': '40px',
