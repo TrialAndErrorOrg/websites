@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#ffffff" />
       </head>
 
-      <body className="selection:bg-salmon flex min-h-screen flex-col bg-white tracking-tight text-gray-900 antialiased transition-colors selection:border selection:border-black selection:transition-all dark:bg-slate-800 dark:text-slate-300">
+      <body className="selection:bg-orange-200/50 flex min-h-screen flex-col bg-white tracking-tight text-gray-900 antialiased transition-colors selection:border selection:border-black selection:transition-all dark:bg-slate-800 dark:text-slate-300">
         <HeaderWrapper />
         <div className="flex-grow">{children}</div>
         <Footer />
