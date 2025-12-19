@@ -2,14 +2,15 @@
   "collectionName": "components_components_rich_texts",
   "info": {
     "displayName": "Rich Text",
-    "icon": "text-height"
+    "icon": "text-height",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "body": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor",
       "required": true

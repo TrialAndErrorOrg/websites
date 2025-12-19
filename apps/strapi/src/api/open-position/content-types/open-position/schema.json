@@ -33,7 +33,7 @@
       },
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "required": true,
       "customField": "plugin::ckeditor5.CKEditor"
@@ -73,7 +73,7 @@
       },
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -139,7 +139,7 @@
       },
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor",
       "required": true
@@ -152,7 +152,7 @@
       },
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -235,7 +235,7 @@
       },
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -247,7 +247,7 @@
       },
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     }

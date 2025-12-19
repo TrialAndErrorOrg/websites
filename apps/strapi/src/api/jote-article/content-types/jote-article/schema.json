@@ -18,7 +18,7 @@
     "abstract": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -35,7 +35,11 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files", "videos"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
     },
     "jote_article_category": {
       "type": "relation",

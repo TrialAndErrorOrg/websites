@@ -1,30 +1,30 @@
 {
-  "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "lib": ["ES2020", "DOM"],
-    "target": "ES2019",
+	"compilerOptions": {
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"lib": ["ES2020", "DOM"],
+		"target": "ES2019",
 
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "noEmitOnError": true,
-    "outDir": "dist",
-    "rootDir": "."
-  },
-  "include": ["./", "src/**/*.json"],
-  "exclude": [
-    "./**/node_modules/**",
-    "./**/build/**",
-    "./**/dist/**",
-    "./**/.cache/**",
-    "./**/.tmp/**",
-    "src/admin/",
-    "./**/*.test.ts",
-    "src/plugins/**",
-    "src/extensions/documentation/**"
-  ]
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"noEmitOnError": true,
+		"outDir": "dist",
+		"rootDir": "."
+	},
+	"include": ["./", "src/**/*.json"],
+	"exclude": [
+		"./**/node_modules/**",
+		"./**/build/**",
+		"./**/dist/**",
+		"./**/.cache/**",
+		"./**/.tmp/**",
+		"src/smadmin",
+		"./**/*.test.ts",
+		"src/plugins/**",
+		"src/extensions/documentation/**"
+	]
 }

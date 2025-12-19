@@ -24,12 +24,14 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "bio": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor",
       "required": false

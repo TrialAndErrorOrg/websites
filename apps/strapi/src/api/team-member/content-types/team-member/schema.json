@@ -26,7 +26,7 @@
     "bio": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "required": true,
       "customField": "plugin::ckeditor5.CKEditor"
@@ -116,7 +116,7 @@
     "summary": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon",
+        "preset": "default",
         "maxLengthCharacters": 400
       },
       "required": true,

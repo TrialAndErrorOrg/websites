@@ -10,7 +10,7 @@
     "body": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "required": true,
       "customField": "plugin::ckeditor5.CKEditor"

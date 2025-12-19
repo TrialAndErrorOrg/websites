@@ -50,21 +50,21 @@
     "motivation": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "cv": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "additional": {
       "type": "customField",
       "options": {
-        "preset": "toolbarBaloon"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor",
       "required": false
