@@ -1,3 +1,5 @@
 dist
 cert
 .yarn
+
+!.yarn/releases/*
