@@ -38,7 +38,9 @@
     "strapi-plugin-sitemap": "^3.0.3",
     "strapi-plugin-slugify": "^2.3.2",
     "strapi-provider-rest-cache-memory": "^4.2.8",
-    "strapi-provider-upload-azure-storage": "^3.1.3"
+    "strapi-provider-upload-azure-storage": "^3.1.3",
+    "react-dom": "^18.3.1",
+    "react": "^18.3.1"
   },
   "scripts": {
     "dev": "yarn develop-strapi",
@@ -75,6 +77,8 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.1",
     "ts-to-zod": "^3.1.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "react-dom": "^18.3.1",
+    "react": "^18.3.1"
   }
 }
