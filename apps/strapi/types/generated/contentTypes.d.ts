@@ -301,6 +301,70 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   }
 }
 
+export interface AdminWorkflow extends Schema.CollectionType {
+  collectionName: 'strapi_workflows'
+  info: {
+    name: 'Workflow'
+    description: ''
+    singularName: 'workflow'
+    pluralName: 'workflows'
+    displayName: 'Workflow'
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique
+    stages: Attribute.Relation<'admin::workflow', 'oneToMany', 'admin::workflow-stage'>
+    contentTypes: Attribute.JSON & Attribute.Required & Attribute.DefaultTo<[]>
+    createdAt: Attribute.DateTime
+    updatedAt: Attribute.DateTime
+    createdBy: Attribute.Relation<'admin::workflow', 'oneToOne', 'admin::user'> & Attribute.Private
+    updatedBy: Attribute.Relation<'admin::workflow', 'oneToOne', 'admin::user'> & Attribute.Private
+    sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+  }
+}
+
+export interface AdminWorkflowStage extends Schema.CollectionType {
+  collectionName: 'strapi_workflows_stages'
+  info: {
+    name: 'Workflow Stage'
+    description: ''
+    singularName: 'workflow-stage'
+    pluralName: 'workflow-stages'
+    displayName: 'Stages'
+  }
+  options: {
+    version: '1.1.0'
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    name: Attribute.String
+    color: Attribute.String & Attribute.DefaultTo<'#4945FF'>
+    workflow: Attribute.Relation<'admin::workflow-stage', 'manyToOne', 'admin::workflow'>
+    permissions: Attribute.Relation<'admin::workflow-stage', 'manyToMany', 'admin::permission'>
+    createdAt: Attribute.DateTime
+    updatedAt: Attribute.DateTime
+    createdBy: Attribute.Relation<'admin::workflow-stage', 'oneToOne', 'admin::user'> &
+      Attribute.Private
+    updatedBy: Attribute.Relation<'admin::workflow-stage', 'oneToOne', 'admin::user'> &
+      Attribute.Private
+    sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+  }
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files'
   info: {
@@ -770,6 +834,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'plugin::users-permissions.user', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'plugin::users-permissions.user', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -988,6 +1058,12 @@ export interface ApiAboutPageAboutPage extends Schema.SingleType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::about-page.about-page',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::about-page.about-page', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1055,6 +1131,12 @@ export interface ApiApplicationApplication extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::application.application', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::application.application',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::application.application', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1106,6 +1188,12 @@ export interface ApiBlogAuthorBlogAuthor extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::blog-author.blog-author',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::blog-author.blog-author', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1165,6 +1253,12 @@ export interface ApiBlogHomeBlogHome extends Schema.SingleType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::blog-home.blog-home',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::blog-home.blog-home', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1221,6 +1315,12 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::blog-post.blog-post', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::blog-post.blog-post',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::blog-post.blog-post', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1270,6 +1370,8 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::category.category', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::category.category', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1311,6 +1413,12 @@ export interface ApiCollaboratorCollaborator extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::collaborator.collaborator', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::collaborator.collaborator',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::collaborator.collaborator', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1370,6 +1478,12 @@ export interface ApiDonatePageDonatePage extends Schema.SingleType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::donate-page.donate-page',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::donate-page.donate-page', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1397,6 +1511,8 @@ export interface ApiGlobalGlobal extends Schema.SingleType {
     updatedBy: Attribute.Relation<'api::global.global', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::global.global', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::global.global', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1431,6 +1547,8 @@ export interface ApiHomepageHomepage extends Schema.SingleType {
     updatedBy: Attribute.Relation<'api::homepage.homepage', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::homepage.homepage', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::homepage.homepage', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1477,6 +1595,12 @@ export interface ApiJoteArticleJoteArticle extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::jote-article.jote-article', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::jote-article.jote-article',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::jote-article.jote-article', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1518,6 +1642,16 @@ export interface ApiJoteArticleCategoryJoteArticleCategory extends Schema.Collec
     > &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::jote-article-category.jote-article-category',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<
+      'api::jote-article-category.jote-article-category',
+      'oneToOne',
+      'admin::user'
+    >
   }
 }
 
@@ -1546,6 +1680,12 @@ export interface ApiJoteAuthorJoteAuthor extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::jote-author.jote-author', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::jote-author.jote-author',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::jote-author.jote-author', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1605,6 +1745,12 @@ export interface ApiLegalPageLegalPage extends Schema.SingleType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::legal-page.legal-page',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::legal-page.legal-page', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1833,6 +1979,16 @@ export interface ApiOpenPositionOpenPosition extends Schema.CollectionType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::open-position.open-position',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<
+      'api::open-position.open-position',
+      'oneToOne',
+      'admin::user'
+    >
   }
 }
 
@@ -1906,6 +2062,16 @@ export interface ApiOpenPositionsPageOpenPositionsPage extends Schema.SingleType
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::open-positions-page.open-positions-page',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<
+      'api::open-positions-page.open-positions-page',
+      'oneToOne',
+      'admin::user'
+    >
   }
 }
 
@@ -1967,6 +2133,8 @@ export interface ApiPagePage extends Schema.CollectionType {
     localizations: Attribute.Relation<'api::page.page', 'oneToMany', 'api::page.page'>
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::page.page', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -1993,6 +2161,8 @@ export interface ApiPositionPosition extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::position.position', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::position.position', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::position.position', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -2021,6 +2191,8 @@ export interface ApiTagTag extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> & Attribute.Private
     updatedBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> & Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -2115,6 +2287,12 @@ export interface ApiTeamMemberTeamMember extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::team-member.team-member', 'oneToOne', 'admin::user'> &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::team-member.team-member',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::team-member.team-member', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -2166,6 +2344,12 @@ export interface ApiTeamPageTeamPage extends Schema.SingleType {
     >
     locale: Attribute.String
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::team-page.team-page',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<'api::team-page.team-page', 'oneToOne', 'admin::user'>
   }
 }
 
@@ -2200,6 +2384,47 @@ export interface ApiUpdateCategoryUpdateCategory extends Schema.CollectionType {
     > &
       Attribute.Private
     sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<
+      'api::update-category.update-category',
+      'oneToOne',
+      'admin::workflow-stage'
+    >
+    strapi_assignee: Attribute.Relation<
+      'api::update-category.update-category',
+      'oneToOne',
+      'admin::user'
+    >
+  }
+}
+
+export interface AdminAuditLog extends Schema.CollectionType {
+  collectionName: 'strapi_audit_logs'
+  info: {
+    singularName: 'audit-log'
+    pluralName: 'audit-logs'
+    displayName: 'Audit Log'
+  }
+  options: {
+    draftAndPublish: false
+    timestamps: false
+  }
+  pluginOptions: {
+    'content-manager': {
+      visible: false
+    }
+    'content-type-builder': {
+      visible: false
+    }
+  }
+  attributes: {
+    action: Attribute.String & Attribute.Required
+    date: Attribute.DateTime & Attribute.Required
+    user: Attribute.Relation<'admin::audit-log', 'oneToOne', 'admin::user'>
+    payload: Attribute.JSON
+    createdAt: Attribute.DateTime
+    updatedAt: Attribute.DateTime
+    createdBy: Attribute.Relation<'admin::audit-log', 'oneToOne', 'admin::user'> & Attribute.Private
+    updatedBy: Attribute.Relation<'admin::audit-log', 'oneToOne', 'admin::user'> & Attribute.Private
   }
 }
 
@@ -2213,6 +2438,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission
       'admin::transfer-token': AdminTransferToken
       'admin::transfer-token-permission': AdminTransferTokenPermission
+      'admin::workflow': AdminWorkflow
+      'admin::workflow-stage': AdminWorkflowStage
       'plugin::upload.file': PluginUploadFile
       'plugin::upload.folder': PluginUploadFolder
       'plugin::content-releases.release': PluginContentReleasesRelease
@@ -2250,6 +2477,7 @@ declare module '@strapi/types' {
       'api::team-member.team-member': ApiTeamMemberTeamMember
       'api::team-page.team-page': ApiTeamPageTeamPage
       'api::update-category.update-category': ApiUpdateCategoryUpdateCategory
+      'admin::audit-log': AdminAuditLog
     }
   }
 }

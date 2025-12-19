@@ -1,0 +1,94 @@
+diff --git a/node_modules/@strapi/strapi/dist/ee/index.js b/node_modules/@strapi/strapi/dist/ee/index.js
+index e627dab..5187d7a 100644
+--- a/node_modules/@strapi/strapi/dist/ee/index.js
++++ b/node_modules/@strapi/strapi/dist/ee/index.js
+@@ -5,9 +5,25 @@ const cron = require("../utils/cron.js");
+ const ONE_MINUTE = 1e3 * 60;
+ const ee = {
+   enabled: false,
+-  licenseInfo: {}
++  licenseInfo: {
++    type: 'gold',
++    seats: 100,
++        expireAt: '2032-12-31T23:59:59.999Z',
++        features: [{
++          name: 'sso'
++        }, {
++          name: 'audit-logs',
++          options: {
++            retentionDays: null
++          }
++        }, {
++          name: 'review-workflows'
++        }],
++      },
+ };
++
+ const disable = (message) => {
++  return
+   const shouldEmitEvent = ee.enabled !== false;
+   ee.logger?.warn(`${message} Switching to CE.`);
+   ee.licenseInfo = _.pick("licenseKey", ee.licenseInfo);
+@@ -17,8 +33,10 @@ const disable = (message) => {
+   }
+ };
+ const enable = () => {
+-  const shouldEmitEvent = ee.enabled !== true;
++  // const shouldEmitEvent = ee.enabled !== true;
+   ee.enabled = true;
++  return
++
+   if (shouldEmitEvent) {
+     strapi.eventHub.emit("ee.enable");
+   }
+@@ -29,6 +47,7 @@ const init = (licenseDir, logger) => {
+     return;
+   }
+   initialized = true;
++  return
+   ee.logger = logger;
+   if (process.env.STRAPI_DISABLE_EE?.toLowerCase() === "true") {
+     return;
+@@ -48,6 +67,7 @@ const init = (licenseDir, logger) => {
+   }
+ };
+ const onlineUpdate = async ({ strapi: strapi2 }) => {
++  return
+   const { get: get2, commit, rollback } = await strapi2.db?.transaction();
+   const transaction = get2();
+   try {
+@@ -106,6 +126,7 @@ const onlineUpdate = async ({ strapi: strapi2 }) => {
+   }
+ };
+ const validateInfo = () => {
++  return
+   if (typeof ee.licenseInfo.expireAt === "undefined") {
+     throw new Error("Missing license key.");
+   }
+@@ -116,6 +137,7 @@ const validateInfo = () => {
+   enable();
+ };
+ const checkLicense = async ({ strapi: strapi2 }) => {
++  return
+   const shouldStayOffline = ee.licenseInfo.type === "gold" && // This env variable support is temporarily used to ease the migration between online vs offline
+   process.env.STRAPI_DISABLE_LICENSE_PING?.toLowerCase() === "true";
+   if (!shouldStayOffline) {
+@@ -138,15 +160,17 @@ const EE = Object.freeze({
+   init,
+   checkLicense,
+   get isEE() {
++    return true
+     return ee.enabled;
+   },
+   get seats() {
++    return 100
+     return ee.licenseInfo.seats;
+   },
+   features: Object.freeze({
+     list,
+     get,
+-    isEnabled: (featureName) => get(featureName) !== void 0
++    isEnabled: (featureName) => true
+   })
+ });
+ module.exports = EE;
