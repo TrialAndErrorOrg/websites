@@ -146,3 +146,16 @@ index a2e849f..b443f62 100644
    const eeAdmin = require('./ee/strapi-server');
  
    module.exports = _.mergeWith({}, admin, eeAdmin, mergeRoutes);
+diff --git a/node_modules/@strapi/admin/utils/create-cache-dir.js b/node_modules/@strapi/admin/utils/create-cache-dir.js
+index 84ec6c9c..d72a20fe 100644
+--- a/node_modules/@strapi/admin/utils/create-cache-dir.js
++++ b/node_modules/@strapi/admin/utils/create-cache-dir.js
+@@ -116,7 +116,7 @@ async function createCacheDir({ appDir, plugins }) {
+ 
+         return isLocalPluginWithLegacyAdminFile;
+       } catch (err) {
+-        if (err.code === 'MODULE_NOT_FOUND') {
++        if (err.code === 'MODULE_NOT_FOUND' || err.code === 'ERR_PACKAGE_PATH_NOT_EXPORTED') {
+           /**
+            * the plugin does not contain FE code, so we
+            * don't want to import it anyway
