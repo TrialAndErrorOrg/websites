@@ -14,43 +14,44 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  /* config options here */
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  // reactStrictMode: true,
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
-  images: {
-    domains: [
-      'avatars.githubusercontent.com',
-      'cote.azureedge.net',
-      'res.cloudinary.com',
-      'tailwindui.com',
-    ],
-  },
-  experimental: {
-    outputFileTracingIgnores: ['**/@swc+core*'],
-  },
-  // rewrites: async () => [
-  //   {
-  //     source: '/rss.xml',
-  //     destination: '/rss',
-  //   },
-  //   {
-  //     source: '/rss.json',
-  //     destination: '/rss?type=json',
-  //   },
-  //   {
-  //     source: '/rss2.xml',
-  //     destination: '/rss?type=rss',
-  //   },
-  // ],
-}
+	/* config options here */
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
+	typescript: {
+		ignoreBuildErrors: true,
+	},
+	output: "standalone",
+	// reactStrictMode: true,
+	// i18n: {
+	//   locales: ["en"],
+	//   defaultLocale: "en",
+	// },
+	images: {
+		domains: [
+			"avatars.githubusercontent.com",
+			"cote.azureedge.net",
+			"res.cloudinary.com",
+			"tailwindui.com",
+		],
+	},
+	experimental: {
+		outputFileTracingIgnores: ["**/@swc+core*"],
+	},
+	// rewrites: async () => [
+	//   {
+	//     source: '/rss.xml',
+	//     destination: '/rss',
+	//   },
+	//   {
+	//     source: '/rss.json',
+	//     destination: '/rss?type=json',
+	//   },
+	//   {
+	//     source: '/rss2.xml',
+	//     destination: '/rss?type=rss',
+	//   },
+	// ],
+};
 
-export default nextConfig
+export default nextConfig;

@@ -5,18 +5,14 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "executor": "nx:run-commands",
       "options": {
-        "root": "apps/og",
-        "outputPath": "dist/apps/og"
-      },
-      "configurations": {
-        "development": {
-          "outputPath": "apps/og"
-        },
-        "production": {}
+        "commands": [
+          "next build apps/og",
+          "mv apps/og/.next/static apps/og/.next/standalone/apps/og/.next",
+          "cp -r apps/og/public apps/og/.next/standalone/apps/og/.next"
+        ],
+        "outputPath": "apps/og/.next"
       }
     },
     "serve": {
@@ -35,6 +31,12 @@
           "buildTarget": "og:build:production",
           "dev": false
         }
+      }
+    },
+    "serve-standalone": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node apps/og/.next/standalone/apps/og/server.js"]
       }
     },
     "export": {

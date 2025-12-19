@@ -3,6 +3,8 @@
 /**
  * @type {import('next').NextConfig}
  */
-const config = {}
+const config = {
+	output: "standalone",
+};
 
-export default config
+export default config;

@@ -5,7 +5,6 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -17,7 +16,8 @@
           "outputPath": "apps/trialanderror.org"
         },
         "production": {}
-      }
+      },
+      "command": "next build apps/trialanderror.org && mv apps/trialanderror.org/.next/static apps/trialanderror.org/.next/standalone/apps/trialanderror.org/.next && cp -r apps/trialanderror.org/public apps/trialanderror.org/.next/standalone/apps/trialanderror.org/.next"
     },
     "dev": {
       "executor": "nx:run-commands",
@@ -41,6 +41,14 @@
           "buildTarget": "trialanderror.org:build:production",
           "dev": false
         }
+      }
+    },
+    "serve-standalone": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node apps/trialanderror.org/.next/standalone/apps/trialanderror.org/server.js"
+        ]
       }
     },
     "export": {

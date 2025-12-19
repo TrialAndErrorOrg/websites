@@ -23,7 +23,11 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["next build apps/next-blog"],
+        "commands": [
+          "next build apps/next-blog",
+          "mv apps/next-blog/.next/static apps/next-blog/.next/standalone/apps/next-blog/.next",
+          "cp -r apps/next-blog/public apps/next-blog/.next/standalone/apps/next-blog/.next"
+        ],
         "outputPath": "apps/next-blog/.next"
       }
     },
@@ -49,6 +53,12 @@
           "buildTarget": "next-blog:build:production",
           "dev": false
         }
+      }
+    },
+    "serve-standalone": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node apps/next-blog/.next/standalone/apps/next-blog/server.js"]
       }
     },
     "export": {
