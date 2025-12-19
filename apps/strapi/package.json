@@ -1,11 +1,10 @@
 {
-  "name": "strapi",
+  "name": "@cote/strapi",
   "private": true,
   "version": "0.1.0",
   "description": "Backend CMS for COTE",
   "dependencies": {
-    "@_sh/strapi-plugin-ckeditor": "^2.0.3",
-    "@code-mancers/strapi-plugin-multi-site-vercel-deploy": "^2.0.11",
+    "@_sh/strapi-plugin-ckeditor": "^3.0.3",
     "@strapi/plugin-color-picker": "^4.13.1",
     "@strapi/plugin-documentation": "^4.13.1",
     "@strapi/plugin-graphql": "^4.13.1",
@@ -33,7 +32,7 @@
     "strapi-plugin-navigation": "^2.2.12",
     "strapi-plugin-notes": "^1.0.1",
     "strapi-plugin-plausible": "^1.0.5",
-    "strapi-plugin-preview-button": "^2.0.0",
+    "strapi-plugin-preview-button": "^2.1.0",
     "strapi-plugin-publisher": "^1.4.0",
     "strapi-plugin-rest-cache": "^4.2.8",
     "strapi-plugin-sitemap": "^3.0.3",
@@ -66,8 +65,11 @@
     "starter": "@strapi/starter-next-blog"
   },
   "engines": {
-    "node": ">=16.x.x",
-    "npm": ">=6.0.0"
+    "node": ">=20.x.x",
+    "npm": ">=10.0.0"
+  },
+  "resolutions": {
+    "**/@strapi/plugin-seo": "^1.8.0"
   },
   "license": "MIT",
   "devDependencies": {
