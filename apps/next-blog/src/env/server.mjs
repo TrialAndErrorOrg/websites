@@ -19,7 +19,7 @@ Object.keys(serverSchema.shape).forEach(
 
 const _serverEnv = serverSchema.safeParse(serverEnv);
 
-if (!_serverEnv.success) {
+if (!_serverEnv.success && process.env.SKIP_ENV_VALIDATION !== "true") {
   console.error(
     "❌ Invalid environment variables:\n",
     ...formatErrors(_serverEnv.error.format()),

@@ -9,7 +9,7 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/trialanderror.org",
-        "outputPath": "dist/apps/trialanderror.org"
+        "outputPath": "apps/trialanderror.org/.next"
       },
       "configurations": {
         "development": {
