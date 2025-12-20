@@ -23,7 +23,9 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": "next build apps/next-blog && mv apps/next-blog/.next/static apps/next-blog/.next/standalone/apps/next-blog/.next && cp -r apps/next-blog/public apps/next-blog/.next/standalone/apps/next-blog/.next",
+        "commands": [
+          "next build apps/next-blog && mv apps/next-blog/.next/static apps/next-blog/.next/standalone/apps/next-blog/.next && cp -r apps/next-blog/public apps/next-blog/.next/standalone/apps/next-blog/.next"
+        ],
         "outputPath": "apps/next-blog/.next"
       }
     },
