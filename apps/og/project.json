@@ -6,11 +6,10 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
+      "outputs": ["apps/og/.next"],
       "options": {
         "commands": [
-          "next build apps/og",
-          "mv apps/og/.next/static apps/og/.next/standalone/apps/og/.next",
-          "cp -r apps/og/public apps/og/.next/standalone/apps/og/.next"
+          "next build apps/og && mv apps/og/.next/static apps/og/.next/standalone/apps/og/.next && cp -r apps/og/public apps/og/.next/standalone/apps/og/.next"
         ],
         "outputPath": "apps/og/.next"
       }

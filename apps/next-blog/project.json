@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/next-blog",
-        "outputPath": "dist/apps/next-blog"
+        "outputPath": "apps/next-blog/.next"
       },
       "configurations": {
         "development": {
@@ -22,6 +22,7 @@
 
     "build": {
       "executor": "nx:run-commands",
+      "outputs": ["apps/next-blog/.next"],
       "options": {
         "commands": [
           "next build apps/next-blog && mv apps/next-blog/.next/static apps/next-blog/.next/standalone/apps/next-blog/.next && cp -r apps/next-blog/public apps/next-blog/.next/standalone/apps/next-blog/.next"

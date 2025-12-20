@@ -5,18 +5,12 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "executor": "nx:run-commands",
+      "outputs": ["apps/positions/.next"],
       "options": {
-        "root": "apps/positions",
-        "outputPath": "dist/apps/positions"
-      },
-      "configurations": {
-        "development": {
-          "outputPath": "apps/positions"
-        },
-        "production": {}
+        "commands": [
+          "next build apps/positions && mv apps/positions/.next/static apps/positions/.next/standalone/apps/positions/.next && cp -r apps/positions/public apps/positions/.next/standalone/apps/positions/.next"
+        ]
       }
     },
     "serve": {
