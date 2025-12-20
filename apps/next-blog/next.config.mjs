@@ -21,6 +21,8 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
+
+	staticPageGenerationTimeout: 120,
 	output: "standalone",
 	// reactStrictMode: true,
 	// i18n: {
