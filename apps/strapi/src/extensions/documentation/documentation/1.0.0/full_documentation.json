@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-12-19T18:46:57.209Z"
+    "x-generation-date": "2026-02-03T14:07:29.003Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -25,7 +25,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/api",
+      "url": "http://localhost:1337/api",
       "description": "Development server"
     }
   ],
@@ -5362,6 +5362,9 @@
                                                                             "linkedIn": {
                                                                               "type": "string"
                                                                             },
+                                                                            "bluesky": {
+                                                                              "type": "string"
+                                                                            },
                                                                             "createdAt": {
                                                                               "type": "string",
                                                                               "format": "date-time"
@@ -5520,6 +5523,9 @@
                                                                       }
                                                                     }
                                                                   }
+                                                                },
+                                                                "bluesky": {
+                                                                  "type": "string"
                                                                 },
                                                                 "createdAt": {
                                                                   "type": "string",
@@ -6692,6 +6698,9 @@
                 "type": "string"
               },
               "linkedIn": {
+                "type": "string"
+              },
+              "bluesky": {
                 "type": "string"
               },
               "sitemap_exclude": {
@@ -10303,6 +10312,9 @@
                                                         }
                                                       }
                                                     },
+                                                    "bluesky": {
+                                                      "type": "string"
+                                                    },
                                                     "createdAt": {
                                                       "type": "string",
                                                       "format": "date-time"
@@ -10749,6 +10761,9 @@
                                         "type": "string"
                                       },
                                       "linkedIn": {
+                                        "type": "string"
+                                      },
+                                      "bluesky": {
                                         "type": "string"
                                       },
                                       "createdAt": {
@@ -11635,6 +11650,9 @@
             "type": "string"
           },
           "linkedIn": {
+            "type": "string"
+          },
+          "bluesky": {
             "type": "string"
           },
           "createdAt": {
@@ -16471,6 +16489,9 @@
                                                         }
                                                       }
                                                     },
+                                                    "bluesky": {
+                                                      "type": "string"
+                                                    },
                                                     "createdAt": {
                                                       "type": "string",
                                                       "format": "date-time"
@@ -17179,6 +17200,9 @@
                           "type": "string"
                         },
                         "linkedIn": {
+                          "type": "string"
+                        },
+                        "bluesky": {
                           "type": "string"
                         },
                         "createdAt": {
@@ -21104,6 +21128,9 @@
                                                         }
                                                       }
                                                     },
+                                                    "bluesky": {
+                                                      "type": "string"
+                                                    },
                                                     "createdAt": {
                                                       "type": "string",
                                                       "format": "date-time"
@@ -21550,6 +21577,9 @@
                                         "type": "string"
                                       },
                                       "linkedIn": {
+                                        "type": "string"
+                                      },
+                                      "bluesky": {
                                         "type": "string"
                                       },
                                       "createdAt": {
@@ -25512,6 +25542,9 @@
                                     "linkedIn": {
                                       "type": "string"
                                     },
+                                    "bluesky": {
+                                      "type": "string"
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -27390,6 +27423,9 @@
                               }
                             }
                           }
+                        },
+                        "bluesky": {
+                          "type": "string"
                         },
                         "createdAt": {
                           "type": "string",
@@ -36889,6 +36925,9 @@
                                                               "linkedIn": {
                                                                 "type": "string"
                                                               },
+                                                              "bluesky": {
+                                                                "type": "string"
+                                                              },
                                                               "createdAt": {
                                                                 "type": "string",
                                                                 "format": "date-time"
@@ -37312,6 +37351,9 @@
                                                         }
                                                       }
                                                     }
+                                                  },
+                                                  "bluesky": {
+                                                    "type": "string"
                                                   },
                                                   "createdAt": {
                                                     "type": "string",
@@ -44048,6 +44090,9 @@
                                                         }
                                                       }
                                                     },
+                                                    "bluesky": {
+                                                      "type": "string"
+                                                    },
                                                     "createdAt": {
                                                       "type": "string",
                                                       "format": "date-time"
@@ -44494,6 +44539,9 @@
                                         "type": "string"
                                       },
                                       "linkedIn": {
+                                        "type": "string"
+                                      },
+                                      "bluesky": {
                                         "type": "string"
                                       },
                                       "createdAt": {
@@ -45592,6 +45640,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "bluesky": {
+                "type": "string"
               },
               "sitemap_exclude": {
                 "type": "boolean"
@@ -49746,6 +49797,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "bluesky": {
+                                                    "type": "string"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -50456,6 +50510,9 @@
                       "linkedIn": {
                         "type": "string"
                       },
+                      "bluesky": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -50614,6 +50671,9 @@
                 }
               }
             }
+          },
+          "bluesky": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",

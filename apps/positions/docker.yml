@@ -1,0 +1,496 @@
+services:
+  postgres:
+    image: 'postgres:13-alpine'
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/postgres:/var/lib/postgresql/data'
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/postgres-dump:/tmp/postgres-dump'
+    environment:
+      POSTGRES_DB: manifold_production
+      POSTGRES_HOST_AUTH_METHOD: trust
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: postgres-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    container_name: postgres-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=postgres-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=postgres
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=27784
+      - coolify.service.subType=database
+      - coolify.service.subName=postgres
+    env_file:
+      - .env
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:5.6.7'
+    environment:
+      ES_JAVA_OPTS: '-Xms512m -Xmx512m'
+      xpack.security.enabled: 'false'
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: elasticsearch-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    container_name: elasticsearch-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=elasticsearch-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=elasticsearch
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111201
+      - coolify.service.subType=application
+      - coolify.service.subName=elasticsearch
+    env_file:
+      - .env
+  redis:
+    image: 'redis:alpine'
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/redis:/data'
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    container_name: redis-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=redis-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=redis
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=27785
+      - coolify.service.subType=database
+      - coolify.service.subName=redis
+    environment:
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: redis-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    env_file:
+      - .env
+  api_cable:
+    image: 'manifoldscholarship/manifold-api:${MANIFOLD_TAG}'
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/api/public:/opt/manifold/api/public'
+      - 'manifold_sockets:/manifold_sockets'
+    environment:
+      DOMAIN: '${DOMAIN}'
+      CLIENT_BROWSER_API_URL: '${CLIENT_BROWSER_API_URL}'
+      CLIENT_BROWSER_API_CABLE_URL: '${CLIENT_BROWSER_API_CABLE_URL}'
+      SSL_ENABLED: '${SSL_ENABLED}'
+      API_PORT: '${API_PORT}'
+      API_SOCKET: '${API_SOCKET}'
+      API_CABLE_SOCKET: '${API_CABLE_SOCKET}'
+      CLIENT_SERVER_SOCKET: '${CLIENT_SERVER_SOCKET}'
+      CLIENT_SERVER_API_URL: '${CLIENT_SERVER_API_URL}'
+      NODE_ENV: '${NODE_ENV}'
+      ELASTICSEARCH_URL: '${ELASTICSEARCH_URL}'
+      CLIENT_SERVER_PROXIES: '${CLIENT_SERVER_PROXIES}'
+      RAILS_ENV: '${RAILS_ENV}'
+      RAILS_SECRET_KEY: '${RAILS_SECRET_KEY}'
+      RAILS_DB_USER: '${RAILS_DB_USER}'
+      RAILS_DB_PASS: '${RAILS_DB_PASS}'
+      RAILS_DB_HOST: '${RAILS_DB_HOST}'
+      RAILS_DB_PORT: '${RAILS_DB_PORT}'
+      RAILS_DB_NAME: '${RAILS_DB_NAME}'
+      RAILS_REDIS_URL: '${RAILS_REDIS_URL}'
+      DATABASE_URL: 'postgres://${RAILS_DB_USER}:${RAILS_DB_PASS}@${RAILS_DB_HOST}:${RAILS_DB_PORT}/${RAILS_DB_NAME}'
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: api_cable-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    command:
+      - ./start-and-run
+      - bin/cable
+    container_name: api_cable-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=api_cable-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=api-cable
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111202
+      - coolify.service.subType=application
+      - coolify.service.subName=api-cable
+    env_file:
+      - .env
+  api_clockwork:
+    image: 'manifoldscholarship/manifold-api:${MANIFOLD_TAG}'
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/api/public:/opt/manifold/api/public'
+      - 'manifold_sockets:/manifold_sockets'
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    command:
+      - ./start-and-run
+      - 'bin/zhong zhong.rb'
+    environment:
+      DOMAIN: '${DOMAIN}'
+      CLIENT_BROWSER_API_URL: '${CLIENT_BROWSER_API_URL}'
+      CLIENT_BROWSER_API_CABLE_URL: '${CLIENT_BROWSER_API_CABLE_URL}'
+      SSL_ENABLED: '${SSL_ENABLED}'
+      API_PORT: '${API_PORT}'
+      API_SOCKET: '${API_SOCKET}'
+      API_CABLE_SOCKET: '${API_CABLE_SOCKET}'
+      CLIENT_SERVER_SOCKET: '${CLIENT_SERVER_SOCKET}'
+      CLIENT_SERVER_API_URL: '${CLIENT_SERVER_API_URL}'
+      NODE_ENV: '${NODE_ENV}'
+      ELASTICSEARCH_URL: '${ELASTICSEARCH_URL}'
+      CLIENT_SERVER_PROXIES: '${CLIENT_SERVER_PROXIES}'
+      RAILS_ENV: '${RAILS_ENV}'
+      RAILS_SECRET_KEY: '${RAILS_SECRET_KEY}'
+      RAILS_DB_USER: '${RAILS_DB_USER}'
+      RAILS_DB_PASS: '${RAILS_DB_PASS}'
+      RAILS_DB_HOST: '${RAILS_DB_HOST}'
+      RAILS_DB_PORT: '${RAILS_DB_PORT}'
+      RAILS_DB_NAME: '${RAILS_DB_NAME}'
+      RAILS_REDIS_URL: '${RAILS_REDIS_URL}'
+      DATABASE_URL: 'postgres://${RAILS_DB_USER}:${RAILS_DB_PASS}@${RAILS_DB_HOST}:${RAILS_DB_PORT}/${RAILS_DB_NAME}'
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: api_clockwork-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    container_name: api_clockwork-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=api_clockwork-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=api-clockwork
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111203
+      - coolify.service.subType=application
+      - coolify.service.subName=api-clockwork
+    env_file:
+      - .env
+  api_rails:
+    image: 'manifoldscholarship/manifold-api:${MANIFOLD_TAG}'
+    environment:
+      DOMAIN: '${DOMAIN}'
+      CLIENT_BROWSER_API_URL: '${CLIENT_BROWSER_API_URL}'
+      CLIENT_BROWSER_API_CABLE_URL: '${CLIENT_BROWSER_API_CABLE_URL}'
+      SSL_ENABLED: '${SSL_ENABLED}'
+      API_PORT: '${API_PORT}'
+      API_SOCKET: '${API_SOCKET}'
+      API_CABLE_SOCKET: '${API_CABLE_SOCKET}'
+      CLIENT_SERVER_SOCKET: '${CLIENT_SERVER_SOCKET}'
+      CLIENT_SERVER_API_URL: '${CLIENT_SERVER_API_URL}'
+      NODE_ENV: '${NODE_ENV}'
+      ELASTICSEARCH_URL: '${ELASTICSEARCH_URL}'
+      CLIENT_SERVER_PROXIES: '${CLIENT_SERVER_PROXIES}'
+      RAILS_ENV: '${RAILS_ENV}'
+      RAILS_SECRET_KEY: '${RAILS_SECRET_KEY}'
+      RAILS_DB_USER: '${RAILS_DB_USER}'
+      RAILS_DB_PASS: '${RAILS_DB_PASS}'
+      RAILS_DB_HOST: '${RAILS_DB_HOST}'
+      RAILS_DB_PORT: '${RAILS_DB_PORT}'
+      RAILS_DB_NAME: '${RAILS_DB_NAME}'
+      RAILS_REDIS_URL: '${RAILS_REDIS_URL}'
+      DATABASE_URL: 'postgres://${RAILS_DB_USER}:${RAILS_DB_PASS}@${RAILS_DB_HOST}:${RAILS_DB_PORT}/${RAILS_DB_NAME}'
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: api_rails-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/api/public:/opt/manifold/api/public'
+      - 'manifold_sockets:/manifold_sockets'
+    command:
+      - ./start-and-run
+      - 'bin/puma -C config/puma.rb'
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    container_name: api_rails-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=api_rails-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=api-rails
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111204
+      - coolify.service.subType=application
+      - coolify.service.subName=api-rails
+    env_file:
+      - .env
+  api_sidekiq:
+    image: 'manifoldscholarship/manifold-api:${MANIFOLD_TAG}'
+    environment:
+      DOMAIN: '${DOMAIN}'
+      CLIENT_BROWSER_API_URL: '${CLIENT_BROWSER_API_URL}'
+      CLIENT_BROWSER_API_CABLE_URL: '${CLIENT_BROWSER_API_CABLE_URL}'
+      SSL_ENABLED: '${SSL_ENABLED}'
+      API_PORT: '${API_PORT}'
+      API_SOCKET: '${API_SOCKET}'
+      API_CABLE_SOCKET: '${API_CABLE_SOCKET}'
+      CLIENT_SERVER_SOCKET: '${CLIENT_SERVER_SOCKET}'
+      CLIENT_SERVER_API_URL: '${CLIENT_SERVER_API_URL}'
+      NODE_ENV: '${NODE_ENV}'
+      ELASTICSEARCH_URL: '${ELASTICSEARCH_URL}'
+      CLIENT_SERVER_PROXIES: '${CLIENT_SERVER_PROXIES}'
+      RAILS_ENV: '${RAILS_ENV}'
+      RAILS_SECRET_KEY: '${RAILS_SECRET_KEY}'
+      RAILS_DB_USER: '${RAILS_DB_USER}'
+      RAILS_DB_PASS: '${RAILS_DB_PASS}'
+      RAILS_DB_HOST: '${RAILS_DB_HOST}'
+      RAILS_DB_PORT: '${RAILS_DB_PORT}'
+      RAILS_DB_NAME: '${RAILS_DB_NAME}'
+      RAILS_REDIS_URL: '${RAILS_REDIS_URL}'
+      DATABASE_URL: 'postgres://${RAILS_DB_USER}:${RAILS_DB_PASS}@${RAILS_DB_HOST}:${RAILS_DB_PORT}/${RAILS_DB_NAME}'
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: api_sidekiq-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/api/public:/opt/manifold/api/public'
+      - 'manifold_sockets:/manifold_sockets'
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    command:
+      - ./start-and-run
+      - bin/sidekiq
+    container_name: api_sidekiq-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=api_sidekiq-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=api-sidekiq
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111205
+      - coolify.service.subType=application
+      - coolify.service.subName=api-sidekiq
+    env_file:
+      - .env
+  client:
+    image: 'manifoldscholarship/manifold-client:${MANIFOLD_TAG}'
+    environment:
+      DOMAIN: '${DOMAIN}'
+      CLIENT_BROWSER_API_URL: '${CLIENT_BROWSER_API_URL}'
+      CLIENT_BROWSER_API_CABLE_URL: '${CLIENT_BROWSER_API_CABLE_URL}'
+      SSL_ENABLED: '${SSL_ENABLED}'
+      API_PORT: '${API_PORT}'
+      API_SOCKET: '${API_SOCKET}'
+      API_CABLE_SOCKET: '${API_CABLE_SOCKET}'
+      CLIENT_SERVER_SOCKET: '${CLIENT_SERVER_SOCKET}'
+      CLIENT_SERVER_API_URL: '${CLIENT_SERVER_API_URL}'
+      NODE_ENV: '${NODE_ENV}'
+      ELASTICSEARCH_URL: '${ELASTICSEARCH_URL}'
+      CLIENT_SERVER_PROXIES: '${CLIENT_SERVER_PROXIES}'
+      RAILS_ENV: '${RAILS_ENV}'
+      RAILS_SECRET_KEY: '${RAILS_SECRET_KEY}'
+      RAILS_DB_USER: '${RAILS_DB_USER}'
+      RAILS_DB_PASS: '${RAILS_DB_PASS}'
+      RAILS_DB_HOST: '${RAILS_DB_HOST}'
+      RAILS_DB_PORT: '${RAILS_DB_PORT}'
+      RAILS_DB_NAME: '${RAILS_DB_NAME}'
+      RAILS_REDIS_URL: '${RAILS_REDIS_URL}'
+      DATABASE_URL: 'postgres://${RAILS_DB_USER}:${RAILS_DB_PASS}@${RAILS_DB_HOST}:${RAILS_DB_PORT}/${RAILS_DB_NAME}'
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: client-q8080w4ocs4kwoskw0gw0c0c
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/api/public:/opt/manifold/api/public'
+      - 'manifold_sockets:/manifold_sockets'
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/client:/opt/manifold/client'
+    command: 'yarn run start-docker'
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    container_name: client-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=client-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=client
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111206
+      - coolify.service.subType=application
+      - coolify.service.subName=client
+    env_file:
+      - .env
+  proxy:
+    image: 'manifoldscholarship/manifold-nginx:${MANIFOLD_TAG}'
+    volumes:
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/nginx/ssl:/etc/nginx/ssl'
+      - '/data/coolify/services/q8080w4ocs4kwoskw0gw0c0c/data/api/public:/opt/manifold/api/public'
+      - 'manifold_sockets:/manifold_sockets'
+    command:
+      - start-nginx
+    networks:
+      network1: null
+      q8080w4ocs4kwoskw0gw0c0c: null
+    container_name: proxy-q8080w4ocs4kwoskw0gw0c0c
+    restart: unless-stopped
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.452
+      - coolify.serviceId=35535
+      - coolify.type=service
+      - coolify.name=proxy-q8080w4ocs4kwoskw0gw0c0c
+      - coolify.resourceName=service-t0gwk4goco48kgogckckcgs8
+      - coolify.projectName=publishers
+      - coolify.serviceName=proxy
+      - coolify.environmentName=production
+      - coolify.pullRequestId=0
+      - coolify.service.subId=111207
+      - coolify.service.subType=application
+      - coolify.service.subName=proxy
+      - traefik.enable=true
+      - traefik.http.middlewares.gzip.compress=true
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.routers.http-0-q8080w4ocs4kwoskw0gw0c0c-proxy.entryPoints=http
+      - traefik.http.routers.http-0-q8080w4ocs4kwoskw0gw0c0c-proxy.middlewares=redirect-to-https
+      - 'traefik.http.routers.http-0-q8080w4ocs4kwoskw0gw0c0c-proxy.rule=Host(`oscu.trialanderror.org`) && PathPrefix(`/`)'
+      - traefik.http.routers.http-0-q8080w4ocs4kwoskw0gw0c0c-proxy.service=http-0-q8080w4ocs4kwoskw0gw0c0c-proxy
+      - traefik.http.routers.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.entryPoints=https
+      - traefik.http.routers.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.middlewares=gzip
+      - 'traefik.http.routers.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.rule=Host(`oscu.trialanderror.org`) && PathPrefix(`/`)'
+      - traefik.http.routers.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.service=https-0-q8080w4ocs4kwoskw0gw0c0c-proxy
+      - traefik.http.routers.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.tls.certresolver=letsencrypt
+      - traefik.http.routers.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.tls=true
+      - traefik.http.services.http-0-q8080w4ocs4kwoskw0gw0c0c-proxy.loadbalancer.server.port=80
+      - traefik.http.services.https-0-q8080w4ocs4kwoskw0gw0c0c-proxy.loadbalancer.server.port=80
+      - 'caddy_0.encode=zstd gzip'
+      - 'caddy_0.handle_path.0_reverse_proxy={{upstreams 80}}'
+      - 'caddy_0.handle_path=/*'
+      - caddy_0.header=-Server
+      - 'caddy_0.try_files={path} /index.html /index.php'
+      - 'caddy_0=https://oscu.trialanderror.org'
+      - caddy_ingress_network=q8080w4ocs4kwoskw0gw0c0c
+    environment:
+      COOLIFY_RESOURCE_UUID: q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_CONTAINER_NAME: proxy-q8080w4ocs4kwoskw0gw0c0c
+      COOLIFY_FQDN: oscu.trialanderror.org
+      COOLIFY_URL: 'https://oscu.trialanderror.org'
+      SERVICE_NAME_POSTGRES: postgres
+      SERVICE_NAME_ELASTICSEARCH: elasticsearch
+      SERVICE_NAME_REDIS: redis
+      SERVICE_NAME_API_CABLE: api_cable
+      SERVICE_NAME_API_CLOCKWORK: api_clockwork
+      SERVICE_NAME_API_RAILS: api_rails
+      SERVICE_NAME_API_SIDEKIQ: api_sidekiq
+      SERVICE_NAME_CLIENT: client
+      SERVICE_NAME_PROXY: proxy
+    env_file:
+      - .env
+networks:
+  network1: null
+  q8080w4ocs4kwoskw0gw0c0c:
+    name: q8080w4ocs4kwoskw0gw0c0c
+    external: true
+volumes:
+  manifold_sockets:

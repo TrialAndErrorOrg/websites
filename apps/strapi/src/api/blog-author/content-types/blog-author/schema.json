@@ -80,6 +80,10 @@
     },
     "linkedIn": {
       "type": "string"
+    },
+    "bluesky": {
+      "type": "string",
+      "regex": "https:\\/\\/bsky.app\\/profile\\/.*"
     }
   }
 }

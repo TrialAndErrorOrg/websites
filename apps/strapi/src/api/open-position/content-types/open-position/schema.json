@@ -45,7 +45,12 @@
         }
       },
       "type": "enumeration",
-      "enum": ["internship", "volunteer", "part-time", "full-time"]
+      "enum": [
+        "internship",
+        "volunteer",
+        "part-time",
+        "full-time"
+      ]
     },
     "startDate": {
       "pluginOptions": {
@@ -90,7 +95,9 @@
       "type": "media",
       "multiple": false,
       "required": true,
-      "allowedTypes": ["images"],
+      "allowedTypes": [
+        "images"
+      ],
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -173,7 +180,10 @@
         }
       },
       "type": "enumeration",
-      "enum": ["remote", "Utrecht"],
+      "enum": [
+        "remote",
+        "Utrecht"
+      ],
       "default": "remote",
       "required": true
     },

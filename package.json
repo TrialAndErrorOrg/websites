@@ -64,7 +64,7 @@
     "react-dom": "^18.2.0",
     "react-email": "^1.9.3",
     "react-hook-form": "^7.43.9",
-    "react-icons": "^4.8.0",
+    "react-icons": "^5.5.0",
     "react-instantsearch-dom": "^6.39.1",
     "react-instantsearch-hooks-web": "^6.43.0",
     "regenerator-runtime": "0.13.11",

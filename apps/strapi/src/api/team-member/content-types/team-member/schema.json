@@ -158,6 +158,10 @@
       "relation": "manyToMany",
       "target": "api::collaborator.collaborator",
       "mappedBy": "teamMembers"
+    },
+    "bluesky": {
+      "type": "string",
+      "regex": "https:\\/\\/bsky.app\\/profile\\/.*"
     }
   }
 }
