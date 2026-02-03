@@ -25,14 +25,12 @@ export function Author(props: Props) {
 		author.twitter ||
 		author.github;
 
-	console.log(author);
-
 	const LinkComponent = author.slug ? Link : "span";
 
 	return (
 		<div className={cx(className, "card ")}>
 			<div className="group z-50 grid w-full grid-cols-4 gap-x-4 !bg-white p-4 py-4 dark:!bg-slate-700 md:gap-x-0 md:px-2">
-				<div className="col-span-4 mb-3 flex h-20 w-20 items-center justify-center self-center justify-self-center rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black md:col-span-1 md:row-span-2 md:mb-0 md:h-20 md:w-20">
+				<div className="col-span-4 mb-3 flex h-20 w-20 items-center justify-center self-center justify-self-center overflow-clip rounded-full border-2 border-black bg-orange-500 text-xl font-black capitalize text-black md:col-span-1 md:row-span-2 md:mb-0 md:h-20 md:w-20">
 					{author.image?.url ? (
 						<Image
 							src={author?.image?.formats?.thumbnail?.url || author?.image?.url}
@@ -44,7 +42,7 @@ export function Author(props: Props) {
 							width={
 								author?.image?.formats?.thumbnail?.width || author?.image?.width
 							}
-							className="col-span-1 row-span-2 h-20  w-20 self-center justify-self-center rounded-full border-2 border-black object-cover dark:border-white"
+							className="col-span-1 row-span-2 h-20 w-full self-center justify-self-center  border-black object-cover dark:border-white"
 						/>
 					) : (
 						<span>{author.lastName?.[0] ?? author?.firstName?.[0]}</span>

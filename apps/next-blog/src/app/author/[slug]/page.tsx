@@ -70,7 +70,6 @@ export default async function AuthorPage({
 }) {
 	const author = await getPerson(params.slug);
 
-	console.log(author);
 	if (!author) {
 		return <div>Author not found</div>;
 	}

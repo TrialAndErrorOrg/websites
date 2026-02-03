@@ -110,11 +110,6 @@ export async function SinglePost(props: Props) {
 
 	const blurhash = post.image?.blurhash;
 	const blurDataURL = blurhash ? blurHashToDataURL(blurhash) : undefined;
-	console.log({
-		blurhash,
-		blurDataURL,
-	});
-
 	return (
 		<section className="relative mx-auto flex flex-col bg-white dark:bg-slate-700">
 			{post.image?.width && post.image?.height && (
