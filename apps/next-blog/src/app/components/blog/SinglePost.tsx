@@ -2,7 +2,7 @@ import { blurHashToDataURL } from "apps/next-blog/src/utils/blurhashToDataUrl";
 import GithubSlugger from "github-slugger";
 import Image from "next/image";
 import Link from "next/link";
-import { FaOrcid } from "react-icons/fa6";
+import { FaBluesky, FaOrcid } from "react-icons/fa6";
 import readingTime from "reading-time";
 import type { BlogPost } from "@/types";
 import { addBigLetterToBody } from "../../../utils/addBigLetterToBody";
@@ -199,15 +199,10 @@ export async function SinglePost(props: Props) {
 					</p>
 					<div className="col-span-11 col-start-2 my-8 ml-4 flex h-4 items-center justify-start gap-2 p-1 md:sticky md:top-40 md:col-span-1 md:col-start-1 md:flex-col md:gap-4">
 						<a
-							href={`https://twitter.com/intent/tweet?text=${post.title}&url=https%3A%2F%2Fblog.trialanderror.orgs%2F${post.slug}`}
+							href={`https://bsky.app/intent/compose?text=${post.title}%3A%20${encodeURIComponent(`https://blog.trialanderror.org/${post.slug}`)}`}
 						>
-							<svg
-								className="button-sleek h-10 w-10 text-black dark:text-white"
-								fill="currentColor"
-								viewBox="0 0 24 24"
-							>
-								<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
-							</svg>
+							<FaBluesky className="size-6" />
+							<span className="sr-only">Share on Bluesky</span>
 						</a>
 						<a
 							href={`http://www.facebook.com/sharer.php?u=https%3A%2F%2Fblog.trialanderror.org%2F${post.slug}`}
