@@ -25,14 +25,16 @@ export default ({ env }: { env: Env }) => ({
 			user: env("DATABASE_USERNAME", "strapi"),
 			password: env("DATABASE_PASSWORD", ""),
 			// schema: env('DATABASE_SCHEMA', 'public'), // Not required
-			...(!env.bool("SSL", false)
-				? { ssl: false }
-				: {
-						ssl: {
-							ca: Buffer.from(env("CERT", ""), "base64").toString("utf-8"),
-							rejectUnauthorized: env.bool("DATABASE_SSL_SELF", false), // For self-signed certificates
-						},
-					}),
+			// 	...(!env.bool("SSL", false)
+			// 		? { ssl: false }
+			// 		: {
+			// 				ssl: {
+			// 					ca: Buffer.from(env("CERT", ""), "base64").toString("utf-8"),
+			// 					rejectUnauthorized: env.bool("DATABASE_SSL_SELF", false), // For self-signed certificates
+			// 				},
+			// 			}),
+			// },
+			ssl: false,
 		},
 		debug: false,
 	},
