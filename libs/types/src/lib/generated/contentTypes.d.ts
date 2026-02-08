@@ -1181,6 +1181,7 @@ export interface ApiBlogAuthorBlogAuthor extends Schema.CollectionType {
     summary: Attribute.Text
     personalWebsite: Attribute.String
     linkedIn: Attribute.String
+    bluesky: Attribute.String
     createdAt: Attribute.DateTime
     updatedAt: Attribute.DateTime
     createdBy: Attribute.Relation<'api::blog-author.blog-author', 'oneToOne', 'admin::user'> &
@@ -2280,6 +2281,7 @@ export interface ApiTeamMemberTeamMember extends Schema.CollectionType {
       'manyToMany',
       'api::collaborator.collaborator'
     >
+    bluesky: Attribute.String
     createdAt: Attribute.DateTime
     updatedAt: Attribute.DateTime
     createdBy: Attribute.Relation<'api::team-member.team-member', 'oneToOne', 'admin::user'> &

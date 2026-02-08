@@ -1488,6 +1488,29 @@ export interface ApiDonatePageDonatePage extends Schema.SingleType {
   }
 }
 
+export interface ApiEventEvent extends Schema.CollectionType {
+  collectionName: 'events'
+  info: {
+    singularName: 'event'
+    pluralName: 'events'
+    displayName: 'Event'
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    Title: Attribute.String & Attribute.Required & Attribute.Unique
+    createdAt: Attribute.DateTime
+    updatedAt: Attribute.DateTime
+    publishedAt: Attribute.DateTime
+    createdBy: Attribute.Relation<'api::event.event', 'oneToOne', 'admin::user'> & Attribute.Private
+    updatedBy: Attribute.Relation<'api::event.event', 'oneToOne', 'admin::user'> & Attribute.Private
+    sitemap_exclude: Attribute.Boolean & Attribute.Private & Attribute.DefaultTo<false>
+    strapi_stage: Attribute.Relation<'api::event.event', 'oneToOne', 'admin::workflow-stage'>
+    strapi_assignee: Attribute.Relation<'api::event.event', 'oneToOne', 'admin::user'>
+  }
+}
+
 export interface ApiGlobalGlobal extends Schema.SingleType {
   collectionName: 'globals'
   info: {
@@ -2465,6 +2488,7 @@ declare module '@strapi/types' {
       'api::category.category': ApiCategoryCategory
       'api::collaborator.collaborator': ApiCollaboratorCollaborator
       'api::donate-page.donate-page': ApiDonatePageDonatePage
+      'api::event.event': ApiEventEvent
       'api::global.global': ApiGlobalGlobal
       'api::homepage.homepage': ApiHomepageHomepage
       'api::jote-article.jote-article': ApiJoteArticleJoteArticle
