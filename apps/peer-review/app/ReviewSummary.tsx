@@ -226,7 +226,7 @@ export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
                   className="divide-y divide-gray-200 rounded-md border border-gray-200"
                 >
                   {review.reviewFiles.map((file) => (
-                    <li
+                    (<li
                       key={file._href}
                       className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
                     >
@@ -242,7 +242,7 @@ export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
                           Download
                         </a>
                       </div>
-                    </li>
+                    </li>)
                     // <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                     //   <div className="w-0 flex-1 flex items-center">
                     //     <PaperClipIcon
@@ -270,5 +270,5 @@ export async function ReviewSummary({ review }: { review: ReviewAssignment }) {
         </dl>
       </div>
     </div>
-  )
+  );
 }

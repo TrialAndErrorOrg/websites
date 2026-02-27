@@ -209,7 +209,7 @@ const fetchSubmission = async (
   }
 }
 
-export default async function Page(props: { params: { pr: string } }) {
+export default async function Page(props: { params: Promise<{ pr: string }> }) {
   const {
     params: { pr },
   } = props
