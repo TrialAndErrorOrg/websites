@@ -2,7 +2,7 @@
 
 import { PageConfig } from 'next'
 import { ImageResponse } from '@vercel/og'
-import { NextRequest } from 'next/server'
+import { NextRequest } from "next/server";
 import { format } from 'date-fns'
 
 export const config: PageConfig = {

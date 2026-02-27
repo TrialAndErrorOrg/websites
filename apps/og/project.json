@@ -4,6 +4,12 @@
   "sourceRoot": "apps/og",
   "projectType": "application",
   "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["next dev apps/og -p 4201"]
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
       "outputs": ["apps/og/.next"],
