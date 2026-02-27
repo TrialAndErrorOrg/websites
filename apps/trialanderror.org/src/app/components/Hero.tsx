@@ -1,20 +1,22 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { Frame } from './Frame'
 
 export function Hero() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
   return <div className="relative flex min-h-screen w-screen flex-col justify-center">
-      {/* <div className="max-w-screen absolute inset-6 -z-20 min-h-screen border-4 border-blue-500 md:inset-20 md:border-[6px]" /> */}
       <Frame />
       <div className="relative mt-[20vh] grid w-full grid-cols-6 items-center justify-center md:mt-[40vh]">
         <div className="absolute left-0 top-4 -z-20 col-span-4 col-start-2 h-[10000rem] w-full bg-orange-500 md:top-8 2xl:top-10" />
-        {/* <Frame /> */}
 
         <motion.h1
           initial={{ translateX: '-100vw' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          animate={{ translateX: 0 }}
+          animate={{ translateX: mounted ? 0 : '-100vw' }}
           className="font-overpass col-span-5 col-start-2 -ml-4  max-w-[66.666667%] text-5xl font-black leading-[1] tracking-tight text-blue-500 md:-ml-8 md:text-6xl md:leading-[1.2]  xl:text-7xl  2xl:text-[104px]"
         >
           The Center of Trial <br className="hidden xl:flex" />
@@ -23,7 +25,7 @@ export function Hero() {
         <motion.div
           initial={{ translateX: '100vw' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          animate={{ translateX: 0 }}
+          animate={{ translateX: mounted ? 0 : '100vw' }}
           className="col-span-4 col-start-2 -ml-3 mt-10 md:col-start-3 md:ml-10 md:max-w-[52vw] lg:max-w-none"
         >
           <h2 className="font-sans font-semibold leading-[1.2] text-blue-500 md:text-2xl lg:text-3xl 2xl:text-4xl">
