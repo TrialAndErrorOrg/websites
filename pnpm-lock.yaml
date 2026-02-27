@@ -99,9 +99,6 @@ importers:
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.21.4)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      next-auth:
-        specifier: ^4.23.1
-        version: 4.24.11(next@16.1.6(@babel/core@7.21.4)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-compose-plugins:
         specifier: ^2.2.1
         version: 2.2.1
@@ -2784,9 +2781,6 @@ packages:
     resolution: {integrity: sha512-gE3QJvhh0Yj9cSAkkHjRLKPmC7BTJeiaB5YyhVKVUwbnWQgTszV92lZ9pvZtNPEghP7jPbhEs4c6983A0ojQwA==}
     cpu: [x64]
     os: [win32]
-
-  '@panva/hkdf@1.2.1':
-    resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==}
 
   '@parcel/watcher@2.0.4':
     resolution: {integrity: sha512-cTDi+FUDBIUOBKEtj+nhiJ71AZVlkAsQFuGQTun5tV9mwQBQgZvhCzG+URPQc8myeN32yRVZEfVAPCs1RW+Jvg==}
@@ -6551,10 +6545,6 @@ packages:
 
   cookie@0.7.1:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
-    engines: {node: '>= 0.6'}
-
-  cookie@0.7.2:
-    resolution: {integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==}
     engines: {node: '>= 0.6'}
 
   cookies@0.9.1:
@@ -10523,20 +10513,6 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  next-auth@4.24.11:
-    resolution: {integrity: sha512-pCFXzIDQX7xmHFs4KVH4luCjaCbuPRtZ9oBUjUhOk84mZ9WVPf94n87TxYI4rSRf9HmfHEF8Yep3JrYDVOo3Cw==}
-    peerDependencies:
-      '@auth/core': 0.34.2
-      next: ^12.2.5 || ^13 || ^14 || ^15
-      nodemailer: ^6.6.5
-      react: ^17.0.2 || ^18 || ^19
-      react-dom: ^17.0.2 || ^18 || ^19
-    peerDependenciesMeta:
-      '@auth/core':
-        optional: true
-      nodemailer:
-        optional: true
-
   next-compose-plugins@2.2.1:
     resolution: {integrity: sha512-OjJ+fV15FXO2uQXQagLD4C0abYErBjyjE0I0FHpOEIB8upw0hg1ldFP6cqHTJBH1cZqy96OeR3u1dJ+Ez2D4Bg==}
 
@@ -10735,9 +10711,6 @@ packages:
       '@swc/core':
         optional: true
 
-  oauth@0.9.15:
-    resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
-
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -10745,10 +10718,6 @@ packages:
   object-copy@0.1.0:
     resolution: {integrity: sha512-79LYn6VAb63zgtmAteVOWo9Vdj71ZVBy3Pbse+VqxDpEP83XuujMrGqHIwAXJ5I/aM0zU7dIyIAhifVTPrNItQ==}
     engines: {node: '>=0.10.0'}
-
-  object-hash@2.2.0:
-    resolution: {integrity: sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==}
-    engines: {node: '>= 6'}
 
   object-hash@3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
@@ -10813,10 +10782,6 @@ packages:
   oblivious-set@1.0.0:
     resolution: {integrity: sha512-z+pI07qxo4c2CulUHCDf9lcqDlMSo72N/4rLUpRXf6fu+q8vjt8y0xS+Tlf8NTJDdTXHbdeO1n3MlbctwEoXZw==}
 
-  oidc-token-hash@5.1.1:
-    resolution: {integrity: sha512-D7EmwxJV6DsEB6vOFLrBM2OzsVgQzgPWyHlV2OOAVj772n+WTXpudC9e9u5BVKQnYwaD30Ivhi9b+4UeBcGu9g==}
-    engines: {node: ^10.13.0 || >=12.0.0}
-
   on-finished@2.4.1:
     resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
     engines: {node: '>= 0.8'}
@@ -10865,9 +10830,6 @@ packages:
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
-
-  openid-client@5.7.1:
-    resolution: {integrity: sha512-jDBPgSVfTnkIh71Hg9pRvtJc6wTwqjRkN88+gCFtYWrlP4Yx2Dsrow8uPi3qLr/aeymPF3o2+dS+wOpglK04ew==}
 
   opn@5.5.0:
     resolution: {integrity: sha512-PqHpggC9bLV0VeWcdKhkpxY+3JTzetLSqTCWL/z/tFIbI6G8JCjondXklT1JinczLz2Xib62sSp0T/gKT4KksA==}
@@ -11500,11 +11462,6 @@ packages:
   postinstall-postinstall@2.1.0:
     resolution: {integrity: sha512-7hQX6ZlZXIoRiWNrbMQaLzUUfH+sSx39u8EJ9HYuDc1kLo9IXKWjM5RSquZN1ad5GnH8CGFM78fsAAQi3OKEEQ==}
 
-  preact-render-to-string@5.2.6:
-    resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
-    peerDependencies:
-      preact: '>=10'
-
   preact@10.27.2:
     resolution: {integrity: sha512-5SYSgFKSyhCbk6SrXyMpqjb5+MQBgfvEKE/OC+PujcY34sOpqtr+0AZQtPYx5IA6VxynQ7rUPCtKzyovpj9Bpg==}
 
@@ -11612,9 +11569,6 @@ packages:
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-
-  pretty-format@3.8.0:
-    resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
 
   pretty-hrtime@1.0.3:
     resolution: {integrity: sha512-66hKPCr+72mlfiSjlEB1+45IjXSqvVAIy6mocupoww4tBFE9R9IhwwUGoI4G++Tc9Aq+2rxOt0RFU6gPcrte0A==}
@@ -17323,8 +17277,6 @@ snapshots:
   '@oxc-resolver/binding-win32-x64-msvc@11.9.0':
     optional: true
 
-  '@panva/hkdf@1.2.1': {}
-
   '@parcel/watcher@2.0.4':
     dependencies:
       node-addon-api: 3.2.1
@@ -22812,8 +22764,6 @@ snapshots:
 
   cookie@0.7.1: {}
 
-  cookie@0.7.2: {}
-
   cookies@0.9.1:
     dependencies:
       depd: 2.0.0
@@ -27822,21 +27772,6 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-auth@4.24.11(next@16.1.6(@babel/core@7.21.4)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@babel/runtime': 7.28.4
-      '@panva/hkdf': 1.2.1
-      cookie: 0.7.2
-      jose: 4.15.9
-      next: 16.1.6(@babel/core@7.21.4)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      oauth: 0.9.15
-      openid-client: 5.7.1
-      preact: 10.27.2
-      preact-render-to-string: 5.2.6(preact@10.27.2)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      uuid: 8.3.2
-
   next-compose-plugins@2.2.1: {}
 
   next-seo@6.8.0(next@16.1.6(@babel/core@7.21.4)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -28121,8 +28056,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  oauth@0.9.15: {}
-
   object-assign@4.1.1: {}
 
   object-copy@0.1.0:
@@ -28130,8 +28063,6 @@ snapshots:
       copy-descriptor: 0.1.1
       define-property: 0.2.5
       kind-of: 3.2.2
-
-  object-hash@2.2.0: {}
 
   object-hash@3.0.0: {}
 
@@ -28218,8 +28149,6 @@ snapshots:
 
   oblivious-set@1.0.0: {}
 
-  oidc-token-hash@5.1.1: {}
-
   on-finished@2.4.1:
     dependencies:
       ee-first: 1.1.1
@@ -28273,13 +28202,6 @@ snapshots:
       is-wsl: 2.2.0
 
   opener@1.5.2: {}
-
-  openid-client@5.7.1:
-    dependencies:
-      jose: 4.15.9
-      lru-cache: 6.0.0
-      object-hash: 2.2.0
-      oidc-token-hash: 5.1.1
 
   opn@5.5.0:
     dependencies:
@@ -28927,11 +28849,6 @@ snapshots:
 
   postinstall-postinstall@2.1.0: {}
 
-  preact-render-to-string@5.2.6(preact@10.27.2):
-    dependencies:
-      preact: 10.27.2
-      pretty-format: 3.8.0
-
   preact@10.27.2: {}
 
   prebuild-install@7.1.3:
@@ -28990,8 +28907,6 @@ snapshots:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
       react-is: 18.3.1
-
-  pretty-format@3.8.0: {}
 
   pretty-hrtime@1.0.3: {}
 
