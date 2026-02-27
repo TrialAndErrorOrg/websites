@@ -8,7 +8,7 @@ import { GoogleScript } from "./google-script";
 export const revalidate = 3600; // revalidate every hour
 
 type Props = {
-	params: { page: string };
+	params: Promise<{ page: string }>;
 };
 const GOOGLE_AD_PAGES = [
 	"donate",
@@ -16,24 +16,31 @@ const GOOGLE_AD_PAGES = [
 	...(process.env.GOOGLE_AD_PAGES?.split(",") ?? []),
 ] as const;
 
-export async function generateMetadata({ params }: Props) {
-	const { seo, title, slug } = await getPage(params.page);
+export async function generateMetadata(props: Props) {
+    const params = await props.params;
+    const { seo, title, slug } = await getPage(params.page);
 
-	return createMetadata({
+    return createMetadata({
 		title: seo?.metaTitle ?? title,
 		description: seo?.metaDescription ?? "",
 		canonical: slug,
 	});
 }
 
-export default async function AboutPage({ params: { page } }: Props) {
-	const pageResult = await getPage(page);
+export default async function AboutPage(props: Props) {
+    const params = await props.params;
 
-	const { title, block } = pageResult;
-	if (!title) {
+    const {
+        page
+    } = params;
+
+    const pageResult = await getPage(page);
+
+    const { title, block } = pageResult;
+    if (!title) {
 		notFound();
 	}
-	return (
+    return (
 		<>
 			<main className="flex flex-col items-center">
 				<div className="w-screen">

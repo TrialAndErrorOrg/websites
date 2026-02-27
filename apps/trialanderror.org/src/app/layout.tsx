@@ -1,6 +1,5 @@
 import { Open_Sans, Overpass } from "next/font/google";
 import { createMetadata } from "../utils/createMetadata";
-import { AnalyticsWrapper } from "./components/Analytics";
 import { Footer } from "./components/Footer";
 import { Nav } from "./components/Nav";
 
@@ -60,7 +59,6 @@ export default function RootLayout({
 				<Nav />
 				<main>{children}</main>
 				<Footer />
-				<AnalyticsWrapper />
 
 				<Script
 					defer

@@ -52,13 +52,13 @@ const defaultNav: EasyMenu = {
 	],
 };
 
-const socialMap: Record<string, React.FC<React.ComponentProps<"svg">>> = {
-	bluesky: (props: React.ComponentProps<"svg">) => <FaBluesky {...props} />,
-	github: (props: React.ComponentProps<"svg">) => <FaGithub {...props} />,
-	mastodon: (props: React.ComponentProps<"svg">) => <FaMastodon {...props} />,
-	linkedin: (props: React.ComponentProps<"svg">) => <FaLinkedin {...props} />,
-	instagram: (props: React.ComponentProps<"svg">) => <FaInstagram {...props} />,
-	email: (props: React.ComponentProps<"svg">) => <FaEnvelope {...props} />,
+const socialMap: Record<string, React.ReactNode> = {
+	bluesky: <FaBluesky />,
+	github: <FaGithub />,
+	mastodon: <FaMastodon />,
+	linkedin: <FaLinkedin />,
+	instagram: <FaInstagram />,
+	email: <FaEnvelope />,
 };
 
 const defaultSocials: EasyMenu = {
@@ -187,17 +187,9 @@ export async function Footer() {
 					<div className="flex space-x-6 text-white md:order-2">
 						{social.items?.map(({ title, icon, url }) => {
 							const lowercaseTitle = title.toLowerCase();
-							const Icon = icon ? (
-								<Image
-									src={icon?.url}
-									alt={title}
-									width={24}
-									height={24}
-									className="h-6 w-6 text-white"
-								/>
-							) : (
-								socialMap[lowercaseTitle]
-							);
+
+							const socialMapIcon = socialMap[lowercaseTitle];
+
 							return (
 								<a
 									key={title}
@@ -209,8 +201,18 @@ export async function Footer() {
 									{/* <icon //className="h-6 w-6 text-white"
                 // aria-hidden="true"
                 /> */}
-									{/* @ts-expect-error TODO: fix incorrect icon type when using JSX elements in an object as a map */}
-									<Icon />
+
+									{icon ? (
+										<Image
+											src={icon?.url}
+											alt={title}
+											width={24}
+											height={24}
+											className="h-6 w-6 text-white"
+										/>
+									) : (
+										socialMapIcon
+									)}
 								</a>
 							);
 						})}

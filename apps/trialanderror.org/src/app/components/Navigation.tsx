@@ -207,7 +207,6 @@ export function Navigation({ nav }: { nav: Menu }) {
           })}
         </Popover.Group>
       </div>
-
       <Transition
         as={Fragment}
         enter="duration-200 ease-out"
@@ -282,5 +281,5 @@ export function Navigation({ nav }: { nav: Menu }) {
         </Popover.Panel>
       </Transition>
     </Popover>
-  )
+  );
 }
