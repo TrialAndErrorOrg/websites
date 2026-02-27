@@ -17,7 +17,7 @@
         },
         "production": {}
       },
-      "command": "next build apps/trialanderror.org && mv apps/trialanderror.org/.next/static apps/trialanderror.org/.next/standalone/apps/trialanderror.org/.next && cp -r apps/trialanderror.org/public apps/trialanderror.org/.next/standalone/apps/trialanderror.org/.next"
+      "command": "next build apps/trialanderror.org && mv apps/trialanderror.org/.next/static apps/trialanderror.org/.next/standalone/apps/trialanderror.org/.next && cp -r apps/trialanderror.org/public apps/trialanderror.org/.next/standalone/apps/trialanderror.org"
     },
     "dev": {
       "executor": "nx:run-commands",
