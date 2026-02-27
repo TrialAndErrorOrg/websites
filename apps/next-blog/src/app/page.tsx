@@ -13,7 +13,7 @@ export const metadata = createMetadata({
 export const dynamic = 'force-static'
 
 export default async function Index() {
-  const { isEnabled } = draftMode()
+  const { isEnabled } = await draftMode()
 
   const posts = (await getAllPosts(isEnabled)) ?? []
 

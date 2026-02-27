@@ -1,7 +1,6 @@
 import { Open_Sans, Overpass } from "next/font/google";
 import Script from "next/script";
 import { createMetadata } from "../utils/createMetadata";
-import { AnalyticsWrapper } from "./components/Analytics";
 import { Footer } from "./components/Footer";
 
 import "../styles/globals.css";
@@ -58,7 +57,6 @@ export default function RootLayout({
 				<HeaderWrapper />
 				<div className="flex-grow">{children}</div>
 				<Footer />
-				<AnalyticsWrapper />
 				<Script
 					defer
 					src="https://analytics.trialanderror.org/script.js"

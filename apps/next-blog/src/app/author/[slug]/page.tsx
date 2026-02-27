@@ -43,17 +43,18 @@ export async function generateStaticParams() {
 	);
 }
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { slug: string };
-}): Promise<Metadata> {
-	const author = await getPerson(params.slug);
-	if (!author) {
+export async function generateMetadata(
+    props: {
+        params: Promise<{ slug: string }>;
+    }
+): Promise<Metadata> {
+    const params = await props.params;
+    const author = await getPerson(params.slug);
+    if (!author) {
 		return createMetadata();
 	}
 
-	return createMetadata({
+    return createMetadata({
 		title: `${author.firstName} ${author.lastName}`,
 		description: author.summary?.replace(/<[^>]*?>/gm, "") ?? "",
 		canonical: `/author/${params.slug}`,
@@ -63,18 +64,19 @@ export async function generateMetadata({
 	});
 }
 
-export default async function AuthorPage({
-	params,
-}: {
-	params: { slug: string };
-}) {
-	const author = await getPerson(params.slug);
+export default async function AuthorPage(
+    props: {
+        params: Promise<{ slug: string }>;
+    }
+) {
+    const params = await props.params;
+    const author = await getPerson(params.slug);
 
-	if (!author) {
+    if (!author) {
 		return <div>Author not found</div>;
 	}
 
-	return (
+    return (
 		<article className="mx-auto scroll-m-14 px-6 py-12 sm:px-6 sm:py-16 lg:py-20">
 			<header>
 				<h1 className="leading-tighter font-heading mb-8 text-center text-4xl font-bold tracking-tighter md:mb-16 md:text-5xl">

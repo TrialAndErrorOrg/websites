@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server'
+import { NextRequest } from "next/server";
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { getAllPosts } from '../../../utils/blog'
 import { env } from '../../../env/server.mjs'

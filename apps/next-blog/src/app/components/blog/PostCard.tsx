@@ -24,8 +24,8 @@ export function PostCard({
 	className = wide ? "card grid md:flex group" : "flex-col flex group card",
 }: Props) {
 	return (
-		<div className={className}>
-			<div
+        <div className={className}>
+            <div
 				className={cx(
 					"overflow-hidden border-black bg-gray-100 transition-all dark:border-white  dark:bg-gray-800",
 					wide ? "md:aspect-square" : "aspect-video",
@@ -82,7 +82,7 @@ export function PostCard({
 					className="absolute bottom-3 right-4 z-10 flex max-w-[80%] flex-wrap justify-end gap-x-1 text-sm"
 				/>
 			</div>
-			<div
+            <div
 				className={cx(
 					"flex flex-col gap-2 bg-white dark:bg-slate-700 md:gap-6 ",
 					wide ? "p-6 pb-4 pt-6 md:w-1/2" : "flex-grow p-6",
@@ -133,6 +133,6 @@ export function PostCard({
 					</span>
 				</Link>
 			</div>
-		</div>
-	);
+        </div>
+    );
 }

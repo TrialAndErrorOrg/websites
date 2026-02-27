@@ -7,16 +7,17 @@ import { getAcademicOtherSeo } from "../../utils/getAcademicOtherSEO";
 import { cleanSlug } from "../../utils/permalinks";
 import { SinglePost } from "../components/blog/SinglePost";
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { post: string };
-}) {
-	const post = await getPostBy({ field: "slug", value: params.post });
-	if (!post) {
+export async function generateMetadata(
+    props: {
+        params: Promise<{ post: string }>;
+    }
+) {
+    const params = await props.params;
+    const post = await getPostBy({ field: "slug", value: params.post });
+    if (!post) {
 		return createMetadata({});
 	}
-	return createMetadata(
+    return createMetadata(
 		{
 			title: `${post.title} — ${SITE.name}`,
 			description: post.seo?.metaDescription ?? post.excerpt,
@@ -45,27 +46,28 @@ export async function generateStaticParams() {
 	return pars;
 }
 
-export default async function Post({ params }: { params: { post: string } }) {
-	const { isEnabled } = draftMode();
+export default async function Post(props: { params: Promise<{ post: string }> }) {
+    const params = await props.params;
+    const { isEnabled } = await draftMode();
 
-	const { post: slug } = params;
-	const posts = (await getAllPosts(isEnabled)) ?? [];
-	// const post = posts.find((post) => cleanSlug(post.slug ?? '/') === slug)
-	const post = await getSinglePost(slug, isEnabled);
-	const idx = posts.findIndex((post) => cleanSlug(post.slug ?? "/") === slug);
-	const prev = posts[idx - 1];
-	const next = posts[idx + 1];
+    const { post: slug } = params;
+    const posts = (await getAllPosts(isEnabled)) ?? [];
+    // const post = posts.find((post) => cleanSlug(post.slug ?? '/') === slug)
+    const post = await getSinglePost(slug, isEnabled);
+    const idx = posts.findIndex((post) => cleanSlug(post.slug ?? "/") === slug);
+    const prev = posts[idx - 1];
+    const next = posts[idx + 1];
 
-	// const date = post?.publishDate ?? post?.publishedAt
-	// const nextNext = getNextPublishPost(date ? new Date(date) : new Date())
-	// console.log(next.slug, nextNext?.slug)
-	const latest = posts.filter((latest) => latest.id !== post?.id).slice(0, 4);
+    // const date = post?.publishDate ?? post?.publishedAt
+    // const nextNext = getNextPublishPost(date ? new Date(date) : new Date())
+    // console.log(next.slug, nextNext?.slug)
+    const latest = posts.filter((latest) => latest.id !== post?.id).slice(0, 4);
 
-	if (!post) {
+    if (!post) {
 		notFound();
 	}
 
-	return (
+    return (
 		<SinglePost
 			latest={latest}
 			prev={prev}

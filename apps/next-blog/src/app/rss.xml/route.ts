@@ -1,5 +1,4 @@
-// src/pages/api/rss/index.ts
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from "next/server";
 import { generateRssFeed } from '../../utils/generateRSSFeed'
 
 export const dynamic = 'force-dynamic'

@@ -31,27 +31,33 @@ import { PostCard } from "../../components/blog/PostCard";
 //   return allPages
 // }
 
-export default async function BlogPage({
-	params: { page },
-}: {
-	params: { page: string; final: string };
-}) {
-	const posts: BlogPost[] = (await getAllPosts()) ?? [];
-	let actualPosts: BlogPost[] = [];
+export default async function BlogPage(
+    props: {
+        params: Promise<{ page: string; final: string }>;
+    }
+) {
+    const params = await props.params;
 
-	const { categories, tags } = getUniqueCategoriesAndTags(posts);
+    const {
+        page
+    } = params;
 
-	let intPage = 0;
-	let nextUrl = "";
-	let prevUrl = "";
+    const posts: BlogPost[] = (await getAllPosts()) ?? [];
+    let actualPosts: BlogPost[] = [];
 
-	let isBasicBlog = false;
+    const { categories, tags } = getUniqueCategoriesAndTags(posts);
 
-	try {
+    let intPage = 0;
+    let nextUrl = "";
+    let prevUrl = "";
+
+    let isBasicBlog = false;
+
+    try {
 		intPage = parseInt(page);
 	} catch (e) {}
 
-	const pageType =
+    const pageType =
 		intPage && !isNaN(intPage)
 			? "blog"
 			: tags.some((tag) => tag.slug === page)
@@ -60,13 +66,13 @@ export default async function BlogPage({
 					? "category"
 					: "";
 
-	if (!pageType) {
+    if (!pageType) {
 		return notFound();
 	}
 
-	let title = "Blog";
+    let title = "Blog";
 
-	if (pageType === "blog") {
+    if (pageType === "blog") {
 		if (intPage < 1 || intPage > posts.length / 10 + 1) {
 			return notFound();
 		}
@@ -80,7 +86,7 @@ export default async function BlogPage({
 		prevUrl = hasPrev ? `/blog/${intPage - 1}` : "";
 	}
 
-	if (pageType === "category") {
+    if (pageType === "category") {
 		actualPosts = posts.filter((post) => {
 			if (post.category?.slug === page) {
 				title = post.category?.title;
@@ -90,7 +96,7 @@ export default async function BlogPage({
 		});
 	}
 
-	if (pageType === "tag") {
+    if (pageType === "tag") {
 		actualPosts = posts.filter((post) =>
 			post.blog_tags?.some((tag) => {
 				if (tag.slug === page) {
@@ -102,7 +108,7 @@ export default async function BlogPage({
 		);
 	}
 
-	const Title =
+    const Title =
 		pageType === "blog" ? (
 			<h1 className="inline text-center font-sans text-8xl font-black">Blog</h1>
 		) : pageType === "tag" ? (
@@ -113,7 +119,7 @@ export default async function BlogPage({
 			</h1>
 		);
 
-	return (
+    return (
 		<>
 			<div className="flex h-40 items-center">{Title}</div>
 			{actualPosts?.map((post) => (
