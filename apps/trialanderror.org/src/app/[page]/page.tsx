@@ -17,10 +17,10 @@ const GOOGLE_AD_PAGES = [
 ] as const;
 
 export async function generateMetadata(props: Props) {
-    const params = await props.params;
-    const { seo, title, slug } = await getPage(params.page);
+	const params = await props.params;
+	const { seo, title, slug } = await getPage(params.page);
 
-    return createMetadata({
+	return createMetadata({
 		title: seo?.metaTitle ?? title,
 		description: seo?.metaDescription ?? "",
 		canonical: slug,
@@ -28,19 +28,17 @@ export async function generateMetadata(props: Props) {
 }
 
 export default async function AboutPage(props: Props) {
-    const params = await props.params;
+	const params = await props.params;
 
-    const {
-        page
-    } = params;
+	const { page } = params;
 
-    const pageResult = await getPage(page);
+	const pageResult = await getPage(page);
 
-    const { title, block } = pageResult;
-    if (!title) {
+	const { title, block } = pageResult;
+	if (!title) {
 		notFound();
 	}
-    return (
+	return (
 		<>
 			<main className="flex flex-col items-center">
 				<div className="w-screen">
