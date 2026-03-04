@@ -44,7 +44,7 @@ export default async function AboutPage(props: Props) {
 				<div className="w-screen">
 					<Frame />
 					<div className="relative left-[13vw] top-20 mb-80 min-h-screen w-[75vw] bg-blue-50 p-6 md:top-60 md:w-[60vw] md:p-10 2xl:w-[40vw]">
-						<article className="mb-10 flex flex-col justify-center gap-10 md:w-[45vw] md:gap-20">
+						<article className="mb-10 flex flex-col justify-center gap-10 md:w-[45vw] md:gap-20 [&_iframe]:relative [&_iframe]:-left-12 [&_iframe]:w-[130%] [&_iframe]:border-4 md:[&_iframe]:left-0 md:[&_iframe]:w-full">
 							<h1 className="-mt-10 text-4xl font-black text-blue-500 md:-mt-16 md:text-7xl">
 								{title}
 							</h1>
