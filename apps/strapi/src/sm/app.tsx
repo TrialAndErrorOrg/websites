@@ -114,6 +114,5 @@ export default {
 		//   });
 		//   app.registerPlugin({ ... });
 		// },
-		console.log(app);
 	},
 };

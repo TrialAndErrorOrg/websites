@@ -14,7 +14,6 @@ export default factories.createCoreController(
 	"api::application.application",
 	({ strapi }) => ({
 		async create(ctx: any) {
-			console.log("create application", ctx);
 			const standardRes = await super.create(ctx);
 
 			const {
@@ -52,8 +51,6 @@ export default factories.createCoreController(
 					},
 				},
 			);
-
-			console.log(standardRes);
 
 			// send email
 			try {
@@ -106,7 +103,6 @@ export default factories.createCoreController(
 				//     console.log({ position, updatedApplication })
 				//   }, 10000)
 				// }
-				console.log({ res });
 			} catch (error) {
 				console.error(error);
 				return ctx.badRequest(standardRes, error);
