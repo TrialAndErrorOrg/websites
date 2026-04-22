@@ -15,7 +15,7 @@ export default ({ env }: { env: Env }) => ({
 			},
 		},
 	},
-	publiser: {
+	publisher: {
 		enabled: true,
 	},
 	"rest-cache": {
