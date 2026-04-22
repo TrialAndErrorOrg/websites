@@ -1,6 +1,5 @@
-// @ts-expect-error no declaration file for this
-
 import { decode } from "jsonwebtoken";
+// @ts-expect-error no declaration file for this
 import AzureAdOAuth2Strategy from "passport-azure-ad-oauth2";
 
 export type Env = {
