@@ -1,12 +1,21 @@
 import { Frame } from '../components/Frame'
-import { getTeam } from '../team/page'
 import { TeamMemberCard } from '../components/TeamMemberCard'
 import { OurMission } from '../components/OurMission'
 import { AboutUs } from '../components/AboutUs'
 import { createMetadata } from '../../utils/createMetadata'
+import { Attribute } from '@strapi/strapi'
+import { strapiClient } from '../../server/api/strapi'
 
 export const revalidate = 3600 // revalidate every hour
+export async function getTeam() {
+  const team = await strapiClient
+    .from<Attribute.GetValues<'api::team-member.team-member'> & { id: number }>('team-members')
+    .select()
+    .populate()
+    .get()
 
+  return team?.data ?? []
+}
 export const metadata = createMetadata({
   title: 'About Us',
   description: 'Read the vision and mission of the Center of Trial and Error.',
