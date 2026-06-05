@@ -52,6 +52,12 @@ export default function RootLayout({
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
 				<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#002642" />
+				<link
+					rel="alternate"
+					type="application/rss+xml"
+					title="Center of Trial and Error | RSS Feed"
+					href="/api/rss"
+				/>
 				<meta name="msapplication-TileColor" content="#002642" />
 				<meta name="theme-color" content="#ffffff" />
 			</head>
