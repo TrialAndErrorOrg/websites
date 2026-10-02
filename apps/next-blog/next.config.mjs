@@ -32,7 +32,7 @@ const nextConfig = {
 	images: {
 		domains: [
 			"avatars.githubusercontent.com",
-			"cote.azureedge.net",
+			"cms.trialanderror.org",
 			"res.cloudinary.com",
 			"tailwindui.com",
 		],
