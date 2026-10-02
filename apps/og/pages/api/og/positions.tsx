@@ -131,7 +131,7 @@ export default async function handler(req: NextRequest) {
   // const publishedPretty = publishedRaw ? new Date(publishedRaw).toLocaleDateString() : null
   // const logo =
   //   searchParams.get('logo') ||
-  //   'https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_transp_back_0_5x_bbe4cae12e.png?updated_at=2022-08-31T19:02:18.630Z'
+  //   'https://cms.trialanderror.org/uploads/TE_logo_transp_back_0_5x_bbe4cae12e.png'
   // const name = 'Journal of Trial & Error'
   // const author = searchParams.get('author')
   // const issue = searchParams.get('issue')

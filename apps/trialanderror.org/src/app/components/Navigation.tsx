@@ -253,7 +253,7 @@ export function Navigation({ nav }: { nav: Menu }) {
 				className="absolute left-4 z-20 hidden h-[calc(21vh+5rem)] w-20 flex-col items-center justify-end bg-blue-500 md:flex lg:left-[calc(16.6667%-8vw)]"
 			>
 				<Image
-					src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
+					src="https://cms.trialanderror.org/uploads/TE_logo_white_transp_back_71a53de683.svg"
 					alt="TE logo"
 					width={90}
 					height={90}
@@ -301,7 +301,7 @@ export function Navigation({ nav }: { nav: Menu }) {
 								<div>
 									<Image
 										className="bg-blue-500"
-										src="https://cote.azureedge.net/cote-strapi-uploads/assets/TE_logo_white_transp_back_71a53de683.svg"
+										src="https://cms.trialanderror.org/uploads/TE_logo_white_transp_back_71a53de683.svg"
 										alt="Workflow"
 										width={40}
 										height={40}
