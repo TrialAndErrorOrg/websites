@@ -170,3 +170,4 @@ patches_bak
 libs/types/src/lib/validators.ts
 
 .react-email
+.claude
