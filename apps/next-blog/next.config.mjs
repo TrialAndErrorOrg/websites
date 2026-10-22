@@ -1,4 +1,6 @@
 // @ts-check
+import { fileURLToPath } from "node:url";
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds.
@@ -10,10 +12,14 @@
 //   enabled: process.env.ANALYZE === "true",
 // })
 
+const root = fileURLToPath(new URL("../..", import.meta.url));
+
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+	turbopack: { root },
+	outputFileTracingRoot: root,
 	/* config options here */
 	eslint: {
 		ignoreDuringBuilds: true,

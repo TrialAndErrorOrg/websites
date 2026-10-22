@@ -30,17 +30,9 @@ export async function generateStaticParams() {
 			.map((author) => [author.lastName, author]),
 	);
 
-	return Object.entries(authors).map(([lastName, author]) =>
-		posts
-			.filter((post) =>
-				[...(post.blog_authors ?? []), ...(post.team_members ?? [])].some(
-					(a: Author) => a.lastName === lastName,
-				),
-			)
-			.map((author) => ({
-				slug: author.slug ?? cleanSlug(lastName ?? ""),
-			})),
-	);
+	return Object.entries(authors).map(([lastName, author]) => ({
+		slug: author.slug ?? cleanSlug(lastName ?? ""),
+	}));
 }
 
 export async function generateMetadata(
